@@ -20,7 +20,7 @@ function MySceneGraph(filename, scene) {
     this.scene = scene;
     scene.graph = this;
 	this.nodeIDToIndex = [];
-    this.nodes = [];
+    this.nodeTree = null;
 	this.xmlNodes = [];
 
     this.idRoot = null; // The id of the root element.
@@ -1120,11 +1120,11 @@ MySceneGraph.prototype.parseNode = function(nodeToParse) {
     let nodeID = this.reader.getString(nodeToParse,'id');
     let newNode = new MyGraphNode(this,nodeID);
 	let nodeSpecs = nodeToParse.children;
-	var specNames = new Array();
+	let specNames = new Array();
 	let possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
 	for (let j = 0; j < nodeSpecs.length; j++) {
 		let specName = nodeSpecs[j].nodeName;
-		specsNames.push(specName);
+		specNames.push(specName);
 
 		// Warns against possible invalid tag names.
 		if (possibleValues.indexOf(specName) == -1)
@@ -1206,19 +1206,21 @@ MySceneGraph.prototype.parseNode = function(nodeToParse) {
 	}
 	
 	// Process Descendants
-	let descendantsIndex = specsNames.indexOf("DESCENDANTS");
+	let descendantsIndex = specNames.indexOf("DESCENDANTS");
 	if (descendantsIndex === -1){
 		this.onXMLMinorError("An Intermediate Node must have descendants");
 		return null;
 	}
 	let descendants = nodeSpecs[descendantsIndex].children;
-	descendants.foreach(child => {
+	
+	for (let i = 0; i < descendants.length; i++){
+		let child = descendants[i];
 		if (child.nodeName === "NODEREF"){
 			// Process child node
 			let nodeID = this.reader.getString(child, 'id');
 			let nodeIndexInXMLNodes = this.nodeIDToIndex[nodeID];
 			if (nodeIndexInXMLNodes != null && nodeIndexInXMLNodes > -1){
-				newNode.addChild(parseNode(this.xmlNodes[nodeIndexInXMLNodes]));
+				newNode.addChild(this.parseNode(this.xmlNodes[nodeIndexInXMLNodes]));
 			}else{
 				this.onXMLMinorError("Descendant id: " + nodeID + " is not declared.");
 				return null;
@@ -1230,7 +1232,8 @@ MySceneGraph.prototype.parseNode = function(nodeToParse) {
 			this.onXMLMinorError("incorrect descendant node with name: " + child.nodeName);
 			return null;
 		}
-	});
+	}
+	return newNode;
 }
 
 
@@ -1271,7 +1274,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 	if (this.nodeIDToIndex[this.idRoot] == null){
 		return "Invalid Root ID";
 	}
-	this.parseNode(this.xmlNodes[this.nodeIDToIndex[this.idRoot]]);
+	this.nodeTree = this.parseNode(this.xmlNodes[this.nodeIDToIndex[this.idRoot]]);
 
     console.log("Parsed nodes");
     return null;
