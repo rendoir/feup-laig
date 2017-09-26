@@ -1,4 +1,4 @@
-let DEGREE_TO_RAD = Math.PI / 180;
+// let DEGREE_TO_RAD = Math.PI / 180;
 
 // Order of the groups in the XML document.
 let INITIALS_INDEX = 0;
@@ -1108,7 +1108,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
     console.log("Parsed materials");
 }
 
-MySceneGraph.prototype.getAttributeOfSpec(nodeSpecs,specIndex, attributeName) {
+MySceneGraph.prototype.getAttributeOfSpec = function(nodeSpecs,specIndex, attributeName) {
 	let specID = this.reader.getString(nodeSpecs[specIndex],attributeName);
 	if (specID == null) {
 		this.onXMLMinorError("Unable to parse " + specName + "of node");
@@ -1119,7 +1119,8 @@ MySceneGraph.prototype.getAttributeOfSpec(nodeSpecs,specIndex, attributeName) {
 MySceneGraph.prototype.parseNode = function(nodeToParse) {
     let nodeID = this.reader.getString(nodeToParse,'id');
     let newNode = new MyGraphNode(this,nodeID);
-	let nodeSpecs = children[i].children;
+	let nodeSpecs = nodeToParse.children;
+	var specNames = new Array();
 	let possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
 	for (let j = 0; j < nodeSpecs.length; j++) {
 		let specName = nodeSpecs[j].nodeName;
@@ -1240,7 +1241,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse) {
 MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
     // Traverses nodes.
-    this.xmlNodes= = nodesNode.children;
+    this.xmlNodes = nodesNode.children;
 
     for (let i = 0; i < this.xmlNodes.length; i++) {
         let nodeName;
@@ -1270,7 +1271,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 	if (this.nodeIDToIndex[this.idRoot] == null){
 		return "Invalid Root ID";
 	}
-	this.parseNode(thix.xmlNodes[this.nodeIDToIndex[this.idRoot]]);
+	this.parseNode(this.xmlNodes[this.nodeIDToIndex[this.idRoot]]);
 
     console.log("Parsed nodes");
     return null;
