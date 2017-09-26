@@ -1118,7 +1118,7 @@ MySceneGraph.prototype.getAttributeOfSpec = function(nodeSpecs,specIndex, attrib
 
 MySceneGraph.prototype.parseNode = function(nodeToParse) {
     let nodeID = this.reader.getString(nodeToParse,'id');
-    let newNode = new MyGraphNode(this,nodeID);
+    let newNode = new MyGraphNode(nodeID);
 	let nodeSpecs = nodeToParse.children;
 	let specNames = new Array();
 	let possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
@@ -1131,7 +1131,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse) {
 			this.onXMLMinorError("unknown tag <" + specName + ">");
 	}
 	// Process Material
-	let indexOfMaterial = specNames.indexOf("MATERIAl");
+	let indexOfMaterial = specNames.indexOf("MATERIAL");
 	if (indexOfMaterial > -1) {
 		newNode.materialID = this.getAttributeOfSpec(nodeSpecs,indexOfMaterial,'id');
 	}
@@ -1227,8 +1227,8 @@ MySceneGraph.prototype.parseNode = function(nodeToParse) {
 			}
 		}else if (child.nodeName === "LEAF"){
 			// Process child leaf
-			this.processLeaf(child);
-			newNode.addLeaf(new MyGraphLeaf(this,child));
+			
+			newNode.addLeaf(this.processLeaf(child));
 		}else{
 			this.onXMLMinorError("incorrect descendant node with name: " + child.nodeName);
 			return null;
@@ -1239,23 +1239,33 @@ MySceneGraph.prototype.parseNode = function(nodeToParse) {
 
 
 MySceneGraph.prototype.processLeaf = function(leafToParse){
-	let type = graph.reader.getItem(leafToParse, 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
-	let argsString = graph.reader.getString(leafToParse,'args');
+	let type = this.reader.getItem(leafToParse, 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
+	let argsString = this.reader.getString(leafToParse,'args');
 	let argsArray = argsString.split(" ");
-	switch (this.type) {
+	let leafObject = null;
+	switch (type) {
         case 'rectangle':
-            this.element = new Rectangle(scene);
+			if (argsArray.length === 4){
+				leafObject = new Rectangle(this.scene, argsArray[0],argsArray[1],argsArray[2],argsArray[3]);
+			}else{
+				console.log("Error parsing rectangle. Invalid number of arguments");
+			}
             break;
         case 'cylinder':
-            this.element = new Cylinder(scene, 12, 12);
+            leafObject = new Cylinder(this.scene, 12, 12);
             break;
         case 'sphere':
-            this.element = new Sphere(scene);
+            leafObject = new Sphere(this.scene);
             break;
         case 'triangle':
-            this.element = new Triangle(scene);
+			if (argsArray.length === 9){
+				leafObject = new Triangle(this.scene,argsArray);
+			}else {
+				console.log("Error reading triangle, length should be equal to 9");
+			}
             break;
     }
+	return leafObject;
 }
 /**
  * Parses the <NODES> block.
@@ -1357,6 +1367,45 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.displayScene = function() {
     // entry point for graph rendering
     // remove log below to avoid performance issues
+    let materialStack = [];
+    let textureStack = [];
+	if (this.nodeTree != null) {
+		this.log("Graph should be rendered here...");
+		this.displayNode(this.nodeTree,materialStack,textureStack);
+	}
 
-    this.log("Graph should be rendered here...");
+    
+}
+
+MySceneGraph.prototype.displayNode = function(nodeToDisplay,materialStack,textureStack) {
+    if (nodeToDisplay.leaves.length > 0){
+        let materialID = materialStack[materialStack.length -1];
+        let material = this.materials[materialID].apply();
+        nodeToDisplay.leaves.forEach(leaf => {
+            leaf.display();
+        });
+    }
+    if (nodeToDisplay.children.length > 0){
+        nodeToDisplay.children.forEach(node => {
+            this.scene.pushMatrix();
+            this.scene.multMatrix(node.transformMatrix);
+            if (node.materialID == "null" && materialStack.length > 0){
+                materialStack.push(materialStack[materialStack.length -1]);
+            }else{
+                materialStack.push(node.materialID);
+            }
+            if (node.textureID == "null" && textureStack.length > 0){
+                textureStack.push(textureStack[textureStack.length -1]);
+            }else{
+                textureStack.push(node.textureID);
+            }
+            this.displayNode(
+                node,materialStack,textureStack);
+                });
+        this.scene.popMatrix();
+        materialStack.pop();
+        textureStack.pop();
+    }
+    
+
 }

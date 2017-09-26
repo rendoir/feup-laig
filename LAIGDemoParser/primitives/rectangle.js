@@ -9,6 +9,10 @@ function Rectangle(scene, ltx,lty,rbx,rby, height, minS, maxS, minT, maxT) {
     this.maxS = maxS || 1.0;
     this.minT = minT || 0.0;
     this.maxT = maxT || 1.0;
+    this.ltx = ltx;
+    this.lty = lty;
+    this.rbx = rbx;
+    this.rby = rby;
     this.initBuffers();
 };
 
@@ -18,9 +22,9 @@ Rectangle.prototype.constructor = Rectangle;
 Rectangle.prototype.initBuffers = function() {
 
 
-    this.vertices = [ltx,rby, 0,
-        rbx,rby, 0, ltx,lty, 0,
-        rbx, lty, 0
+    this.vertices = [this.ltx,this.rby, 0,
+        this.rbx,this.rby, 0, this.ltx,this.lty, 0,
+        this.rbx, this.lty, 0
     ];
 
     this.indices = [
