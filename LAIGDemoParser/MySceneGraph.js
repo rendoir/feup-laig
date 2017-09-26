@@ -1107,6 +1107,51 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
     console.log("Parsed materials");
 }
 
+MySceneGraph.prototype.getAttributeOfSpec(nodeSpecs,specIndex, attributeName) {
+	let specID = this.reader.getString(nodeSpecs[specIndex],attributeName);
+	if (specID == null) {
+		this.onXMLMinorError("Unable to parse " + specName + "of node");
+	}
+	return specID;
+}
+
+MySceneGraph.prototype.parseNode = function(nodeToParse) {
+    let nodeID = this.reader.getString(nodeToParse,'id');
+    let newNode = new MyGraphNode(this,nodeID);
+	let nodeSpecs = children[i].children;
+	let possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
+	for (let j = 0; j < nodeSpecs.length; j++) {
+		let specName = nodeSpecs[j].nodeName;
+		specsNames.push(specName);
+
+		// Warns against possible invalid tag names.
+		if (possibleValues.indexOf(specName) == -1)
+			this.onXMLMinorError("unknown tag <" + specName + ">");
+	}
+	// Process Material
+	let indexOfMaterial = specNames.indexOf("MATERIAl");
+	if (indexOfMaterial > -1) {
+		newNode.materialID = this.getAttributeOfSpec(nodeSpecs,indexOfMaterial,'id');
+	}
+	// Process texture
+	let indexOfTexture = specNames.indexOf("TEXTURE");
+	if (indexOfTexture > -1) {
+		newNode.textureID = this.getAttributeOfSpec(nodeSpecs,indexOfTexture,'id');
+	}
+	// Process translation
+	
+	// Process rotation
+	
+	// Process scale
+	
+	// Process Descendants
+	
+	nodeToParse.children.foreach(child => {
+		newNode.addChildren(this.parseNode(child));
+	});
+    
+}
+
 
 /**
  * Parses the <NODES> block.
