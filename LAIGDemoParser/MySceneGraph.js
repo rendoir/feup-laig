@@ -1227,7 +1227,8 @@ MySceneGraph.prototype.parseNode = function(nodeToParse) {
 			}
 		}else if (child.nodeName === "LEAF"){
 			// Process child leaf
-				newNode.addLeaf(new MyGraphLeaf(this,child));
+			this.processLeaf(child);
+			newNode.addLeaf(new MyGraphLeaf(this,child));
 		}else{
 			this.onXMLMinorError("incorrect descendant node with name: " + child.nodeName);
 			return null;
@@ -1237,7 +1238,25 @@ MySceneGraph.prototype.parseNode = function(nodeToParse) {
 }
 
 
-
+MySceneGraph.prototype.processLeaf = function(leafToParse){
+	let type = graph.reader.getItem(leafToParse, 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
+	let argsString = graph.reader.getString(leafToParse,'args');
+	let argsArray = argsString.split(" ");
+	switch (this.type) {
+        case 'rectangle':
+            this.element = new Rectangle(scene);
+            break;
+        case 'cylinder':
+            this.element = new Cylinder(scene, 12, 12);
+            break;
+        case 'sphere':
+            this.element = new Sphere(scene);
+            break;
+        case 'triangle':
+            this.element = new Triangle(scene);
+            break;
+    }
+}
 /**
  * Parses the <NODES> block.
  */

@@ -3,23 +3,21 @@
  * @constructor
  **/
 
-function MyGraphLeaf(graph, xmlelem) {
-    this.graph = graph;
-
+function MyGraphLeaf(scene) {
     this.type = graph.reader.getItem(xmlelem, 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
 
     switch (this.type) {
         case 'rectangle':
-            this.element = new Rectangle(this.graph.scene);
+            this.element = new Rectangle(scene);
             break;
         case 'cylinder':
-            this.element = new Cylinder(this.graph.scene, 12, 12);
+            this.element = new Cylinder(scene, 12, 12);
             break;
         case 'sphere':
-            this.element = new Sphere(this.graph.scene);
+            this.element = new Sphere(scene);
             break;
         case 'triangle':
-            this.element = new Triangle(this.graph.scene);
+            this.element = new Triangle(scene);
             break;
     }
 }
