@@ -1360,12 +1360,6 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.displayScene = function() {
     // entry point for graph rendering
     // remove log below to avoid performance issues
-    if (this.loadedOk != null) {
-        this.nodes.forEach(node => {
-            node.leaves.forEach(leave => {
-                leave.display();
-            })
-        });
-    }
+
     this.log("Graph should be rendered here...");
 }

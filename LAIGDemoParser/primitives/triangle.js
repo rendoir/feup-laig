@@ -1,35 +1,33 @@
 /**
- * MyTriangle
+ * Triangle
  * @constructor
  */
-function MyTriangle(scene) {
+function Triangle(scene) {
     CGFobject.call(this, scene);
-    
+
     this.initBuffers();
 };
 
-MyTriangle.prototype = Object.create(CGFobject.prototype);
-MyTriangle.prototype.constructor = MyTriangle;
+Triangle.prototype = Object.create(CGFobject.prototype);
+Triangle.prototype.constructor = Triangle;
 
-MyTriangle.prototype.initBuffers = function() {
- 	
-	this.vertices = [];
-	this.indices = [];
-	this.normals = [];
+Triangle.prototype.initBuffers = function() {
 
-	this.vertices.push(0.5,0.3,0);
-	this.vertices.push(-0.5,0.3,0);
-	this.vertices.push(0,0.3,2);
+    this.vertices = [];
+    this.indices = [];
+    this.normals = [];
 
-	this.indices.push(0,1,2);
+    this.vertices.push(0.5, 0.3, 0);
+    this.vertices.push(-0.5, 0.3, 0);
+    this.vertices.push(0, 0.3, 2);
 
-	this.normals.push(0,1,0);
-	this.normals.push(0,1,0);
-	this.normals.push(0,1,0);
+    this.indices.push(0, 1, 2);
 
-
- 	this.primitiveType = this.scene.gl.TRIANGLES;
- 	this.initGLBuffers();
- };
+    this.normals.push(0, 1, 0);
+    this.normals.push(0, 1, 0);
+    this.normals.push(0, 1, 0);
 
 
+    this.primitiveType = this.scene.gl.TRIANGLES;
+    this.initGLBuffers();
+};

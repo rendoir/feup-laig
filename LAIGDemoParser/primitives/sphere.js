@@ -1,22 +1,22 @@
 /**
- * MySphere
+ * Sphere
  * @constructor
  */
-function MySphere(scene, slices, stacks, radius ) {
+function Sphere(scene, slices, stacks, radius) {
     CGFobject.call(this, scene);
     this.radius = radius || 1;
     this.slices = slices || 16;
     this.stacks = stacks || 16;
-    this.Semisphere = new MySemiSphere(scene,slices,stacks,radius);
+    this.semisphere = new SemiSphere(scene, slices, stacks, radius);
 };
 
-MySphere.prototype = Object.create(CGFobject.prototype);
-MySphere.prototype.constructor = MySphere;
+Sphere.prototype = Object.create(CGFobject.prototype);
+Sphere.prototype.constructor = Sphere;
 
-MySphere.prototype.display = function() {
+Sphere.prototype.display = function() {
     this.scene.pushMatrix();
-        this.Semisphere.display();
-        this.scene.rotate(Math.PI,0,1,0);
-        this.Semisphere.display();
+    this.semisphere.display();
+    this.scene.rotate(Math.PI, 0, 1, 0);
+    this.semisphere.display();
     this.scene.popMatrix();
 };
