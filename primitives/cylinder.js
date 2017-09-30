@@ -43,14 +43,6 @@ MyCylinder.prototype = Object.create(CGFobject.prototype);
 MyCylinder.prototype.constructor = MyCylinder;
 
 MyCylinder.prototype.initBuffers = function() {
-    /*
-     * TODO:
-     * Replace the following lines in order to build a Cylinder with a **single mesh**.
-     *
-     * How can the vertices, indices and normals arrays be defined to
-     * build a prism with varying number of slices and stacks?
-     */
-
     var angle = (2 * Math.PI) / this.slices;
 
     this.vertices = [];

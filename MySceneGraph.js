@@ -1345,8 +1345,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 						        else
 							          this.warn("Error in leaf");
 
-                    //TODO Check if MyGraphLeaf's constructor should have different arguments
-						        this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]);
+						        this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));
                     sizeChildren++;
 					      }
 					      else

@@ -28,12 +28,6 @@ Triangle.prototype.initBuffers = function() {
 
     this.indices.push(0, 1, 2);
 
-	// Normals need to be fixed
-	/*
-    this.normals.push(0, 1, 0);
-    this.normals.push(0, 1, 0);
-    this.normals.push(0, 1, 0);*/
-	//To calculate the normal, get 2 vectors of the plane and make the cross product between them
 	let v12 = [v2[0]-v1[0],v2[1]-v1[1],v2[2]-v1[2]];
 	let v13 = [v3[0]-v1[0],v3[1]-v1[1],v3[2]-v1[2]];
 	let normalVector = [
