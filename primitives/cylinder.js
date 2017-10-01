@@ -2,13 +2,17 @@
  * Cylinder
  * @constructor
  */
-
-function Cylinder(scene, slices, stacks, radius) {
+function Cylinder(scene, height, bottom_radius, top_radius, stacks, slices, has_caps) {
     CGFobject.call(this, scene);
-    this.radius = radius || 1;
 
-    this.cylinder = new MyCylinder(this.scene, slices, stacks, this.radius);
-    this.circle = new Circle(this.scene, slices, 0, 1, 0, 1, this.radius);
+    this.height = height;
+
+    this.body = new CylinderBody(this.scene, bottom_radius, top_radius, slices, stacks);
+
+    if(has_caps) {
+       this.bottom_cap = new Circle(this.scene, slices, bottom_radius);
+       this.top_cap    = new Circle(this.scene, slices, top_radius);
+    }
 };
 
 Cylinder.prototype = Object.create(CGFobject.prototype);
@@ -16,56 +20,58 @@ Cylinder.prototype.constructor = Cylinder;
 
 Cylinder.prototype.display = function() {
     this.scene.pushMatrix();
-    this.cylinder.display();
-    this.scene.pushMatrix();
-    this.scene.translate(0, 0, 1);
-    this.circle.display();
-    this.scene.popMatrix();
-    this.scene.pushMatrix();
-    this.scene.rotate(Math.PI, 1, 0, 0);
-    this.circle.display();
-    this.scene.popMatrix();
-
+      this.body.display();
+      this.scene.pushMatrix();
+        this.scene.translate(0, 0, 1);
+        this.top_cap.display();
+      this.scene.popMatrix();
+      this.scene.pushMatrix();
+        this.scene.rotate(Math.PI, 1, 0, 0);
+        this.bottom_cap.display();
+      this.scene.popMatrix();
     this.scene.popMatrix();
 }
 
-
-function MyCylinder(scene, slices, stacks, radius) {
+/**
+ * CylinderBody
+ * @constructor
+ */
+function CylinderBody(scene, bottom_radius, top_radius, slices, stacks) {
     CGFobject.call(this, scene);
 
+    this.bottom_radius = bottom_radius;
+    this.top_radius = top_radius;
     this.slices = slices;
     this.stacks = stacks;
-    this.radius = radius || 1;
+
     this.initBuffers();
 };
 
-MyCylinder.prototype = Object.create(CGFobject.prototype);
-MyCylinder.prototype.constructor = MyCylinder;
+CylinderBody.prototype = Object.create(CGFobject.prototype);
+CylinderBody.prototype.constructor = CylinderBody;
 
-MyCylinder.prototype.initBuffers = function() {
+CylinderBody.prototype.initBuffers = function() {
     var angle = (2 * Math.PI) / this.slices;
 
-    this.vertices = [];
-    this.indices = [];
-    this.normals = [];
+    this.vertices  = [];
+    this.indices   = [];
+    this.normals   = [];
     this.texCoords = [];
 
     for (stack = 0; stack <= this.stacks; stack++) {
-        for (i = 0; i <= this.slices; i++) {
-            //Vertice 0
-            this.vertices.push(Math.cos(i * angle) * this.radius, Math.sin(i * angle) * this.radius, stack / this.stacks);
-            //Add Normals
-            this.normals.push(Math.cos(i * angle), Math.sin(i * angle), 0);
-            //Add textCoords
-            this.texCoords.push(i / this.slices, stack / this.stacks);
+      var radius = (this.top_radius - this.bottom_radius)*(stack / this.stacks) + this.top_radius;
+        for (slice = 0; slice < this.slices; slice++) {
+            this.vertices.push(Math.cos(slice * angle) * radius, Math.sin(slice * angle) * radius, stack / this.stacks);
+            this.normals.push(Math.cos(slice * angle), Math.sin(slice * angle), 0);
+            this.texCoords.push(slice / this.slices, stack / this.stacks);
         }
     }
 
+    var stack_const = this.slices + 1;
     for (stack = 0; stack < this.stacks; stack++) {
-        stack_const = this.slices + 1;
-        for (i = 0; i < this.slices; i++) {
-            this.indices.push(i + (stack * stack_const), (i + 1) + (stack * stack_const), i + this.slices + 1 + (stack * stack_const));
-            this.indices.push(i + 1 + (stack * stack_const), (i + this.slices + 2) + (stack * stack_const), i + this.slices + 1 + (stack * stack_const));
+        for (slice = 0; slice < this.slices; slice++) {
+            this.indices.push(slice + (stack * stack_const), slice + 1 + (stack * stack_const), slice + this.slices + 1 + (stack * stack_const));
+            this.indices.push(slice + 1 + (stack * stack_const), (slice + this.slices + 2) + (stack * stack_const), slice + this.slices + 1 + (stack * stack_const));
         }
     }
 

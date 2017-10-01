@@ -1,18 +1,15 @@
 /**
  * Rectangle
- * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function Rectangle(scene, ltx,lty,rbx,rby, height, minS, maxS, minT, maxT) {
+function Rectangle(scene, left_top, right_bottom) {
     CGFobject.call(this, scene);
-    this.minS = minS || 0.0;
-    this.maxS = maxS || 1.0;
-    this.minT = minT || 0.0;
-    this.maxT = maxT || 1.0;
-    this.ltx = ltx;
-    this.lty = lty;
-    this.rbx = rbx;
-    this.rby = rby;
+    this.minS = 0.0;
+    this.maxS = 1.0;
+    this.minT = 0.0;
+    this.maxT = 1.0;
+    this.left_top = left_top;
+    this.right_bottom = right_bottom;
     this.initBuffers();
 };
 
@@ -20,11 +17,11 @@ Rectangle.prototype = Object.create(CGFobject.prototype);
 Rectangle.prototype.constructor = Rectangle;
 
 Rectangle.prototype.initBuffers = function() {
-
-
-    this.vertices = [this.ltx,this.rby, 0,
-        this.rbx,this.rby, 0, this.ltx,this.lty, 0,
-        this.rbx, this.lty, 0
+    this.vertices = [
+        this.left_top[0],     this.right_bottom[1], 0,
+        this.right_bottom[0], this.right_bottom[1], 0,
+        this.left_top[0],     this.left_top[1],     0,
+        this.right_bottom[0], this.left_top[1],     0
     ];
 
     this.indices = [
