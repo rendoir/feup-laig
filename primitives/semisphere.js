@@ -15,19 +15,8 @@ SemiSphere.prototype = Object.create(CGFobject.prototype);
 SemiSphere.prototype.constructor = SemiSphere;
 
 SemiSphere.prototype.initBuffers = function() {
-    /*
-     * TODO:
-     * Replace the following lines in order to build a Cylinder with a **single mesh**.
-     *
-     * How can the vertices, indices and normals arrays be defined to
-     * build a prism with varying number of slices and stacks?
-     */
-
     var angle = (2 * Math.PI) / this.slices;
 
-    //console.log("Angle: " + angle);
-
-    //console.log("Number Of Slices " + this.slices);
     this.vertices = [];
     this.indices = [];
     this.normals = [];
@@ -39,12 +28,9 @@ SemiSphere.prototype.initBuffers = function() {
         for (i = 0; i <= this.slices; i++) {
             var x = Math.cos(i * angle) * sub_radius;
             var y = Math.sin(i * angle) * sub_radius;
-            //Vertice 0
-            this.vertices.push(x, y, h);
-            //Add Normals
-            this.normals.push(x, y, h);
-            //New Mode
 
+            this.vertices.push(x, y, h);
+            this.normals.push(x, y, h);
             this.texCoords.push((x + this.radius) / (diameter), (-y + this.radius) / (diameter));
 
         }
