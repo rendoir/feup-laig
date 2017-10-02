@@ -1419,8 +1419,54 @@ MySceneGraph.generateRandomString = function(length) {
 /**
  * Displays the scene, processing each node, starting in the root node.
  */
-MySceneGraph.prototype.displayScene = function() {
-	// entry point for graph rendering
-	// remove log below to avoid performance issues
-	this.log("Graph should be rendered here...");
+MySceneGraph.prototype.displayScene = function () {
+    var material_stack = []; //Stores ID's of materials
+    var texture_stack  = []; //Stores ID's of textures
+    this.displayNode(this.nodes[this.idRoot], material_stack, texture_stack);
+}
+
+MySceneGraph.prototype.displayNode = function (node_to_display, material_stack, texture_stack) {
+    if (node_to_display == null)
+        return;
+
+    if (node_to_display.leaves.length > 0) {
+        var material_id = material_stack[material_stack.length - 1];
+        this.materials[material_id].apply();
+
+        for (var i = 0; i < node_to_display.leaves.length; i++) {
+            node_to_display.leaves[i].display();
+        }
+    }
+
+    if (node_to_display.children.length > 0) {
+        for (var i = 0; i < node_to_display.children.length; i++) {
+            var node_id = node_to_display.children[i];
+            var node = this.nodes[node_id];
+
+            this.scene.pushMatrix();
+            this.scene.multMatrix(node.transformMatrix);
+
+            if (node.materialID == "null") { //Should inherit
+                if (material_stack.length > 0) { //Can inherit
+                    material_stack.push(material_stack[material_stack.length - 1]); //Inherit -> Last pushed element
+                } else { //Can't inherit
+                    material_stack.push(this.defaultMaterialID); //Use default
+                }
+            } else { //Should override
+                material_stack.push(node.materialID);
+            }
+
+            if (node.textureID == "null" && texture_stack.length > 0) { //Should inherit and can inherit
+                texture_stack.push(texture_stack[texture_stack.length - 1]); //Inherit -> Last pushed element
+            } else { //Should override
+                texture_stack.push(node.textureID);
+            }
+
+            this.displayNode(node, material_stack, texture_stack);
+
+            this.scene.popMatrix();
+            material_stack.pop();
+            texture_stack.pop();
+        }
+    }
 }

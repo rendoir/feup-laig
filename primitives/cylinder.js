@@ -6,7 +6,7 @@ function Cylinder(scene, height, bottom_radius, top_radius, stacks, slices, has_
     CGFobject.call(this, scene);
 
     this.height = height;
-
+    this.has_caps = has_caps || false;
     this.body = new CylinderBody(this.scene, bottom_radius, top_radius, slices, stacks);
 
     if(has_caps) {
@@ -20,15 +20,18 @@ Cylinder.prototype.constructor = Cylinder;
 
 Cylinder.prototype.display = function() {
     this.scene.pushMatrix();
+      this.scene.scale(1, 1, this.height);
       this.body.display();
-      this.scene.pushMatrix();
-        this.scene.translate(0, 0, 1);
-        this.top_cap.display();
-      this.scene.popMatrix();
-      this.scene.pushMatrix();
-        this.scene.rotate(Math.PI, 1, 0, 0);
-        this.bottom_cap.display();
-      this.scene.popMatrix();
+      if (this.has_caps) {
+          this.scene.pushMatrix();
+            this.scene.translate(0, 0, 1);
+            this.top_cap.display();
+          this.scene.popMatrix();
+          this.scene.pushMatrix();
+            this.scene.rotate(Math.PI, 1, 0, 0);
+            this.bottom_cap.display();
+          this.scene.popMatrix();
+      }
     this.scene.popMatrix();
 }
 

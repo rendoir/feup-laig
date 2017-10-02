@@ -2,14 +2,14 @@
  * Circle
  * @constructor
  */
-function Circle(scene, slices, minS, maxS, minT, maxT, rad) {
+function Circle(scene, slices, radius) {
     CGFobject.call(this, scene);
 
-    this.minS = minS || 0;
-    this.maxS = maxS || 1;
-    this.minT = minT || 0;
-    this.maxT = maxT || 1;
-    this.radius = rad || 1;
+    this.minS = 0;
+    this.maxS = 1;
+    this.minT = 0;
+    this.maxT = 1;
+    this.radius = radius;
     this.slices = slices;
     this.initBuffers();
 
