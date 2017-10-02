@@ -59,8 +59,8 @@ CylinderBody.prototype.initBuffers = function() {
     this.texCoords = [];
 
     for (stack = 0; stack <= this.stacks; stack++) {
-      var radius = (this.top_radius - this.bottom_radius)*(stack / this.stacks) + this.top_radius;
-        for (slice = 0; slice < this.slices; slice++) {
+      var radius = (this.top_radius - this.bottom_radius)*(stack / this.stacks) + this.bottom_radius;
+        for (slice = 0; slice <= this.slices; slice++) {
             this.vertices.push(Math.cos(slice * angle) * radius, Math.sin(slice * angle) * radius, stack / this.stacks);
             this.normals.push(Math.cos(slice * angle), Math.sin(slice * angle), 0);
             this.texCoords.push(slice / this.slices, stack / this.stacks);
