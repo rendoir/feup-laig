@@ -1422,7 +1422,7 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.displayScene = function () {
     this.last_texture = null;
     var material_stack = []; //Stores ID's of materials
-    var texture_stack  = []; //Stores ID's of textures
+    var texture_stack  = ["clear"]; //Stores ID's of textures
     this.displayNode(this.nodes[this.idRoot], material_stack, texture_stack);
 }
 
