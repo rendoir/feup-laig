@@ -1420,6 +1420,7 @@ MySceneGraph.generateRandomString = function(length) {
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function () {
+    this.last_texture = null;
     var material_stack = []; //Stores ID's of materials
     var texture_stack  = []; //Stores ID's of textures
     this.displayNode(this.nodes[this.idRoot], material_stack, texture_stack);
@@ -1433,9 +1434,21 @@ MySceneGraph.prototype.displayNode = function (node_to_display, material_stack, 
         var material_id = material_stack[material_stack.length - 1];
         this.materials[material_id].apply();
 
+        if(texture_stack.length > 0) {
+          var texture_id = texture_stack[texture_stack.length - 1];
+          if(texture_id != "clear"){
+            this.textures[texture_id][0].bind();
+            this.last_texture = this.textures[texture_id][0];
+          }
+          else
+            if(this.last_texture != null)
+              this.last_texture.unbind();
+        }
+
         for (var i = 0; i < node_to_display.leaves.length; i++) {
             node_to_display.leaves[i].display();
         }
+
     }
 
     if (node_to_display.children.length > 0) {
@@ -1459,7 +1472,7 @@ MySceneGraph.prototype.displayNode = function (node_to_display, material_stack, 
             if (node.textureID == "null" && texture_stack.length > 0) { //Should inherit and can inherit
                 texture_stack.push(texture_stack[texture_stack.length - 1]); //Inherit -> Last pushed element
             } else { //Should override
-                texture_stack.push(node.textureID);
+              texture_stack.push(node.textureID);
             }
 
             this.displayNode(node, material_stack, texture_stack);
