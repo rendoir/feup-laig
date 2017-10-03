@@ -6,10 +6,10 @@ function Cylinder(scene, height, bottom_radius, top_radius, stacks, slices, has_
     CGFobject.call(this, scene);
 
     this.height = height;
-    this.has_caps = has_caps || false;
+    this.has_caps = has_caps || true;
     this.body = new CylinderBody(this.scene, bottom_radius, top_radius, slices, stacks);
 
-    if(has_caps) {
+    if(this.has_caps) {
        this.bottom_cap = new Circle(this.scene, slices, bottom_radius);
        this.top_cap    = new Circle(this.scene, slices, top_radius);
     }
