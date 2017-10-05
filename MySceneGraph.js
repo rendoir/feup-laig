@@ -1420,10 +1420,18 @@ MySceneGraph.generateRandomString = function(length) {
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function () {
-    this.last_texture = null;
     var material_stack = []; //Stores ID's of materials
     var texture_stack  = ["clear"]; //Stores ID's of textures
-    this.displayNode(this.nodes[this.idRoot], material_stack, texture_stack);
+    this.last_texture = null;
+    rootNode = this.nodes[this.idRoot];
+    if (rootNode.materialID != "null"){
+        material_stack.push(rootNode.materialID);
+    }
+    if (rootNode.textureID != "null" && rootNode.textureID != "clear"){
+        texture_stack.push(rootNode.textureID);
+    }
+    
+    this.displayNode(rootNode, material_stack, texture_stack);
 }
 
 MySceneGraph.prototype.displayNode = function (node_to_display, material_stack, texture_stack) {
