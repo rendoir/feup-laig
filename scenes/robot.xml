@@ -107,99 +107,20 @@
         <MATERIAL id="defaultMaterial" />         
         <TEXTURE id="null" />  
 
-        <DESCENDANTS>
-            <NODEREF id="solar_system" />
-        </DESCENDANTS>
-
-    </NODE>
-
-    <!-- Solar System -->
-    <NODE id="solar_system">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
-        
-        <SCALE sx="3" sy="3" sz="3" />
 
         <DESCENDANTS>
-            <NODEREF id="sun" />    
-            <NODEREF id="planets" />     
-		</DESCENDANTS>
-
-    </NODE>
-    
-    <!-- The SUN -->
-     <NODE id="sun">       
-        <MATERIAL id="m_sun" />    
-        <TEXTURE id="null" />       			
-
-        <DESCENDANTS>
-                <LEAF id="p_sun" type="sphere" args="10 20 20" /> 	    
-        </DESCENDANTS>
-    </NODE>
-
-    <!-- Planets -->
-     <NODE id="planets">       
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />       			
-
-        <DESCENDANTS>
-            <NODEREF id="mercury" /> 
-            <NODEREF id="venus" /> 
-            <NODEREF id="earth" /> 
-            <NODEREF id="mars" /> 
-        </DESCENDANTS>
-
-    </NODE>
-
-    <NODE id="mercury">       
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" /> 
-        
-        <TRANSLATION x="-25" y="0" z="0" />     			
-
-        <DESCENDANTS>
-                <LEAF id="p_mercury" type="sphere" args="2 20 20" />   
-        </DESCENDANTS>
-    </NODE>
-
-    <NODE id="venus">       
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" /> 
-        
-        <TRANSLATION x="-40" y="0" z="0" />     			
-
-        <DESCENDANTS>
-                <LEAF id="p_venus" type="sphere" args="2 20 20" />
-        </DESCENDANTS>
-    </NODE>
-
-    <NODE id="earth">       
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" /> 
-        
-        <TRANSLATION x="-65" y="0" z="0" />     			
-
-        <DESCENDANTS>
-                <LEAF id="p_earth" type="sphere" args="3 20 20" />
-        </DESCENDANTS>
-    </NODE>
-
-    <NODE id="mars">       
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" /> 
-        
-        <TRANSLATION x="-90" y="0" z="0" />     			
-
-        <DESCENDANTS>    
             <NODEREF id="robot" />
-            <LEAF id="p_mars" type="sphere" args="2 20 20" />
         </DESCENDANTS>
+
     </NODE>
 
     <!-- ROBOT -->
     <NODE id="robot">      
         <MATERIAL id="null" />    
         <TEXTURE id="null" />
+
+        <SCALE sx="3" sy="3" sz="3" />
+        <TRANSLATION x="0" y="0" z="0" />
         
         <DESCENDANTS>
             <NODEREF id="body" />  

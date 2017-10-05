@@ -38,8 +38,8 @@ SemiSphere.prototype.initBuffers = function() {
     for (stack = 0; stack < this.stacks; stack++) {
         stack_const = this.slices + 1;
         for (i = 0; i < this.slices; i++) {
-            this.indices.push(i + 1 + this.slices + (stack * stack_const), (i + 1) + (stack * stack_const), i + (stack * stack_const));
-            this.indices.push(i + this.slices + 1 + (stack * stack_const), (i + this.slices + 2) + (stack * stack_const), i + 1 + (stack * stack_const));
+            this.indices.push(i + (stack * stack_const), (i + 1) + (stack * stack_const), i + 1 + this.slices + (stack * stack_const));
+            this.indices.push(i + 1 + (stack * stack_const), (i + this.slices + 2) + (stack * stack_const), i + this.slices + 1 + (stack * stack_const));
         }
     }
 

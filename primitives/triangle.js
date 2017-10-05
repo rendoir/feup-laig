@@ -14,9 +14,9 @@ Triangle.prototype = Object.create(CGFobject.prototype);
 Triangle.prototype.constructor = Triangle;
 
 Triangle.prototype.initBuffers = function() {
-    this.vertices  = [];
-    this.indices   = [];
-	  this.normals   = [];
+    this.vertices = [];
+    this.indices = [];
+    this.normals = [];
     this.texCoords = [];
 
     var v1 = this.v1;
@@ -38,7 +38,7 @@ Triangle.prototype.initBuffers = function() {
         v12[0] * v13[1] - v12[1] * v13[0]
     ];
 
-	  this.normals.push(normalVector[0], normalVector[1], normalVector[2]);
+    this.normals.push(normalVector[0], normalVector[1], normalVector[2]);
     this.normals.push(normalVector[0], normalVector[1], normalVector[2]);
     this.normals.push(normalVector[0], normalVector[1], normalVector[2]);
 
