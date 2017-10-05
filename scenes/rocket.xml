@@ -58,6 +58,18 @@
         <file path="images/trunk-image.jpg" />               
         <amplif_factor s="2" t="2" />                           
     </TEXTURE>
+    <TEXTURE id="t_spaceXLogo">
+        <file path="images/SpaceX-Logo.png" />
+        <amplif_factor s="0.1" t="0.1" />
+    </TEXTURE>
+    <TEXTURE id="t_metal">
+        <file path="images/metal.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+    <TEXTURE id="t_carbon">
+        <file path="images/carbon.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
 </TEXTURES>
 
 
@@ -81,9 +93,17 @@
 
     <MATERIAL id="m_rocket_union">                                  
         <shininess value="1" />
-        <specular r="0.3" g="0" b="0" a="1" />        
-        <diffuse r="0.8" g="0" b="0" a="1" />       
-        <ambient r="0.8" g="0" b="0" a="1" />
+        <specular r="0.1" g="0.1" b="0.5" a="1" />        
+        <diffuse r="0.1" g="0.1" b="0.8" a="1" />       
+        <ambient r="0.2" g="0.2" b="0.8" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" /> 
+    </MATERIAL>
+
+    <MATERIAL id="m_rocket_stage_body">
+        <shininess value="1" />
+        <specular r="0.7" g="0.7" b="0.7" a="1" />        
+        <diffuse r="0.7" g="0.7" b="0.7" a="1" />       
+        <ambient r="0.5" g="0.5" b="0.5" a="1" />
         <emission r="0.0" g="0.0" b="0.0" a="1" /> 
     </MATERIAL>
 </MATERIALS>
@@ -100,7 +120,7 @@
     <ROOT id="rocket" />     
 
     <NODE id="rocket">
-        <MATERIAL id="null" />
+        <MATERIAL id="m_rocket_stage_body" />
         <TEXTURE id="null" />
         <DESCENDANTS>
             <NODEREF id="stage1_body" />
@@ -146,7 +166,7 @@
 
     <NODE id="nose">
         <MATERIAL id="null" />
-        <TEXTURE id="null" />
+        <TEXTURE id="t_metal" />
         <TRANSLATION x="0" y="0" z="15.75" />
         <DESCENDANTS>
             <!--​ ​height,​ ​bottom​ ​radius,​ ​top​ ​radius, sections​ ​along​ ​height​ ​(stacks),​ ​parts​ ​per​ ​section​ ​(slices)​ ​--> 
@@ -167,7 +187,7 @@
 
     <NODE id="stage2_body">
         <MATERIAL id="null" />
-        <TEXTURE id="null" />
+        <TEXTURE id="t_metal" />
         <TRANSLATION x="0" y="0" z="8.25" />
         <DESCENDANTS>
             <!--​ ​height,​ ​bottom​ ​radius,​ ​top​ ​radius, sections​ ​along​ ​height​ ​(stacks),​ ​parts​ ​per​ ​section​ ​(slices)​ ​--> 
@@ -177,7 +197,7 @@
 
     <NODE id="stage1_body">
         <MATERIAL id="null" />
-        <TEXTURE id="null" />
+        <TEXTURE id="t_spaceXLogo" />
         <DESCENDANTS>
             <NODEREF id="stage1_nozzle" />
             <!--​ ​height,​ ​bottom​ ​radius,​ ​top​ ​radius, sections​ ​along​ ​height​ ​(stacks),​ ​parts​ ​per​ ​section​ ​(slices)​ ​--> 
@@ -188,7 +208,7 @@
 
     <NODE id="side_boosters">
         <MATERIAL id="null" />
-        <TEXTURE id="null" />
+        <TEXTURE id="t_metal" />
         <DESCENDANTS>
             <NODEREF id="left_booster" />
             <NODEREF id="right_booster" />
@@ -224,8 +244,8 @@
     </NODE>
 
     <NODE id="stage1_nozzle">
-        <MATERIAL id="m_rocket_nozzle" />
-        <TEXTURE id="null" />
+        <MATERIAL id="null" />
+        <TEXTURE id="clear" />
         <SCALE sx="1.25" sy="1.25" sz="2" />
         <TRANSLATION x="0" y="0" z="-0.5" />
         <DESCENDANTS>
@@ -235,7 +255,7 @@
 
     <NODE id="side_booster_nozzle">
         <MATERIAL id="null" />
-        <TEXTURE id="null" />
+        <TEXTURE id="clear" />
         <TRANSLATION x="0" y="0" z="-0.5" />
         <DESCENDANTS>
             <NODEREF id="engine_nozzle"/>
@@ -243,8 +263,8 @@
     </NODE>
 
     <NODE id="engine_nozzle">
-        <MATERIAL id="m_rocket_nozzle" />
-        <TEXTURE id="null" />
+        <MATERIAL id="null" />
+        <TEXTURE id="t_carbon" />
         <DESCENDANTS>
             <LEAF id="engine_nozzle" type="cylinder" args="0.5 1 0.5 3 6" />
         </DESCENDANTS>
