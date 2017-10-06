@@ -32,8 +32,48 @@
 
 <TEXTURES>
     <TEXTURE id="t_sun">
-        <file path="images/sun.jpg" />
-        <amplif_factor s="2" t="2" />
+        <file path="images/solar_system/sun.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_mercury">
+        <file path="images/solar_system/mercury.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_venus">
+        <file path="images/solar_system/venus.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_earth">
+        <file path="images/solar_system/earth.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_mars">
+        <file path="images/solar_system/mars.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_jupiter">
+        <file path="images/solar_system/jupiter.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_saturn">
+        <file path="images/solar_system/saturn.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_uranus">
+        <file path="images/solar_system/uranus.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_neptune">
+        <file path="images/solar_system/neptune.jpg" />
+        <amplif_factor s="1" t="1" />
     </TEXTURE>
 </TEXTURES>
 
@@ -108,7 +148,7 @@
 
     <NODE id="mercury">
         <MATERIAL id="null" />
-        <TEXTURE id="null" />
+        <TEXTURE id="t_mercury" />
         <TRANSLATION x="-25" y="0" z="0" />
         <DESCENDANTS>
                 <LEAF id="p_mercury" type="sphere" args="2 20 20" />
@@ -117,7 +157,7 @@
 
     <NODE id="venus">
         <MATERIAL id="null" />
-        <TEXTURE id="null" />
+        <TEXTURE id="t_venus" />
         <TRANSLATION x="-40" y="0" z="0" />
         <DESCENDANTS>
                 <LEAF id="p_venus" type="sphere" args="2 20 20" />
@@ -126,8 +166,9 @@
 
     <NODE id="earth">
         <MATERIAL id="null" />
-        <TEXTURE id="null" />
+        <TEXTURE id="t_earth" />
         <TRANSLATION x="-65" y="0" z="0" />
+        <ROTATION axis="x" angle="90" />
         <DESCENDANTS>
                 <LEAF id="p_earth" type="sphere" args="3 20 20" />
         </DESCENDANTS>
@@ -135,7 +176,7 @@
 
     <NODE id="mars">
         <MATERIAL id="null" />
-        <TEXTURE id="null" />
+        <TEXTURE id="t_mars" />
         <TRANSLATION x="-90" y="0" z="0" />
         <DESCENDANTS>
             <NODEREF id="robot" />
@@ -146,7 +187,7 @@
     <!-- ROBOT -->
     <NODE id="robot">
         <MATERIAL id="null" />
-        <TEXTURE id="null" />
+        <TEXTURE id="clear" />
         <DESCENDANTS>
             <NODEREF id="body" />
 		</DESCENDANTS>
