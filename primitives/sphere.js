@@ -23,10 +23,10 @@ Sphere.prototype.initBuffers = function() {
     var theta = 0.0;
 
     for(var stack = 0; stack <= this.stacks; stack++) {
-      var y = this.radius * Math.cos(phi);
+      var z = this.radius * Math.cos(phi);
       var v = 1 - (stack / this.stacks);
       for(var slice = 0; slice <= this.slices; slice++) {
-          var z = this.radius * Math.sin(phi) * Math.cos(theta);
+          var y = this.radius * Math.sin(phi) * Math.cos(theta);
           var x = this.radius * Math.sin(phi) * Math.sin(theta);
           var u = 1 - (slice / this.slices);
           this.vertices.push(x, y, z);
@@ -44,8 +44,8 @@ Sphere.prototype.initBuffers = function() {
         var i2 = slice + stack * (this.slices + 1) + 1;
         var i3 = slice + (stack + 1) * (this.slices + 1);
         var i4 = slice + (stack + 1) * (this.slices + 1) + 1;
-        this.indices.push(i1, i3, i4);
-        this.indices.push(i4, i2, i1);
+        this.indices.push(i4, i3, i1);
+        this.indices.push(i1, i2, i4);
       }
     }
 

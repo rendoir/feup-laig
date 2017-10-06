@@ -2,61 +2,61 @@
 
 <!-- Initial values -->
 <INITIALS>
-    <frustum near="0.1" far="100"/>                 
-    <translation x="0" y="0" z="0" />               
-    <rotation axis="x" angle="0" />                
-    <rotation axis="y" angle="0" />                
-    <rotation axis="z" angle="0" />                
-    <scale sx="1" sy="1" sz="1" />         
-    <reference length="5" />                        
+    <frustum near="0.1" far="100"/>
+    <translation x="0" y="0" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="1" sy="1" sz="1" />
+    <reference length="5" />
 </INITIALS>
 
 
 <!-- Illumination and clear colour -->
 <ILLUMINATION>
-    <ambient r="1" g="1" b="1" a="1" />       
-    <background r="0" g="0" b="0" a="1" />          
+    <ambient r="1" g="1" b="1" a="1" />
+    <background r="0" g="0" b="0" a="1" />
 </ILLUMINATION>
 
-<LIGHTS>	
-    <!-- DEBUG LIGHTS -->	
-	<LIGHT id="light1">                                    
-        <enable value ="1" />                   	       
-        <position  x="100" y="100" z="100" w="1" />       	   
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />        	 
-        <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />         
-        <specular r="0.2" g="0.2" b="0.2" a="1.0" />     
-    </LIGHT>	
-	<LIGHT id="light2">                                    
-        <enable value ="1" />                   	       
-        <position  x="-100" y="100" z="100" w="1" />    	   
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />        	 
-        <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />         
-        <specular r="0.2" g="0.2" b="0.2" a="1.0" />       
-    </LIGHT>	
-	<LIGHT id="light3">                                    
-        <enable value ="1" />                   	       
-        <position  x="100" y="100" z="-100" w="1" />    	   
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />        	 
-        <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />         
-        <specular r="0.2" g="0.2" b="0.2" a="1.0" />       
-    </LIGHT>	
-	<LIGHT id="light4">                                    
-        <enable value ="1" />                   	       
-        <position  x="-100" y="100" z="-100" w="1" />  	   
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />        	 
-        <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />         
-        <specular r="0.2" g="0.2" b="0.2" a="1.0" />          
+<LIGHTS>
+    <!-- DEBUG LIGHTS -->
+	<LIGHT id="light1">
+        <enable value ="1" />
+        <position  x="100" y="100" z="100" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+        <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+	<LIGHT id="light2">
+        <enable value ="1" />
+        <position  x="-100" y="100" z="100" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+        <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+	<LIGHT id="light3">
+        <enable value ="1" />
+        <position  x="100" y="100" z="-100" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+        <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+	<LIGHT id="light4">
+        <enable value ="1" />
+        <position  x="-100" y="100" z="-100" w="1" />
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+        <specular r="0.2" g="0.2" b="0.2" a="1.0" />
     </LIGHT>
 </LIGHTS>
 
 
 <!-- Textures -->
-<TEXTURES> 
+<TEXTURES>
 	<!-- Tree trunk -->
     <TEXTURE id="t_sun">
-        <file path="images/trunk-image.jpg" />               
-        <amplif_factor s="2" t="2" />                           
+        <file path="images/trunk-image.jpg" />
+        <amplif_factor s="2" t="2" />
     </TEXTURE>
     <TEXTURE id="t_spaceXLogo">
         <file path="images/SpaceX-Logo.png" />
@@ -75,36 +75,36 @@
 
 <MATERIALS>
     <!-- A default material -->
-    <MATERIAL id="defaultMaterial">                                  
+    <MATERIAL id="defaultMaterial">
         <shininess value="1" />
-        <specular r="0.0" g="0.0" b="0.0" a="1" />        
-        <diffuse r="0.4" g="0.4" b="0.4" a="1" />       
-        <ambient r="0.4" g="0.4" b="0.4" a="1" />         
-        <emission r="0.0" g="0.0" b="0.0" a="1" />        
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+        <ambient r="0.4" g="0.4" b="0.4" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 
-    <MATERIAL id="m_rocket_nozzle">                                  
+    <MATERIAL id="m_rocket_nozzle">
         <shininess value="1" />
-        <specular r="0.5" g="0.5" b="0.5" a="1" />        
-        <diffuse r="0.3" g="0.3" b="0.3" a="1" />       
+        <specular r="0.5" g="0.5" b="0.5" a="1" />
+        <diffuse r="0.3" g="0.3" b="0.3" a="1" />
         <ambient r="0.2" g="0.2" b="0.2" a="1" />
-        <emission r="0.0" g="0.0" b="0.0" a="1" />  
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 
-    <MATERIAL id="m_rocket_union">                                  
+    <MATERIAL id="m_rocket_union">
         <shininess value="1" />
-        <specular r="0.1" g="0.1" b="0.5" a="1" />        
-        <diffuse r="0.1" g="0.1" b="0.8" a="1" />       
+        <specular r="0.1" g="0.1" b="0.5" a="1" />
+        <diffuse r="0.1" g="0.1" b="0.8" a="1" />
         <ambient r="0.2" g="0.2" b="0.8" a="1" />
-        <emission r="0.0" g="0.0" b="0.0" a="1" /> 
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 
     <MATERIAL id="m_rocket_stage_body">
         <shininess value="1" />
-        <specular r="0.7" g="0.7" b="0.7" a="1" />        
-        <diffuse r="0.7" g="0.7" b="0.7" a="1" />       
+        <specular r="0.7" g="0.7" b="0.7" a="1" />
+        <diffuse r="0.7" g="0.7" b="0.7" a="1" />
         <ambient r="0.5" g="0.5" b="0.5" a="1" />
-        <emission r="0.0" g="0.0" b="0.0" a="1" /> 
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 </MATERIALS>
 
@@ -117,7 +117,7 @@
 <!-- The nodes -->
 <NODES>
 
-    <ROOT id="rocket" />     
+    <ROOT id="rocket" />
 
     <NODE id="rocket">
         <MATERIAL id="m_rocket_stage_body" />
@@ -133,14 +133,14 @@
             <NODEREF id="side_boosters" />
         </DESCENDANTS>
     </NODE>
-    
+
     <NODE id="stage12_union">
         <MATERIAL id="m_rocket_union" />
         <TEXTURE id="null" />
         <TRANSLATION x="0" y="0" z="8" />
         <DESCENDANTS>
             <!--​ ​height,​ ​bottom​ ​radius,​ ​top​ ​radius, sections​ ​along​ ​height​ ​(stacks),​ ​parts​ ​per​ ​section​ ​(slices)​ ​--> 
-            <LEAF id="p_stage12_union" type="cylinder" args="0.25 1.5 1 1 6" /> 
+            <LEAF id="p_stage12_union" type="cylinder" args="0.25 1.5 1 1 16" /> 
         </DESCENDANTS>
     </NODE>
 
@@ -150,7 +150,7 @@
         <TRANSLATION x="0" y="0" z="12.25" />
         <DESCENDANTS>
             <!--​ ​height,​ ​bottom​ ​radius,​ ​top​ ​radius, sections​ ​along​ ​height​ ​(stacks),​ ​parts​ ​per​ ​section​ ​(slices)​ ​--> 
-            <LEAF id="p_stage23_union" type="cylinder" args="0.25 1 1.5 1 6" /> 
+            <LEAF id="p_stage23_union" type="cylinder" args="0.25 1 1.5 1 16" /> 
         </DESCENDANTS>
     </NODE>
 
@@ -160,7 +160,7 @@
         <TRANSLATION x="0" y="0" z="15.5" />
         <DESCENDANTS>
             <!--​ ​height,​ ​bottom​ ​radius,​ ​top​ ​radius, sections​ ​along​ ​height​ ​(stacks),​ ​parts​ ​per​ ​section​ ​(slices)​ ​--> 
-            <LEAF id="p_stage3nose_union" type="cylinder" args="0.25 1.5 1 1 6" /> 
+            <LEAF id="p_stage3nose_union" type="cylinder" args="0.25 1.5 1 1 16" /> 
         </DESCENDANTS>
     </NODE>
 
@@ -170,7 +170,7 @@
         <TRANSLATION x="0" y="0" z="15.75" />
         <DESCENDANTS>
             <!--​ ​height,​ ​bottom​ ​radius,​ ​top​ ​radius, sections​ ​along​ ​height​ ​(stacks),​ ​parts​ ​per​ ​section​ ​(slices)​ ​--> 
-            <LEAF id="p_nose" type="cylinder" args="3 1 0.1 1 6" />
+            <LEAF id="p_nose" type="cylinder" args="3 1 0.1 1 16" />
         </DESCENDANTS>
     </NODE>
 
@@ -180,7 +180,7 @@
         <TRANSLATION x="0" y="0" z="12.5" />
         <DESCENDANTS>
             <!--​ ​height,​ ​bottom​ ​radius,​ ​top​ ​radius, sections​ ​along​ ​height​ ​(stacks),​ ​parts​ ​per​ ​section​ ​(slices)​ ​--> 
-            <LEAF id="p_stage3Body" type="cylinder" args="3 1.5 1.5 1 6" />
+            <LEAF id="p_stage3Body" type="cylinder" args="3 1.5 1.5 1 16" />
         </DESCENDANTS>
     </NODE>
 
@@ -191,7 +191,7 @@
         <TRANSLATION x="0" y="0" z="8.25" />
         <DESCENDANTS>
             <!--​ ​height,​ ​bottom​ ​radius,​ ​top​ ​radius, sections​ ​along​ ​height​ ​(stacks),​ ​parts​ ​per​ ​section​ ​(slices)​ ​--> 
-            <LEAF id="p_stage2Body" type="cylinder" args="4 1 1 1 6" /> 
+            <LEAF id="p_stage2Body" type="cylinder" args="4 1 1 1 16" /> 
         </DESCENDANTS>
     </NODE>
 
@@ -201,8 +201,8 @@
         <DESCENDANTS>
             <NODEREF id="stage1_nozzle" />
             <!--​ ​height,​ ​bottom​ ​radius,​ ​top​ ​radius, sections​ ​along​ ​height​ ​(stacks),​ ​parts​ ​per​ ​section​ ​(slices)​ ​--> 
-            <LEAF id="p_stage1Body" type="cylinder" args="8 1.5 1.5 1 6" /> 
-            
+            <LEAF id="p_stage1Body" type="cylinder" args="8 1.5 1.5 1 16" /> 
+
         </DESCENDANTS>
     </NODE>
 
@@ -239,7 +239,7 @@
         <DESCENDANTS>
             <NODEREF id="side_booster_nozzle" />
             <!--​ ​height,​ ​bottom​ ​radius,​ ​top​ ​radius, sections​ ​along​ ​height​ ​(stacks),​ ​parts​ ​per​ ​section​ ​(slices)​ ​--> 
-            <LEAF id="booster_body" type="cylinder" args="10 1 1 1 6" /> 
+            <LEAF id="booster_body" type="cylinder" args="10 1 1 1 16" /> 
         </DESCENDANTS>
     </NODE>
 
@@ -266,7 +266,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="t_carbon" />
         <DESCENDANTS>
-            <LEAF id="engine_nozzle" type="cylinder" args="0.5 1 0.5 3 6" />
+            <LEAF id="engine_nozzle" type="cylinder" args="0.5 1 0.5 3 16" />
         </DESCENDANTS>
     </NODE>
 </NODES>
