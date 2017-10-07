@@ -1166,9 +1166,10 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
     // Traverses nodes.
     var children = nodesNode.children; //  The <ROOT> and multiple <NODE>
-
+    let currentTextureID = null;
     for (var i = 0; i < children.length; i++) {
         var nodeName; //<ROOT> or <NODE>
+        
         if ((nodeName = children[i].nodeName) == "ROOT") {
             // Retrieves root node.
             if (this.idRoot != null )
@@ -1230,6 +1231,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
 
             this.nodes[nodeID].textureID = textureID;
+            currentTextureID = textureID;
 
             // Retrieves possible transformations.
             for (var j = 0; j < nodeSpecs.length; j++) {
@@ -1320,6 +1322,18 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             var descendants = nodeSpecs[descendantsIndex].children;
 
             var sizeChildren = 0;
+            let afs = null;
+            let aft = null;
+            for (let i = 0; i < descendants.length;i++){
+                if (descendants[i].nodeName == "LEAF"){
+                    if (this.textures[currentTextureID] != null){
+                        afs = this.textures[currentTextureID][1];
+                        aft = this.textures[currentTextureID][2];
+                    }
+                    break;
+                }
+            }
+
             for (var j = 0; j < descendants.length; j++) {
                 if (descendants[j].nodeName == "NODEREF")
 				        {
@@ -1340,12 +1354,18 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 					      {
 						        var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
 
-						        if (type != null)
-							          this.log("   Leaf: "+ type);
-						        else
-							          this.warn("Error in leaf");
-
-						        this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));
+						        if (type != null){
+                                    this.log("   Leaf: "+ type);
+                                } else {
+                                    this.warn("Error in leaf");
+                                }
+                                let newLeaf = new MyGraphLeaf(this, descendants[j]);
+                                if (type == 'rectangle' || type == 'triangle'){
+                                    newLeaf.initRectangleOrTriangle(afs,aft);
+                                }else{
+                                    newLeaf.initSphereOrCylinder();
+                                }
+						        this.nodes[nodeID].addLeaf(newLeaf);
                     sizeChildren++;
 					      }
 					      else
@@ -1443,7 +1463,7 @@ MySceneGraph.prototype.displayNode = function (node_to_display, material_stack, 
         this.materials[material_id].apply();
 
         if(texture_stack.length > 0) {
-          var texture_id = texture_stack[texture_stack.length - 1];
+          let texture_id = texture_stack[texture_stack.length - 1];
           if(texture_id != "clear"){
             this.textures[texture_id][0].bind();
             this.last_texture = this.textures[texture_id][0];
@@ -1452,11 +1472,9 @@ MySceneGraph.prototype.displayNode = function (node_to_display, material_stack, 
             if(this.last_texture != null)
               this.last_texture.unbind();
         }
-
         for (var i = 0; i < node_to_display.leaves.length; i++) {
             node_to_display.leaves[i].display();
         }
-
     }
 
     if (node_to_display.children.length > 0) {

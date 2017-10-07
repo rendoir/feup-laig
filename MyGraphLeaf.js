@@ -7,48 +7,61 @@ function MyGraphLeaf(graph, xmlLeaf) {
   this.primitive = null;
   this.graph = graph;
   this.scene = graph.scene;
-  this.initPrimitive(xmlLeaf);
+  this.type = this.graph.reader.getItem(xmlLeaf, 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
+  const args_string = this.graph.reader.getString(xmlLeaf,'args');
+  this.args_array = args_string.split(" ");
+  if (this.type == 'sphere' || this.type == 'cylinder'){
+    this.initSphereOrCylinder();
+  }
 }
 
-MyGraphLeaf.prototype.initPrimitive = function(xmlLeaf) {
-  var type = this.graph.reader.getItem(xmlLeaf, 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
-  var args_string = this.graph.reader.getString(xmlLeaf,'args');
-  var args_array = args_string.split(" ");
 
-  switch (type) {
-    case "rectangle": {
-        if(args_array.length == 4)
-          this.primitive = new Rectangle(this.scene, [parseFloat(args_array[0]), parseFloat(args_array[1])],
-                                         [parseFloat(args_array[2]), parseFloat(args_array[3])]);
-        else console.log("Invalid arguments for a rectangle");
-      break;
-    }
-
+MyGraphLeaf.prototype.initSphereOrCylinder = function(){
+  switch (this.type) {
     case "cylinder": {
-      if(args_array.length == 5)
-        this.primitive = new Cylinder(this.scene, parseFloat(args_array[0]), parseFloat(args_array[1]), parseFloat(args_array[2]),
-                                      parseInt(args_array[3]), parseInt(args_array[4]));
+      if(this.args_array.length == 5)
+        this.primitive = new Cylinder(this.scene, parseFloat(this.args_array[0]), parseFloat(this.args_array[1]), parseFloat(this.args_array[2]),
+                                      parseInt(this.args_array[3]), parseInt(this.args_array[4]));
       else console.log("Invalid arguments for a cylinder");
       break;
     }
-
     case "sphere": {
-      if(args_array.length == 3)
-        this.primitive = new Sphere(this.scene, parseFloat(args_array[0]), parseInt(args_array[1]), parseInt(args_array[2]));
+      if(this.args_array.length == 3)
+        this.primitive = new Sphere(this.scene, parseFloat(this.args_array[0]), parseInt(this.args_array[1]), parseInt(this.args_array[2]));
       else console.log("Invalid arguments for a sphere");
       break;
     }
+    default:
+        console.log("Invalid Primitive, not a cylinder or sphere");
+  }
+}
 
+
+/**
+ * afs - amplification factor on s axis of the texture.
+ * aft - amplification factor on t axis of the texture.
+ */
+MyGraphLeaf.prototype.initRectangleOrTriangle = function(afs,aft) {
+  switch (this.type) {
+    case "rectangle": {
+        if(this.args_array.length == 4)
+          this.primitive = new Rectangle(this.scene, [parseFloat(this.args_array[0]), parseFloat(this.args_array[1])],
+                                         [parseFloat(this.args_array[2]), parseFloat(this.args_array[3])],
+                                        afs,aft);
+        else console.log("Invalid arguments for a rectangle");
+      break;
+    }
     case "triangle": {
-      if(args_array.length == 9)
-        this.primitive = new Triangle(this.scene, [parseFloat(args_array[0]), parseFloat(args_array[1]), parseFloat(args_array[2])],
-                                      [parseFloat(args_array[3]), parseFloat(args_array[4]), parseFloat(args_array[5])],
-                                      [parseFloat(args_array[6]), parseFloat(args_array[7]), parseFloat(args_array[8])]);
+      if(this.args_array.length == 9)
+        this.primitive = new Triangle(this.scene, [parseFloat(this.args_array[0]), parseFloat(this.args_array[1]), parseFloat(this.args_array[2])],
+                                      [parseFloat(this.args_array[3]), parseFloat(this.args_array[4]), parseFloat(this.args_array[5])],
+                                      [parseFloat(this.args_array[6]), parseFloat(this.args_array[7]), parseFloat(this.args_array[8])],
+                                      afs,aft);
       else console.log("Invalid arguments for a triangle");
       break;
     }
     default:
-        console.log("Invalid primitive");
+        console.log("Invalid Primitive, not a rectangle or triangle");
   }
 }
 
