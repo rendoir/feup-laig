@@ -59,7 +59,7 @@
         <amplif_factor s="2" t="2" />
     </TEXTURE>
     <TEXTURE id="t_spaceXLogo">
-        <file path="images/SpaceX-Logo.png" />
+        <file path="images/spaceX-Logo.png" />
         <amplif_factor s="0.1" t="0.1" />
     </TEXTURE>
     <TEXTURE id="t_metal">
