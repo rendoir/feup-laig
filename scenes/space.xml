@@ -75,6 +75,11 @@
         <file path="images/solar_system/neptune.jpg" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
+
+    <TEXTURE id="t_wheel">
+        <file path="images/wheel.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
 </TEXTURES>
 
 
@@ -101,6 +106,14 @@
         <diffuse r="0.0" g="0.0" b="0.0" a="1" />
         <ambient r="0.0" g="0.0" b="0.0" a="1" />
         <emission r="1.0" g="0.5" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="m_sup">                                  
+        <shininess value="1" />
+        <specular r="0.2" g="0.2" b="0.2" a="1" />        
+        <diffuse r="0.6" g="0.6" b="0.6" a="1" />       
+        <ambient r="0" g="0" b="0" a="1" />         
+        <emission r="0" g="0" b="0" a="1" />        
     </MATERIAL>
 </MATERIALS>
 
@@ -250,7 +263,7 @@
     </NODE>
 
     <NODE id="camera">      
-        <MATERIAL id="null" />    
+        <MATERIAL id="m_sup" />    
         <TEXTURE id="null" />
 
 		<ROTATION axis="x" angle="-90" />
@@ -311,7 +324,7 @@
     </NODE>
 
     <NODE id="sup1">      
-        <MATERIAL id="null" />    
+        <MATERIAL id="m_sup" />    
         <TEXTURE id="null" />
 
         <DESCENDANTS>  
@@ -429,8 +442,8 @@
     </NODE>
 
     <NODE id="wheel1">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+        <MATERIAL id="null" />
+        <TEXTURE id="t_wheel" />
 
         <TRANSLATION x="0" y="0" z="0.3" />
 
@@ -440,8 +453,8 @@
     </NODE>
 
     <NODE id="wheel2">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+        <MATERIAL id="null" />
+        <TEXTURE id="t_wheel" />
 
         <TRANSLATION x="0" y="0" z="0.25" />
 
@@ -451,8 +464,8 @@
     </NODE>
 
     <NODE id="wheel3">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+        <MATERIAL id="null" />
+        <TEXTURE id="t_wheel" />
 
         <TRANSLATION x="0" y="0" z="0.25" />
 
@@ -472,7 +485,7 @@
     </NODE>
 
     <NODE id="cyl9">      
-        <MATERIAL id="null" />    
+        <MATERIAL id="m_sup" />    
         <TEXTURE id="null" />
 
         <TRANSLATION x="0" y="0.3" z="-0.8" />
@@ -581,8 +594,8 @@
     </NODE>
 
     <NODE id="wheel4">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+        <MATERIAL id="null" />
+        <TEXTURE id="t_wheel" />
 
         <TRANSLATION x="0" y="0" z="-0.2" />
 
@@ -592,8 +605,8 @@
     </NODE>
 
     <NODE id="wheel5">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+        <MATERIAL id="null" />
+        <TEXTURE id="t_wheel" />
 
         <TRANSLATION x="0" y="0" z="-0.2" />
 
@@ -603,8 +616,8 @@
     </NODE>
 
     <NODE id="wheel6">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+        <MATERIAL id="null" />
+        <TEXTURE id="t_wheel" />
 
         <TRANSLATION x="0" y="0" z="-0.2" />
 
