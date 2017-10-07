@@ -3,9 +3,7 @@
  * @constructor
 **/
 
-function MyGraphNode(graph, nodeID) {
-    this.graph = graph;
-
+function MyGraphNode(nodeID) {
     this.nodeID = nodeID;
 
     // IDs of child nodes.

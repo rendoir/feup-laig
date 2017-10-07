@@ -3,15 +3,17 @@
  * @constructor
 **/
 
-function MyGraphLeaf(graph, xmlLeaf) {
+function MyGraphLeaf(scene, type, args_array, afs, aft) {
   this.primitive = null;
-  this.graph = graph;
-  this.scene = graph.scene;
-  this.type = this.graph.reader.getItem(xmlLeaf, 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
-  const args_string = this.graph.reader.getString(xmlLeaf,'args');
-  this.args_array = args_string.split(" ");
+  this.type = type;
+  this.args_array = args_array;
+  this.scene = scene;
+  this.afs = afs || 1;
+  this.aft = aft || 1;
   if (this.type == 'sphere' || this.type == 'cylinder'){
     this.initSphereOrCylinder();
+  }else{
+    this.initRectangleOrTriangle(this.afs,this.aft);
   }
 }
 
