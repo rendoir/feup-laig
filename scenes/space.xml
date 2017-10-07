@@ -2,8 +2,8 @@
 
 <!-- Initial values -->
 <INITIALS>
-    <frustum near="0.1" far="500"/>
-    <translation x="-1" y="1" z="0" />
+    <frustum near="0" far="500"/>
+    <translation x="-20" y="-20" z="-20" />
     <rotation axis="x" angle="0" />
     <rotation axis="y" angle="0" />
     <rotation axis="z" angle="0" />
@@ -87,6 +87,14 @@
         <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 
+    <MATERIAL id="m_planets">
+        <shininess value="4" />
+        <specular r="0.25" g="0.25" b="0.25" a="1" />
+        <diffuse r="0.75" g="0.75" b="0.75" a="1" />
+        <ambient r="0.1" g="0.1" b="0.1" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
     <MATERIAL id="m_sun">
         <shininess value="1" />
         <specular r="0.0" g="0.0" b="0.0" a="1" />
@@ -130,19 +138,24 @@
         <MATERIAL id="m_sun" />
         <TEXTURE id="t_sun" />
         <DESCENDANTS>
-                <LEAF id="p_sun" type="sphere" args="10 20 20" />
+                <LEAF id="p_sun" type="sphere" args="20 40 40" />
         </DESCENDANTS>
     </NODE>
 
     <!-- Planets -->
      <NODE id="planets">
-        <MATERIAL id="null" />
+        <MATERIAL id="m_planets" />
         <TEXTURE id="null" />
+        <TRANSLATION x="-25" y="0" z="0" />
         <DESCENDANTS>
             <NODEREF id="mercury" />
             <NODEREF id="venus" />
             <NODEREF id="earth" />
             <NODEREF id="mars" />
+            <NODEREF id="jupiter" />
+            <NODEREF id="saturn" />
+            <NODEREF id="uranus" />
+            <NODEREF id="neptune" />
         </DESCENDANTS>
     </NODE>
 
@@ -151,7 +164,7 @@
         <TEXTURE id="t_mercury" />
         <TRANSLATION x="-25" y="0" z="0" />
         <DESCENDANTS>
-                <LEAF id="p_mercury" type="sphere" args="2 20 20" />
+                <LEAF id="p_mercury" type="sphere" args="2 16 16" />
         </DESCENDANTS>
     </NODE>
 
@@ -160,29 +173,69 @@
         <TEXTURE id="t_venus" />
         <TRANSLATION x="-40" y="0" z="0" />
         <DESCENDANTS>
-                <LEAF id="p_venus" type="sphere" args="2 20 20" />
+                <LEAF id="p_venus" type="sphere" args="3 18 18" />
         </DESCENDANTS>
     </NODE>
 
     <NODE id="earth">
         <MATERIAL id="null" />
         <TEXTURE id="t_earth" />
-        <TRANSLATION x="-65" y="0" z="0" />
+        <TRANSLATION x="-55" y="0" z="0" />
         <ROTATION axis="x" angle="90" />
         <DESCENDANTS>
-                <LEAF id="p_earth" type="sphere" args="3 20 20" />
+                <LEAF id="p_earth" type="sphere" args="3 18 18" />
         </DESCENDANTS>
     </NODE>
 
     <NODE id="mars">
         <MATERIAL id="null" />
         <TEXTURE id="t_mars" />
-        <TRANSLATION x="-90" y="0" z="0" />
+        <TRANSLATION x="-70" y="0" z="0" />
         <DESCENDANTS>
             <!-- <NODEREF id="robot" /> -->
-            <LEAF id="p_mars" type="sphere" args="2 20 20" />
+            <LEAF id="p_mars" type="sphere" args="2 16 16" />
         </DESCENDANTS>
     </NODE>
+
+    <NODE id="jupiter">
+        <MATERIAL id="null" />
+        <TEXTURE id="t_jupiter" />
+        <TRANSLATION x="-120" y="0" z="0" />
+        <ROTATION axis="x" angle="90" />
+        <DESCENDANTS>
+                <LEAF id="p_jupiter" type="sphere" args="10 30 30" />
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="saturn">
+        <MATERIAL id="null" />
+        <TEXTURE id="t_saturn" />
+        <TRANSLATION x="-170" y="0" z="0" />
+        <ROTATION axis="x" angle="90" />
+        <DESCENDANTS>
+                <LEAF id="p_saturn" type="sphere" args="7.5 26 26" />
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="uranus">
+        <MATERIAL id="null" />
+        <TEXTURE id="t_uranus" />
+        <TRANSLATION x="-220" y="0" z="0" />
+        <DESCENDANTS>
+                <LEAF id="p_uranus" type="sphere" args="5 22 22" />
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="neptune">
+        <MATERIAL id="null" />
+        <TEXTURE id="t_neptune" />
+        <TRANSLATION x="-250" y="0" z="0" />
+        <DESCENDANTS>
+                <LEAF id="t_neptune" type="sphere" args="5 22 22" />
+        </DESCENDANTS>
+    </NODE>
+
+
 </NODES>
 
 </SCENE>
