@@ -147,7 +147,7 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
         if (index != NODES_INDEX)
             this.onXMLMinorError("tag <NODES> out of order");
 
-        if ((error = this.parseNodes(xmlNodes[index])) != null )
+        if ((error = this.parseNodesXMLTag(xmlNodes[index])) != null )
             return error;
     }
 
@@ -935,6 +935,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
     // Each material.
 
     this.materials = [];
+    
 
     var oneMaterialDefined = false;
 
@@ -1167,8 +1168,13 @@ MySceneGraph.prototype.getAttributeOfSpec = function(nodeSpecs,specIndex, attrib
 	return specID;
 }
 
-MySceneGraph.prototype.parseNode = function(nodeToParse) {
+// Parses nodes recursively. Needs the texture stack in order to keep track of the amplification factors of textures. 
+MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     let nodeID = this.reader.getString(nodeToParse,'id');
+    if(textureStack == null){
+        textureStack = ["clear"];
+    } 
+    let texturePushed = false;
     let newNode = new MyGraphNode(nodeID);
 	let nodeSpecs = nodeToParse.children;
 	let specNames = new Array();
@@ -1185,12 +1191,20 @@ MySceneGraph.prototype.parseNode = function(nodeToParse) {
 	let indexOfMaterial = specNames.indexOf("MATERIAL");
 	if (indexOfMaterial > -1) {
 		newNode.materialID = this.getAttributeOfSpec(nodeSpecs,indexOfMaterial,'id');
-	}
+	}else{
+        this.onXMLError("No material defined for node " + nodeID + ".");
+    }
 	// Process texture
 	let indexOfTexture = specNames.indexOf("TEXTURE");
 	if (indexOfTexture > -1) {
-		newNode.textureID = this.getAttributeOfSpec(nodeSpecs,indexOfTexture,'id');
-	}
+        newNode.textureID = this.getAttributeOfSpec(nodeSpecs,indexOfTexture,'id');
+        if ((newNode.textureID != "null" && this.textures[newNode.textureID] != null) || newNode.textureID == "clear"){
+            textureStack.push(newNode.textureID);
+            texturePushed = true;
+        }
+	}else{
+        this.onXMLError("No texture defined for node " + nodeID + ".");
+    }
 	// Process transformations
 	// Retrieves possible transformations.
 	for (let j = 0; j < nodeSpecs.length; j++) {
@@ -1271,7 +1285,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse) {
 			let nodeID = this.reader.getString(child, 'id');
 			let nodeIndexInXMLNodes = this.nodeIDToIndex[nodeID];
 			if (nodeIndexInXMLNodes != null && nodeIndexInXMLNodes > -1){
-				newNode.addChild(this.parseNode(this.xmlNodes[nodeIndexInXMLNodes]));
+				newNode.addChild(this.parseNode(this.xmlNodes[nodeIndexInXMLNodes],textureStack));
 			}else{
 				this.onXMLMinorError("Descendant id: " + nodeID + " is not declared.");
 				return null;
@@ -1281,19 +1295,35 @@ MySceneGraph.prototype.parseNode = function(nodeToParse) {
 			let type = this.reader.getItem(child, 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
             let argsString = this.reader.getString(child,'args');
             let argsArray = argsString.split(" ");
-			newNode.addLeaf(new MyGraphLeaf(this.scene,type,argsArray));
+            if (type == 'rectangle' || type == 'triangle') {
+                let textureID = textureStack[textureStack.length-1];
+                let currentTexture = this.textures[textureID];
+                let afs = null, aft = null;
+                if (currentTexture != null){
+                    afs = currentTexture[1];
+                    aft = currentTexture[2];
+                }
+                newNode.addLeaf(new MyGraphLeaf(this.scene,type,argsArray,afs,aft));
+            }else{
+                newNode.addLeaf(new MyGraphLeaf(this.scene,type,argsArray));
+            }
+            
+			
 		}else{
 			this.onXMLMinorError("incorrect descendant node with name: " + child.nodeName);
 			return null;
 		}
-	}
+    }
+    if (texturePushed === true){
+        textureStack.pop();
+    }
 	return newNode;
 }
 
 /**
  * Parses the <NODES> block.
  */
-MySceneGraph.prototype.parseNodes = function(nodesNode) {
+MySceneGraph.prototype.parseNodesXMLTag = function(nodesNode) {
     
         // Traverses nodes.
         this.xmlNodes = nodesNode.children;
@@ -1401,6 +1431,10 @@ MySceneGraph.prototype.displayScene = function () {
     this.displayNode(this.rootGraphNode, material_stack, texture_stack);
 }
 
+/**
+ * Displays an instance of MyGraphNode. Calls itself recursively to display it's children and leaves.
+ * @param node_to_display - An instance of MyGraphNode.
+ */
 MySceneGraph.prototype.displayNode = function (node_to_display, material_stack, texture_stack) {
     if (node_to_display == null)
         return;
