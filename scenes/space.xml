@@ -1,720 +1,978 @@
 <SCENE>
 
-<!-- Initial values -->
-<INITIALS>
-    <frustum near="0" far="5000"/>
+  <!-- Initial values -->
+  <INITIALS>
+    <frustum near="0" far="500"/>
     <translation x="0" y="0" z="0" />
     <rotation axis="x" angle="0" />
     <rotation axis="y" angle="0" />
     <rotation axis="z" angle="0" />
     <scale sx="0.25" sy="0.25" sz="0.25" />
     <reference length="0" />
-</INITIALS>
+  </INITIALS>
 
 
-<!-- Illumination and clear colour -->
-<ILLUMINATION>
+  <!-- Illumination and clear colour -->
+  <ILLUMINATION>
     <ambient r="0.25" g="0.25" b="0.25" a="1" />
     <background r="0" g="0" b="0" a="1" />
-</ILLUMINATION>
+  </ILLUMINATION>
 
 
-<LIGHTS>
-	<LIGHT id="l_sun">
-        <enable value ="1" />
-        <position  x="0" y="0" z="0" w="1" />
-        <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+  <LIGHTS>
+    <LIGHT id="l_sun">
+      <enable value ="1" />
+      <position  x="0" y="0" z="0" w="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+      <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+      <specular r="1.0" g="1.0" b="1.0" a="1.0" />
     </LIGHT>
-</LIGHTS>
+  </LIGHTS>
 
 
-<TEXTURES>
+  <TEXTURES>
     <TEXTURE id="t_sun">
-        <file path="images/solar_system/sun.jpg" />
-        <amplif_factor s="1" t="1" />
+      <file path="images/solar_system/sun.jpg" />
+      <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_mercury">
-        <file path="images/solar_system/mercury.jpg" />
-        <amplif_factor s="1" t="1" />
+      <file path="images/solar_system/mercury.jpg" />
+      <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_venus">
-        <file path="images/solar_system/venus.jpg" />
-        <amplif_factor s="1" t="1" />
+      <file path="images/solar_system/venus.jpg" />
+      <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_earth">
-        <file path="images/solar_system/earth.jpg" />
-        <amplif_factor s="1" t="1" />
+      <file path="images/solar_system/earth.jpg" />
+      <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_mars">
-        <file path="images/solar_system/mars.jpg" />
-        <amplif_factor s="1" t="1" />
+      <file path="images/solar_system/mars.jpg" />
+      <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_jupiter">
-        <file path="images/solar_system/jupiter.jpg" />
-        <amplif_factor s="1" t="1" />
+      <file path="images/solar_system/jupiter.jpg" />
+      <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_saturn">
-        <file path="images/solar_system/saturn.jpg" />
-        <amplif_factor s="1" t="1" />
+      <file path="images/solar_system/saturn.jpg" />
+      <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_uranus">
-        <file path="images/solar_system/uranus.jpg" />
-        <amplif_factor s="1" t="1" />
+      <file path="images/solar_system/uranus.jpg" />
+      <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_neptune">
-        <file path="images/solar_system/neptune.jpg" />
-        <amplif_factor s="1" t="1" />
+      <file path="images/solar_system/neptune.jpg" />
+      <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_wheel">
-        <file path="images/wheel.jpg" />
-        <amplif_factor s="1" t="1" />
+      <file path="images/wheel.jpg" />
+      <amplif_factor s="1" t="1" />
     </TEXTURE>
-</TEXTURES>
+
+    <TEXTURE id="t_carbon">
+      <file path="images/rocket/carbon.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_dark_grill">
+      <file path="images/rocket/dark_grill.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_light_grill">
+      <file path="images/rocket/light_grill.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_aluminium">
+      <file path="images/rocket/aluminium.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+  </TEXTURES>
 
 
-<MATERIALS>
+  <MATERIALS>
     <MATERIAL id="m_default">
-        <shininess value="10" />
-        <specular r="0.5" g="0.5" b="0.5" a="1" />
-        <diffuse r="0.5" g="0.5" b="0.5" a="1" />
-        <ambient r="0.1" g="0.1" b="0.1" a="1" />
-        <emission r="0.0" g="0.0" b="0.0" a="1" />
+      <shininess value="10" />
+      <specular r="0.5" g="0.5" b="0.5" a="1" />
+      <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 
     <MATERIAL id="m_planets">
-        <shininess value="4" />
-        <specular r="0.25" g="0.25" b="0.25" a="1" />
-        <diffuse r="0.75" g="0.75" b="0.75" a="1" />
-        <ambient r="0.1" g="0.1" b="0.1" a="1" />
-        <emission r="0.0" g="0.0" b="0.0" a="1" />
+      <shininess value="4" />
+      <specular r="0.25" g="0.25" b="0.25" a="1" />
+      <diffuse r="0.75" g="0.75" b="0.75" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 
     <MATERIAL id="m_sun">
-        <shininess value="1" />
-        <specular r="0.0" g="0.0" b="0.0" a="1" />
-        <diffuse r="0.0" g="0.0" b="0.0" a="1" />
-        <ambient r="0.0" g="0.0" b="0.0" a="1" />
-        <emission r="1.0" g="0.5" b="0.0" a="1" />
+      <shininess value="1" />
+      <specular r="0.0" g="0.0" b="0.0" a="1" />
+      <diffuse r="0.0" g="0.0" b="0.0" a="1" />
+      <ambient r="0.0" g="0.0" b="0.0" a="1" />
+      <emission r="1.0" g="0.5" b="0.0" a="1" />
     </MATERIAL>
 
-    <MATERIAL id="m_sup">                                  
-        <shininess value="1" />
-        <specular r="0.2" g="0.2" b="0.2" a="1" />        
-        <diffuse r="0.6" g="0.6" b="0.6" a="1" />       
-        <ambient r="0" g="0" b="0" a="1" />         
-        <emission r="0" g="0" b="0" a="1" />        
+    <MATERIAL id="m_robot_steel">
+      <shininess value="20" />
+      <specular r="0.8" g="0.8" b="0.8" a="1" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0" g="0" b="0" a="1" />
     </MATERIAL>
-</MATERIALS>
+
+    <MATERIAL id="m_robot_wheel">
+      <shininess value="1" />
+      <specular r="0.15" g="0.15" b="0.15" a="1" />
+      <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0" g="0" b="0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="m_rocket_nose">
+      <shininess value="20" />
+      <specular r="0.75" g="0.75" b="0.75" a="1" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="m_rocket_union">
+      <shininess value="20" />
+      <specular r="0.2" g="0.3" b="0.7" a="1" />
+      <diffuse r="0.2" g="0.3" b="0.7" a="1" />
+      <ambient r="0.1" g="0.1" b="0.2" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="m_rocket_stage_body">
+      <shininess value="20" />
+      <specular r="0.75" g="0.75" b="0.75" a="1" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="m_rocket_nozzle">
+      <shininess value="1" />
+      <specular r="0.1" g="0.1" b="0.1" a="1" />
+      <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+  </MATERIALS>
 
 
-<!-- The leaves -->
-<LEAVES>
-</LEAVES>
+  <!-- The leaves -->
+  <LEAVES>
+  </LEAVES>
 
 
-<!-- The nodes -->
-<NODES>
+  <!-- The nodes -->
+  <NODES>
     <ROOT id="root" />
 
     <!-- The root node -->
     <NODE id="root">
-        <MATERIAL id="m_default" />
-        <TEXTURE id="null" />
-        <DESCENDANTS>
-            <NODEREF id="solar_system" />
-        </DESCENDANTS>
+      <MATERIAL id="m_default" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="solar_system" />
+      </DESCENDANTS>
     </NODE>
 
     <!-- Solar System -->
     <NODE id="solar_system">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-        <DESCENDANTS>
-            <NODEREF id="sun" />
-            <NODEREF id="planets" />
-		</DESCENDANTS>
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="sun" />
+        <NODEREF id="planets" />
+      </DESCENDANTS>
     </NODE>
 
     <!-- Sun -->
-     <NODE id="sun">
-        <MATERIAL id="m_sun" />
-        <TEXTURE id="t_sun" />
-        <DESCENDANTS>
-                <LEAF id="p_sun" type="sphere" args="20 40 40" />
-        </DESCENDANTS>
+    <NODE id="sun">
+      <MATERIAL id="m_sun" />
+      <TEXTURE id="t_sun" />
+      <DESCENDANTS>
+        <LEAF id="p_sun" type="sphere" args="20 40 40" />
+      </DESCENDANTS>
     </NODE>
 
     <!-- Planets -->
-     <NODE id="planets">
-        <MATERIAL id="m_planets" />
-        <TEXTURE id="null" />
-        <TRANSLATION x="-25" y="0" z="0" />
-        <DESCENDANTS>
-            <NODEREF id="mercury" />
-            <NODEREF id="venus" />
-            <NODEREF id="earth" />
-            <NODEREF id="mars" />
-            <NODEREF id="jupiter" />
-            <NODEREF id="saturn" />
-            <NODEREF id="uranus" />
-            <NODEREF id="neptune" />
-        </DESCENDANTS>
+    <NODE id="planets">
+      <MATERIAL id="m_planets" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="-25" y="0" z="0" />
+      <DESCENDANTS>
+        <NODEREF id="mercury" />
+        <NODEREF id="venus" />
+        <NODEREF id="earth" />
+        <NODEREF id="mars" />
+        <NODEREF id="jupiter" />
+        <NODEREF id="saturn" />
+        <NODEREF id="uranus" />
+        <NODEREF id="neptune" />
+      </DESCENDANTS>
     </NODE>
 
     <NODE id="mercury">
-        <MATERIAL id="null" />
-        <TEXTURE id="t_mercury" />
-        <TRANSLATION x="-25" y="0" z="0" />
-        <DESCENDANTS>
-                <LEAF id="p_mercury" type="sphere" args="2 16 16" />
-        </DESCENDANTS>
+      <MATERIAL id="null" />
+      <TEXTURE id="t_mercury" />
+      <TRANSLATION x="-25" y="0" z="0" />
+      <DESCENDANTS>
+        <LEAF id="p_mercury" type="sphere" args="2 18 18" />
+      </DESCENDANTS>
     </NODE>
 
     <NODE id="venus">
-        <MATERIAL id="null" />
-        <TEXTURE id="t_venus" />
-        <TRANSLATION x="-40" y="0" z="0" />
-        <DESCENDANTS>
-                <LEAF id="p_venus" type="sphere" args="3 18 18" />
-        </DESCENDANTS>
+      <MATERIAL id="null" />
+      <TEXTURE id="t_venus" />
+      <TRANSLATION x="-40" y="0" z="0" />
+      <DESCENDANTS>
+        <NODEREF id="rocket" />
+        <LEAF id="p_venus" type="sphere" args="3 20 20" />
+      </DESCENDANTS>
     </NODE>
 
     <NODE id="earth">
-        <MATERIAL id="null" />
-        <TEXTURE id="t_earth" />
-        <TRANSLATION x="-55" y="0" z="0" />
-        <ROTATION axis="x" angle="90" />
-        <DESCENDANTS>
-                <LEAF id="p_earth" type="sphere" args="3 18 18" />
-        </DESCENDANTS>
+      <MATERIAL id="null" />
+      <TEXTURE id="t_earth" />
+      <TRANSLATION x="-55" y="0" z="0" />
+      <ROTATION axis="x" angle="90" />
+      <DESCENDANTS>
+        <LEAF id="p_earth" type="sphere" args="3 20 20" />
+      </DESCENDANTS>
     </NODE>
 
     <NODE id="mars">
-        <MATERIAL id="null" />
-        <TEXTURE id="t_mars" />
-        <TRANSLATION x="-70" y="0" z="0" />
-        <DESCENDANTS>
-            <NODEREF id="robot" />
-            <LEAF id="p_mars" type="sphere" args="2 16 16" />
-        </DESCENDANTS>
+      <MATERIAL id="null" />
+      <TEXTURE id="t_mars" />
+      <TRANSLATION x="-70" y="0" z="0" />
+      <DESCENDANTS>
+        <NODEREF id="robot" />
+        <LEAF id="p_mars" type="sphere" args="2 18 18" />
+      </DESCENDANTS>
     </NODE>
 
     <NODE id="jupiter">
-        <MATERIAL id="null" />
-        <TEXTURE id="t_jupiter" />
-        <TRANSLATION x="-120" y="0" z="0" />
-        <ROTATION axis="x" angle="90" />
-        <DESCENDANTS>
-                <LEAF id="p_jupiter" type="sphere" args="10 30 30" />
-        </DESCENDANTS>
+      <MATERIAL id="null" />
+      <TEXTURE id="t_jupiter" />
+      <TRANSLATION x="-120" y="0" z="0" />
+      <ROTATION axis="x" angle="90" />
+      <DESCENDANTS>
+        <LEAF id="p_jupiter" type="sphere" args="10 30 30" />
+      </DESCENDANTS>
     </NODE>
 
     <NODE id="saturn">
-        <MATERIAL id="null" />
-        <TEXTURE id="t_saturn" />
-        <TRANSLATION x="-170" y="0" z="0" />
-        <ROTATION axis="x" angle="90" />
-        <DESCENDANTS>
-                <LEAF id="p_saturn" type="sphere" args="7.5 26 26" />
-        </DESCENDANTS>
+      <MATERIAL id="null" />
+      <TEXTURE id="t_saturn" />
+      <TRANSLATION x="-170" y="0" z="0" />
+      <ROTATION axis="x" angle="90" />
+      <DESCENDANTS>
+        <LEAF id="p_saturn" type="sphere" args="7.5 26 26" />
+      </DESCENDANTS>
     </NODE>
 
     <NODE id="uranus">
-        <MATERIAL id="null" />
-        <TEXTURE id="t_uranus" />
-        <TRANSLATION x="-220" y="0" z="0" />
-        <DESCENDANTS>
-                <LEAF id="p_uranus" type="sphere" args="5 22 22" />
-        </DESCENDANTS>
+      <MATERIAL id="null" />
+      <TEXTURE id="t_uranus" />
+      <TRANSLATION x="-220" y="0" z="0" />
+      <DESCENDANTS>
+        <LEAF id="p_uranus" type="sphere" args="5 22 22" />
+      </DESCENDANTS>
     </NODE>
 
     <NODE id="neptune">
-        <MATERIAL id="null" />
-        <TEXTURE id="t_neptune" />
-        <TRANSLATION x="-250" y="0" z="0" />
-        <DESCENDANTS>
-                <LEAF id="t_neptune" type="sphere" args="5 22 22" />
-        </DESCENDANTS>
+      <MATERIAL id="null" />
+      <TEXTURE id="t_neptune" />
+      <TRANSLATION x="-250" y="0" z="0" />
+      <DESCENDANTS>
+        <LEAF id="t_neptune" type="sphere" args="5 22 22" />
+      </DESCENDANTS>
     </NODE>
 
     <!-- ROBOT -->
-    <NODE id="robot">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="clear" />
+    <NODE id="robot">
+      <MATERIAL id="m_robot_steel" />
+      <TEXTURE id="clear" />
+      
+      <TRANSLATION x="0" y="2.2" z="0" />
+      <SCALE sx="0.5" sy="0.5" sz="0.5" />
 
-        <TRANSLATION x="0" y="2.2" z="0" />
-        
-        <DESCENDANTS>
-            <NODEREF id="body" />  
-            <NODEREF id="camera" /> 
-            <NODEREF id="wheels" /> 
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="body" />
+        <NODEREF id="camera" />
+        <NODEREF id="wheels" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="camera">      
-        <MATERIAL id="m_sup" />    
-        <TEXTURE id="null" />
+    <NODE id="camera">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-		<ROTATION axis="x" angle="-90" />
+      <ROTATION axis="x" angle="-90" />
 
-        <DESCENDANTS>
-            <NODEREF id="camera1" /> 
-            <NODEREF id="camera2" /> 
-            <LEAF id="p_cyl1" type="cylinder" args="1 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="camera1" />
+        <NODEREF id="camera2" />
+        <LEAF id="p_cyl1" type="cylinder" args="1 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="camera1">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="camera1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <TRANSLATION x="0" y="0" z="1" />
-        <SCALE sx="0.1" sy="0.4" sz="0.25" />
+      <TRANSLATION x="0" y="0" z="1" />
+      <SCALE sx="0.1" sy="0.4" sz="0.25" />
 
-        <DESCENDANTS>
-            <NODEREF id="box" /> 
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="box" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="camera2">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="camera2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <TRANSLATION x="0" y="0" z="1" />
-		<ROTATION axis="y" angle="90" />
+      <TRANSLATION x="0" y="0" z="1" />
+      <ROTATION axis="y" angle="90" />
 
-        <DESCENDANTS>
-            <LEAF id="p_cyl1" type="cylinder" args="0.1 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF id="p_cyl1" type="cylinder" args="0.1 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="body">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="body">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <SCALE sx="1" sy="0.3" sz="1" />
+      <SCALE sx="1" sy="0.3" sz="1" />
 
-        <DESCENDANTS>  
-            <NODEREF id="box" />  
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="box" />
+      </DESCENDANTS>
     </NODE>
 
     <!-- WHEELS -->
-    <NODE id="wheels">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="wheels">
+      <MATERIAL id="m_robot_wheel" />
+      <TEXTURE id="null" />
 
-        <TRANSLATION x="0" y="-0.3" z="0" />
+      <TRANSLATION x="0" y="-0.3" z="0" />
 
-        <DESCENDANTS>
-            <NODEREF id="sup1" />
-            <NODEREF id="sup2" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="sup1" />
+        <NODEREF id="sup2" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="sup1">      
-        <MATERIAL id="m_sup" />    
-        <TEXTURE id="null" />
+    <NODE id="sup1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <DESCENDANTS>  
-            <NODEREF id="cyl1" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="cyl1" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl1">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <TRANSLATION x="0" y="0.3" z="0.5" />
+      <TRANSLATION x="0" y="0.3" z="0.5" />
 
-        <DESCENDANTS>
-            <NODEREF id="cyl2" />
-            <NODEREF id="cyl4" />
-            <LEAF id="p_cyl1" type="cylinder" args="0.3 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="cyl2" />
+        <NODEREF id="cyl4" />
+        <LEAF id="p_cyl1" type="cylinder" args="0.3 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl2">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <TRANSLATION x="0" y="0" z="0.2" />
-		<ROTATION axis="y" angle="90" />
-		<ROTATION axis="x" angle="30" />
+      <TRANSLATION x="0" y="0" z="0.2" />
+      <ROTATION axis="y" angle="90" />
+      <ROTATION axis="x" angle="30" />
 
-        <DESCENDANTS>
-            <NODEREF id="cyl3" />
-            <LEAF id="p_cyl2" type="cylinder" args="0.6 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="cyl3" />
+        <LEAF id="p_cyl2" type="cylinder" args="0.6 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl3">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl3">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-		<ROTATION axis="x" angle="-30" />
-		<ROTATION axis="y" angle="-90" />
-        <TRANSLATION x="0.52" y="-0.3" z="-0.05" />
+      <ROTATION axis="x" angle="-30" />
+      <ROTATION axis="y" angle="-90" />
+      <TRANSLATION x="0.52" y="-0.3" z="-0.05" />
 
-        <DESCENDANTS>
-            <NODEREF id="wheel1" />
-            <LEAF id="p_cyl3" type="cylinder" args="0.3 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="wheel1" />
+        <LEAF id="p_cyl3" type="cylinder" args="0.3 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl4">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl4">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <TRANSLATION x="0" y="0" z="0.1" />
-		<ROTATION axis="y" angle="90" />
-		<ROTATION axis="x" angle="150" />
+      <TRANSLATION x="0" y="0" z="0.1" />
+      <ROTATION axis="y" angle="90" />
+      <ROTATION axis="x" angle="150" />
 
-        <DESCENDANTS>
-            <NODEREF id="cyl5" />
-            <LEAF id="p_cyl4" type="cylinder" args="0.6 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="cyl5" />
+        <LEAF id="p_cyl4" type="cylinder" args="0.6 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl5">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl5">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-		<ROTATION axis="x" angle="-150" />
-		<ROTATION axis="y" angle="-90" />
-        <TRANSLATION x="-0.52" y="-0.3" z="-0.05" />
+      <ROTATION axis="x" angle="-150" />
+      <ROTATION axis="y" angle="-90" />
+      <TRANSLATION x="-0.52" y="-0.3" z="-0.05" />
 
-        <DESCENDANTS>
-            <NODEREF id="cyl6" />
-            <LEAF id="p_cyl5" type="cylinder" args="0.2 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="cyl6" />
+        <LEAF id="p_cyl5" type="cylinder" args="0.2 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl6">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl6">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <TRANSLATION x="-0.3" y="0" z="0.2" />
-		<ROTATION axis="y" angle="90" />
+      <TRANSLATION x="-0.3" y="0" z="0.2" />
+      <ROTATION axis="y" angle="90" />
 
-        <DESCENDANTS>
-            <NODEREF id="cyl7" />
-            <NODEREF id="cyl8" />
-            <LEAF id="p_cyl6" type="cylinder" args="0.6 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="cyl7" />
+        <NODEREF id="cyl8" />
+        <LEAF id="p_cyl6" type="cylinder" args="0.6 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl7">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
-        
-		<ROTATION axis="y" angle="-90" />
-        <TRANSLATION x="0" y="0" z="-0.05" />
+    <NODE id="cyl7">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <DESCENDANTS>
-            <NODEREF id="wheel2" />
-            <LEAF id="p_cyl7" type="cylinder" args="0.25 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <ROTATION axis="y" angle="-90" />
+      <TRANSLATION x="0" y="0" z="-0.05" />
+
+      <DESCENDANTS>
+        <NODEREF id="wheel2" />
+        <LEAF id="p_cyl7" type="cylinder" args="0.25 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl8">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl8">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-		<ROTATION axis="y" angle="-90" />
-        <TRANSLATION x="0.6" y="0" z="-0.05" />
+      <ROTATION axis="y" angle="-90" />
+      <TRANSLATION x="0.6" y="0" z="-0.05" />
 
-        <DESCENDANTS>
-            <NODEREF id="wheel3" />
-            <LEAF id="p_cyl8" type="cylinder" args="0.25 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="wheel3" />
+        <LEAF id="p_cyl8" type="cylinder" args="0.25 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="wheel1">      
-        <MATERIAL id="null" />
-        <TEXTURE id="t_wheel" />
+    <NODE id="wheel1">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_wheel" />
 
-        <TRANSLATION x="0" y="0" z="0.3" />
+      <TRANSLATION x="0" y="0" z="0.3" />
 
-        <DESCENDANTS>
-            <LEAF id="p_wheel1" type="cylinder" args="0.2 0.2 0.2 20 20" /> 
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF id="p_wheel1" type="cylinder" args="0.2 0.2 0.2 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="wheel2">      
-        <MATERIAL id="null" />
-        <TEXTURE id="t_wheel" />
+    <NODE id="wheel2">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_wheel" />
 
-        <TRANSLATION x="0" y="0" z="0.25" />
+      <TRANSLATION x="0" y="0" z="0.25" />
 
-        <DESCENDANTS>
-            <LEAF id="p_wheel2" type="cylinder" args="0.2 0.2 0.2 20 20" /> 
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF id="p_wheel2" type="cylinder" args="0.2 0.2 0.2 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="wheel3">      
-        <MATERIAL id="null" />
-        <TEXTURE id="t_wheel" />
+    <NODE id="wheel3">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_wheel" />
 
-        <TRANSLATION x="0" y="0" z="0.25" />
+      <TRANSLATION x="0" y="0" z="0.25" />
 
-        <DESCENDANTS>
-            <LEAF id="p_wheel3" type="cylinder" args="0.2 0.2 0.2 20 20" /> 
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF id="p_wheel3" type="cylinder" args="0.2 0.2 0.2 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    
-    <NODE id="sup2">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
 
-        <DESCENDANTS>  
-            <NODEREF id="cyl9" />
-		</DESCENDANTS>
+    <NODE id="sup2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <NODEREF id="cyl9" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl9">      
-        <MATERIAL id="m_sup" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl9">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <TRANSLATION x="0" y="0.3" z="-0.8" />
+      <TRANSLATION x="0" y="0.3" z="-0.8" />
 
-        <DESCENDANTS>
-            <NODEREF id="cyl10" />
-            <NODEREF id="cyl12" />
-            <LEAF id="p_cyl9" type="cylinder" args="0.3 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="cyl10" />
+        <NODEREF id="cyl12" />
+        <LEAF id="p_cyl9" type="cylinder" args="0.3 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl10">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl10">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <TRANSLATION x="0" y="0" z="0.1" />
-		<ROTATION axis="y" angle="90" />
-		<ROTATION axis="x" angle="30" />
+      <TRANSLATION x="0" y="0" z="0.1" />
+      <ROTATION axis="y" angle="90" />
+      <ROTATION axis="x" angle="30" />
 
-        <DESCENDANTS>
-            <NODEREF id="cyl11" />
-            <LEAF id="p_cyl2" type="cylinder" args="0.6 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="cyl11" />
+        <LEAF id="p_cyl2" type="cylinder" args="0.6 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl11">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl11">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-		<ROTATION axis="x" angle="-30" />
-		<ROTATION axis="y" angle="-90" />
-        <TRANSLATION x="0.52" y="-0.3" z="-0.25" />
+      <ROTATION axis="x" angle="-30" />
+      <ROTATION axis="y" angle="-90" />
+      <TRANSLATION x="0.52" y="-0.3" z="-0.25" />
 
-        <DESCENDANTS>
-            <NODEREF id="wheel4" />
-            <LEAF id="p_cyl3" type="cylinder" args="0.3 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="wheel4" />
+        <LEAF id="p_cyl3" type="cylinder" args="0.3 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl12">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl12">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <TRANSLATION x="0" y="0" z="0.2" />
-		<ROTATION axis="y" angle="90" />
-		<ROTATION axis="x" angle="150" />
+      <TRANSLATION x="0" y="0" z="0.2" />
+      <ROTATION axis="y" angle="90" />
+      <ROTATION axis="x" angle="150" />
 
-        <DESCENDANTS>
-            <NODEREF id="cyl13" />
-            <LEAF id="p_cyl4" type="cylinder" args="0.6 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="cyl13" />
+        <LEAF id="p_cyl4" type="cylinder" args="0.6 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl13">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl13">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-		<ROTATION axis="x" angle="-150" />
-		<ROTATION axis="y" angle="-90" />
-        <TRANSLATION x="-0.52" y="-0.3" z="-0.15" />
+      <ROTATION axis="x" angle="-150" />
+      <ROTATION axis="y" angle="-90" />
+      <TRANSLATION x="-0.52" y="-0.3" z="-0.15" />
 
-        <DESCENDANTS>
-            <NODEREF id="cyl14" />
-            <LEAF id="p_cyl5" type="cylinder" args="0.2 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="cyl14" />
+        <LEAF id="p_cyl5" type="cylinder" args="0.2 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl14">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl14">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <TRANSLATION x="-0.3" y="0" z="0" />
-		<ROTATION axis="y" angle="90" />
+      <TRANSLATION x="-0.3" y="0" z="0" />
+      <ROTATION axis="y" angle="90" />
 
-        <DESCENDANTS>
-            <NODEREF id="cyl15" />
-            <NODEREF id="cyl16" />
-            <LEAF id="p_cyl6" type="cylinder" args="0.6 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="cyl15" />
+        <NODEREF id="cyl16" />
+        <LEAF id="p_cyl6" type="cylinder" args="0.6 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl15">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
-        
-		<ROTATION axis="y" angle="-90" />
-        <TRANSLATION x="0" y="0" z="-0.2" />
+    <NODE id="cyl15">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <DESCENDANTS>
-            <NODEREF id="wheel5" />
-            <LEAF id="p_cyl7" type="cylinder" args="0.25 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <ROTATION axis="y" angle="-90" />
+      <TRANSLATION x="0" y="0" z="-0.2" />
+
+      <DESCENDANTS>
+        <NODEREF id="wheel5" />
+        <LEAF id="p_cyl7" type="cylinder" args="0.25 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="cyl16">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="cyl16">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-		<ROTATION axis="y" angle="-90" />
-        <TRANSLATION x="0.6" y="0" z="-0.2" />
+      <ROTATION axis="y" angle="-90" />
+      <TRANSLATION x="0.6" y="0" z="-0.2" />
 
-        <DESCENDANTS>
-            <NODEREF id="wheel6" />
-            <LEAF id="p_cyl8" type="cylinder" args="0.25 0.05 0.05 20 20" />
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="wheel6" />
+        <LEAF id="p_cyl8" type="cylinder" args="0.25 0.05 0.05 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="wheel4">      
-        <MATERIAL id="null" />
-        <TEXTURE id="t_wheel" />
+    <NODE id="wheel4">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_wheel" />
 
-        <TRANSLATION x="0" y="0" z="-0.2" />
+      <TRANSLATION x="0" y="0" z="-0.2" />
 
-        <DESCENDANTS>
-            <LEAF id="p_wheel1" type="cylinder" args="0.2 0.2 0.2 20 20" /> 
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF id="p_wheel1" type="cylinder" args="0.2 0.2 0.2 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="wheel5">      
-        <MATERIAL id="null" />
-        <TEXTURE id="t_wheel" />
+    <NODE id="wheel5">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_wheel" />
 
-        <TRANSLATION x="0" y="0" z="-0.2" />
+      <TRANSLATION x="0" y="0" z="-0.2" />
 
-        <DESCENDANTS>
-            <LEAF id="p_wheel2" type="cylinder" args="0.2 0.2 0.2 20 20" /> 
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF id="p_wheel2" type="cylinder" args="0.2 0.2 0.2 20 20" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="wheel6">      
-        <MATERIAL id="null" />
-        <TEXTURE id="t_wheel" />
+    <NODE id="wheel6">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_wheel" />
 
-        <TRANSLATION x="0" y="0" z="-0.2" />
+      <TRANSLATION x="0" y="0" z="-0.2" />
 
-        <DESCENDANTS>
-            <LEAF id="p_wheel3" type="cylinder" args="0.2 0.2 0.2 20 20" /> 
-		</DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF id="p_wheel3" type="cylinder" args="0.2 0.2 0.2 20 20" />
+      </DESCENDANTS>
     </NODE>
 
 
 
     <!-- UTILS -->
-    <NODE id="box">      
-        <MATERIAL id="null" />    
-        <TEXTURE id="null" />
+    <NODE id="box">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <DESCENDANTS>
-            <NODEREF id="face1" />
-            <NODEREF id="face2" />
-            <NODEREF id="face3" />
-            <NODEREF id="face4" />
-            <NODEREF id="face5" />
-            <NODEREF id="face6" />
-        </DESCENDANTS>
+      <DESCENDANTS>
+        <NODEREF id="face1" />
+        <NODEREF id="face2" />
+        <NODEREF id="face3" />
+        <NODEREF id="face4" />
+        <NODEREF id="face5" />
+        <NODEREF id="face6" />
+      </DESCENDANTS>
     </NODE>
 
     <!-- A cube face -->
-    <NODE id="face1">       
-        <MATERIAL id="null" />     
-        <TEXTURE id="null" />       			
+    <NODE id="face1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-        <TRANSLATION x="0" y="0" z="0.5" />
+      <TRANSLATION x="0" y="0" z="0.5" />
 
-        <DESCENDANTS>
-					<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />        
-        </DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="face2">       
-        <MATERIAL id="null" />     
-        <TEXTURE id="null" />       			
+    <NODE id="face2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-		<ROTATION axis="y" angle="-90" />
-        <TRANSLATION x="0" y="0" z="0.5" />
+      <ROTATION axis="y" angle="-90" />
+      <TRANSLATION x="0" y="0" z="0.5" />
 
-        <DESCENDANTS>
-					<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />        
-        </DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="face3">       
-        <MATERIAL id="null" />     
-        <TEXTURE id="null" />       			
+    <NODE id="face3">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-		<ROTATION axis="y" angle="-180" />
-        <TRANSLATION x="0" y="0" z="0.5" />
+      <ROTATION axis="y" angle="-180" />
+      <TRANSLATION x="0" y="0" z="0.5" />
 
-        <DESCENDANTS>
-					<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />        
-        </DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="face4">       
-        <MATERIAL id="null" />     
-        <TEXTURE id="null" />       			
+    <NODE id="face4">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-		<ROTATION axis="y" angle="90" />
-        <TRANSLATION x="0" y="0" z="0.5" />
+      <ROTATION axis="y" angle="90" />
+      <TRANSLATION x="0" y="0" z="0.5" />
 
-        <DESCENDANTS>
-					<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />        
-        </DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
     </NODE>
 
-    <NODE id="face5">       
-        <MATERIAL id="null" />     
-        <TEXTURE id="null" />       			
+    <NODE id="face5">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
 
-		<ROTATION axis="x" angle="-90" />
-        <TRANSLATION x="0" y="0" z="0.5" />
+      <ROTATION axis="x" angle="-90" />
+      <TRANSLATION x="0" y="0" z="0.5" />
 
-        <DESCENDANTS>
-					<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />        
-        </DESCENDANTS>
-    </NODE>
-    
-    <NODE id="face6">       
-        <MATERIAL id="null" />     
-        <TEXTURE id="null" />       			
-
-		<ROTATION axis="x" angle="90" />
-        <TRANSLATION x="0" y="0" z="0.5" />
-
-        <DESCENDANTS>
-					<LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />        
-        </DESCENDANTS>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
     </NODE>
 
-</NODES>
+    <NODE id="face6">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <ROTATION axis="x" angle="90" />
+      <TRANSLATION x="0" y="0" z="0.5" />
+
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="rocket">
+      <MATERIAL id="m_rocket_stage_body" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="3.2" z="0" />
+      <ROTATION axis="x" angle="-90" />
+      <SCALE sx="0.15" sy="0.15" sz="0.15" />
+      <DESCENDANTS>
+        <NODEREF id="main_body" />
+        <NODEREF id="side_boosters" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="main_body">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="stages" />
+        <NODEREF id="unions" />
+        <NODEREF id="main_nozzle" />
+        <NODEREF id="main_nose" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="stages">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="bottom_stage" />
+        <NODEREF id="mid_stage" />
+        <NODEREF id="top_stage" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="bottom_stage">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_light_grill" />
+      <DESCENDANTS>
+        <LEAF id="bottom_stage" type="cylinder" args="8 1.5 1.5 16 16" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="mid_stage">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_aluminium" />
+      <TRANSLATION x="0" y="0" z="8.25" />
+      <DESCENDANTS>
+        <LEAF id="mid_stage" type="cylinder" args="4 1 1 16 16" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="top_stage">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_light_grill" />
+      <TRANSLATION x="0" y="0" z="12.5" />
+      <DESCENDANTS>
+        <LEAF id="top_stage" type="cylinder" args="3 1.5 1.5 16 16" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="unions">
+      <MATERIAL id="m_rocket_union" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="union_b_m" />
+        <NODEREF id="union_t_n" />
+        <NODEREF id="union_m_t" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="union_b_m">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="8" />
+      <DESCENDANTS>
+        <LEAF id="union_b_m" type="cylinder" args="0.25 1.5 1 8 16" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="union_t_n">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="15.5" />
+      <DESCENDANTS>
+        <LEAF id="union_t_n" type="cylinder" args="0.25 1.5 1 8 16" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="union_m_t">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="12.25" />
+      <DESCENDANTS>
+        <LEAF id="union_m_t" type="cylinder" args="0.25 1 1.5 8 16" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="main_nozzle">
+      <MATERIAL id="null" />
+      <SCALE sy="1.5" sx="1.5" sz="1.5" />
+      <TRANSLATION x="0" y="0" z="-0.5" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="nozzle" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="main_nose">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="15.75" />
+      <DESCENDANTS>
+        <NODEREF id="nose" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="side_boosters">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="left_booster" />
+        <NODEREF id="right_booster" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="left_booster">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="-2.5" y="0" z="0" />
+      <DESCENDANTS>
+        <NODEREF id="side_booster" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="right_booster">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="2.5" y="0" z="0" />
+      <DESCENDANTS>
+        <NODEREF id="side_booster" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="side_booster">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_dark_grill" />
+      <DESCENDANTS>
+        <NODEREF id="side_nozzle" />
+        <NODEREF id="side_nose" />
+        <LEAF id="booster_body" type="cylinder" args="10 1 1 16 16" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="side_nozzle">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="-0.5" />
+      <DESCENDANTS>
+        <NODEREF id="nozzle" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="side_nose">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="10" />
+      <DESCENDANTS>
+        <NODEREF id="nose" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="nozzle">
+      <MATERIAL id="m_rocket_nozzle" />
+      <TEXTURE id="t_carbon" />
+      <DESCENDANTS>
+        <LEAF id="engine_nozzle" type="cylinder" args="0.5 1 0.5 3 16" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="nose">
+      <MATERIAL id="m_rocket_nose" />
+      <TEXTURE id="clear" />
+      <DESCENDANTS>
+        <LEAF id="nose" type="cylinder" args="3 1 0.25 16 16" />
+        <NODEREF id="nose_tip" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="nose_tip">
+      <MATERIAL id="m_rocket_nose" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="3" />
+      <DESCENDANTS>
+        <LEAF id="nose_tip" type="sphere" args="0.25 16 16" />
+      </DESCENDANTS>
+    </NODE>
+  </NODES>
 
 </SCENE>
