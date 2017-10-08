@@ -12,21 +12,26 @@ function MyGraphLeaf(scene, type, args_array, afs, aft) {
   this.aft = aft || 1;
 
   switch (this.type) {
-      case "cylinder":
+      case "cylinder": {
           this.initCylinder();
           break;
-      case "sphere":
+      }
+      case "sphere": {
           this.initSphere();
           break;
-      case "rectangle":
+      }
+      case "rectangle": {
           this.initRectangle();
           break;
-      case "triangle":
+      }
+      case "triangle": {
           this.initTriangle();
           break;
-      case "patch":
+      }
+      /*case "patch": {
           this.initPatch();
           break;
+      }*/
       default:
           console.log("Invalid primitive");
   }
@@ -49,7 +54,7 @@ MyGraphLeaf.prototype.initRectangle = function () {
     if (this.args_array.length == 4)
         this.primitive = new Rectangle(this.scene, [parseFloat(this.args_array[0]), parseFloat(this.args_array[1])],
                                        [parseFloat(this.args_array[2]), parseFloat(this.args_array[3])],
-                                       afs, aft);
+                                       this.afs, this.aft);
     else console.log("Invalid arguments for a rectangle");
 }
 
@@ -58,7 +63,7 @@ MyGraphLeaf.prototype.initTriangle = function () {
         this.primitive = new Triangle(this.scene, [parseFloat(this.args_array[0]), parseFloat(this.args_array[1]), parseFloat(this.args_array[2])],
                                       [parseFloat(this.args_array[3]), parseFloat(this.args_array[4]), parseFloat(this.args_array[5])],
                                       [parseFloat(this.args_array[6]), parseFloat(this.args_array[7]), parseFloat(this.args_array[8])],
-                                      afs, aft);
+                                      this.afs, this.aft);
     else console.log("Invalid arguments for a triangle");
 }
 

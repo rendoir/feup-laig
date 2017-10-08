@@ -1295,7 +1295,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
 			let type = this.reader.getItem(child, 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
             let argsString = this.reader.getString(child,'args');
             let argsArray = argsString.split(" ");
-            if (type == 'rectangle' || type == 'triangle') {
+            if (type === "rectangle" || type === "triangle") {
                 let textureID = textureStack[textureStack.length-1];
                 let currentTexture = this.textures[textureID];
                 let afs = null, aft = null;
@@ -1303,8 +1303,10 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
                     afs = currentTexture[1];
                     aft = currentTexture[2];
                 }
-                newNode.addLeaf(new MyGraphLeaf(this.scene,type,argsArray,afs,aft));
-            } else if (type == 'patch') {
+                newNode.addLeaf(new MyGraphLeaf(this.scene, type, argsArray, afs, aft));
+                console.log("CENAS");
+            }   /*      IF THIS IS UNCOMENTED THE PROGRAM WILL CRASH EVEN WITHOUT NURBS (NO FUCKING IDEA WHY)           */
+                else if (type === "patch") {/*
                 var degree_u = parseInt(argsArray[0]);
                 var degree_v = parseInt(argsArray[1]);
                 argsArray[2] = new Array();
@@ -1312,17 +1314,18 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
                     var control_point_line = new Array();
                     for (var j = 0; j < degree_v; j++) {
                         var control_point = new Array();
-                        control_point.push(0/*TODO: REPLACE THIS*/); //x
-                        control_point.push(0/*TODO: REPLACE THIS*/); //y
-                        control_point.push(0/*TODO: REPLACE THIS*/); //z
-                        control_point.push(0/*TODO: REPLACE THIS*/); //w
+                        control_point.push(this.reader.getFloat(child.children[i].children[j],'xx')); //x
+                        control_point.push(this.reader.getFloat(child.children[i].children[j],'yy')); //y
+                        control_point.push(this.reader.getFloat(child.children[i].children[j],'zz')); //z
+                        control_point.push(this.reader.getFloat(child.children[i].children[j],'ww')); //w
                         control_point_line.push(control_point);
                     }
                     argsArray[2].push(control_point_line);
                 }
 
-                newNode.addLeaf(new MyGraphLeaf(this.scene, type, argsArray));
-            } else {
+                newNode.addLeaf(new MyGraphLeaf(this.scene, type, argsArray));*/
+                console.log("PATCH");
+            }  else {
                 newNode.addLeaf(new MyGraphLeaf(this.scene,type,argsArray));
             }
             
