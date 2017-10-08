@@ -65,6 +65,8 @@ MyGraphLeaf.prototype.initTriangle = function () {
 MyGraphLeaf.prototype.initPatch = function () {
     var degree_u = parseInt(this.args_array[0]);
     var degree_v = parseInt(this.args_array[1]);
+    var control_vertices = this.args_array[2];
+    /* NO NEED FOR THIS IF ALREADY DONE IN THE PARSER (WHERE IT SHOULD BE DONE)
     var control_vertices = new Array(); //Contains degree_u lines of degree_v 4D points
     for (var i = 0; i < degree_u; i++) {
         var control_point_line = new Array(); //Contains 1 line of degree_v 4D points
@@ -77,7 +79,7 @@ MyGraphLeaf.prototype.initPatch = function () {
             control_point_line.push(control_point);
         }
         control_vertices.push(control_point_line);
-    }
+    }*/
     this.primitive = new Nurbs(this.scene, degree_u, degree_v, control_vertices);
 }
 

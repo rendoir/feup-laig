@@ -1304,7 +1304,25 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
                     aft = currentTexture[2];
                 }
                 newNode.addLeaf(new MyGraphLeaf(this.scene,type,argsArray,afs,aft));
-            }else{
+            } else if (type == 'patch') {
+                var degree_u = parseInt(argsArray[0]);
+                var degree_v = parseInt(argsArray[1]);
+                argsArray[2] = new Array();
+                for (var i = 0; i < degree_u; i++) {
+                    var control_point_line = new Array();
+                    for (var j = 0; j < degree_v; j++) {
+                        var control_point = new Array();
+                        control_point.push(0/*TODO: REPLACE THIS*/); //x
+                        control_point.push(0/*TODO: REPLACE THIS*/); //y
+                        control_point.push(0/*TODO: REPLACE THIS*/); //z
+                        control_point.push(0/*TODO: REPLACE THIS*/); //w
+                        control_point_line.push(control_point);
+                    }
+                    argsArray[2].push(control_point_line);
+                }
+
+                newNode.addLeaf(new MyGraphLeaf(this.scene, type, argsArray));
+            } else {
                 newNode.addLeaf(new MyGraphLeaf(this.scene,type,argsArray));
             }
             
