@@ -1320,7 +1320,6 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
                 }
 
                 newNode.addLeaf(new MyGraphLeaf(this.scene, type, argsArray));
-                console.log("PATCH");
             }  else {
                 newNode.addLeaf(new MyGraphLeaf(this.scene,type,argsArray));
             }
