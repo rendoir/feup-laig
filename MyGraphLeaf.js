@@ -38,9 +38,10 @@ function MyGraphLeaf(scene, type, args_array, afs, aft) {
 }
 
 MyGraphLeaf.prototype.initCylinder = function () {
-    if (this.args_array.length == 5)
+    if (this.args_array.length == 7)
         this.primitive = new Cylinder(this.scene, parseFloat(this.args_array[0]), parseFloat(this.args_array[1]), parseFloat(this.args_array[2]),
-                                      parseInt(this.args_array[3]), parseInt(this.args_array[4]));
+                                      parseInt(this.args_array[3]), parseInt(this.args_array[4]),
+                                      parseInt(this.args_array[5]), parseInt(this.args_array[6]));
     else console.log("Invalid arguments for a cylinder");
 }
 

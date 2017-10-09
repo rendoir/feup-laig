@@ -77,9 +77,9 @@
 
   <MATERIALS>
     <MATERIAL id="m_rocket_nose">
-      <shininess value="20" />
-      <specular r="0.75" g="0.75" b="0.75" a="1" />
-      <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+      <shininess value="25" />
+      <specular r="0.8" g="0.8" b="0.8" a="1" />
+      <diffuse r="0.5" g="0.5" b="0.5" a="1" />
       <ambient r="0.1" g="0.1" b="0.1" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
@@ -93,9 +93,9 @@
     </MATERIAL>
 
     <MATERIAL id="m_rocket_stage_body">
-      <shininess value="20" />
-      <specular r="0.75" g="0.75" b="0.75" a="1" />
-      <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+      <shininess value="25" />
+      <specular r="0.8" g="0.8" b="0.8" a="1" />
+      <diffuse r="0.5" g="0.5" b="0.5" a="1" />
       <ambient r="0.1" g="0.1" b="0.1" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
@@ -120,9 +120,13 @@
 
     <ROOT id="rocket" />
 
+    <!-- Rocket -->
     <NODE id="rocket">
       <MATERIAL id="m_rocket_stage_body" />
       <TEXTURE id="null" />
+      <TRANSLATION x="0" y="3.2" z="0" />
+      <ROTATION axis="x" angle="-90" />
+      <SCALE sx="0.15" sy="0.15" sz="0.15" />
       <DESCENDANTS>
         <NODEREF id="main_body" />
         <NODEREF id="side_boosters" />
@@ -154,7 +158,7 @@
       <MATERIAL id="null" />
       <TEXTURE id="t_light_grill" />
       <DESCENDANTS>
-        <LEAF id="bottom_stage" type="cylinder" args="8 1.5 1.5 16 16" />
+        <LEAF id="bottom_stage" type="cylinder" args="8 1.5 1.5 16 16 0 1" />
       </DESCENDANTS>
     </NODE>
 
@@ -163,7 +167,7 @@
       <TEXTURE id="t_aluminium" />
       <TRANSLATION x="0" y="0" z="8.25" />
       <DESCENDANTS>
-        <LEAF id="mid_stage" type="cylinder" args="4 1 1 16 16" />
+        <LEAF id="mid_stage" type="cylinder" args="4 1 1 16 16 0 0" />
       </DESCENDANTS>
     </NODE>
 
@@ -172,13 +176,13 @@
       <TEXTURE id="t_light_grill" />
       <TRANSLATION x="0" y="0" z="12.5" />
       <DESCENDANTS>
-        <LEAF id="top_stage" type="cylinder" args="3 1.5 1.5 16 16" />
+        <LEAF id="top_stage" type="cylinder" args="3 1.5 1.5 16 16 0 0" />
       </DESCENDANTS>
-    </NODE>    
+    </NODE>
 
     <NODE id="unions">
       <MATERIAL id="m_rocket_union" />
-      <TEXTURE id="null" />
+      <TEXTURE id="clear" />
       <DESCENDANTS>
         <NODEREF id="union_b_m" />
         <NODEREF id="union_t_n" />
@@ -191,7 +195,7 @@
       <TEXTURE id="null" />
       <TRANSLATION x="0" y="0" z="8" />
       <DESCENDANTS>
-        <LEAF id="union_b_m" type="cylinder" args="0.25 1.5 1 8 16" />
+        <LEAF id="union_b_m" type="cylinder" args="0.25 1.5 1 8 16 0 0" />
       </DESCENDANTS>
     </NODE>
 
@@ -200,7 +204,7 @@
       <TEXTURE id="null" />
       <TRANSLATION x="0" y="0" z="15.5" />
       <DESCENDANTS>
-        <LEAF id="union_t_n" type="cylinder" args="0.25 1.5 1 8 16" />
+        <LEAF id="union_t_n" type="cylinder" args="0.25 1.5 1 8 16 0 0" />
       </DESCENDANTS>
     </NODE>
 
@@ -209,7 +213,7 @@
       <TEXTURE id="null" />
       <TRANSLATION x="0" y="0" z="12.25" />
       <DESCENDANTS>
-        <LEAF id="union_m_t" type="cylinder" args="0.25 1 1.5 8 16" />
+        <LEAF id="union_m_t" type="cylinder" args="0.25 1 1.5 8 16 0 0" />
       </DESCENDANTS>
     </NODE>
 
@@ -265,7 +269,7 @@
       <DESCENDANTS>
         <NODEREF id="side_nozzle" />
         <NODEREF id="side_nose" />
-        <LEAF id="booster_body" type="cylinder" args="10 1 1 16 16" />
+        <LEAF id="booster_body" type="cylinder" args="10 1 1 16 16 0 1" />
       </DESCENDANTS>
     </NODE>
 
@@ -291,7 +295,7 @@
       <MATERIAL id="m_rocket_nozzle" />
       <TEXTURE id="t_carbon" />
       <DESCENDANTS>
-        <LEAF id="engine_nozzle" type="cylinder" args="0.5 1 0.5 3 16" />
+        <LEAF id="engine_nozzle" type="cylinder" args="0.5 1 0.5 3 16 0 1" />
       </DESCENDANTS>
     </NODE>
 
@@ -299,7 +303,7 @@
       <MATERIAL id="m_rocket_nose" />
       <TEXTURE id="clear" />
       <DESCENDANTS>
-        <LEAF id="nose" type="cylinder" args="3 1 0.25 16 16" />
+        <LEAF id="nose" type="cylinder" args="3 1 0.25 16 16 0 0" />
         <NODEREF id="nose_tip" />
       </DESCENDANTS>
     </NODE>
