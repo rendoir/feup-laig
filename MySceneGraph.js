@@ -1303,19 +1303,18 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
                 }
                 newNode.addLeaf(new MyGraphLeaf(this.scene, type, argsArray, afs, aft));
                 console.log("CENAS");
-            }   /*      IF THIS IS UNCOMENTED THE PROGRAM WILL CRASH EVEN WITHOUT NURBS (NO FUCKING IDEA WHY)           */
-                else if (type === "patch") {
+            }else if (type === "patch") {
                 let degree_u = parseInt(argsArray[0]);
                 let degree_v = parseInt(argsArray[1]);
                 argsArray[2] = new Array();
-                for (let k = 0; k < degree_u; k++) {
+                for (let u = 0; u <= degree_u; u++) {
                     let control_point_line = new Array();
-                    for (let j = 0; j < degree_v; j++) {
+                    for (let v = 0; v <= degree_v; v++) {
                         let control_point = new Array();
-                        control_point.push(this.reader.getFloat(child.children[k].children[j],'xx')); //x
-                        control_point.push(this.reader.getFloat(child.children[k].children[j],'yy')); //y
-                        control_point.push(this.reader.getFloat(child.children[k].children[j],'zz')); //z
-                        control_point.push(this.reader.getFloat(child.children[k].children[j],'ww')); //w
+                        control_point.push(this.reader.getFloat(child.children[u].children[v],'xx')); //x
+                        control_point.push(this.reader.getFloat(child.children[u].children[v],'yy')); //y
+                        control_point.push(this.reader.getFloat(child.children[u].children[v],'zz')); //z
+                        control_point.push(this.reader.getFloat(child.children[u].children[v],'ww')); //w
                         control_point_line.push(control_point);
                     }
                     argsArray[2].push(control_point_line);
@@ -1437,7 +1436,7 @@ MySceneGraph.generateRandomString = function(length) {
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function () {
-    let material_stack = []; //Stores ID's of materials
+    let material_stack = [this.defaultMaterialID]; //Stores ID's of materials
     let texture_stack  = ["clear"]; //Stores ID's of textures
     this.last_texture = null;
     if (this.rootGraphNode.materialID != "null"){

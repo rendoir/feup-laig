@@ -11,10 +11,10 @@ Nurbs.prototype = Object.create(CGFobject.prototype);
 Nurbs.prototype.constructor = Nurbs;
 
 Nurbs.prototype.initObject = function () {
-    var knots_u = this.getKnotsVector(this.degree_u);
-    var knots_v = this.getKnotsVector(this.degree_v);
+    let knots_u = this.getKnotsVector(this.degree_u);
+    let knots_v = this.getKnotsVector(this.degree_v);
 
-    var nurbsSurface = new CGFnurbsSurface(this.degree_u, this.degree_v, knots_u, knots_v, this.control_vertices);
+    let nurbsSurface = new CGFnurbsSurface(this.degree_u, this.degree_v, knots_u, knots_v, this.control_vertices);
 
     getSurfacePoint = function (u, v) {
         return nurbsSurface.getPoint(u, v);

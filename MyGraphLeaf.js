@@ -28,10 +28,10 @@ function MyGraphLeaf(scene, type, args_array, afs, aft) {
           this.initTriangle();
           break;
       }
-      /*case "patch": {
+      case "patch": {
           this.initPatch();
           break;
-      }*/
+      }
       default:
           console.log("Invalid primitive");
   }
@@ -68,23 +68,9 @@ MyGraphLeaf.prototype.initTriangle = function () {
 }
 
 MyGraphLeaf.prototype.initPatch = function () {
-    var degree_u = parseInt(this.args_array[0]);
-    var degree_v = parseInt(this.args_array[1]);
-    var control_vertices = this.args_array[2];
-    /* NO NEED FOR THIS IF ALREADY DONE IN THE PARSER (WHERE IT SHOULD BE DONE)
-    var control_vertices = new Array(); //Contains degree_u lines of degree_v 4D points
-    for (var i = 0; i < degree_u; i++) {
-        var control_point_line = new Array(); //Contains 1 line of degree_v 4D points
-        for (var j = 0; j < degree_v; j++) {
-            var control_point = new Array(); //Contains 1 4D point
-            control_point.push(this.args_array[2][i][j][0]); //x
-            control_point.push(this.args_array[2][i][j][1]); //y
-            control_point.push(this.args_array[2][i][j][2]); //z
-            control_point.push(this.args_array[2][i][j][3]); //w
-            control_point_line.push(control_point);
-        }
-        control_vertices.push(control_point_line);
-    }*/
+    const degree_u = parseInt(this.args_array[0]);
+    const degree_v = parseInt(this.args_array[1]);
+    let control_vertices = this.args_array[2];
     this.primitive = new Nurbs(this.scene, degree_u, degree_v, control_vertices);
 }
 
