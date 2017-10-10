@@ -40,10 +40,10 @@ Rectangle.prototype.initBuffers = function() {
     const texCoordsMaxS = length / this.afs;
     const texCoordsMaxT = height / this.aft;
     this.texCoords = [
-        0, 0,
-        texCoordsMaxS, 0,
         0, texCoordsMaxT,
-        texCoordsMaxS, texCoordsMaxT
+        texCoordsMaxS, texCoordsMaxT,
+        0, 0,
+        texCoordsMaxS, 0
     ];
 
     this.primitiveType = this.scene.gl.TRIANGLES;

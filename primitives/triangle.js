@@ -59,9 +59,9 @@ Triangle.prototype.initBuffers = function() {
     const cosAlpha = (-(bc*bc) + (ac*ac) + (ab*ab))/(2 * ac * ab);
     const sinAlpha = Math.sqrt(1 - (cosAlpha*cosAlpha));
 
-    this.texCoords.push(0, 0); // Point A texture coords.
-    this.texCoords.push(ab/this.afs, 0); // Point B texture coords.
-    this.texCoords.push(ac * cosAlpha / this.afs, ac * sinAlpha / this.aft); // Point C texture coords
+    this.texCoords.push(0, ac * sinAlpha / this.aft); // Point A texture coords.
+    this.texCoords.push(ab/this.afs, ac * sinAlpha / this.aft); // Point B texture coords.
+    this.texCoords.push(ac * cosAlpha / this.afs, 0); // Point C texture coords
 
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();

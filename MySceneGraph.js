@@ -1302,7 +1302,6 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
                     aft = currentTexture[2];
                 }
                 newNode.addLeaf(new MyGraphLeaf(this.scene, type, argsArray, afs, aft));
-                console.log("CENAS");
             }else if (type === "patch") {
                 let div_u = parseInt(argsArray[0]);
                 let div_v = parseInt(argsArray[1]);
@@ -1323,7 +1322,6 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
                 }
 
                 newNode.addLeaf(new MyGraphLeaf(this.scene, type, argsArray));
-                console.log("PATCH");
             }  else {
                 newNode.addLeaf(new MyGraphLeaf(this.scene,type,argsArray));
             }
