@@ -85,14 +85,54 @@
       <MATERIAL id="null" />
       <TEXTURE id="clear" />
       <DESCENDANTS>
-        <LEAF type="patch" args="1 1">
+        <LEAF type="patch" args="20 20"> 
             <CPLINE> <!-- use as many cpline to represent the u dimension-->
-                <CPOINT xx="1.0" yy="-3.0" zz="0.0" ww="1.0" /> <!-- use as many cpoint to represent the v dimension-->
-                 <CPOINT xx="3.0" yy="3.0" zz="0" ww="1.0" />
+                <CPOINT xx="-2" yy="0" zz="-2" ww="1.0" /> <!-- use as many cpoint to represent the v dimension-->
+                <CPOINT xx="-0.25" yy="0" zz="-2" ww="1.0" />
+                <CPOINT xx="-0.25" yy="0" zz="-2" ww="1.0" />
+                <CPOINT xx="0.25" yy="0" zz="-2" ww="1.0" />
+                <CPOINT xx="0.25" yy="0" zz="-2" ww="1.0" />
+                <CPOINT xx="2" yy="0" zz="-2" ww="1.0" />
             </CPLINE>
-            <CPLINE> <!-- u = 1 -->
-                <CPOINT xx="2.0" yy="-1.0" zz="0.0" ww="1.0" /><!-- v= 0 -->
-                 <CPOINT xx="5.0" yy="1.0" zz="0.0" ww="1.0" /><!-- v= 1 -->
+            <CPLINE> <!-- use as many cpline to represent the u dimension-->
+                <CPOINT xx="-2" yy="0" zz="-0.25" ww="1.0" /> <!-- use as many cpoint to represent the v dimension-->
+                <CPOINT xx="-0.25" yy="0" zz="-0.25" ww="1.0" />
+                <CPOINT xx="-0.25" yy="0" zz="-0.25" ww="1.0" />
+                <CPOINT xx="0.25" yy="0" zz="-0.25" ww="1.0" />
+                <CPOINT xx="0.25" yy="0" zz="-0.25" ww="1.0" />
+                <CPOINT xx="2" yy="0" zz="-0.25" ww="1.0" />
+            </CPLINE>
+            <CPLINE> <!-- use as many cpline to represent the u dimension-->
+                <CPOINT xx="-2" yy="0" zz="-0.25" ww="1.0" /> <!-- use as many cpoint to represent the v dimension-->
+                <CPOINT xx="-0.25" yy="0" zz="-0.25" ww="1.0" />
+                <CPOINT xx="-0.25" yy="-1.5" zz="-0.25" ww="1.0" />
+                <CPOINT xx="0.25" yy="-1.5" zz="-0.25" ww="1.0" />
+                <CPOINT xx="0.25" yy="0" zz="-0.25" ww="1.0" />
+                <CPOINT xx="2" yy="0" zz="-0.25" ww="1.0" />
+            </CPLINE>
+            <CPLINE> <!-- use as many cpline to represent the u dimension-->
+                <CPOINT xx="-2" yy="0" zz="0.25" ww="1.0" /> <!-- use as many cpoint to represent the v dimension-->
+                <CPOINT xx="-0.25" yy="0" zz="0.25" ww="1.0" />
+                <CPOINT xx="-0.25" yy="-1.5" zz="0.25" ww="1.0" />
+                <CPOINT xx="0.25" yy="-1.5" zz="0.25" ww="1.0" />
+                <CPOINT xx="0.25" yy="0" zz="0.25" ww="1.0" />
+                <CPOINT xx="2" yy="0" zz="-0.25" ww="1.0" />
+            </CPLINE>
+            <CPLINE> <!-- use as many cpline to represent the u dimension-->
+                <CPOINT xx="-2" yy="0" zz="0.25" ww="1.0" /> <!-- use as many cpoint to represent the v dimension-->
+                <CPOINT xx="-0.25" yy="0" zz="0.25" ww="1.0" />
+                <CPOINT xx="-0.25" yy="0" zz="0.25" ww="1.0" />
+                <CPOINT xx="0.25" yy="0" zz="0.25" ww="1.0" />
+                <CPOINT xx="0.25" yy="0" zz="0.25" ww="1.0" />
+                <CPOINT xx="2" yy="0" zz="0.25" ww="1.0" />
+            </CPLINE>
+            <CPLINE> <!-- use as many cpline to represent the u dimension-->
+                <CPOINT xx="-2" yy="0" zz="2" ww="1.0" /> <!-- use as many cpoint to represent the v dimension-->
+                <CPOINT xx="-0.25" yy="0" zz="2" ww="1.0" />
+                <CPOINT xx="-0.25" yy="0" zz="2" ww="1.0" />
+                <CPOINT xx="0.25" yy="0" zz="2" ww="1.0" />
+                <CPOINT xx="0.25" yy="0" zz="2" ww="1.0" />
+                <CPOINT xx="2" yy="0" zz="2" ww="1.0" />
             </CPLINE>
         </LEAF>
       </DESCENDANTS>
