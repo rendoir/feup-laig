@@ -1,7 +1,7 @@
-function Nurbs(scene, degree_u, degree_v, control_vertices) {
+function Nurbs(scene, div_u, div_v, control_vertices) {
     CGFobject.call(this, scene);
-    this.degree_u = degree_u;
-    this.degree_v = degree_v;
+    this.div_u = div_u;
+    this.div_v = div_v;
     this.control_vertices = control_vertices;
     this.object = null;
     this.initObject();
@@ -11,16 +11,18 @@ Nurbs.prototype = Object.create(CGFobject.prototype);
 Nurbs.prototype.constructor = Nurbs;
 
 Nurbs.prototype.initObject = function () {
-    let knots_u = this.getKnotsVector(this.degree_u);
-    let knots_v = this.getKnotsVector(this.degree_v);
+    let degree_u = this.control_vertices.length - 1;
+    let degree_v = this.control_vertices[0].length - 1;
+    let knots_u = this.getKnotsVector(degree_u);
+    let knots_v = this.getKnotsVector(degree_v);
 
-    let nurbsSurface = new CGFnurbsSurface(this.degree_u, this.degree_v, knots_u, knots_v, this.control_vertices);
+    let nurbsSurface = new CGFnurbsSurface(degree_u, degree_v, knots_u, knots_v, this.control_vertices);
 
     getSurfacePoint = function (u, v) {
         return nurbsSurface.getPoint(u, v);
     };
 
-    this.object = new CGFnurbsObject(this.scene, getSurfacePoint, 20, 20);
+    this.object = new CGFnurbsObject(this.scene, getSurfacePoint, this.div_u, this.div_v);
 }
 
 Nurbs.prototype.getKnotsVector = function (degree) {
