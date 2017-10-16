@@ -1286,7 +1286,6 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
 				newNode.addChild(this.parseNode(this.xmlNodes[nodeIndexInXMLNodes],textureStack));
 			}else{
 				this.onXMLMinorError("Descendant id: " + nodeID + " is not declared.");
-				return null;
 			}
 		}else if (child.nodeName === "LEAF"){
 			// Process child leaf
