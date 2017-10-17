@@ -1,0 +1,125 @@
+<SCENE>
+
+  <!-- Initial values -->
+  <INITIALS>
+    <frustum near="0.1" far="100"/>
+    <translation x="0" y="0" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="0.25" sy="0.25" sz="0.25" />
+    <reference length="5" />
+  </INITIALS>
+
+
+  <!-- Illumination and clear colour -->
+  <ILLUMINATION>
+    <ambient r="1" g="1" b="1" a="1" />
+    <background r="0" g="0" b="0" a="1" />
+  </ILLUMINATION>
+
+  <LIGHTS>
+    <!-- DEBUG LIGHTS -->
+    <LIGHT id="light1">
+      <enable value ="1" />
+      <position  x="100" y="100" z="100" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+      <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+    <LIGHT id="light2">
+      <enable value ="1" />
+      <position  x="-100" y="100" z="100" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+      <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+    <LIGHT id="light3">
+      <enable value ="1" />
+      <position  x="100" y="100" z="-100" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+      <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+    <LIGHT id="light4">
+      <enable value ="1" />
+      <position  x="-100" y="100" z="-100" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+      <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+  </LIGHTS>
+
+
+  <!-- Textures -->
+  <TEXTURES>
+    <TEXTURE id="t_carbon">
+      <file path="images/rocket/carbon.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+  </TEXTURES>
+
+
+  <MATERIALS>
+    <MATERIAL id="m_rocket_nose">
+      <shininess value="25" />
+      <specular r="0.8" g="0.8" b="0.8" a="1" />
+      <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+  </MATERIALS>
+
+
+  <!-- The leaves -->
+  <LEAVES>
+  </LEAVES>
+
+
+  <!-- The nodes -->
+  <NODES>
+
+    <ROOT id="ring" />
+
+    <!-- Rocket -->
+    <NODE id="ring">
+      <MATERIAL id="null" />
+	  <TEXTURE id="null" />
+      <DESCENDANTS>
+        <LEAF type="patch" args="20 20" >
+			<CPLINE>
+				<CPOINT xx="0" yy="0" zz="1" ww="1"/>
+				<CPOINT xx="-0.6" yy="0" zz="1" ww="1"/>
+				<CPOINT xx="-1.8" yy="0" zz="0" ww="1"/>
+				<CPOINT xx="-0.6" yy="0" zz="-1" ww="1"/>
+				<CPOINT xx="0" yy="0" zz="-1" ww="1"/>
+			</CPLINE>
+			<CPLINE>
+				<CPOINT xx="0" yy="0" zz="0.75" ww="1"/>
+				<CPOINT xx="-0.4" yy="0" zz="0.9" ww="1"/>
+				<CPOINT xx="-1.5" yy="0" zz="0" ww="1"/>
+				<CPOINT xx="-0.4" yy="0" zz="-0.9" ww="1"/>
+				<CPOINT xx="0" yy="0" zz="-0.75" ww="1"/>
+			</CPLINE>
+		</LEAF>
+		<LEAF type="patch" args="10 10" >
+			<CPLINE>
+				<CPOINT xx="0" yy="0" zz="-1" ww="1"/>
+				<CPOINT xx="0.6" yy="0" zz="-1" ww="1"/>
+				<CPOINT xx="1.8" yy="0" zz="0" ww="1"/>
+				<CPOINT xx="0.6" yy="0" zz="1" ww="1"/>
+				<CPOINT xx="0" yy="0" zz="1" ww="1"/>
+			</CPLINE>
+			<CPLINE>
+				<CPOINT xx="0" yy="0" zz="-0.75" ww="1"/>
+				<CPOINT xx="0.4" yy="0" zz="-0.9" ww="1"/>
+				<CPOINT xx="1.5" yy="0" zz="0" ww="1"/>
+				<CPOINT xx="0.4" yy="0" zz="0.9" ww="1"/>
+				<CPOINT xx="0" yy="0" zz="0.75" ww="1"/>
+			</CPLINE>
+		</LEAF>
+      </DESCENDANTS>
+    </NODE>
+  </NODES>
+
+</SCENE>
