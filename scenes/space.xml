@@ -1,13 +1,13 @@
 <SCENE>
 
   <INITIALS>
-    <frustum near="0" far="500"/>
+    <frustum near="0.1" far="500"/>
     <translation x="0" y="0" z="0" />
     <rotation axis="x" angle="0" />
     <rotation axis="y" angle="0" />
     <rotation axis="z" angle="0" />
     <scale sx="0.25" sy="0.25" sz="0.25" />
-    <reference length="0" />
+    <reference length="1" />
   </INITIALS>
 
 
@@ -98,6 +98,36 @@
       <file path="images/rocket/aluminium.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
+
+    <TEXTURE id="t_skybox_back">
+      <file path="images/solar_system/skybox_back.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_down">
+      <file path="images/solar_system/skybox_down.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_front">
+      <file path="images/solar_system/skybox_front.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_left">
+      <file path="images/solar_system/skybox_left.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_right">
+      <file path="images/solar_system/skybox_right.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_up">
+      <file path="images/solar_system/skybox_up.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
   </TEXTURES>
 
 
@@ -173,13 +203,21 @@
       <ambient r="0.1" g="0.1" b="0.1" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
+
+    <MATERIAL id="m_skybox">
+      <shininess value="1" />
+      <specular r="0.0" g="0.0" b="0.0" a="1" />
+      <diffuse r="0.0" g="0.0" b="0.0" a="1" />
+      <ambient r="1.0" g="1.0" b="1.0" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
   </MATERIALS>
 
 
   <LEAVES>
   </LEAVES>
 
-  
+
   <NODES>
     <ROOT id="root" />
 
@@ -188,6 +226,7 @@
       <TEXTURE id="clear" />
       <DESCENDANTS>
         <NODEREF id="solar_system" />
+        <NODEREF id="skybox" />
       </DESCENDANTS>
     </NODE>
 
@@ -308,7 +347,7 @@
     <NODE id="robot">
       <MATERIAL id="m_robot_steel" />
       <TEXTURE id="clear" />
-      
+
       <TRANSLATION x="0" y="2.2" z="0" />
       <SCALE sx="0.5" sy="0.5" sz="0.5" />
 
@@ -967,6 +1006,84 @@
         <LEAF id="nose_tip" type="sphere" args="0.25 16 16" />
       </DESCENDANTS>
     </NODE>
+
+    <NODE id="skybox">
+      <MATERIAL id="m_skybox" />
+      <TEXTURE id="clear" />
+      <SCALE sx="750" sy="750" sz="750"/>
+      <DESCENDANTS>
+        <NODEREF id="skybox_back" />
+        <NODEREF id="skybox_down" />
+        <NODEREF id="skybox_front" />
+        <NODEREF id="skybox_left" />
+        <NODEREF id="skybox_right" />
+        <NODEREF id="skybox_up" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="skybox_back">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_skybox_back" />
+      <TRANSLATION x="0" y="0" z="0.5" />
+      <ROTATION axis="y" angle="180"/>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="skybox_down">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_skybox_down" />
+      <TRANSLATION x="0" y="-0.5" z="0" />
+      <ROTATION axis="x" angle="90"/>
+      <ROTATION axis="y" angle="180"/>
+      <ROTATION axis="z" angle="180"/>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="skybox_front">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_skybox_front" />
+      <TRANSLATION x="0" y="0" z="-0.5" />
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="skybox_left">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_skybox_left" />
+      <TRANSLATION x="-0.5" y="0" z="0" />
+      <ROTATION axis="y" angle="90"/>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="skybox_right">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_skybox_right" />
+      <TRANSLATION x="0.5" y="0" z="0" />
+      <ROTATION axis="y" angle="270"/>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="skybox_up">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_skybox_up" />
+      <TRANSLATION x="0" y="0.5" z="0" />
+      <ROTATION axis="x" angle="-90"/>
+      <ROTATION axis="y" angle="180"/>
+      <ROTATION axis="z" angle="180"/>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
+    </NODE>
+
   </NODES>
 
 </SCENE>
