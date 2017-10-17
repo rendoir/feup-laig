@@ -1444,7 +1444,9 @@ MySceneGraph.prototype.displayScene = function () {
     if (this.rootGraphNode.textureID != "null" && this.rootGraphNode.textureID != "clear"){
         texture_stack.push(this.rootGraphNode.textureID);
     }
-    
+    if (this.rootGraphNode.transformMatrix != null){
+        this.scene.multMatrix(this.rootGraphNode.transformMatrix);
+    }
     this.displayNode(this.rootGraphNode, material_stack, texture_stack);
 }
 
