@@ -107,7 +107,7 @@
         <NODEREF id="half-ring" />
       </DESCENDANTS>
     </NODE>
-    <!-- Rocket -->
+    
     <NODE id="half-ring">
       <MATERIAL id="null" />
 	    <TEXTURE id="null" />
