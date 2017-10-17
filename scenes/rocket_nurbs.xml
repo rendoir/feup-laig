@@ -1,0 +1,324 @@
+<SCENE>
+
+  <!-- Initial values -->
+  <INITIALS>
+    <frustum near="0.1" far="100"/>
+    <translation x="0" y="0" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="1" sy="1" sz="1" />
+    <reference length="5" />
+  </INITIALS>
+
+
+  <!-- Illumination and clear colour -->
+  <ILLUMINATION>
+    <ambient r="1" g="1" b="1" a="1" />
+    <background r="0" g="0" b="0" a="1" />
+  </ILLUMINATION>
+
+  <LIGHTS>
+    <!-- DEBUG LIGHTS -->
+    <LIGHT id="light1">
+      <enable value ="1" />
+      <position  x="100" y="100" z="100" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+      <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+    <LIGHT id="light2">
+      <enable value ="1" />
+      <position  x="-100" y="100" z="100" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+      <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+    <LIGHT id="light3">
+      <enable value ="1" />
+      <position  x="100" y="100" z="-100" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+      <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+    <LIGHT id="light4">
+      <enable value ="1" />
+      <position  x="-100" y="100" z="-100" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+      <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+  </LIGHTS>
+
+
+  <!-- Textures -->
+  <TEXTURES>
+    <TEXTURE id="t_aluminium">
+      <file path="images/rocket/aluminium.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+  </TEXTURES>
+
+
+  <MATERIALS>
+    <MATERIAL id="m_rocket_nose">
+      <shininess value="20" />
+      <specular r="0.75" g="0.75" b="0.75" a="1" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+  </MATERIALS>
+
+
+  <!-- The leaves -->
+  <LEAVES>
+  </LEAVES>
+
+
+  <!-- The nodes -->
+  <NODES>
+
+    <ROOT id="root" />
+
+   <!-- The root node -->
+    <NODE id="root">       
+        <MATERIAL id="null" />         
+        <TEXTURE id="null" />  
+        <DESCENDANTS>
+          <NODEREF id="cone"/>
+          <NODEREF id="asas"/>
+          <NODEREF id="asa_vertical"/>
+        </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="cone">
+      <MATERIAL id="null" />
+      <TEXTURE id="clear" />
+      <DESCENDANTS>
+        <LEAF type="patch" args="20 200"> 
+          <CPLINE>
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="7" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0.5" yy="10" zz="0" ww="2.0" />
+              <CPOINT xx="1" yy="7" zz="0" ww="10.0" />
+              <CPOINT xx="1" yy="0" zz="0" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0.5" yy="10" zz="0" ww="2.0" />
+              <CPOINT xx="1" yy="7" zz="0" ww="10.0" />
+              <CPOINT xx="1" yy="0" zz="0" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0.3535" yy="10" zz="0.3535" ww="2.0" />
+              <CPOINT xx="1" yy="7" zz="2" ww="10.0" />
+              <CPOINT xx="1" yy="0" zz="2" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0.3535" yy="10" zz="0.3535" ww="2.0" />
+              <CPOINT xx="1" yy="7" zz="2" ww="10.0" />
+              <CPOINT xx="1" yy="0" zz="2" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0.5" ww="2.0" />
+              <CPOINT xx="0" yy="7" zz="1" ww="10.0" />
+              <CPOINT xx="0" yy="0" zz="1" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="-0.3535" yy="10" zz="0.3535" ww="2.0" />
+              <CPOINT xx="-1" yy="7" zz="2" ww="10.0" />
+              <CPOINT xx="-1" yy="0" zz="2" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="-0.3535" yy="10" zz="0.3535" ww="2.0" />
+              <CPOINT xx="-1" yy="7" zz="2" ww="10.0" />
+              <CPOINT xx="-1" yy="0" zz="2" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="-0.5" yy="10" zz="0" ww="2.0" />
+              <CPOINT xx="-1" yy="7" zz="0" ww="10.0" />
+              <CPOINT xx="-1" yy="0" zz="0" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="-0.5" yy="10" zz="0" ww="2.0" />
+              <CPOINT xx="-1" yy="7" zz="0" ww="10.0" />
+              <CPOINT xx="-1" yy="0" zz="0" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="7" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+        </LEAF>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asas">
+      <MATERIAL id="null" />
+      <TEXTURE id="clear" />
+      <DESCENDANTS>
+        <LEAF type="patch" args="50 50"> 
+          <CPLINE>
+            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="1" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="2" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="3" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="4" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="9.5" zz="0" ww="3.0" />
+            <CPOINT xx="1.5" yy="8" zz="0" ww="2.0" />
+            <CPOINT xx="1" yy="2" zz="0" ww="2.0" />
+            <CPOINT xx="4" yy="2" zz="0" ww="2.0" />
+            <CPOINT xx="4" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="9.5" zz="0" ww="3.0" />
+            <CPOINT xx="1.5" yy="8" zz="0" ww="2.0" />
+            <CPOINT xx="1" yy="2" zz="0" ww="2.0" />
+            <CPOINT xx="4" yy="2" zz="0" ww="2.0" />
+            <CPOINT xx="4" yy="0" zz="0" ww="1.0" />
+          </CPLINE> 
+          <CPLINE>
+            <CPOINT xx="0" yy="9.52" zz="0.5" ww="3.0" />
+            <CPOINT xx="1.5" yy="8.02" zz="0.5" ww="2.0" />
+            <CPOINT xx="1" yy="2.02" zz="0.5" ww="2.0" />
+            <CPOINT xx="4.02" yy="2.02" zz="0.5" ww="2.0" />
+            <CPOINT xx="4" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="0" zz="0.2" ww="1.0" />
+            <CPOINT xx="1" yy="0" zz="0.2" ww="1.0" />
+            <CPOINT xx="2" yy="0" zz="0.2" ww="1.0" />
+            <CPOINT xx="3" yy="0" zz="0.2" ww="1.0" />
+            <CPOINT xx="4" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="1" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="2" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="3" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="4" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+        </LEAF>
+        
+        <LEAF type="patch" args="50 50"> 
+          <CPLINE>
+            <CPOINT xx="-4" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="-3" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="-2" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="-1" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="-4" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="-4" yy="2" zz="0" ww="2.0" />
+            <CPOINT xx="-1" yy="2" zz="0" ww="2.0" />
+            <CPOINT xx="-1.5" yy="8" zz="0" ww="2.0" />
+            <CPOINT xx="0" yy="9.5" zz="0" ww="3.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="-4" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="-4" yy="2" zz="0" ww="2.0" />
+            <CPOINT xx="-1" yy="2" zz="0" ww="2.0" />
+            <CPOINT xx="-1.5" yy="8" zz="0" ww="2.0" />
+            <CPOINT xx="0" yy="9.5" zz="0" ww="3.0" />
+          </CPLINE> 
+          <CPLINE>
+            <CPOINT xx="-4" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="-4.02" yy="2.02" zz="0.5" ww="2.0" />
+            <CPOINT xx="-1" yy="2.02" zz="0.5" ww="2.0" />
+            <CPOINT xx="-1.5" yy="8.02" zz="0.5" ww="2.0" />
+            <CPOINT xx="0" yy="9.52" zz="0.5" ww="3.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="-4" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="-3" yy="0" zz="0.2" ww="1.0" />
+            <CPOINT xx="-2" yy="0" zz="0.2" ww="1.0" />
+            <CPOINT xx="-1" yy="0" zz="0.2" ww="1.0" />
+            <CPOINT xx="0" yy="0" zz="0.2" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="-4" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="-3" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="-2" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="-1" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+        </LEAF>
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="asa_vertical">
+      <MATERIAL id="null" />
+      <TEXTURE id="clear" />
+      <DESCENDANTS>
+        <LEAF type="patch" args="20 20"> 
+          <CPLINE>
+            <CPOINT xx="0" yy="0" zz="1" ww="1.0" />
+            <CPOINT xx="0" yy="-0.25" zz="1.5" ww="1.0" />
+            <CPOINT xx="0" yy="-0.5" zz="2" ww="1.0" />
+            <CPOINT xx="0" yy="-0.75" zz="2.5" ww="1.0" />
+            <CPOINT xx="0" yy="-1" zz="3" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0.2" yy="7" zz="1" ww="1.0" />
+            <CPOINT xx="0.2" yy="2" zz="1.2" ww="2.0" />
+            <CPOINT xx="0.2" yy="1" zz="1.5" ww="2.0" />
+            <CPOINT xx="0.2" yy="0" zz="3" ww="2.0" />
+            <CPOINT xx="0" yy="-1" zz="3" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="7" zz="1" ww="1.0" />
+            <CPOINT xx="0" yy="2" zz="1.2" ww="2.0" />
+            <CPOINT xx="0" yy="1" zz="1.5" ww="2.0" />
+            <CPOINT xx="0" yy="0" zz="3" ww="2.0" />
+            <CPOINT xx="0" yy="-1" zz="3" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="-0.2" yy="7" zz="1" ww="1.0" />
+            <CPOINT xx="-0.2" yy="2" zz="1.2" ww="2.0" />
+            <CPOINT xx="-0.2" yy="1" zz="1.5" ww="2.0" />
+            <CPOINT xx="-0.2" yy="0" zz="3" ww="2.0" />
+            <CPOINT xx="0" yy="-1" zz="3" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="0" zz="1" ww="1.0" />
+            <CPOINT xx="0" yy="-0.25" zz="1.5" ww="1.0" />
+            <CPOINT xx="0" yy="-0.5" zz="2" ww="1.0" />
+            <CPOINT xx="0" yy="-0.75" zz="2.5" ww="1.0" />
+            <CPOINT xx="0" yy="-1" zz="3" ww="1.0" />
+          </CPLINE>
+        </LEAF>
+      </DESCENDANTS>
+    </NODE>
+
+  </NODES>
+
+</SCENE>
