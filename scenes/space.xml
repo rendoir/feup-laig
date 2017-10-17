@@ -234,6 +234,7 @@
     <NODE id="solar_system">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
+      <ROTATION axis="x" angle="90" />
       <DESCENDANTS>
         <NODEREF id="sun" />
         <NODEREF id="planets" />
@@ -289,7 +290,6 @@
       <MATERIAL id="null" />
       <TEXTURE id="t_earth" />
       <TRANSLATION x="-55" y="0" z="0" />
-      <ROTATION axis="x" angle="90" />
       <DESCENDANTS>
         <LEAF id="p_earth" type="sphere" args="3 20 20" />
       </DESCENDANTS>
@@ -309,7 +309,6 @@
       <MATERIAL id="null" />
       <TEXTURE id="t_jupiter" />
       <TRANSLATION x="-120" y="0" z="0" />
-      <ROTATION axis="x" angle="90" />
       <DESCENDANTS>
         <LEAF id="p_jupiter" type="sphere" args="10 30 30" />
       </DESCENDANTS>
@@ -319,7 +318,6 @@
       <MATERIAL id="null" />
       <TEXTURE id="t_saturn" />
       <TRANSLATION x="-170" y="0" z="0" />
-      <ROTATION axis="x" angle="90" />
       <DESCENDANTS>
         <LEAF id="p_saturn" type="sphere" args="7.5 26 26" />
       </DESCENDANTS>
@@ -348,9 +346,9 @@
       <MATERIAL id="m_robot_steel" />
       <TEXTURE id="clear" />
 
-      <TRANSLATION x="0" y="2.2" z="0" />
+      <TRANSLATION x="0" y="0" z="-2.2" />
       <SCALE sx="0.5" sy="0.5" sz="0.5" />
-
+      <ROTATION axis="x" angle="-90" />
       <DESCENDANTS>
         <NODEREF id="body" />
         <NODEREF id="camera" />
@@ -814,9 +812,9 @@
     <NODE id="rocket">
       <MATERIAL id="m_rocket_stage_body" />
       <TEXTURE id="null" />
-      <TRANSLATION x="0" y="3.2" z="0" />
-      <ROTATION axis="x" angle="-90" />
+      <TRANSLATION x="0" y="0" z="-3.2" />
       <SCALE sx="0.15" sy="0.15" sz="0.15" />
+      <ROTATION axis="x" angle="-180" />
       <DESCENDANTS>
         <NODEREF id="main_body" />
         <NODEREF id="side_boosters" />
