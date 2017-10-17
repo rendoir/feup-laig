@@ -1290,7 +1290,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
 		}else if (child.nodeName === "LEAF"){
 			// Process child leaf
 			let type = this.reader.getItem(child, 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
-            let argsString = this.reader.getString(child,'args');
+            let argsString = this.reader.getString(child,'args').trim();
             let argsArray = argsString.split(" ");
             if (type === "rectangle" || type === "triangle") {
                 let textureID = textureStack[textureStack.length-1];
