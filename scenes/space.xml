@@ -48,6 +48,11 @@
       <file path="images/solar_system/earth.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
+    
+    <TEXTURE id="t_moon">
+      <file path="images/solar_system/moon.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
 
     <TEXTURE id="t_mars">
       <file path="images/solar_system/mars.jpg" />
@@ -71,6 +76,11 @@
 
     <TEXTURE id="t_uranus">
       <file path="images/solar_system/uranus.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_uranus_ring">
+      <file path="images/solar_system/uranus_ring.png" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -296,7 +306,17 @@
       <TEXTURE id="t_earth" />
       <TRANSLATION x="-55" y="0" z="0" />
       <DESCENDANTS>
+        <NODEREF id="moon" />
         <LEAF id="p_earth" type="sphere" args="3 20 20" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="moon">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_moon" />
+      <TRANSLATION x="0" y="5" z="0" />
+      <DESCENDANTS>
+        <LEAF id="p_moon" type="sphere" args="1 18 18" />
       </DESCENDANTS>
     </NODE>
 
@@ -322,7 +342,7 @@
     <NODE id="saturn">
       <MATERIAL id="null" />
       <TEXTURE id="t_saturn" />
-      <TRANSLATION x="-170" y="0" z="0" />
+      <TRANSLATION x="-180" y="0" z="0" />
       <DESCENDANTS>
         <LEAF id="p_saturn" type="sphere" args="7.5 26 26" />
         <NODEREF id="saturn_ring" />
@@ -332,7 +352,7 @@
     <NODE id="saturn_ring">
       <MATERIAL id="null" />
       <TEXTURE id="t_saturn_ring" />
-      <SCALE sx="20" sy="20" sz="20" />
+      <SCALE sx="17.5" sy="17.5" sz="17.5" />
       <ROTATION axis="y" angle="-30" />
       <DESCENDANTS>
         <LEAF id="p_saturn_ring" type="cylinder" args="0 1 1 0 28 1 1" />
@@ -342,16 +362,27 @@
     <NODE id="uranus">
       <MATERIAL id="null" />
       <TEXTURE id="t_uranus" />
-      <TRANSLATION x="-220" y="0" z="0" />
+      <TRANSLATION x="-230" y="0" z="0" />
       <DESCENDANTS>
         <LEAF id="p_uranus" type="sphere" args="5 22 22" />
+        <NODEREF id="uranus_ring" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="uranus_ring">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_uranus_ring" />
+      <SCALE sx="15" sy="15" sz="15" />
+      <ROTATION axis="y" angle="-15" />
+      <DESCENDANTS>
+        <LEAF id="p_uranus_ring" type="cylinder" args="0 1 1 0 32 1 1" />
       </DESCENDANTS>
     </NODE>
 
     <NODE id="neptune">
       <MATERIAL id="null" />
       <TEXTURE id="t_neptune" />
-      <TRANSLATION x="-250" y="0" z="0" />
+      <TRANSLATION x="-270" y="0" z="0" />
       <DESCENDANTS>
         <LEAF id="t_neptune" type="sphere" args="5 22 22" />
       </DESCENDANTS>
