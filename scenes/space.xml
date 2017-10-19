@@ -65,7 +65,7 @@
     </TEXTURE>
 
     <TEXTURE id="t_saturn_ring">
-      <file path="images/solar_system/saturnRing.jpg" />
+      <file path="images/solar_system/saturn_ring.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -212,7 +212,7 @@
     <MATERIAL id="m_skybox">
       <shininess value="1" />
       <specular r="0.0" g="0.0" b="0.0" a="1" />
-      <diffuse r="0.0" g="0.0" b="0.0" a="1" />
+      <diffuse r="1.0" g="1.0" b="1.0" a="1" />
       <ambient r="1.0" g="1.0" b="1.0" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
@@ -333,6 +333,7 @@
       <MATERIAL id="null" />
       <TEXTURE id="t_saturn_ring" />
       <ROTATION axis="x" angle="90" />
+      <ROTATION axis="z" angle="30" />
       <SCALE sx="15" sy="1" sz="15" />
       <DESCENDANTS>
         <NODEREF id="ring" />
@@ -1024,7 +1025,7 @@
     <NODE id="skybox">
       <MATERIAL id="m_skybox" />
       <TEXTURE id="clear" />
-      <SCALE sx="750" sy="750" sz="750"/>
+      <SCALE sx="1000" sy="1000" sz="1000"/>
       <DESCENDANTS>
         <NODEREF id="skybox_back" />
         <NODEREF id="skybox_down" />
