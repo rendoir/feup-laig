@@ -65,7 +65,7 @@
     </TEXTURE>
 
     <TEXTURE id="t_saturn_ring">
-      <file path="images/solar_system/saturn_ring.jpg" />
+      <file path="images/solar_system/saturn_ring.png" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -230,8 +230,8 @@
       <MATERIAL id="m_default" />
       <TEXTURE id="clear" />
       <DESCENDANTS>
-        <NODEREF id="solar_system" />
         <NODEREF id="skybox" />
+        <NODEREF id="solar_system" />
       </DESCENDANTS>
     </NODE>
 
@@ -332,11 +332,10 @@
     <NODE id="saturn_ring">
       <MATERIAL id="null" />
       <TEXTURE id="t_saturn_ring" />
-      <ROTATION axis="x" angle="90" />
-      <ROTATION axis="z" angle="30" />
-      <SCALE sx="15" sy="1" sz="15" />
+      <SCALE sx="20" sy="20" sz="20" />
+      <ROTATION axis="y" angle="-30" />
       <DESCENDANTS>
-        <NODEREF id="ring" />
+        <LEAF id="p_saturn_ring" type="cylinder" args="0 1 1 0 28 1 1" />
       </DESCENDANTS>
     </NODE>
 
@@ -1098,82 +1097,6 @@
         <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
       </DESCENDANTS>
     </NODE>
-
-    <NODE id="ring">
-      <MATERIAL id="null" />
-	    <TEXTURE id="null" />
-      <DESCENDANTS>
-        <NODEREF id="left-ring" />
-        <NODEREF id="right-ring" />
-      </DESCENDANTS>
-    </NODE>
-
-
-    <NODE id="left-ring">
-      <MATERIAL id="null" />
-	    <TEXTURE id="null" />
-      <DESCENDANTS>
-        <NODEREF id="half-ring" />
-      </DESCENDANTS>
-    </NODE>
-
-    <NODE id="right-ring">
-      <MATERIAL id="null" />
-	    <TEXTURE id="null" />
-      <ROTATION axis="y" angle="180" />
-      <DESCENDANTS>
-        <NODEREF id="half-ring" />
-      </DESCENDANTS>
-    </NODE>
-
-    <NODE id="half-ring">
-      <MATERIAL id="null" />
-	    <TEXTURE id="null" />
-      <TRANSLATION x="0" y="1" z="0"/>
-      <DESCENDANTS>
-        <LEAF type="patch" args="20 20" >
-          <CPLINE>
-            <CPOINT xx="0" yy="0" zz="1" ww="1"/>
-            <CPOINT xx="-2" yy="0" zz="1" ww="0.333"/>
-            <CPOINT xx="-2" yy="0" zz="-1" ww="0.333"/>
-            <CPOINT xx="0" yy="0" zz="-1" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="0" yy="0.05" zz="0.875" ww="1"/>
-            <CPOINT xx="-1.75" yy="0.05" zz="0.875" ww="0.333"/>
-            <CPOINT xx="-1.75" yy="0.05" zz="-0.875" ww="0.333"/>
-            <CPOINT xx="0" yy="0.05" zz="-0.875" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="0" yy="0" zz="0.75" ww="1"/>
-            <CPOINT xx="-1.5" yy="0" zz="0.75" ww="0.333"/>
-            <CPOINT xx="-1.5" yy="0" zz="-0.75" ww="0.333"/>
-            <CPOINT xx="0" yy="0" zz="-0.75" ww="1"/>
-          </CPLINE>
-		    </LEAF>
-        <LEAF type="patch" args="20 20" >
-          <CPLINE>
-            <CPOINT xx="0" yy="0" zz="-1" ww="1"/>
-            <CPOINT xx="-2" yy="0" zz="-1" ww="0.333"/>
-            <CPOINT xx="-2" yy="0" zz="1" ww="0.333"/>
-            <CPOINT xx="0" yy="0" zz="1" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="0" yy="-0.05" zz="-0.875" ww="1"/>
-            <CPOINT xx="-1.75" yy="-0.05" zz="-0.875" ww="0.333"/>
-            <CPOINT xx="-1.75" yy="-0.05" zz="0.875" ww="0.333"/>
-            <CPOINT xx="0" yy="-0.05" zz="0.875" ww="1"/>
-          </CPLINE>
-          <CPLINE>
-            <CPOINT xx="0" yy="0" zz="-0.75" ww="1"/>
-            <CPOINT xx="-1.5" yy="0" zz="-0.75" ww="0.333"/>
-            <CPOINT xx="-1.5" yy="0" zz="0.75" ww="0.333"/>
-            <CPOINT xx="0" yy="0" zz="0.75" ww="1"/>
-          </CPLINE>
-		    </LEAF>
-      </DESCENDANTS>
-    </NODE>
-
   </NODES>
 
 </SCENE>
