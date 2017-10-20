@@ -63,7 +63,7 @@
   
   <TEXTURES>
      <TEXTURE id="t_pyramid">
-      <file path="images/pyramid.jpg" />
+      <file path="images/misc/rock.jpg" />
       <amplif_factor s="0.5" t="0.5" />
     </TEXTURE>
   </TEXTURES>

@@ -18,28 +18,58 @@
     <background r="0" g="0" b="0" a="1" />          
 </ILLUMINATION>
 
-<LIGHTS>	
-	<LIGHT id="light_0">                                    
-        <enable value ="1" />                   	       
-        <position  x="0" y="0" z="0" w="1" />       	   
-        <ambient r="0.1" g="0.1" b="0.1" a="1.0" />        	 
-        <diffuse r="1" g="1" b="1" a="1.0" />        
-        <specular r="1" g="1" b="1" a="1.0" />      
-    </LIGHT>
-    <LIGHT id="light_1">
-      <enable value ="1" />
-      <position  x="1" y="1" z="0" w="1" />
-      <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-      <diffuse r="1" g="1" b="1" a="1.0" />
-      <specular r="1" g="1" b="1" a="1.0" />
-    </LIGHT>
+<LIGHTS>
+  <LIGHT id="light0">
+    <enable value ="1" />
+    <position  x="0" y="10" z="0" w="1" />
+    <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+    <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+    <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+  </LIGHT>
+
+  <LIGHT id="light1">
+    <enable value ="1" />
+    <position x="30" y="10" z="0" w="1" />
+    <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+    <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+    <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+  </LIGHT>
+
+  <LIGHT id="light2">
+    <enable value ="1" />
+    <position x="0" y="10" z="20" w="1" />
+    <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+    <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+    <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+  </LIGHT>
+
+  <LIGHT id="light3">
+    <enable value ="1" />
+    <position x="30" y="10" z="20" w="1" />
+    <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+    <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+    <specular r="0.6" g="0.6" b="0.6" a="1.0" />
+  </LIGHT>
+
+  <LIGHT id="light4">
+    <enable value ="1" />
+    <position x="0" y="-10" z="0" w="1" />
+    <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+    <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+    <specular r="0.6" g="0.6" b="0.6" a="1.0" />
+  </LIGHT>
 </LIGHTS>
 
 
 <TEXTURES> 
-    <TEXTURE id="t_wheel">
-        <file path="images/wheel.jpg" />
-        <amplif_factor s="1" t="5" />
+    <TEXTURE id="t_rubber">
+        <file path="images/misc/tyre_rubber.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_aluminium">
+      <file path="images/misc/aluminium.jpg" />
+      <amplif_factor s="2" t="1" />
     </TEXTURE>
 </TEXTURES>
 
@@ -54,17 +84,17 @@
   </MATERIAL>
 
   <MATERIAL id="m_robot_steel">
-      <shininess value="25" />
-      <specular r="0.8" g="0.8" b="0.8" a="1" />
-      <diffuse r="0.5" g="0.5" b="0.5" a="1" />
-      <ambient r="0.1" g="0.1" b="0.1" a="1" />
-      <emission r="0" g="0" b="0" a="1" />
-    </MATERIAL>
+    <shininess value="64" />
+    <specular r="0.85" g="0.85" b="0.85" a="1" />
+    <diffuse r="0.25" g="0.25" b="0.25" a="1" />
+    <ambient r="0.1" g="0.1" b="0.1" a="1" />
+    <emission r="0" g="0" b="0" a="1" />
+  </MATERIAL>
 
   <MATERIAL id="m_robot_wheel">
     <shininess value="1" />
-    <specular r="0.15" g="0.15" b="0.15" a="1" />
-    <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+    <specular r="0.2" g="0.2" b="0.2" a="1" />
+    <diffuse r="0.6" g="0.6" b="0.6" a="1" />
     <ambient r="0.1" g="0.1" b="0.1" a="1" />
     <emission r="0" g="0" b="0" a="1" />
   </MATERIAL>
@@ -94,10 +124,7 @@
   <!-- Robot -->
   <NODE id="robot">
     <MATERIAL id="m_robot_steel" />
-    <TEXTURE id="clear" />
-
-    <TRANSLATION x="0" y="2.2" z="0" />
-    <SCALE sx="0.5" sy="0.5" sz="0.5" />
+    <TEXTURE id="t_aluminium" />
 
     <DESCENDANTS>
       <NODEREF id="body" />
@@ -155,7 +182,7 @@
   </NODE>
 
   <NODE id="wheels">
-    <MATERIAL id="m_robot_wheel" />
+    <MATERIAL id="null" />
     <TEXTURE id="null" />
 
     <TRANSLATION x="0" y="-0.3" z="0" />
@@ -285,8 +312,8 @@
   </NODE>
 
   <NODE id="wheel1">
-    <MATERIAL id="null" />
-    <TEXTURE id="t_wheel" />
+    <MATERIAL id="m_robot_wheel" />
+    <TEXTURE id="t_rubber" />
 
     <TRANSLATION x="0" y="0" z="0.3" />
 
@@ -296,8 +323,8 @@
   </NODE>
 
   <NODE id="wheel2">
-    <MATERIAL id="null" />
-    <TEXTURE id="t_wheel" />
+    <MATERIAL id="m_robot_wheel" />
+    <TEXTURE id="t_rubber" />
 
     <TRANSLATION x="0" y="0" z="0.25" />
 
@@ -307,8 +334,8 @@
   </NODE>
 
   <NODE id="wheel3">
-    <MATERIAL id="null" />
-    <TEXTURE id="t_wheel" />
+    <MATERIAL id="m_robot_wheel" />
+    <TEXTURE id="t_rubber" />
 
     <TRANSLATION x="0" y="0" z="0.25" />
 
@@ -437,8 +464,8 @@
   </NODE>
 
   <NODE id="wheel4">
-    <MATERIAL id="null" />
-    <TEXTURE id="t_wheel" />
+    <MATERIAL id="m_robot_wheel" />
+    <TEXTURE id="t_rubber" />
 
     <TRANSLATION x="0" y="0" z="-0.2" />
 
@@ -448,8 +475,8 @@
   </NODE>
 
   <NODE id="wheel5">
-    <MATERIAL id="null" />
-    <TEXTURE id="t_wheel" />
+    <MATERIAL id="m_robot_wheel" />
+    <TEXTURE id="t_rubber" />
 
     <TRANSLATION x="0" y="0" z="-0.2" />
 
@@ -459,8 +486,8 @@
   </NODE>
 
   <NODE id="wheel6">
-    <MATERIAL id="null" />
-    <TEXTURE id="t_wheel" />
+    <MATERIAL id="m_robot_wheel" />
+    <TEXTURE id="t_rubber" />
 
     <TRANSLATION x="0" y="0" z="-0.2" />
 
@@ -478,7 +505,7 @@
 
     <DESCENDANTS>
       <NODEREF id="face1" />
-      <NODEREF id="face2" />
+      <NODEREF id="face2" /> 
       <NODEREF id="face3" />
       <NODEREF id="face4" />
       <NODEREF id="face5" />
@@ -501,8 +528,8 @@
     <MATERIAL id="null" />
     <TEXTURE id="null" />
 
+    <TRANSLATION x="-0.5" y="0" z="0" />
     <ROTATION axis="y" angle="-90" />
-    <TRANSLATION x="0" y="0" z="0.5" />
 
     <DESCENDANTS>
       <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
@@ -513,8 +540,8 @@
     <MATERIAL id="null" />
     <TEXTURE id="null" />
 
+    <TRANSLATION x="0" y="0" z="-0.5" />
     <ROTATION axis="y" angle="-180" />
-    <TRANSLATION x="0" y="0" z="0.5" />
 
     <DESCENDANTS>
       <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
@@ -525,8 +552,8 @@
     <MATERIAL id="null" />
     <TEXTURE id="null" />
 
+    <TRANSLATION x="0.5" y="0" z="0" />
     <ROTATION axis="y" angle="90" />
-    <TRANSLATION x="0" y="0" z="0.5" />
 
     <DESCENDANTS>
       <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
@@ -537,8 +564,8 @@
     <MATERIAL id="null" />
     <TEXTURE id="null" />
 
+    <TRANSLATION x="0" y="0.5" z="0" />
     <ROTATION axis="x" angle="-90" />
-    <TRANSLATION x="0" y="0" z="0.5" />
 
     <DESCENDANTS>
       <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
@@ -549,13 +576,14 @@
     <MATERIAL id="null" />
     <TEXTURE id="null" />
 
+    <TRANSLATION x="0" y="-0.5" z="0" />
     <ROTATION axis="x" angle="90" />
-    <TRANSLATION x="0" y="0" z="0.5" />
 
     <DESCENDANTS>
       <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
     </DESCENDANTS>
   </NODE>
+
 </NODES>
 
 </SCENE>

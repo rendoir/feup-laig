@@ -53,18 +53,26 @@
 
   <!-- Textures -->
   <TEXTURES>
-    <TEXTURE id="t_aluminium">
-      <file path="images/rocket/aluminium.jpg" />
+     <TEXTURE id="t_perforated">
+      <file path="images/misc/perforated_metal.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
   </TEXTURES>
 
 
   <MATERIALS>
-    <MATERIAL id="m_rocket_nose">
-      <shininess value="20" />
-      <specular r="0.75" g="0.75" b="0.75" a="1" />
-      <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+    <MATERIAL id="m_rocket_body">
+      <shininess value="64" />
+      <specular r="1.0" g="1.0" b="1.0" a="1" />
+      <diffuse r="1.0" g="1.0" b="1.0" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="m_rocket_nozzle">
+      <shininess value="16" />
+      <specular r="1.0" g="1.0" b="1.0" a="1" />
+      <diffuse r="0.75" g="0.75" b="0.75" a="1" />
       <ambient r="0.1" g="0.1" b="0.1" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
@@ -79,26 +87,26 @@
   <!-- The nodes -->
   <NODES>
 
-    <ROOT id="root" />
+    <ROOT id="rocket" />
 
-   <!-- The root node -->
-    <NODE id="root">       
-        <MATERIAL id="null" />         
-        <TEXTURE id="null" />  
+   <!-- Rocket -->
+    <NODE id="rocket">       
+        <MATERIAL id="m_rocket_body" />         
+        <TEXTURE id="clear" />
         <DESCENDANTS>
           <NODEREF id="cone"/>
-          <NODEREF id="asas"/>
-          <NODEREF id="asa_vertical"/>
-          <NODEREF id="propellant"/>
+          <NODEREF id="wings"/>
+          <NODEREF id="fin"/>
+          <NODEREF id="nozzle"/>
         </DESCENDANTS>
     </NODE>
 
 
     <NODE id="cone">
       <MATERIAL id="null" />
-      <TEXTURE id="clear" />
+      <TEXTURE id="null" />
       <DESCENDANTS>
-        <LEAF type="patch" args="20 200"> 
+        <LEAF type="patch" args="20 100"> 
           <CPLINE>
               <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
               <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
@@ -180,9 +188,9 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="asas">
+    <NODE id="wings">
       <MATERIAL id="null" />
-      <TEXTURE id="clear" />
+      <TEXTURE id="null" />
       <DESCENDANTS>
         <LEAF type="patch" args="50 50"> 
           <CPLINE>
@@ -276,9 +284,9 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="asa_vertical">
+    <NODE id="fin">
       <MATERIAL id="null" />
-      <TEXTURE id="clear" />
+      <TEXTURE id="null" />
       <DESCENDANTS>
         <LEAF type="patch" args="20 20"> 
           <CPLINE>
@@ -321,9 +329,9 @@
     </NODE>
 
     
-    <NODE id="propellant">
-      <MATERIAL id="null" />
-      <TEXTURE id="clear" />
+    <NODE id="nozzle">
+      <MATERIAL id="m_rocket_nozzle" />
+      <TEXTURE id="t_perforated" />
       <DESCENDANTS>
         <LEAF type="patch" args="20 20"> 
           <CPLINE>

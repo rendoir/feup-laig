@@ -59,31 +59,31 @@
   <TEXTURES>
     <!-- Tree trunk -->
     <TEXTURE id="trunk">
-      <file path="images/trunk-image.jpg" />
+      <file path="images/demo/trunk-image.jpg" />
       <amplif_factor s="2" t="2" />
     </TEXTURE>
 
     <!-- Tree leaves -->
     <TEXTURE id="folhas">
-      <file path="images/leaves.jpg" />
+      <file path="images/demo/leaves.jpg" />
       <amplif_factor s="3" t="4" />
     </TEXTURE>
 
     <!-- Rocks -->
     <TEXTURE id="rocks">
-      <file path="images/rocks.jpg" />
+      <file path="images/demo/rocks.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <!-- Glass work -->
     <TEXTURE id="vidral">
-      <file path="images/vidral.jpg" />
+      <file path="images/demo/vidral.jpg" />
       <amplif_factor s="15" t="10" />
     </TEXTURE>
 
     <!-- Street bench -->
     <TEXTURE id="banco">
-      <file path="images/bank.jpg" />
+      <file path="images/demo/bank.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -164,7 +164,6 @@
       <TEXTURE id="null" />
 
       <DESCENDANTS>
-        <!-- <NODEREF id="nurbs" /> -->
         <NODEREF id="luzes" />
         <NODEREF id="piramide" />
         <NODEREF id="arvores" />
@@ -172,29 +171,6 @@
         <NODEREF id="bancos" />
       </DESCENDANTS>
     </NODE>
-
-    <!-- <NODE id="nurbs">
-      <MATERIAL id="defaultMaterial" />
-      <TEXTURE id="null" />
-      <DESCENDANTS>
-        <LEAF type="patch" args="2 1" >
-          <CPLINE >
-            <CPOINT xx="-1.5" yy="-1.5" zz="0.0" ww="1" />
-            <CPOINT xx="-1.5" yy="1.5" zz="0.0" ww="1" />
-          </CPLINE>
-
-          <CPLINE >
-            <CPOINT xx="0" yy="-1.5" zz="3.0" ww="1" />
-            <CPOINT xx="0" yy="1.5" zz="3.0" ww="1" />
-          </CPLINE>
-
-          <CPLINE >
-            <CPOINT xx="1.5" yy="-1.5" zz="0.0" ww="1" />
-            <CPOINT xx="1.5" yy="1.5" zz="0.0" ww="1" />
-          </CPLINE>
-        </LEAF>
-      </DESCENDANTS>
-    </NODE> -->
 
     <!-- The floor -->
     <NODE id="chao">
