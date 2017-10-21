@@ -5,10 +5,6 @@
 function Circle(scene, slices, radius) {
     CGFobject.call(this, scene);
 
-    this.minS = 0;
-    this.maxS = 1;
-    this.minT = 0;
-    this.maxT = 1;
     this.radius = radius;
     this.slices = slices;
     this.initBuffers();
@@ -41,43 +37,45 @@ Circle.prototype.initBuffers = function() {
         var x1 = Math.cos(angle_now) * this.radius;
         var y1 = Math.sin(angle_now) * this.radius;
 
+        //Vertices
+            //Current vertex
         this.vertices.push(x0);
         this.vertices.push(y0);
-        this.vertices.push(0); // vertice 0
+        this.vertices.push(0);
 
+            //Next vertex
         this.vertices.push(x1);
         this.vertices.push(y1);
-        this.vertices.push(0); // vertice 1
-
-        this.vertices.push(0)
         this.vertices.push(0);
-        this.vertices.push(0); // vertice 2
 
-        this.indices.push(indice); // 0
-        this.indices.push(indice + 1); // 1
-        this.indices.push(indice + 2); // 2
+            //Center
+        this.vertices.push(0);
+        this.vertices.push(0);
+        this.vertices.push(0); 
+
+        //Indices
+        this.indices.push(indice); 
+        this.indices.push(indice + 1); 
+        this.indices.push(indice + 2); 
 
         indice += 3;
 
-        // normal a vertice 0
+        //Normals
         this.normals.push(0);
         this.normals.push(0);
         this.normals.push(1);
 
-        // normal a vertice 1
         this.normals.push(0);
         this.normals.push(0);
         this.normals.push(1);
 
-        // normal a vertice 2
         this.normals.push(0);
         this.normals.push(0);
         this.normals.push(1);
 
-        // coordenadas textura
-
-        this.texCoords.push(0.5 * (x0 + 1), 0.5 * (1 - y0));
-        this.texCoords.push(0.5 * (x1 + 1), 0.5 * (1 - y1));
+        //Texture coordinates
+        this.texCoords.push(0.5 + 0.5 * Math.cos(angle_now - angle), 0.5 + 0.5 * Math.sin(angle_now - angle));
+        this.texCoords.push(0.5 + 0.5 * Math.cos(angle_now), 0.5 + 0.5 * Math.sin(angle_now));
         this.texCoords.push(0.5, 0.5);
     }
 
