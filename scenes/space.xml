@@ -134,8 +134,23 @@
       <amplif_factor s="0.5" t="0.5" />
     </TEXTURE>
 
-    <TEXTURE id="t_perforated">
+    <TEXTURE id="t_perfurated">
       <file path="images/misc/perforated_metal.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_carbon">
+      <file path="images/rocket/carbon.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_dark_grill">
+      <file path="images/rocket/dark_grill.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_light_grill">
+      <file path="images/rocket/light_grill.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
   </TEXTURES>
@@ -198,7 +213,7 @@
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 
-    <MATERIAL id="m_rocket_body">
+    <MATERIAL id="m_spaceship_body">
       <shininess value="64" />
       <specular r="1.0" g="1.0" b="1.0" a="1" />
       <diffuse r="1.0" g="1.0" b="1.0" a="1" />
@@ -206,10 +221,42 @@
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 
-    <MATERIAL id="m_rocket_nozzle">
+    <MATERIAL id="m_spaceship_nozzle">
       <shininess value="16" />
       <specular r="1.0" g="1.0" b="1.0" a="1" />
       <diffuse r="0.75" g="0.75" b="0.75" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="m_rocket_nose">
+      <shininess value="25" />
+      <specular r="0.8" g="0.8" b="0.8" a="1" />
+      <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="m_rocket_union">
+      <shininess value="20" />
+      <specular r="0.2" g="0.3" b="0.7" a="1" />
+      <diffuse r="0.2" g="0.3" b="0.7" a="1" />
+      <ambient r="0.1" g="0.1" b="0.2" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="m_rocket_stage_body">
+      <shininess value="25" />
+      <specular r="0.8" g="0.8" b="0.8" a="1" />
+      <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <MATERIAL id="m_rocket_nozzle">
+      <shininess value="1" />
+      <specular r="0.1" g="0.1" b="0.1" a="1" />
+      <diffuse r="0.8" g="0.8" b="0.8" a="1" />
       <ambient r="0.1" g="0.1" b="0.1" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
@@ -953,112 +1000,307 @@
 
     <!-- Rocket -->
     <NODE id="rocket">
-      <MATERIAL id="m_rocket_body" />
-      <TEXTURE id="clear" />
+      <MATERIAL id="m_rocket_stage_body" />
+      <TEXTURE id="null" />
       <TRANSLATION x="0" y="0" z="-3.2" />
       <SCALE sx="0.25" sy="0.25" sz="0.25" />
-      <ROTATION axis="x" angle="-90" />
-      <ROTATION axis="y" angle="90" />
+      <ROTATION axis="x" angle="180" />
       <DESCENDANTS>
-        <NODEREF id="cone"/>
-        <NODEREF id="wings"/>
-        <NODEREF id="fin"/>
-        <NODEREF id="nozzle"/>
+        <NODEREF id="main_body" />
+        <NODEREF id="side_boosters" />
+        <NODEREF id="spaceship" />
       </DESCENDANTS>
     </NODE>
 
-
-    <NODE id="cone">
+    <NODE id="main_body">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <DESCENDANTS>
-        <LEAF type="patch" args="20 100">
+        <NODEREF id="stages" />
+        <NODEREF id="unions" />
+        <NODEREF id="main_nozzle" />
+        <NODEREF id="main_nose" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="stages">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="bottom_stage" />
+        <NODEREF id="mid_stage" />
+        <NODEREF id="top_stage" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="bottom_stage">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_light_grill" />
+      <DESCENDANTS>
+        <LEAF id="bottom_stage" type="cylinder" args="8 1.5 1.5 16 16 0 1" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="mid_stage">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_aluminium" />
+      <TRANSLATION x="0" y="0" z="8.25" />
+      <DESCENDANTS>
+        <LEAF id="mid_stage" type="cylinder" args="4 1 1 16 16 0 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="top_stage">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_light_grill" />
+      <TRANSLATION x="0" y="0" z="12.5" />
+      <DESCENDANTS>
+        <LEAF id="top_stage" type="cylinder" args="3 1.5 1.5 16 16 0 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="unions">
+      <MATERIAL id="m_rocket_union" />
+      <TEXTURE id="clear" />
+      <DESCENDANTS>
+        <NODEREF id="union_b_m" />
+        <NODEREF id="union_t_n" />
+        <NODEREF id="union_m_t" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="union_b_m">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="8" />
+      <DESCENDANTS>
+        <LEAF id="union_b_m" type="cylinder" args="0.25 1.5 1 8 16 0 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="union_t_n">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="15.5" />
+      <DESCENDANTS>
+        <LEAF id="union_t_n" type="cylinder" args="0.25 1.5 1 8 16 0 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="union_m_t">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="12.25" />
+      <DESCENDANTS>
+        <LEAF id="union_m_t" type="cylinder" args="0.25 1 1.5 8 16 0 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="main_nozzle">
+      <MATERIAL id="null" />
+      <SCALE sy="1.5" sx="1.5" sz="1.5" />
+      <TRANSLATION x="0" y="0" z="-0.5" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="nozzle" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="main_nose">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="15.75" />
+      <DESCENDANTS>
+        <NODEREF id="nose" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="side_boosters">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="left_booster" />
+        <NODEREF id="right_booster" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="left_booster">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="-2.5" y="0" z="0" />
+      <DESCENDANTS>
+        <NODEREF id="side_booster" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="right_booster">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="2.5" y="0" z="0" />
+      <DESCENDANTS>
+        <NODEREF id="side_booster" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="side_booster">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_dark_grill" />
+      <DESCENDANTS>
+        <NODEREF id="side_nozzle" />
+        <NODEREF id="side_nose" />
+        <LEAF id="booster_body" type="cylinder" args="10 1 1 16 16 0 1" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="side_nozzle">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="-0.5" />
+      <DESCENDANTS>
+        <NODEREF id="nozzle" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="side_nose">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="10" />
+      <DESCENDANTS>
+        <NODEREF id="nose" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="nozzle">
+      <MATERIAL id="m_rocket_nozzle" />
+      <TEXTURE id="t_carbon" />
+      <DESCENDANTS>
+        <LEAF id="engine_nozzle" type="cylinder" args="0.5 1 0.5 3 16 0 1" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="nose">
+      <MATERIAL id="m_rocket_nose" />
+      <TEXTURE id="clear" />
+      <DESCENDANTS>
+        <LEAF id="nose" type="cylinder" args="3 1 0.25 16 16 0 0" />
+        <NODEREF id="nose_tip" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="nose_tip">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="3" />
+      <DESCENDANTS>
+        <LEAF id="nose_tip" type="sphere" args="0.25 16 16" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="spaceship">       
+        <MATERIAL id="m_spaceship_body" />         
+        <TEXTURE id="clear" />
+        <TRANSLATION x="0" y="-1.5" z="0"/>
+        <ROTATION axis="x" angle="90"/>
+        <DESCENDANTS>
+          <NODEREF id="spaceship_cone"/>
+          <NODEREF id="spaceship_wings"/>
+          <NODEREF id="spaceship_fin"/>
+          <NODEREF id="spaceship_nozzle"/>
+        </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="spaceship_cone">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <LEAF type="patch" args="20 100"> 
           <CPLINE>
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="0" yy="7" zz="0" ww="1.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="7" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="0.5" yy="10" zz="0" ww="2.0" />
-            <CPOINT xx="1" yy="7" zz="0" ww="10.0" />
-            <CPOINT xx="1" yy="0" zz="0" ww="20.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0.5" yy="10" zz="0" ww="2.0" />
+              <CPOINT xx="1" yy="7" zz="0" ww="10.0" />
+              <CPOINT xx="1" yy="0" zz="0" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="0.5" yy="10" zz="0" ww="2.0" />
-            <CPOINT xx="1" yy="7" zz="0" ww="10.0" />
-            <CPOINT xx="1" yy="0" zz="0" ww="20.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0.5" yy="10" zz="0" ww="2.0" />
+              <CPOINT xx="1" yy="7" zz="0" ww="10.0" />
+              <CPOINT xx="1" yy="0" zz="0" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="0.3535" yy="10" zz="0.3535" ww="2.0" />
-            <CPOINT xx="1" yy="7" zz="2" ww="10.0" />
-            <CPOINT xx="1" yy="0" zz="2" ww="20.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0.3535" yy="10" zz="0.3535" ww="2.0" />
+              <CPOINT xx="1" yy="7" zz="2" ww="10.0" />
+              <CPOINT xx="1" yy="0" zz="2" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="0.3535" yy="10" zz="0.3535" ww="2.0" />
-            <CPOINT xx="1" yy="7" zz="2" ww="10.0" />
-            <CPOINT xx="1" yy="0" zz="2" ww="20.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0.3535" yy="10" zz="0.3535" ww="2.0" />
+              <CPOINT xx="1" yy="7" zz="2" ww="10.0" />
+              <CPOINT xx="1" yy="0" zz="2" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="0" yy="10" zz="0.5" ww="2.0" />
-            <CPOINT xx="0" yy="7" zz="1" ww="10.0" />
-            <CPOINT xx="0" yy="0" zz="1" ww="20.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0.5" ww="2.0" />
+              <CPOINT xx="0" yy="7" zz="1" ww="10.0" />
+              <CPOINT xx="0" yy="0" zz="1" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="-0.3535" yy="10" zz="0.3535" ww="2.0" />
-            <CPOINT xx="-1" yy="7" zz="2" ww="10.0" />
-            <CPOINT xx="-1" yy="0" zz="2" ww="20.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="-0.3535" yy="10" zz="0.3535" ww="2.0" />
+              <CPOINT xx="-1" yy="7" zz="2" ww="10.0" />
+              <CPOINT xx="-1" yy="0" zz="2" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="-0.3535" yy="10" zz="0.3535" ww="2.0" />
-            <CPOINT xx="-1" yy="7" zz="2" ww="10.0" />
-            <CPOINT xx="-1" yy="0" zz="2" ww="20.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="-0.3535" yy="10" zz="0.3535" ww="2.0" />
+              <CPOINT xx="-1" yy="7" zz="2" ww="10.0" />
+              <CPOINT xx="-1" yy="0" zz="2" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="-0.5" yy="10" zz="0" ww="2.0" />
-            <CPOINT xx="-1" yy="7" zz="0" ww="10.0" />
-            <CPOINT xx="-1" yy="0" zz="0" ww="20.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="-0.5" yy="10" zz="0" ww="2.0" />
+              <CPOINT xx="-1" yy="7" zz="0" ww="10.0" />
+              <CPOINT xx="-1" yy="0" zz="0" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="-0.5" yy="10" zz="0" ww="2.0" />
-            <CPOINT xx="-1" yy="7" zz="0" ww="10.0" />
-            <CPOINT xx="-1" yy="0" zz="0" ww="20.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="-0.5" yy="10" zz="0" ww="2.0" />
+              <CPOINT xx="-1" yy="7" zz="0" ww="10.0" />
+              <CPOINT xx="-1" yy="0" zz="0" ww="20.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
           </CPLINE>
           <CPLINE>
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
-            <CPOINT xx="0" yy="7" zz="0" ww="1.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
-            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="10" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="7" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+              <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
           </CPLINE>
         </LEAF>
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="wings">
+    <NODE id="spaceship_wings">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <DESCENDANTS>
-        <LEAF type="patch" args="50 50">
+        <LEAF type="patch" args="50 50"> 
           <CPLINE>
             <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
             <CPOINT xx="1" yy="0" zz="0" ww="1.0" />
@@ -1079,7 +1321,7 @@
             <CPOINT xx="1" yy="2" zz="0" ww="2.0" />
             <CPOINT xx="4" yy="2" zz="0" ww="2.0" />
             <CPOINT xx="4" yy="0" zz="0" ww="1.0" />
-          </CPLINE>
+          </CPLINE> 
           <CPLINE>
             <CPOINT xx="0" yy="9.52" zz="0.5" ww="3.0" />
             <CPOINT xx="1.5" yy="8.02" zz="0.5" ww="2.0" />
@@ -1102,8 +1344,8 @@
             <CPOINT xx="4" yy="0" zz="0" ww="1.0" />
           </CPLINE>
         </LEAF>
-
-        <LEAF type="patch" args="50 50">
+        
+        <LEAF type="patch" args="50 50"> 
           <CPLINE>
             <CPOINT xx="-4" yy="0" zz="0" ww="1.0" />
             <CPOINT xx="-3" yy="0" zz="0" ww="1.0" />
@@ -1124,7 +1366,7 @@
             <CPOINT xx="-1" yy="2" zz="0" ww="2.0" />
             <CPOINT xx="-1.5" yy="8" zz="0" ww="2.0" />
             <CPOINT xx="0" yy="9.5" zz="0" ww="3.0" />
-          </CPLINE>
+          </CPLINE> 
           <CPLINE>
             <CPOINT xx="-4" yy="0" zz="0" ww="1.0" />
             <CPOINT xx="-4.02" yy="2.02" zz="0.5" ww="2.0" />
@@ -1150,11 +1392,11 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="fin">
+    <NODE id="spaceship_fin">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <DESCENDANTS>
-        <LEAF type="patch" args="20 20">
+        <LEAF type="patch" args="20 20"> 
           <CPLINE>
             <CPOINT xx="0" yy="0" zz="1" ww="1.0" />
             <CPOINT xx="0" yy="-0.25" zz="1.5" ww="1.0" />
@@ -1194,12 +1436,12 @@
       </DESCENDANTS>
     </NODE>
 
-
-    <NODE id="nozzle">
-      <MATERIAL id="m_rocket_nozzle" />
-      <TEXTURE id="t_perforated" />
+    
+    <NODE id="spaceship_nozzle">
+      <MATERIAL id="m_spaceship_nozzle" />
+      <TEXTURE id="t_perfurated" />
       <DESCENDANTS>
-        <LEAF type="patch" args="20 20">
+        <LEAF type="patch" args="20 20"> 
           <CPLINE>
             <CPOINT xx="0.3" yy="1" zz="0.6" ww="1.0" />
             <CPOINT xx="0.8" yy="-1" zz="0.6" ww="1.0" />
@@ -1231,7 +1473,7 @@
             <CPOINT xx="-0.3" yy="1" zz="0.6" ww="1.0" />
           </CPLINE>
         </LEAF>
-        <LEAF type="patch" args="20 20">
+        <LEAF type="patch" args="20 20"> 
           <CPLINE>
             <CPOINT xx="-0.3" yy="1" zz="0.6" ww="1.0" />
             <CPOINT xx="-0.8" yy="-1" zz="0.6" ww="1.0" />
@@ -1265,6 +1507,7 @@
         </LEAF>
       </DESCENDANTS>
     </NODE>
+    <!-- End of Rocket-->
   </NODES>
 
 </SCENE>

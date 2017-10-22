@@ -61,7 +61,7 @@
 
 
   <MATERIALS>
-    <MATERIAL id="m_rocket_body">
+    <MATERIAL id="m_spaceship_body">
       <shininess value="64" />
       <specular r="1.0" g="1.0" b="1.0" a="1" />
       <diffuse r="1.0" g="1.0" b="1.0" a="1" />
@@ -69,7 +69,7 @@
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 
-    <MATERIAL id="m_rocket_nozzle">
+    <MATERIAL id="m_spaceship_nozzle">
       <shininess value="16" />
       <specular r="1.0" g="1.0" b="1.0" a="1" />
       <diffuse r="0.75" g="0.75" b="0.75" a="1" />
@@ -87,22 +87,22 @@
   <!-- The nodes -->
   <NODES>
 
-    <ROOT id="rocket" />
+    <ROOT id="spaceship" />
 
-   <!-- Rocket -->
-    <NODE id="rocket">       
-        <MATERIAL id="m_rocket_body" />         
+   <!-- spaceship -->
+    <NODE id="spaceship">       
+        <MATERIAL id="m_spaceship_body" />         
         <TEXTURE id="clear" />
         <DESCENDANTS>
-          <NODEREF id="cone"/>
-          <NODEREF id="wings"/>
-          <NODEREF id="fin"/>
-          <NODEREF id="nozzle"/>
+          <NODEREF id="spaceship_cone"/>
+          <NODEREF id="spaceship_wings"/>
+          <NODEREF id="spaceship_fin"/>
+          <NODEREF id="spaceship_nozzle"/>
         </DESCENDANTS>
     </NODE>
 
 
-    <NODE id="cone">
+    <NODE id="spaceship_cone">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <DESCENDANTS>
@@ -188,7 +188,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="wings">
+    <NODE id="spaceship_wings">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <DESCENDANTS>
@@ -284,7 +284,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="fin">
+    <NODE id="spaceship_fin">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <DESCENDANTS>
@@ -329,8 +329,8 @@
     </NODE>
 
     
-    <NODE id="nozzle">
-      <MATERIAL id="m_rocket_nozzle" />
+    <NODE id="spaceship_nozzle">
+      <MATERIAL id="m_spaceship_nozzle" />
       <TEXTURE id="t_perforated" />
       <DESCENDANTS>
         <LEAF type="patch" args="20 20"> 
