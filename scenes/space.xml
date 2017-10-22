@@ -153,6 +153,11 @@
       <file path="images/rocket/light_grill.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
+    
+    <TEXTURE id="cone_t">
+      <file path="images/rocket/cone.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
   </TEXTURES>
 
 
@@ -1212,7 +1217,7 @@
 
     <NODE id="spaceship_cone">
       <MATERIAL id="null" />
-      <TEXTURE id="null" />
+      <TEXTURE id="cone_t" />
       <DESCENDANTS>
         <LEAF type="patch" args="20 100"> 
           <CPLINE>
