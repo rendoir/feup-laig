@@ -1158,6 +1158,12 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
     console.log("Parsed materials");
 }
 
+/**
+ * Gets the attribute of a given spec.
+ * @param nodeSpecs - Represents the xml node containing the node specifications (Textures, Material, Translation ...)
+ * @param specIndex - Index of the specification in the nodeSpecs array.
+ * @param attributeName - Name of the attribute to get.
+ */
 MySceneGraph.prototype.getAttributeOfSpec = function(nodeSpecs,specIndex, attributeName) {
 	let specID = this.reader.getString(nodeSpecs[specIndex],attributeName);
 	if (specID == null) {
