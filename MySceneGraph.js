@@ -4,7 +4,7 @@ let ILLUMINATION_INDEX = 1;
 let LIGHTS_INDEX = 2;
 let TEXTURES_INDEX = 3;
 let MATERIALS_INDEX = 4;
-let LEAVES_INDEX = 5;
+let ANIMATIONS_INDEX = 5;
 let NODES_INDEX = 6;
 
 /**
@@ -137,6 +137,14 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
         if ((error = this.parseMaterials(xmlNodes[index])) != null )
             return error;
     }
+    // <ANIMATIONS>
+    if ((index = xmlNodeTag.indexOf("ANIMATIONS")) == -1){
+        return "tag <ANIMATIONS> missing";
+    }
+    if (index != ANIMATIONS_INDEX)
+        this.onXMLMinorError("tag <ANIMATIONS> out of order");
+    if ((error = this.parseAnimations(xmlNodes[index])) != null)
+        return error;
 
     // <NODES>
     if ((index = xmlNodeTag.indexOf("NODES")) == -1)
@@ -1157,6 +1165,65 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
 
     console.log("Parsed materials");
 }
+
+
+MySceneGraph.prototype.parseXMLControlPoints = function(XMLControlPoints){
+    let controlPoints = [];
+    let lenght = XMLControlPoints.length;
+    for (let i = 0; i < lenght; i++){
+        let controlP = XMLControlPoints[i];
+        let x = this.reader.getFloat(controlP,"xx");
+        let y = this.reader.getFloat(controlP,"yy");
+        let z = this.reader.getFloat(controlP,"zz");
+        controlPoints.push([x,y,z]);
+    }
+    return controlPoints;
+}
+
+/**
+ * Processes and returns an Animation
+ */
+MySceneGraph.prototype.processXMLAnimation = function(XMLAnimation){
+    const type = this.reader.getItem(XMLAnimation, 'type', ['linear', 'circular', 'bezier', 'combo']);
+    if (type == null){
+        this.onXMLError("Type not defined for animation");
+        return null;
+    }
+    switch(type){
+        case "linear":{
+            let speed = this.reader.getFloat(XMLAnimation, 'speed');
+            let controlPoints = this.parseXMLControlPoints(XMLAnimation.children);
+            return new LinearAnimation(controlPoints,speed);
+        }
+    }
+}
+
+/**
+ * Parses the <ANIMATIONS> node.
+ */
+MySceneGraph.prototype.parseAnimations = function(animationsNode){
+    if (animationsNode == null){
+        return onXMLError("Null animations node");
+    }
+    this.animations = [];
+
+    let length = animationsNode.children.length;
+    for (let i = 0; i < length; i++){
+        let currentAnimation = animationsNode.children[i];
+        let animationId = currentAnimation.id;
+        if (animationId == null){
+            this.onXMLError("Invalid Animation id");
+            return null;
+        }
+        if (this.animations[animationId] !== undefined){
+            this.onXMLError(`Animation ${animationId} defined multiple times`);
+            return null;
+        }
+        this.animations[animationId] = this.processXMLAnimation(currentAnimation);
+    }
+
+}
+
 
 /**
  * Gets the attribute of a given spec.

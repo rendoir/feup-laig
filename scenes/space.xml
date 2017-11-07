@@ -268,8 +268,27 @@
   </MATERIALS>
 
 
-  <LEAVES>
-  </LEAVES>
+  <ANIMATIONS>
+    <ANIMATION id="an_1" speed="1.6" type="linear">
+      <controlpoint xx="1.4" yy="5.3" zz="1.2" />
+      <controlpoint xx="-1" yy="-5.0" zz="-3" />
+    </ANIMATION>
+    <ANIMATION id="an_2" speed="3" type="circular" 
+              centerx="1.0" centery="1.0" centerz="1.0" 
+              radius="1.0" startang="0.0" rotang="360"/>
+    <ANIMATION id="an_3" type="combo"> 
+    <!-- pode ser repetida para
+    várias animações.
+    a próxima instrução deve existir pelo menos uma vez
+    com id a referir-se a uma animação definida acima.
+    As animacoes devem ser executadas sequencialmente
+    pela ordem com que sao declaradas -->
+      <SPANREF id="an_1" />
+    </ANIMATION>
+
+    
+
+  </ANIMATIONS>
 
 
   <NODES>
