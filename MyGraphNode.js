@@ -6,32 +6,29 @@
 function MyGraphNode(nodeID) {
     this.nodeID = nodeID;
 
-    // IDs of child nodes.
     this.children = [];
 
-    // IDs of child nodes.
     this.leaves = [];
 
-    // The material ID or "null"
     this.materialID = null ;
 
-    // The texture ID or "null" or "clear"
     this.textureID = null ;
+
+    this.animation = null;
+    this.animation_matrix = null;
 
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
 }
 
-/**
- * Adds the reference (ID) of another node to this node's children array.
- */
 MyGraphNode.prototype.addChild = function(nodeID) {
     this.children.push(nodeID);
 }
 
-/**
- * Adds a leaf to this node's leaves array.
- */
 MyGraphNode.prototype.addLeaf = function(leaf) {
     this.leaves.push(leaf);
+}
+
+MyGraphNode.prototype.update = frunction() {
+  this.animation_matrix = this.animation.getMatrix();
 }
