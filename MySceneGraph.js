@@ -933,7 +933,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
     // Each material.
 
     this.materials = [];
-    
+
 
     let oneMaterialDefined = false;
 
@@ -1172,12 +1172,12 @@ MySceneGraph.prototype.getAttributeOfSpec = function(nodeSpecs,specIndex, attrib
 	return specID;
 }
 
-// Parses nodes recursively. Needs the texture stack in order to keep track of the amplification factors of textures. 
+// Parses nodes recursively. Needs the texture stack in order to keep track of the amplification factors of textures.
 MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     let nodeID = this.reader.getString(nodeToParse,'id');
     if(textureStack == null){
         textureStack = ["clear"];
-    } 
+    }
     let texturePushed = false;
     let newNode = new MyGraphNode(nodeID);
 	let nodeSpecs = nodeToParse.children;
@@ -1266,14 +1266,14 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
 					this.onXMLMinorError("unable to parse z component of scaling; discarding transform");
 					break;
 				}
-				
+
 				mat4.scale(newNode.transformMatrix, newNode.transformMatrix, [sx, sy, sz]);
 				break;
 			default:
 				break;
 		}
 	}
-	
+
 	// Process Descendants
 	let descendantsIndex = specNames.indexOf("DESCENDANTS");
 	if (descendantsIndex === -1){
@@ -1281,7 +1281,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
 		return null;
 	}
 	let descendants = nodeSpecs[descendantsIndex].children;
-	
+
 	for (let i = 0; i < descendants.length; i++){
 		let child = descendants[i];
 		if (child.nodeName === "NODEREF"){
@@ -1330,8 +1330,8 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
             }  else {
                 newNode.addLeaf(new MyGraphLeaf(this.scene,type,argsArray));
             }
-            
-			
+
+
 		}else{
 			this.onXMLMinorError("incorrect descendant node with name: " + child.nodeName);
 			return null;
@@ -1347,10 +1347,10 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
  * Parses the <NODES> block.
  */
 MySceneGraph.prototype.parseNodesXMLTag = function(nodesNode) {
-    
+
         // Traverses nodes.
         this.xmlNodes = nodesNode.children;
-    
+
         for (let i = 0; i < this.xmlNodes.length; i++) {
             let nodeName;
             if ((nodeName = this.xmlNodes[i].nodeName) == "ROOT") {
@@ -1373,14 +1373,14 @@ MySceneGraph.prototype.parseNodesXMLTag = function(nodesNode) {
                 if (this.nodeIDToIndex[nodeID] != null){
                     return "node ID must be unique (conflict: ID = " + nodeID + ")";
                 }
-                this.nodeIDToIndex[nodeID] = i;  
+                this.nodeIDToIndex[nodeID] = i;
             }
         }
         if (this.nodeIDToIndex[this.idRoot] == null){
             return "Invalid Root ID";
         }
         this.rootGraphNode = this.parseNode(this.xmlNodes[this.nodeIDToIndex[this.idRoot]]);
-    
+
         console.log("Parsed nodes");
         return null;
     }
@@ -1465,21 +1465,21 @@ MySceneGraph.prototype.displayNode = function (node_to_display, material_stack, 
         return;
 
     if (node_to_display.leaves.length > 0) {
-        let material_id = material_stack[material_stack.length - 1];
-        this.materials[material_id].apply();
+        let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack
+        this.materials[material_id].apply(); //Use the material
 
         if(texture_stack.length > 0) {
-          let texture_id = texture_stack[texture_stack.length - 1];
+          let texture_id = texture_stack[texture_stack.length - 1]; //Leaf uses last texture on the stack
           if(texture_id != "clear"){
-            this.textures[texture_id][0].bind();
+            this.textures[texture_id][0].bind(); //Use the texture
             this.last_texture = this.textures[texture_id][0];
           }
           else
             if(this.last_texture != null)
-              this.last_texture.unbind();
+              this.last_texture.unbind(); //Unbind if texture_id is "clear"
         }
         for (let i = 0; i < node_to_display.leaves.length; i++) {
-            node_to_display.leaves[i].display();
+            node_to_display.leaves[i].display(); //Display the leaves
         }
     }
 
@@ -1487,7 +1487,7 @@ MySceneGraph.prototype.displayNode = function (node_to_display, material_stack, 
         for (let i = 0; i < node_to_display.children.length; i++) {
             const node = node_to_display.children[i];
             this.scene.pushMatrix();
-            this.scene.multMatrix(node.transformMatrix);
+            this.scene.multMatrix(node.transformMatrix); //Apply current node's transformation matrix
 
             if (node.materialID == "null") { //Should inherit
                 if (material_stack.length > 0) { //Can inherit
