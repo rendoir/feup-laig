@@ -16,4 +16,6 @@ CircularAnimation.prototype.constructor = CircularAnimation;
 
 CircularAnimation.prototype.getMatrix = function(deltaTime) {
     this.actualTime += deltaTime;
+    let animationMatrix = mat4.create();
+    return animationMatrix;
 };
