@@ -1,0 +1,138 @@
+<SCENE>
+
+  <!-- Initial values -->
+  <INITIALS>
+    <frustum near="0.1" far="100"/>
+    <translation x="0" y="0" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="1" sy="1" sz="1" />
+    <reference length="5" />
+  </INITIALS>
+
+
+  <!-- Illumination and clear colour -->
+  <ILLUMINATION>
+    <ambient r="1" g="1" b="1" a="1" />
+    <background r="0" g="0" b="0" a="1" />
+  </ILLUMINATION>
+
+  <LIGHTS>
+    <!-- DEBUG LIGHTS -->
+    <LIGHT id="light1">
+      <enable value ="1" />
+      <position  x="100" y="100" z="100" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+      <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+    <LIGHT id="light2">
+      <enable value ="1" />
+      <position  x="-100" y="100" z="100" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+      <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+    <LIGHT id="light3">
+      <enable value ="1" />
+      <position  x="100" y="100" z="-100" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+      <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+    <LIGHT id="light4">
+      <enable value ="1" />
+      <position  x="0" y="-10" z="0" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+      <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+  </LIGHTS>
+
+
+  <!-- Textures -->
+  <TEXTURES>
+    <TEXTURE id="t_earth">
+      <file path="images/solar_system/earth.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+  </TEXTURES>
+
+
+  <MATERIALS>
+    <MATERIAL id="m_default">
+      <shininess value="10" />
+      <specular r="0.5" g="0.5" b="0.5" a="1" />
+      <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+  </MATERIALS>
+
+  <ANIMATIONS>
+  
+  </ANIMATIONS>
+
+  <!-- The nodes -->
+  <NODES>
+    <ROOT id="earths" />
+
+    <NODE id="earths">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="earth_1"/>
+        <NODEREF id="earth_2"/>
+        <NODEREF id="earth_3"/>
+      </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="earth_1">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_earth" />
+
+      <TRANSLATION x="-7" y="0" z="0" />
+      <ROTATION axis="x" angle="-90" />
+
+      <ANIMATIONREFS>
+      </ANIMATIONREFS>
+
+      <DESCENDANTS>
+        <LEAF id="p_earth" type="sphere" args="3 24 24" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="earth_2">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_earth" />
+
+      <ROTATION axis="x" angle="-90" />
+
+      <ANIMATIONREFS>
+      </ANIMATIONREFS>
+
+      <DESCENDANTS>
+        <LEAF id="p_earth" type="sphere" args="3 24 24" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="earth_3">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_earth" />
+
+      <TRANSLATION x="7" y="0" z="0" />
+      <ROTATION axis="x" angle="-90" />
+
+      <ANIMATIONREFS>
+      </ANIMATIONREFS>
+
+      <DESCENDANTS>
+        <LEAF id="p_earth" type="sphere" args="3 24 24" />
+      </DESCENDANTS>
+    </NODE>
+
+  </NODES>
+
+</SCENE>

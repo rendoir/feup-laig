@@ -1,7 +1,7 @@
 /**
  * MyGraphNode class, representing an intermediate node in the scene graph.
  * @constructor
-**/
+ **/
 
 function MyGraphNode(nodeID) {
     this.nodeID = nodeID;
@@ -10,9 +10,9 @@ function MyGraphNode(nodeID) {
 
     this.leaves = [];
 
-    this.materialID = null ;
+    this.materialID = null;
 
-    this.textureID = null ;
+    this.textureID = null;
 
     this.animation = null;
     this.animation_matrix = null;
@@ -23,12 +23,14 @@ function MyGraphNode(nodeID) {
 
 MyGraphNode.prototype.addChild = function(nodeID) {
     this.children.push(nodeID);
-}
+};
 
 MyGraphNode.prototype.addLeaf = function(leaf) {
     this.leaves.push(leaf);
-}
+};
 
-MyGraphNode.prototype.update = frunction() {
-  this.animation_matrix = this.animation.getMatrix();
-}
+MyGraphNode.prototype.update = function(deltaTime) {
+    if (this.animation != null) {
+        this.animation_matrix = this.animation.getMatrix(deltaTime);
+    }
+};

@@ -267,7 +267,6 @@
     </MATERIAL>
   </MATERIALS>
 
-
   <ANIMATIONS>
     <ANIMATION id="an_1" speed="1.6" type="linear">
       <controlpoint xx="1.4" yy="5.3" zz="1.2" />
@@ -285,11 +284,7 @@
     pela ordem com que sao declaradas -->
       <SPANREF id="an_1" />
     </ANIMATION>
-
-    
-
   </ANIMATIONS>
-
 
   <NODES>
     <ROOT id="root" />
