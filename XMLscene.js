@@ -152,7 +152,6 @@ XMLscene.prototype.display = function() {
 };
 
 XMLscene.prototype.update = function(currTime) {
-    console.log("update");
     this.lastTime = this.lastTime || 0;
     this.deltaTime = currTime - this.lastTime;
     this.lastTime = currTime;
