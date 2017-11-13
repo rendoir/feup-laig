@@ -14,10 +14,10 @@ function MyGraphNode(nodeID) {
 
     this.textureID = null;
 
-    this.animation = new CircularAnimation(5, 1, [0, 0, 0], 0, 0);
+    this.animation = new CircularAnimation(5, 1, [0, 0, 0], 0, 2 * Math.PI);
 
+    this.animationMatrix = mat4.create();
     this.transformMatrix = mat4.create();
-    mat4.identity(this.transformMatrix);
 }
 
 MyGraphNode.prototype.addChild = function(nodeID) {
@@ -30,7 +30,6 @@ MyGraphNode.prototype.addLeaf = function(leaf) {
 
 MyGraphNode.prototype.update = function(deltaTime) {
     if (this.animation != null) {
-        let animation_matrix = this.animation.getMatrix(deltaTime / 1000);
-        mat4.multiply(this.transformMatrix, animation_matrix, this.transformMatrix);
+        this.animationMatrix = this.animation.getMatrix(deltaTime / 1000);
     }
 };

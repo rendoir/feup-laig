@@ -1494,6 +1494,9 @@ MySceneGraph.prototype.displayScene = function() {
     if (this.rootGraphNode.textureID != "null" && this.rootGraphNode.textureID != "clear") {
         texture_stack.push(this.rootGraphNode.textureID);
     }
+    if (this.rootGraphNode.animationMatrix != null) {
+        this.scene.multMatrix(this.rootGraphNode.animationMatrix);
+    }
     if (this.rootGraphNode.transformMatrix != null) {
         this.scene.multMatrix(this.rootGraphNode.transformMatrix);
     }
@@ -1530,6 +1533,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         for (let i = 0; i < node_to_display.children.length; i++) {
             const node = node_to_display.children[i];
             this.scene.pushMatrix();
+            this.scene.multMatrix(node.animationMatrix);
             this.scene.multMatrix(node.transformMatrix); //Apply current node's transformation matrix
 
             if (node.materialID == "null") { //Should inherit
