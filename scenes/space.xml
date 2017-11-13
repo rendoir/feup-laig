@@ -275,7 +275,13 @@
     <ANIMATION id="an_2" speed="3" type="circular" 
               centerx="1.0" centery="1.0" centerz="1.0" 
               radius="1.0" startang="0.0" rotang="360"/>
-    <ANIMATION id="an_3" type="combo"> 
+    <ANIMATION id="an_3" speed="10" type="bezier">
+      <controlpoint xx="1" yy="2" zz="3" /> <!-- P1 -->
+      <controlpoint xx="1" yy="2" zz="4" /> <!-- P2 -->
+      <controlpoint xx="1" yy="2" zz="5" /> <!-- P3 -->
+      <controlpoint xx="1" yy="2" zz="6" /> <!-- P4 -->
+    </ANIMATION>
+    <ANIMATION id="an_4" type="combo"> 
     <!-- pode ser repetida para
     várias animações.
     a próxima instrução deve existir pelo menos uma vez

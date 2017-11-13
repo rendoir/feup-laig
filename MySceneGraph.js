@@ -1145,6 +1145,32 @@ MySceneGraph.prototype.processXMLAnimation = function(XMLAnimation) {
                 let controlPoints = this.parseXMLControlPoints(XMLAnimation.children);
                 return new LinearAnimation(controlPoints, speed);
             }
+        case "circular":{
+            const speed = this.reader.getFloat(XMLAnimation, 'speed');
+            const centerx = this.reader.getFloat(XMLAnimation, 'centerx');
+            const centery = this.reader.getFloat(XMLAnimation, 'centery');
+            const centerz = this.reader.getFloat(XMLAnimation, 'centerz');
+            const radius = this.reader.getFloat(XMLAnimation, 'radius');
+            const startang = this.reader.getFloat(XMLAnimation, 'startang');
+            const rotang = this.reader.getFloat(XMLAnimation, 'rotang');
+            let centerArray = [centerx, centery, centerz];
+            return new CircularAnimation(radius,speed,centerArray,startang,rotang);
+        }
+        case "bezier":{
+            const speed = this.reader.getFloat(XMLAnimation, 'speed');
+            const controlPoints = this.parseXMLControlPoints(XMLAnimation.children);
+            if (controlPoints.length != 4){
+                this.onXMLError("Bezier Animation has " + controlPoints.length + " control points. It should have 4");
+            }
+            // uncomment when BezierAnimation class is available
+            // return new BezierAnimation(controlPoints,speed);
+        }
+        case "combo":{
+            const spanrefs = XMLAnimation.children;
+            if (spanrefs.lenght < 1){
+                this.onXMLError("Combo animations should have at least 1 SPANREF");
+            }
+        }
     }
 }
 
