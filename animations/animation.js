@@ -4,5 +4,3 @@ class Animation {
     }
     getMatrix(deltaTime) {}
 }
-
-Animation.prototype = Animation;
