@@ -1231,7 +1231,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     let newNode = new MyGraphNode(nodeID);
     let nodeSpecs = nodeToParse.children;
     let specNames = new Array();
-    let possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
+    let possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS","DESCENDANTS"];
     for (let j = 0; j < nodeSpecs.length; j++) {
         let specName = nodeSpecs[j].nodeName;
         specNames.push(specName);
@@ -1320,6 +1320,14 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
                 break;
             default:
                 break;
+        }
+    }
+    let animationsIndex = specNames.indexOf("ANIMATIONREFS");
+    if (animationsIndex > 0){
+        const animationRefs = nodeSpecs[animationsIndex].children;
+        for (let i = 0; i < animationRefs.length; i++){
+            refId = animationRefs[i].id;
+            newNode.animation = this.animations[refId];
         }
     }
 
