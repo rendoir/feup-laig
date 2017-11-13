@@ -14,7 +14,7 @@ function MyGraphNode(nodeID) {
 
     this.textureID = null;
 
-    this.animation = new CircularAnimation(5, 1, [0, 0, 0], 0, 2 * Math.PI);
+    this.animation = null;
 
     this.animationMatrix = mat4.create();
     this.transformMatrix = mat4.create();

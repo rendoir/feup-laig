@@ -1139,12 +1139,11 @@ MySceneGraph.prototype.processXMLAnimation = function(XMLAnimation) {
         return null;
     }
     switch (type) {
-        case "linear":
-            {
-                let speed = this.reader.getFloat(XMLAnimation, 'speed');
-                let controlPoints = this.parseXMLControlPoints(XMLAnimation.children);
-                return new LinearAnimation(controlPoints, speed);
-            }
+        case "linear":{
+            let speed = this.reader.getFloat(XMLAnimation, 'speed');
+            let controlPoints = this.parseXMLControlPoints(XMLAnimation.children);
+            return new LinearAnimation(controlPoints, speed);
+        }
         case "circular":{
             const speed = this.reader.getFloat(XMLAnimation, 'speed');
             const centerx = this.reader.getFloat(XMLAnimation, 'centerx');
@@ -1164,12 +1163,19 @@ MySceneGraph.prototype.processXMLAnimation = function(XMLAnimation) {
             }
             // uncomment when BezierAnimation class is available
             // return new BezierAnimation(controlPoints,speed);
+            return null;
         }
         case "combo":{
             const spanrefs = XMLAnimation.children;
             if (spanrefs.lenght < 1){
                 this.onXMLError("Combo animations should have at least 1 SPANREF");
             }
+            let animationsIds = [];
+            for (let i = 0; i < spanrefs.length; i++){
+                animationsIds.push(spanrefs[i].id);
+            }
+            // return new ComboAnimation(animationsIds);
+            return null;
         }
     }
 }
