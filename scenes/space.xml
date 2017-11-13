@@ -274,7 +274,7 @@
     </ANIMATION>
     <ANIMATION id="an_2" speed="3" type="circular" 
               centerx="1.0" centery="1.0" centerz="1.0" 
-              radius="1.0" startang="0.0" rotang="360"/>
+              radius="1.0" startang="0.0" rotang="3600"/>
     <ANIMATION id="an_3" speed="10" type="bezier">
       <controlpoint xx="1" yy="2" zz="3" /> <!-- P1 -->
       <controlpoint xx="1" yy="2" zz="4" /> <!-- P2 -->
@@ -364,6 +364,9 @@
       <MATERIAL id="null" />
       <TEXTURE id="t_earth" />
       <TRANSLATION x="-55" y="0" z="0" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_2" />
+      </ANIMATIONREFS>
       <DESCENDANTS>
         <NODEREF id="moon" />
         <NODEREF id="pyramid" />

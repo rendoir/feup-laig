@@ -8,17 +8,16 @@ function LinearAnimation(control_points, speed) {
     this.initNextAnimation();
 }
 
-LinearAnimation.prototype.initNextAnimation = function() {
+LinearAnimation.prototype.initNextAnimation = function () {
     this.current_animation++;
+    this.time = 0.0;
     this.p1 = vec3.fromValues(this.control_points[this.current_animation][0],this.control_points[this.current_animation][1],this.control_points[this.current_animation][2] );
     this.p2 = vec3.fromValues(this.control_points[this.current_animation + 1][0],this.control_points[this.current_animation+1][1],this.control_points[this.current_animation+1][2]);
-    let subtraction_vector = vec3.create();
-    vec3.subtract(this.p1,this.p2,subtraction_vector); //error can't be used before declared
-    let length = vec3.length(subtraction_vector);
-    let time = length / this.linear_speed;
-    let vx = (this.p2[0] - this.p1[0]) / time;
-    let vy = (this.p2[1] - this.p1[1]) / time;
-    let vz = (this.p2[2] - this.p1[2]) / time;
+    let subtraction_vector = vec3.subtract(vec3.create(), this.p1, this.p2);
+    this.length = vec3.length(subtraction_vector);
+    let vx = this.linear_speed * (this.p2[0] - this.p1[0]) / this.length;
+    let vy = this.linear_speed * (this.p2[1] - this.p1[1]) / this.length;
+    let vz = this.linear_speed * (this.p2[2] - this.p1[2]) / this.length;
     this.speed = [vx, vy, vz];
     this.matrix_p1 = mat4.fromTranslation(mat4.create(), this.p1);
     let projection_xz = vec3.fromValues(subtraction_vector[0], 0, subtraction_vector[2]);
@@ -26,27 +25,29 @@ LinearAnimation.prototype.initNextAnimation = function() {
     let unit_vector = vec3.fromValues(0, 0, 1);
     angle_y = vec3.angle(projection_xz, unit_vector); //Angle to rotate in y
     angle_z = vec3.angle(projection_xy, unit_vector); //Angle to rotate in z
-    
-    let matrix_angle_y = mat4.fromRotation(mat4.create(), angle_y, unit_vector); //error can't be used before declared
-    let matrix_angle_z = mat4.fromRotation(mat4.create(), angle_z, unit_vector); //error can't be used before declared
+    let matrix_angle_y = mat4.fromRotation(mat4.create(), angle_y, unit_vector);
+    let matrix_angle_z = mat4.fromRotation(mat4.create(), angle_z, unit_vector);
     this.matrix_angle = mat4.multiply(mat4.create(), matrix_angle_z, matrix_angle_y);
 };
 
-LinearAnimation.prototype.checkEndOfCurrentAnimation = function(deltaT) {
-    if (deltaT * this.linear_speed >= this.length)
-        initNextAnimation();
+LinearAnimation.prototype.checkEndOfCurrentAnimation = function(time) {
+    if (time * this.linear_speed >= this.length) {
+        if (this.current_animation < this.control_points.length - 2)
+            this.initNextAnimation();
+        else this.current_animation++;
+    }
 };
 
 LinearAnimation.prototype.getMatrix = function(deltaT) {
-    if (this.current_animation >= control_points.length - 1)
-        return null;
-    let deltaX = deltaT * this.speed[0];
-    let deltaY = deltaT * this.speed[1];
-    let deltaZ = deltaT * this.speed[2];
+    if (this.current_animation < this.control_points.length - 1)
+      this.time += deltaT;
+    let deltaX = this.time * this.speed[0];
+    let deltaY = this.time * this.speed[1];
+    let deltaZ = this.time * this.speed[2];
     let delta_position = vec3.fromValues(deltaX, deltaY, deltaZ);
     let matrix_delta_position = mat4.fromTranslation(mat4.create(), delta_position);
     let temp_matrix = mat4.multiply(mat4.create(), matrix_delta_position, this.matrix_p1);
     let final_matrix = mat4.multiply(mat4.create(), temp_matrix, this.matrix_angle);
-    checkEndOfCurrentAnimation(deltaT);
+    this.checkEndOfCurrentAnimation(this.time);
     return final_matrix;
 };

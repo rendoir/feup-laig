@@ -14,6 +14,8 @@ function MyGraphNode(nodeID) {
 
     this.textureID = null;
 
+    this.animation = null;
+
     //this.animation = new CircularAnimation(5, 300, [0, 0, 0], 0, 360);
     this.animation = new BezierAnimation(0.1, [
         [0, 0, 0],
