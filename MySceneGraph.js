@@ -1522,10 +1522,17 @@ MySceneGraph.prototype.displayScene = function() {
  * @param node_to_display - An instance of MyGraphNode.
  */
 MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, texture_stack) {
+  this.scene.activeShader.setUniformsValues({time_factor: 0.0});
+
     if (node_to_display == null)
         return;
 
     if (node_to_display.leaves.length > 0) {
+      if(node_to_display.selected) {
+        let new_time_factor = Math.sin(performance.now() / 1000);
+        this.scene.activeShader.setUniformsValues({time_factor: new_time_factor});
+      }
+
         let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack
         this.materials[material_id].apply(); //Use the material
 
@@ -1573,6 +1580,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             texture_stack.pop();
         }
     }
+    this.scene.activeShader.setUniformsValues({time_factor: 0.0});
 }
 
 MySceneGraph.prototype.update = function(deltaTime, node) {

@@ -16,13 +16,7 @@ function MyGraphNode(nodeID) {
 
     this.animation = null;
 
-    //this.animation = new CircularAnimation(5, 300, [0, 0, 0], 0, 360);
-    /*this.animation = new BezierAnimation(0.1, [
-        [0, 0, 0],
-        [1, 0, 0],
-        [1, 3, 0],
-        [0, 3, 0]
-    ]);*/
+    this.selected = true;
 
     this.animationMatrix = mat4.create();
     this.transformMatrix = mat4.create();
