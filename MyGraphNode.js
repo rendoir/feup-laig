@@ -20,8 +20,8 @@ function MyGraphNode(nodeID) {
     /*this.animation = new BezierAnimation(0.1, [
         [0, 0, 0],
         [1, 0, 0],
-        [1, 1, 0],
-        [0, 1, 0]
+        [1, 3, 0],
+        [0, 3, 0]
     ]);*/
 
     this.animationMatrix = mat4.create();
