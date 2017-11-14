@@ -339,7 +339,7 @@
     </NODE>
 
     <!-- Sun -->
-    <NODE id="sun">
+    <NODE id="sun" selectable="true">
       <MATERIAL id="m_sun" />
       <TEXTURE id="t_sun" />
       <ROTATION axis="x" angle="-90" />
