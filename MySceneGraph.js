@@ -30,7 +30,7 @@ function MySceneGraph(filename, scene) {
     this.axisCoords['x'] = [1, 0, 0];
     this.axisCoords['y'] = [0, 1, 0];
     this.axisCoords['z'] = [0, 0, 1];
-    
+
 
     // File reading
     this.reader = new CGFXMLreader();
@@ -1333,12 +1333,12 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
         }else{
             let animationsList = [];
             for (let i = 0; i < animationsXml.length; i++){
-                animationsList.push(this.animations[animationsXml[i].id]); 
+                animationsList.push(this.animations[animationsXml[i].id]);
             }
             //uncomment when Combo Animation is available
             //newNode.animation = new ComboAnimation(animationsList);
         }
-        
+
 
     }
 
@@ -1545,7 +1545,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         return;
 
     if (node_to_display.leaves.length > 0) {
-      if(node_to_display.selected) {
+      if(this.selectedNodes[node_to_display.nodeID]) {
         let new_time_factor = Math.sin(performance.now() / 1000);
         this.scene.activeShader.setUniformsValues({time_factor: new_time_factor});
       }
@@ -1588,10 +1588,6 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
                 texture_stack.push(texture_stack[texture_stack.length - 1]); //Inherit -> Last pushed element
             } else { //Should override
                 texture_stack.push(node.textureID);
-            }
-            // See if it is selected to use shader
-            if (this.selectedNodes[node.nodeID] === true){
-                console.log("Use shader in node " + node.nodeID);
             }
 
             this.displayNode(node, material_stack, texture_stack);

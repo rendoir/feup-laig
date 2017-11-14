@@ -108,7 +108,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="earth_2">
+    <NODE id="earth_2" selectable="true">
       <MATERIAL id="null" />
       <TEXTURE id="t_earth" />
 
