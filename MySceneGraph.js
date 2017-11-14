@@ -20,6 +20,9 @@ function MySceneGraph(filename, scene) {
 
     this.rootGraphNode = null;
     this.nodeIDToIndex = [];
+    this.animations = [];
+    /* map nodeId -> isSelected (boolean)*/
+    this.selectedNodes = [];
 
     this.idRoot = null; // The id of the root element.
 
@@ -27,6 +30,7 @@ function MySceneGraph(filename, scene) {
     this.axisCoords['x'] = [1, 0, 0];
     this.axisCoords['y'] = [0, 1, 0];
     this.axisCoords['z'] = [0, 0, 1];
+    
 
     // File reading
     this.reader = new CGFXMLreader();
@@ -1187,7 +1191,6 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
     if (animationsNode == null) {
         return onXMLError("Null animations node");
     }
-    this.animations = [];
 
     let length = animationsNode.children.length;
     for (let i = 0; i < length; i++) {
@@ -1324,11 +1327,19 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     }
     let animationsIndex = specNames.indexOf("ANIMATIONREFS");
     if (animationsIndex > 0){
-        const animationRefs = nodeSpecs[animationsIndex].children;
-        for (let i = 0; i < animationRefs.length; i++){
-            refId = animationRefs[i].id;
-            newNode.animation = this.animations[refId];
+        const animationsXml = nodeSpecs[animationsIndex].children;
+        if (animationsXml.length == 1){
+            newNode.animation = this.animations[animationsXml[0].id];
+        }else{
+            let animationsList = [];
+            for (let i = 0; i < animationsXml.length; i++){
+                animationsList.push(this.animations[animationsXml[i].id]); 
+            }
+            //uncomment when Combo Animation is available
+            //newNode.animation = new ComboAnimation(animationsList);
         }
+        
+
     }
 
     // Process Descendants
@@ -1432,6 +1443,12 @@ MySceneGraph.prototype.parseNodesXMLTag = function(nodesNode) {
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
             }
             this.nodeIDToIndex[nodeID] = i;
+            if (this.reader.hasAttribute(this.xmlNodes[i],'selectable')){
+                let isSelectable = this.reader.getBoolean(this.xmlNodes[i],'selectable',true);
+                if (isSelectable){
+                    this.selectedNodes[nodeID] = false;
+                }
+            }
         }
     }
     if (this.nodeIDToIndex[this.idRoot] == null) {
@@ -1564,6 +1581,10 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
                 texture_stack.push(texture_stack[texture_stack.length - 1]); //Inherit -> Last pushed element
             } else { //Should override
                 texture_stack.push(node.textureID);
+            }
+            // See if it is selected to use shader
+            if (this.selectedNodes[node.nodeID] === true){
+                console.log("Use shader in node " + node.nodeID);
             }
 
             this.displayNode(node, material_stack, texture_stack);
