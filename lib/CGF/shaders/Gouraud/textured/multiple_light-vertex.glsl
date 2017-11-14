@@ -43,6 +43,9 @@ uniform lightProperties uLight[NUMBER_OF_LIGHTS];
 uniform materialProperties uFrontMaterial;
 uniform materialProperties uBackMaterial;
 
+uniform float time_factor;
+const float time_range = 0.25;
+
 varying vec4 vFinalColor;
 varying vec2 vTextureCoord;
 
@@ -91,7 +94,7 @@ vec4 lighting(vec4 vertex, vec3 E, vec3 N) {
                 Is = uLight[i].specular * uFrontMaterial.specular * specular;
             }
 
-            if (uLight[i].position.w == 1.0) 
+            if (uLight[i].position.w == 1.0)
                result += att * max(spot_effect * (Id + Is), Ia);
             else
                result += att * spot_effect * (Ia + Id + Is);
@@ -118,10 +121,11 @@ void main() {
 
     vFinalColor = lighting(vertex, E, N);
 
-	gl_Position = uPMatrix * vertex;
+  float ranged_time_factor = time_factor * time_range;
+  vec4 pulse_vertex = vertex + vec4(N * ranged_time_factor, 1.0);
+	gl_Position = uPMatrix * pulse_vertex;
 
     if (uUseTexture)
         vTextureCoord = aTextureCoord;
 
 }
-

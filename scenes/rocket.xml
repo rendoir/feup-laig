@@ -132,8 +132,17 @@
 
 
   <!-- The leaves -->
-  <LEAVES>
-  </LEAVES>
+  <ANIMATIONS>
+    <ANIMATION id="an_linear" speed="1.6" type="linear">
+      <controlpoint xx="0" yy="0" zz="0" />
+      <controlpoint xx="0" yy="0" zz="5" />
+      <controlpoint xx="0" yy="0" zz="0" />
+    </ANIMATION>
+    <ANIMATION id="an_spaceship" speed="100" type="linear">
+      <controlpoint xx="0" yy="0" zz="0" />
+      <controlpoint xx="0" yy="10" zz="1000" />
+    </ANIMATION>
+  </ANIMATIONS>
 
 
   <!-- The nodes -->
@@ -142,12 +151,14 @@
     <ROOT id="rocket" />
 
     <!-- Rocket -->
-    <NODE id="rocket">
+    <NODE id="rocket" selectable="true">
       <MATERIAL id="m_rocket_stage_body" />
       <TEXTURE id="null" />
       <TRANSLATION x="0" y="0" z="0" />
-      <ROTATION axis="x" angle="-90" />
       <SCALE sx="0.15" sy="0.15" sz="0.15" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_linear" />
+      </ANIMATIONREFS>
       <DESCENDANTS>
         <NODEREF id="main_body" />
         <NODEREF id="side_boosters" />
@@ -155,7 +166,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="main_body">
+    <NODE id="main_body" selectable="true">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <DESCENDANTS>
@@ -342,8 +353,12 @@
     <NODE id="spaceship">       
         <MATERIAL id="m_spaceship_body" />         
         <TEXTURE id="clear" />
-        <TRANSLATION x="0" y="-1.5" z="0"/>
-        <ROTATION axis="x" angle="90"/>
+        <TRANSLATION x="0" y="1.5" z="0"/>
+        <ROTATION axis="x" angle="-90"/>
+        <ROTATION axis="z" angle="180"/>
+        <ANIMATIONREFS>
+          <ANIMATIONREF id="an_spaceship"/>
+        </ANIMATIONREFS>
         <DESCENDANTS>
           <NODEREF id="spaceship_cone"/>
           <NODEREF id="spaceship_wings"/>

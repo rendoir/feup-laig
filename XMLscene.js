@@ -11,6 +11,7 @@ function XMLscene(interface) {
     this.interface = interface;
 
     this.lightValues = {};
+    this.selectedValues = {};
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -93,6 +94,7 @@ XMLscene.prototype.onGraphLoaded = function() {
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
+    this.interface.addSelectedGroup(this.graph.selectedNodes);
 };
 
 /**
@@ -135,9 +137,10 @@ XMLscene.prototype.display = function() {
                 i++;
             }
         }
-
+        this.graph.selectedNodes = this.selectedValues;
         // Displays the scene.
         this.graph.displayScene();
+        
 
     } else {
         // Draw axis
