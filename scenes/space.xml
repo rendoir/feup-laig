@@ -12,7 +12,7 @@
 
 
   <ILLUMINATION>
-    <ambient r="0.25" g="0.25" b="0.25" a="1" />
+    <ambient r="1" g="1" b="1" a="1" />
     <background r="0" g="0" b="0" a="1" />
   </ILLUMINATION>
 
@@ -272,33 +272,36 @@
       <controlpoint xx="1.4" yy="5.3" zz="1.2" />
       <controlpoint xx="-1" yy="-5.0" zz="-3" />
     </ANIMATION>
-    <ANIMATION id="an_mercury" speed="300" type="circular" 
+    <ANIMATION id="an_mercury" speed="10227" type="circular" 
               centerx="0" centery="0" centerz="0" 
-              radius="50" startang="180" rotang="3600"/>
-    <ANIMATION id="an_venus" speed="300" type="circular" 
+              radius="50" startang="180" rotang="1000000"/>
+    <ANIMATION id="an_venus" speed="6769" type="circular" 
               centerx="0" centery="0" centerz="0" 
-              radius="65" startang="180" rotang="3600"/>
-    <ANIMATION id="an_earth" speed="300" type="circular" 
+              radius="65" startang="180" rotang="550000"/>
+    <ANIMATION id="an_earth" speed="6308" type="circular" 
               centerx="0" centery="0" centerz="0" 
-              radius="80" startang="90" rotang="3600"/>
-    <ANIMATION id="an_moon" speed="300" type="circular" 
+              radius="80" startang="90" rotang="500000"/>
+    <ANIMATION id="an_moon" speed="5126" type="circular" 
               centerx="0" centery="0" centerz="0" 
-              radius="5" startang="180" rotang="3600"/>
-    <ANIMATION id="an_mars" speed="300" type="circular" 
+              radius="5" startang="180" rotang="6500000"/>
+    <ANIMATION id="an_mars" speed="4729" type="circular" 
               centerx="0" centery="0" centerz="0" 
-              radius="95" startang="90" rotang="3600"/>
-    <ANIMATION id="an_jupiter" speed="300" type="circular" 
+              radius="95" startang="90" rotang="360000"/>
+    <ANIMATION id="an_jupiter" speed="1747" type="circular" 
               centerx="0" centery="0" centerz="0" 
-              radius="145" startang="90" rotang="3600"/>
-    <ANIMATION id="an_saturn" speed="300" type="circular" 
+              radius="145" startang="90" rotang="140000"/>
+    <ANIMATION id="an_saturn" speed="1406" type="circular" 
               centerx="0" centery="0" centerz="0" 
-              radius="205" startang="90" rotang="3600"/>
-    <ANIMATION id="an_uranus" speed="300" type="circular" 
+              radius="205" startang="90" rotang="128000"/>
+    <ANIMATION id="an_uranus" speed="762" type="circular" 
               centerx="0" centery="0" centerz="0" 
-              radius="255" startang="90" rotang="3600"/>
-    <ANIMATION id="an_neptune" speed="300" type="circular" 
+              radius="255" startang="90" rotang="6400"/>
+    <ANIMATION id="an_neptune" speed="520" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="295" startang="90" rotang="3600"/>
+    <ANIMATION id="an_rotate_him_self" speed="10" type="circular" 
+              centerx="0" centery="0" centerz="0" 
+              radius="0" startang="0" rotang="360000000"/>
     <ANIMATION id="an_3" speed="10" type="bezier">
       <controlpoint xx="1" yy="2" zz="3" /> <!-- P1 -->
       <controlpoint xx="1" yy="2" zz="4" /> <!-- P2 -->
@@ -343,6 +346,9 @@
       <MATERIAL id="m_sun" />
       <TEXTURE id="t_sun" />
       <ROTATION axis="x" angle="-90" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_rotate_him_self" />
+      </ANIMATIONREFS>
       <DESCENDANTS>
         <LEAF id="p_sun" type="sphere" args="20 40 40" />
       </DESCENDANTS>
@@ -353,14 +359,25 @@
       <MATERIAL id="m_planets" />
       <TEXTURE id="null" />
       <DESCENDANTS>
-        <NODEREF id="mercury" />
-        <NODEREF id="venus" />
+        <NODEREF id="mercury_system" />
+        <NODEREF id="venus_system" />
         <NODEREF id="earth_system" />
-        <NODEREF id="mars" />
-        <NODEREF id="jupiter" />
-        <NODEREF id="saturn" />
-        <NODEREF id="uranus" />
-        <NODEREF id="neptune" />
+        <NODEREF id="mars_system" />
+        <NODEREF id="jupiter_system" />
+        <NODEREF id="saturn_system" />
+        <NODEREF id="uranus_system" />
+        <NODEREF id="neptune_system" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="mercury_system">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_mercury" />
+      </ANIMATIONREFS>
+      <DESCENDANTS>
+        <NODEREF id="mercury" />
       </DESCENDANTS>
     </NODE>
 
@@ -369,10 +386,30 @@
       <TEXTURE id="t_mercury" />
       <ROTATION axis="x" angle="-90" />
       <ANIMATIONREFS>
-        <ANIMATIONREF id="an_mercury" />
+        <ANIMATIONREF id="an_rotate_him_self" />
       </ANIMATIONREFS>
       <DESCENDANTS>
         <LEAF id="p_mercury" type="sphere" args="2 20 20" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="venus_system">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_venus" />
+      </ANIMATIONREFS>
+      <DESCENDANTS>
+        <NODEREF id="venus_axil" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="venus_axil">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_venus" />
+      <ROTATION axis="x" angle="-177.36" />
+      <DESCENDANTS>
+        <NODEREF id="venus" />
       </DESCENDANTS>
     </NODE>
 
@@ -381,7 +418,7 @@
       <TEXTURE id="t_venus" />
       <ROTATION axis="x" angle="-90" />
       <ANIMATIONREFS>
-        <ANIMATIONREF id="an_venus" />
+        <ANIMATIONREF id="an_rotate_him_self" />
       </ANIMATIONREFS>
       <DESCENDANTS>
         <NODEREF id="rocket" />
@@ -391,13 +428,22 @@
 
     <NODE id="earth_system">
       <MATERIAL id="null" />
-      <TEXTURE id="t_earth" />
+      <TEXTURE id="null" />
       <ANIMATIONREFS>
         <ANIMATIONREF id="an_earth" />
       </ANIMATIONREFS>
       <DESCENDANTS>
-        <NODEREF id="moon" />
+        <NODEREF id="earth_axil" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="earth_axil">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_earth" />
+      <ROTATION axis="x" angle="-23.5" />
+      <DESCENDANTS>
         <NODEREF id="earth" />
+        <NODEREF id="moon" />
       </DESCENDANTS>
     </NODE>
 
@@ -405,8 +451,10 @@
       <MATERIAL id="null" />
       <TEXTURE id="t_earth" />
       <ROTATION axis="x" angle="-90" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_rotate_him_self" />
+      </ANIMATIONREFS>
       <DESCENDANTS>
-        <NODEREF id="pyramid" />
         <LEAF id="p_earth" type="sphere" args="3 24 24" />
       </DESCENDANTS>
     </NODE>
@@ -423,16 +471,56 @@
       </DESCENDANTS>
     </NODE>
 
+    <NODE id="mars_system">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_mars" />
+      </ANIMATIONREFS>
+      <DESCENDANTS>
+        <NODEREF id="mars_axil" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="mars_axil">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_mars" />
+      <ROTATION axis="x" angle="-25" />
+      <DESCENDANTS>
+        <NODEREF id="mars" />
+      </DESCENDANTS>
+    </NODE>
+
     <NODE id="mars">
       <MATERIAL id="null" />
       <TEXTURE id="t_mars" />
       <ROTATION axis="x" angle="-90" />
       <ANIMATIONREFS>
-        <ANIMATIONREF id="an_mars" />
+        <ANIMATIONREF id="an_rotate_him_self" />
       </ANIMATIONREFS>
       <DESCENDANTS>
         <NODEREF id="robot" />
         <LEAF id="p_mars" type="sphere" args="2 20 20" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="jupiter_system">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_jupiter" />
+      </ANIMATIONREFS>
+      <DESCENDANTS>
+        <NODEREF id="jupiter_axil" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="jupiter_axil">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_jupiter" />
+      <ROTATION axis="x" angle="-3.13" />
+      <DESCENDANTS>
+        <NODEREF id="jupiter"/>
       </DESCENDANTS>
     </NODE>
 
@@ -441,10 +529,31 @@
       <TEXTURE id="t_jupiter" />
       <ROTATION axis="x" angle="-90" />
       <ANIMATIONREFS>
-        <ANIMATIONREF id="an_jupiter" />
+        <ANIMATIONREF id="an_rotate_him_self" />
       </ANIMATIONREFS>
       <DESCENDANTS>
         <LEAF id="p_jupiter" type="sphere" args="10 30 30" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="saturn_system">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_saturn" />
+      </ANIMATIONREFS>
+      <DESCENDANTS>
+        <NODEREF id="saturn_axil" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="saturn_axil">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_saturn" />
+      <ROTATION axis="x" angle="-26.73" />
+      <DESCENDANTS>
+        <NODEREF id="saturn" />
+        <NODEREF id="saturn_ring" />
       </DESCENDANTS>
     </NODE>
 
@@ -453,11 +562,10 @@
       <TEXTURE id="t_saturn" />
       <ROTATION axis="x" angle="-90" />
       <ANIMATIONREFS>
-        <ANIMATIONREF id="an_saturn" />
+        <ANIMATIONREF id="an_rotate_him_self" />
       </ANIMATIONREFS>
       <DESCENDANTS>
         <LEAF id="p_saturn" type="sphere" args="7.5 28 28" />
-        <NODEREF id="saturn_ring" />
       </DESCENDANTS>
     </NODE>
 
@@ -465,9 +573,32 @@
       <MATERIAL id="null" />
       <TEXTURE id="t_saturn_ring" />
       <SCALE sx="17.5" sy="17.5" sz="17.5" />
-      <ROTATION axis="y" angle="30" />
+      <ROTATION axis="x" angle="-90" />
+      <ANIMATIONREFS>
+      </ANIMATIONREFS>
       <DESCENDANTS>
         <LEAF id="p_saturn_ring" type="cylinder" args="0 1 1 0 28 1 1" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="uranus_system">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_uranus" />
+      </ANIMATIONREFS>
+      <DESCENDANTS>
+        <NODEREF id="uranus_axil" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="uranus_axil">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_uranus" />
+      <ROTATION axis="x" angle="82.3" />
+      <DESCENDANTS>
+        <NODEREF id="uranus" />
+        <NODEREF id="uranus_ring" />
       </DESCENDANTS>
     </NODE>
 
@@ -476,11 +607,10 @@
       <TEXTURE id="t_uranus" />
       <ROTATION axis="x" angle="-90" />
       <ANIMATIONREFS>
-        <ANIMATIONREF id="an_uranus" />
+        <ANIMATIONREF id="an_rotate_him_self" />
       </ANIMATIONREFS>
       <DESCENDANTS>
         <LEAF id="p_uranus" type="sphere" args="5 26 26" />
-        <NODEREF id="uranus_ring" />
       </DESCENDANTS>
     </NODE>
 
@@ -488,9 +618,29 @@
       <MATERIAL id="null" />
       <TEXTURE id="t_uranus_ring" />
       <SCALE sx="15" sy="15" sz="15" />
-      <ROTATION axis="y" angle="15" />
+      <ROTATION axis="x" angle="-90" />
       <DESCENDANTS>
         <LEAF id="p_uranus_ring" type="cylinder" args="0 1 1 0 32 1 1" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="neptune_system">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_neptune" />
+      </ANIMATIONREFS>
+      <DESCENDANTS>
+        <NODEREF id="neptune_axil" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="neptune_axil">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_neptune" />
+      <ROTATION axis="x" angle="-30" />
+      <DESCENDANTS>
+        <NODEREF id="neptune" />
       </DESCENDANTS>
     </NODE>
 
@@ -499,7 +649,7 @@
       <TEXTURE id="t_neptune" />
       <ROTATION axis="x" angle="-90" />
       <ANIMATIONREFS>
-        <ANIMATIONREF id="an_neptune" />
+        <ANIMATIONREF id="an_rotate_him_self" />
       </ANIMATIONREFS>
       <DESCENDANTS>
         <LEAF id="t_neptune" type="sphere" args="5 26 26" />
@@ -1085,8 +1235,9 @@
     <NODE id="rocket">
       <MATERIAL id="m_rocket_stage_body" />
       <TEXTURE id="null" />
-      <TRANSLATION x="0" y="0" z="3.2" />
+      <TRANSLATION x="0" y="0" z="-3.2" />
       <SCALE sx="0.25" sy="0.25" sz="0.25" />
+      <ROTATION axis="x" angle="180"/>
       <DESCENDANTS>
         <NODEREF id="main_body" />
         <NODEREF id="side_boosters" />
