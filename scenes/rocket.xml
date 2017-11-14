@@ -132,8 +132,13 @@
 
 
   <!-- The leaves -->
-  <LEAVES>
-  </LEAVES>
+  <ANIMATIONS>
+    <ANIMATION id="an_linear" speed="1.6" type="linear">
+      <controlpoint xx="0" yy="0" zz="0" />
+      <controlpoint xx="0" yy="0" zz="5" />
+      <controlpoint xx="0" yy="0" zz="0" />
+    </ANIMATION>
+  </ANIMATIONS>
 
 
   <!-- The nodes -->
@@ -146,8 +151,10 @@
       <MATERIAL id="m_rocket_stage_body" />
       <TEXTURE id="null" />
       <TRANSLATION x="0" y="0" z="0" />
-      <ROTATION axis="x" angle="-90" />
       <SCALE sx="0.15" sy="0.15" sz="0.15" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_linear" />
+      </ANIMATIONREFS>
       <DESCENDANTS>
         <NODEREF id="main_body" />
         <NODEREF id="side_boosters" />
