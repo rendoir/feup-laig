@@ -53,8 +53,133 @@
 
   <!-- Textures -->
   <TEXTURES>
+    <TEXTURE id="t_sun">
+      <file path="images/solar_system/sun.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_mercury">
+      <file path="images/solar_system/mercury.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_venus">
+      <file path="images/solar_system/venus.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
     <TEXTURE id="t_earth">
       <file path="images/solar_system/earth.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+    
+    <TEXTURE id="t_moon">
+      <file path="images/solar_system/moon.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_mars">
+      <file path="images/solar_system/mars.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_jupiter">
+      <file path="images/solar_system/jupiter.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_saturn">
+      <file path="images/solar_system/saturn.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_saturn_ring">
+      <file path="images/solar_system/saturn_ring.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_uranus">
+      <file path="images/solar_system/uranus.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_uranus_ring">
+      <file path="images/solar_system/uranus_ring.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_neptune">
+      <file path="images/solar_system/neptune.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_rubber">
+      <file path="images/misc/tyre_rubber.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_aluminium">
+      <file path="images/misc/aluminium.jpg" />
+      <amplif_factor s="2" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_back">
+      <file path="images/solar_system/skybox_back.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_down">
+      <file path="images/solar_system/skybox_down.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_front">
+      <file path="images/solar_system/skybox_front.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_left">
+      <file path="images/solar_system/skybox_left.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_right">
+      <file path="images/solar_system/skybox_right.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_up">
+      <file path="images/solar_system/skybox_up.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_pyramid">
+      <file path="images/misc/rock.jpg" />
+      <amplif_factor s="0.5" t="0.5" />
+    </TEXTURE>
+
+    <TEXTURE id="t_perfurated">
+      <file path="images/misc/perforated_metal.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_carbon">
+      <file path="images/rocket/carbon.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_dark_grill">
+      <file path="images/rocket/dark_grill.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_light_grill">
+      <file path="images/rocket/light_grill.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+    
+    <TEXTURE id="cone_t">
+      <file path="images/rocket/cone.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
   </TEXTURES>
@@ -72,67 +197,43 @@
 
   <ANIMATIONS>
   
+    <ANIMATION id="an_1" speed="100" type="circular" 
+              centerx="0" centery="0" centerz="0" 
+              radius="5" startang="0" rotang="500000"/>
+    <ANIMATION id="an_moon" speed="130" type="circular" 
+              centerx="0" centery="0" centerz="0" 
+              radius="5" startang="0" rotang="6500000"/>
+    <ANIMATION id="an_rotate_him_self" speed="200" type="circular" 
+              centerx="0" centery="0" centerz="0" 
+              radius="0" startang="0" rotang="360000000"/>
   </ANIMATIONS>
 
   <!-- The nodes -->
   <NODES>
-    <ROOT id="earth_2" />
+    <ROOT id="mercury_system" />
 
-    <NODE id="earths">
+    <NODE id="mercury_system">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
-      <DESCENDANTS>
-        <NODEREF id="earth_1"/>
-        <NODEREF id="earth_2"/>
-        <NODEREF id="earth_3"/>
-      </DESCENDANTS>
-    </NODE>
-
-
-    <NODE id="earth_1">
-      <MATERIAL id="null" />
-      <TEXTURE id="t_earth" />
-
-      <TRANSLATION x="-7" y="0" z="0" />
-      <ROTATION axis="x" angle="-90" />
-
       <ANIMATIONREFS>
+        <ANIMATIONREF id="an_1" />
       </ANIMATIONREFS>
-
       <DESCENDANTS>
-        <LEAF id="p_earth" type="sphere" args="3 24 24" />
+        <NODEREF id="mercury" />
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="earth_2">
+    <NODE id="mercury">
       <MATERIAL id="null" />
-      <TEXTURE id="t_earth" />
-
+      <TEXTURE id="t_mercury" />
       <ROTATION axis="x" angle="-90" />
-
       <ANIMATIONREFS>
+        <ANIMATIONREF id="an_rotate_him_self" />
       </ANIMATIONREFS>
-
       <DESCENDANTS>
-        <LEAF id="p_earth" type="sphere" args="3 24 24" />
+        <LEAF id="p_mercury" type="sphere" args="2 20 20" />
       </DESCENDANTS>
     </NODE>
-
-    <NODE id="earth_3">
-      <MATERIAL id="null" />
-      <TEXTURE id="t_earth" />
-
-      <TRANSLATION x="7" y="0" z="0" />
-      <ROTATION axis="x" angle="-90" />
-
-      <ANIMATIONREFS>
-      </ANIMATIONREFS>
-
-      <DESCENDANTS>
-        <LEAF id="p_earth" type="sphere" args="3 24 24" />
-      </DESCENDANTS>
-    </NODE>
-
   </NODES>
 
 </SCENE>
