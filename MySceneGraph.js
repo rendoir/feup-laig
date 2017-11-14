@@ -23,6 +23,7 @@ function MySceneGraph(filename, scene) {
     this.animations = [];
     /* map nodeId -> isSelected (boolean)*/
     this.selectedNodes = [];
+    this.useShader = false;
 
     this.idRoot = null; // The id of the root element.
 
@@ -1545,10 +1546,6 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         return;
 
     if (node_to_display.leaves.length > 0) {
-      if(this.selectedNodes[node_to_display.nodeID]) {
-        let new_time_factor = Math.sin(performance.now() / 1000);
-        this.scene.activeShader.setUniformsValues({time_factor: new_time_factor});
-      }
 
         let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack
         this.materials[material_id].apply(); //Use the material
@@ -1568,6 +1565,10 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     }
 
     if (node_to_display.children.length > 0) {
+        if (this.useShader){
+            let new_time_factor = Math.sin(performance.now() / 1000);
+            this.scene.activeShader.setUniformsValues({time_factor: new_time_factor});
+        }
         for (let i = 0; i < node_to_display.children.length; i++) {
             const node = node_to_display.children[i];
             this.scene.pushMatrix();
@@ -1589,8 +1590,12 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             } else { //Should override
                 texture_stack.push(node.textureID);
             }
+            if(this.selectedNodes[node_to_display.nodeID]) {
+                this.useShader = true;
+              }
 
             this.displayNode(node, material_stack, texture_stack);
+            this.useShader = false;
 
             this.scene.popMatrix();
             material_stack.pop();
