@@ -52,7 +52,7 @@ MyInterface.prototype.addSelectedGroup = function(selectedNodes){
     let group = this.gui.addFolder("Selected Nodes");
     group.open();
     for (let nodeId in selectedNodes){
-        this.scene.selectedValues[nodeId] = selectedNodes[nodeId];
+        this.scene.selectedValues[nodeId] = selectedNodes[nodeId][0];
         group.add(this.scene.selectedValues, nodeId);
     }
 }

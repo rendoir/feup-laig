@@ -94,7 +94,7 @@ XMLscene.prototype.onGraphLoaded = function() {
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
-    this.interface.addSelectedGroup(this.graph.selectedNodes);
+    this.interface.addSelectedGroup(this.graph.selectableNodes);
 };
 
 /**
@@ -137,7 +137,9 @@ XMLscene.prototype.display = function() {
                 i++;
             }
         }
-        this.graph.selectedNodes = this.selectedValues;
+        for (let nodeId in this.selectedValues){
+            this.graph.selectableNodes[nodeId][0] = this.selectedValues[nodeId];
+        }
         // Displays the scene.
         this.graph.displayScene();
         

@@ -21,8 +21,8 @@ function MySceneGraph(filename, scene) {
     this.rootGraphNode = null;
     this.nodeIDToIndex = [];
     this.animations = [];
-    /* map nodeId -> isSelected (boolean)*/
-    this.selectedNodes = [];
+    /* map nodeId -> [isSelected,RGB]*/
+    this.selectableNodes = [];
     this.useShader = false;
 
     this.idRoot = null; // The id of the root element.
@@ -1413,6 +1413,30 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     return newNode;
 }
 
+MySceneGraph.prototype.parseColorXml = function(xmlNode){
+    const defaultColor = 1;
+    let rgb = [];
+    if (!this.reader.hasAttribute(xmlNode, 'r')){
+        this.onXMLMinorError('Component R is missing on selectable');
+        rgb.push(defaultColor);
+    }else{
+        rgb.push(this.reader.getFloat(xmlNode, 'r')); 
+    }
+    if (!this.reader.hasAttribute(xmlNode,'g')){
+        this.onXMLMinorError('Component G is missing on selectable');
+        rgb.push(defaultColor);
+    }else{
+        rgb.push(this.reader.getFloat(xmlNode, 'g')); 
+    }
+    if (!this.reader.hasAttribute(xmlNode,'b')){
+        this.onXMLMinorError('Component B is missing on selectable');
+        rgb.push(defaultColor);
+    }else{
+        rgb.push(this.reader.getFloat(xmlNode, 'b')); 
+    }
+    return rgb;
+}
+
 /**
  * Parses the <NODES> block.
  */
@@ -1447,7 +1471,8 @@ MySceneGraph.prototype.parseNodesXMLTag = function(nodesNode) {
             if (this.reader.hasAttribute(this.xmlNodes[i],'selectable')){
                 let isSelectable = this.reader.getBoolean(this.xmlNodes[i],'selectable',true);
                 if (isSelectable){
-                    this.selectedNodes[nodeID] = false;
+                    let rgb = this.parseColorXml(this.xmlNodes[i]);
+                    this.selectableNodes[nodeID] = [false,rgb];
                 }
             }
         }
@@ -1541,11 +1566,23 @@ MySceneGraph.prototype.displayScene = function() {
  */
 MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, texture_stack) {
   this.scene.activeShader.setUniformsValues({time_factor: 0.0});
-
+    let isToDeactivateShader = false;
     if (node_to_display == null)
         return;
+    if (this.selectableNodes[node_to_display.nodeID] != null){
+        if (this.selectableNodes[node_to_display.nodeID][0]){
+            if (!this.useShader){ // check if shader was activated previosuly
+                isToDeactivateShader = true;
+            }
+            this.useShader = true;
+        }
+    }
 
     if (node_to_display.leaves.length > 0) {
+        if (this.useShader){
+            let new_time_factor = Math.sin(performance.now() / 1000);
+            this.scene.activeShader.setUniformsValues({time_factor: new_time_factor});
+        }
 
         let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack
         this.materials[material_id].apply(); //Use the material
@@ -1565,10 +1602,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     }
 
     if (node_to_display.children.length > 0) {
-        if (this.useShader){
-            let new_time_factor = Math.sin(performance.now() / 1000);
-            this.scene.activeShader.setUniformsValues({time_factor: new_time_factor});
-        }
+
         for (let i = 0; i < node_to_display.children.length; i++) {
             const node = node_to_display.children[i];
             this.scene.pushMatrix();
@@ -1590,17 +1624,15 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             } else { //Should override
                 texture_stack.push(node.textureID);
             }
-            if(this.selectedNodes[node_to_display.nodeID]) {
-                this.useShader = true;
-              }
 
             this.displayNode(node, material_stack, texture_stack);
-            this.useShader = false;
-
             this.scene.popMatrix();
             material_stack.pop();
             texture_stack.pop();
         }
+    }
+    if (isToDeactivateShader){
+        this.useShader = false;
     }
     this.scene.activeShader.setUniformsValues({time_factor: 0.0});
 }
