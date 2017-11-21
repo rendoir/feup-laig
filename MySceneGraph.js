@@ -1565,7 +1565,9 @@ MySceneGraph.prototype.displayScene = function() {
  * @param node_to_display - An instance of MyGraphNode.
  */
 MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, texture_stack) {
-  this.scene.activeShader.setUniformsValues({time_factor: 0.0});
+    this.scene.activeShader.setUniformsValues({ time_factor: 0.0 });
+    this.scene.activeShader.setUniformsValues({ saturation_color: [1, 1, 1, 1] });
+
     let isToDeactivateShader = false;
     if (node_to_display == null)
         return;
@@ -1581,7 +1583,8 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     if (node_to_display.leaves.length > 0) {
         if (this.useShader){
             let new_time_factor = Math.sin(performance.now() / 1000);
-            this.scene.activeShader.setUniformsValues({time_factor: new_time_factor});
+            this.scene.activeShader.setUniformsValues({ time_factor: new_time_factor });
+            this.scene.activeShader.setUniformsValues({ saturation_color: [1, 0, 0, 0] });
         }
 
         let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack
@@ -1634,7 +1637,8 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     if (isToDeactivateShader){
         this.useShader = false;
     }
-    this.scene.activeShader.setUniformsValues({time_factor: 0.0});
+    this.scene.activeShader.setUniformsValues({ time_factor: 0.0 });
+    this.scene.activeShader.setUniformsValues({ saturation_color: [1, 1, 1, 1] });
 }
 
 MySceneGraph.prototype.update = function(currTime, node) {

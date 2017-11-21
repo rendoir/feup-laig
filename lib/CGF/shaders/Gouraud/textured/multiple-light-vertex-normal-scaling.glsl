@@ -43,6 +43,11 @@ uniform lightProperties uLight[NUMBER_OF_LIGHTS];
 uniform materialProperties uFrontMaterial;
 uniform materialProperties uBackMaterial;
 
+//Pulse
+uniform vec4 saturation_color;
+uniform float time_factor;
+const float time_range = 0.25;
+
 varying vec4 vFinalColor;
 varying vec2 vTextureCoord;
 
@@ -91,7 +96,7 @@ vec4 lighting(vec4 vertex, vec3 E, vec3 N) {
                 Is = uLight[i].specular * uFrontMaterial.specular * specular;
             }
 
-            if (uLight[i].position.w == 1.0) 
+            if (uLight[i].position.w == 1.0)
                result += att * max(spot_effect * (Id + Is), Ia);
             else
                result += att * spot_effect * (Ia + Id + Is);
@@ -107,6 +112,7 @@ vec4 lighting(vec4 vertex, vec3 E, vec3 N) {
 
 void main() {
 
+
     // Transformed Vertex position
     vec4 vertex = uMVMatrix * vec4(aVertexPosition, 1.0);
 
@@ -116,12 +122,14 @@ void main() {
     vec3 eyeVec = -vec3(vertex.xyz);
     vec3 E = normalize(eyeVec);
 
-    vFinalColor = lighting(vertex, E, N);
+	vec4 pulse_color = saturation_color * time_factor;
+    vFinalColor = lighting(vertex, E, N) + pulse_color;
 
-	gl_Position = uPMatrix * vertex;
+	float ranged_time_factor = time_factor * time_range;
+    vec4 pulse_vertex = vertex + vec4(N * ranged_time_factor, 1.0);
+	gl_Position = uPMatrix * pulse_vertex;
 
     if (uUseTexture)
         vTextureCoord = aTextureCoord;
 
 }
-
