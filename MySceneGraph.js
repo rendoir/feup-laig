@@ -1239,7 +1239,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     if (this.reader.hasAttribute(nodeToParse,'selectable')){
         let isSelectable = this.reader.getBoolean(nodeToParse,'selectable',true);
         if (isSelectable){
-            newNode.rgb = this.parseColorXml(nodeToParse);
+            newNode.rgba = this.parseColorXml(nodeToParse);
             this.selectableNodes[nodeID]= this.nodeIDToIndex[nodeID];
         }
     }
@@ -1582,7 +1582,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     if (this.selectedNode != -1){
         if (nodeIndex == this.selectedNode){
             this.useShader = true;
-            this.shaderRGB = node_to_display.rgb;
+            this.shaderRGB = node_to_display.rgba;
         }
     }
 
@@ -1590,7 +1590,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         if (this.useShader){
             let new_time_factor = Math.sin(performance.now() / 1000);
             this.scene.activeShader.setUniformsValues({ time_factor: new_time_factor });
-            this.scene.activeShader.setUniformsValues({ saturation_color: [1, this.shaderRGB[0], this.shaderRGB[1], this.shaderRGB[2]] });
+            this.scene.activeShader.setUniformsValues({ saturation_color: [this.shaderRGB[3], this.shaderRGB[0], this.shaderRGB[1], this.shaderRGB[2]] });
         }
 
         let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack
