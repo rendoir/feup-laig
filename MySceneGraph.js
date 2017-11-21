@@ -1415,26 +1415,32 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
 
 MySceneGraph.prototype.parseColorXml = function(xmlNode){
     const defaultColor = 1;
-    let rgb = [];
+    let rgba = [];
     if (!this.reader.hasAttribute(xmlNode, 'r')){
         this.onXMLMinorError('Component R is missing on selectable');
-        rgb.push(defaultColor);
+        rgba.push(defaultColor);
     }else{
-        rgb.push(this.reader.getFloat(xmlNode, 'r')); 
+        rgba.push(this.reader.getFloat(xmlNode, 'r')); 
     }
     if (!this.reader.hasAttribute(xmlNode,'g')){
         this.onXMLMinorError('Component G is missing on selectable');
-        rgb.push(defaultColor);
+        rgba.push(defaultColor);
     }else{
-        rgb.push(this.reader.getFloat(xmlNode, 'g')); 
+        rgba.push(this.reader.getFloat(xmlNode, 'g')); 
     }
     if (!this.reader.hasAttribute(xmlNode,'b')){
         this.onXMLMinorError('Component B is missing on selectable');
-        rgb.push(defaultColor);
+        rgba.push(defaultColor);
     }else{
-        rgb.push(this.reader.getFloat(xmlNode, 'b')); 
+        rgba.push(this.reader.getFloat(xmlNode, 'b')); 
     }
-    return rgb;
+    if (!this.reader.hasAttribute(xmlNode, 'a')) {
+        this.onXMLMinorError('Component A is missing on selectable');
+        rgba.push(defaultColor);
+    } else {
+        rgba.push(this.reader.getFloat(xmlNode, 'a'));
+    }
+    return rgba;
 }
 
 /**
@@ -1471,8 +1477,8 @@ MySceneGraph.prototype.parseNodesXMLTag = function(nodesNode) {
             if (this.reader.hasAttribute(this.xmlNodes[i],'selectable')){
                 let isSelectable = this.reader.getBoolean(this.xmlNodes[i],'selectable',true);
                 if (isSelectable){
-                    let rgb = this.parseColorXml(this.xmlNodes[i]);
-                    this.selectableNodes[nodeID] = [false,rgb];
+                    let rgba = this.parseColorXml(this.xmlNodes[i]);
+                    this.selectableNodes[nodeID] = [false,rgba];
                 }
             }
         }
@@ -1577,7 +1583,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
                 isToDeactivateShader = true;
             }
             this.useShader = true;
-            this.nodeRGB = this.selectableNodes[node_to_display.nodeID][1];
+            this.nodeRGBA = this.selectableNodes[node_to_display.nodeID][1];
         }
     }
 
@@ -1585,7 +1591,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         if (this.useShader){
             let new_time_factor = Math.sin(performance.now() / 1000);
             this.scene.activeShader.setUniformsValues({ time_factor: new_time_factor });
-            this.scene.activeShader.setUniformsValues({ saturation_color: [1, this.nodeRGB[0], this.nodeRGB[1], this.nodeRGB[2]] });
+            this.scene.activeShader.setUniformsValues({ saturation_color: [this.nodeRGBA[0], this.nodeRGBA[1], this.nodeRGBA[2], this.nodeRGBA[3]] });
         }
 
         let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack
