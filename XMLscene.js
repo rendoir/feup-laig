@@ -11,7 +11,7 @@ function XMLscene(interface) {
     this.interface = interface;
 
     this.lightValues = {};
-    this.selectedValues = {};
+    this.selectedNode = -1;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -137,9 +137,7 @@ XMLscene.prototype.display = function() {
                 i++;
             }
         }
-        for (let nodeId in this.selectedValues){
-            this.graph.selectableNodes[nodeId][0] = this.selectedValues[nodeId];
-        }
+        this.graph.selectedNode = this.selectedNode;
         // Displays the scene.
         this.graph.displayScene();
         

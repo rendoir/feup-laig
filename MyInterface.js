@@ -48,12 +48,13 @@ MyInterface.prototype.addLightsGroup = function(lights) {
     }
 }
 
-MyInterface.prototype.addSelectedGroup = function(selectedNodes){
-    let group = this.gui.addFolder("Selected Nodes");
+MyInterface.prototype.addSelectedGroup = function(selectableNodes){
+    /*let group = this.gui.addFolder("Selected Nodes");
     group.open();
-    for (let nodeId in selectedNodes){
-        this.scene.selectedValues[nodeId] = selectedNodes[nodeId][0];
+    for (let nodeId in selectableNodes){
+        this.scene.selectedValues[nodeId] = selectableNodes[nodeId][0];
         group.add(this.scene.selectedValues, nodeId);
-    }
+    }*/
+    this.gui.add(this.scene, 'selectedNode', selectableNodes);
 }
 

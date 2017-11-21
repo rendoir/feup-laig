@@ -21,10 +21,9 @@ function MySceneGraph(filename, scene) {
     this.rootGraphNode = null;
     this.nodeIDToIndex = [];
     this.animations = [];
-    /* map nodeId -> [isSelected,RGB]*/
-    this.selectableNodes = [];
     this.useShader = false;
-
+    this.selectableNodes = {none: -1};
+    this.selectedNode = -1;
     this.idRoot = null; // The id of the root element.
 
     this.axisCoords = [];
@@ -1236,6 +1235,16 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     let nodeSpecs = nodeToParse.children;
     let specNames = new Array();
     let possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS","DESCENDANTS"];
+
+    if (this.reader.hasAttribute(nodeToParse,'selectable')){
+        let isSelectable = this.reader.getBoolean(nodeToParse,'selectable',true);
+        if (isSelectable){
+            newNode.rgb = this.parseColorXml(nodeToParse);
+            this.selectableNodes[nodeID]= this.nodeIDToIndex[nodeID];
+        }
+    }
+
+
     for (let j = 0; j < nodeSpecs.length; j++) {
         let specName = nodeSpecs[j].nodeName;
         specNames.push(specName);
@@ -1468,13 +1477,6 @@ MySceneGraph.prototype.parseNodesXMLTag = function(nodesNode) {
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
             }
             this.nodeIDToIndex[nodeID] = i;
-            if (this.reader.hasAttribute(this.xmlNodes[i],'selectable')){
-                let isSelectable = this.reader.getBoolean(this.xmlNodes[i],'selectable',true);
-                if (isSelectable){
-                    let rgb = this.parseColorXml(this.xmlNodes[i]);
-                    this.selectableNodes[nodeID] = [false,rgb];
-                }
-            }
         }
     }
     if (this.nodeIDToIndex[this.idRoot] == null) {
@@ -1568,16 +1570,13 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     this.scene.activeShader.setUniformsValues({ time_factor: 0.0 });
     this.scene.activeShader.setUniformsValues({ saturation_color: [1, 1, 1, 1] });
 
-    let isToDeactivateShader = false;
     if (node_to_display == null)
         return;
-    if (this.selectableNodes[node_to_display.nodeID] != null){ //verify if the node is selectable
-        if (this.selectableNodes[node_to_display.nodeID][0]){ //verify if the node is selected right now
-            if (!this.useShader){ // check if shader was not activated previously
-                isToDeactivateShader = true;
-            }
+    let nodeIndex = this.nodeIDToIndex[node_to_display.nodeID];
+    if (this.selectedNode != -1){
+        if (nodeIndex == this.selectedNode){
             this.useShader = true;
-            this.nodeRGB = this.selectableNodes[node_to_display.nodeID][1];
+            this.shaderRGB = node_to_display.rgb;
         }
     }
 
@@ -1585,7 +1584,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         if (this.useShader){
             let new_time_factor = Math.sin(performance.now() / 1000);
             this.scene.activeShader.setUniformsValues({ time_factor: new_time_factor });
-            this.scene.activeShader.setUniformsValues({ saturation_color: [1, this.nodeRGB[0], this.nodeRGB[1], this.nodeRGB[2]] });
+            this.scene.activeShader.setUniformsValues({ saturation_color: [1, this.shaderRGB[0], this.shaderRGB[1], this.shaderRGB[2]] });
         }
 
         let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack
@@ -1635,7 +1634,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             texture_stack.pop();
         }
     }
-    if (isToDeactivateShader){
+    if (nodeIndex == this.selectedNode){
         this.useShader = false;
     }
     this.scene.activeShader.setUniformsValues({ time_factor: 0.0 });

@@ -16,6 +16,7 @@ function MyGraphNode(nodeID) {
 
     this.animation = null;
     this.initialTimestamp = -1;
+    this.rgb = null;
 
     this.animationMatrix = mat4.create();
     this.transformMatrix = mat4.create();
