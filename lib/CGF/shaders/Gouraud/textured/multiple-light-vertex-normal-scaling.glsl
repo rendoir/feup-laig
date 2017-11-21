@@ -46,7 +46,7 @@ uniform materialProperties uBackMaterial;
 //Pulse
 uniform vec4 saturation_color;
 uniform float time_factor;
-const float time_range = 0.25;
+uniform float time_range;
 
 varying vec4 vFinalColor;
 varying vec2 vTextureCoord;
@@ -122,8 +122,8 @@ void main() {
     vec3 eyeVec = -vec3(vertex.xyz);
     vec3 E = normalize(eyeVec);
 
-	vec4 pulse_color = saturation_color * time_factor;
-    vFinalColor = lighting(vertex, E, N) + pulse_color;
+	vec3 pulse_color = vec3(saturation_color) * time_factor;
+    vFinalColor = lighting(vertex, E, N) + vec4(pulse_color, saturation_color.a);
 
 	float ranged_time_factor = time_factor * time_range;
     vec4 pulse_vertex = vertex + vec4(N * ranged_time_factor, 1.0);

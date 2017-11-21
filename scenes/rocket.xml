@@ -152,7 +152,7 @@
     <ROOT id="rocket" />
 
     <!-- Rocket -->
-    <NODE id="rocket" selectable="true" r="0" g="0" b="1" a="1">
+    <NODE id="rocket" selectable="true" r="0" g="0" b="1" a="1" range="0.005">
       <MATERIAL id="m_rocket_stage_body" />
       <TEXTURE id="null" />
       <TRANSLATION x="0" y="0" z="0" />
@@ -167,7 +167,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="main_body" selectable="true" r="0" g="1" b="0" a="1">
+    <NODE id="main_body" selectable="true" r="0" g="1" b="0" a="1" range="0.005">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <DESCENDANTS>
