@@ -1577,6 +1577,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
                 isToDeactivateShader = true;
             }
             this.useShader = true;
+            this.nodeRGB = this.selectableNodes[node_to_display.nodeID][1];
         }
     }
 
@@ -1584,7 +1585,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         if (this.useShader){
             let new_time_factor = Math.sin(performance.now() / 1000);
             this.scene.activeShader.setUniformsValues({ time_factor: new_time_factor });
-            this.scene.activeShader.setUniformsValues({ saturation_color: [1, 0, 0, 0] });
+            this.scene.activeShader.setUniformsValues({ saturation_color: [1, this.nodeRGB[0], this.nodeRGB[1], this.nodeRGB[2]] });
         }
 
         let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack

@@ -167,7 +167,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="main_body" selectable="true" r="0.1" g="0.2" b="0.5">
+    <NODE id="main_body" selectable="true" r="0" g="1" b="0">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <DESCENDANTS>
