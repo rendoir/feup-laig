@@ -15,6 +15,7 @@ function MyGraphNode(nodeID) {
     this.textureID = null;
 
     this.animation = null;
+    this.initialTimestamp = -1;
 
     this.animationMatrix = mat4.create();
     this.transformMatrix = mat4.create();
@@ -28,8 +29,11 @@ MyGraphNode.prototype.addLeaf = function(leaf) {
     this.leaves.push(leaf);
 };
 
-MyGraphNode.prototype.update = function(deltaTime) {
+MyGraphNode.prototype.update = function (currTime) {
     if (this.animation != null) {
-        this.animationMatrix = this.animation.getMatrix(deltaTime / 1000);
+        if (this.initialTimestamp == -1)
+            this.initialTimestamp = currTime;
+        let deltaTime = (currTime - this.initialTimestamp) / 1000;
+        this.animationMatrix = this.animation.getMatrix(deltaTime);
     }
 };

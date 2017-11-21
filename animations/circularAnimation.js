@@ -13,21 +13,16 @@ class CircularAnimation extends Animation {
         let initialZ = this.center[2] + Math.sin(this.initialAng) * this.radius;
         mat4.translate(this.initialMatrix, this.initialMatrix, [initialX, 0, initialZ]);
         this.actualAngle = this.initialAng;
-        this.t = 0;
         if (this.radius > 0) {
             this.duration = Math.abs(this.rotationAng) / (this.speed / this.radius);
         } else {
             this.duration = Math.abs(this.rotationAng) / this.speed;
         }
     }
-    getMatrix(deltaTime) {
+    getMatrix(time) {
         let animationMatrix = mat4.create();
-        if (this.t < 1) {
-            this.t += deltaTime / this.duration;
-            if (this.t > 1) {
-                this.t = 1;
-            }
-            this.actualAngle = this.initialAng + this.t * this.rotationAng;
+        if (time < 1) {
+            this.actualAngle = this.initialAng + time * this.rotationAng;
         } else {
             this.actualAngle = this.initialAng + this.rotationAng;
         }
