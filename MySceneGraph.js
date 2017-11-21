@@ -1224,6 +1224,8 @@ MySceneGraph.prototype.getAttributeOfSpec = function(nodeSpecs, specIndex, attri
     return specID;
 }
 
+
+
 // Parses nodes recursively. Needs the texture stack in order to keep track of the amplification factors of textures.
 MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     let nodeID = this.reader.getString(nodeToParse, 'id');
@@ -1240,6 +1242,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
         let isSelectable = this.reader.getBoolean(nodeToParse,'selectable',true);
         if (isSelectable){
             newNode.rgba = this.parseColorXml(nodeToParse);
+            newNode.time_range = this.parseRangeXml(nodeToParse);
             this.selectableNodes[nodeID]= this.nodeIDToIndex[nodeID];
         }
     }
@@ -1422,29 +1425,38 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     return newNode;
 }
 
+MySceneGraph.prototype.parseRangeXml = function(xmlNode) {
+    const default_range = 0.005;
+    if (!this.reader.hasAttribute(xmlNode, 'range')){
+        this.onXMLMinorError('Component Range is missing on selectable node');
+        return default_range;
+    }
+    return this.reader.getFloat(xmlNode,'range');
+}
+
 MySceneGraph.prototype.parseColorXml = function(xmlNode){
     const defaultColor = 1;
     let rgba = [];
     if (!this.reader.hasAttribute(xmlNode, 'r')){
-        this.onXMLMinorError('Component R is missing on selectable');
+        this.onXMLMinorError('Component R is missing on selectable node');
         rgba.push(defaultColor);
     }else{
         rgba.push(this.reader.getFloat(xmlNode, 'r')); 
     }
     if (!this.reader.hasAttribute(xmlNode,'g')){
-        this.onXMLMinorError('Component G is missing on selectable');
+        this.onXMLMinorError('Component G is missing on selectable node');
         rgba.push(defaultColor);
     }else{
         rgba.push(this.reader.getFloat(xmlNode, 'g')); 
     }
     if (!this.reader.hasAttribute(xmlNode,'b')){
-        this.onXMLMinorError('Component B is missing on selectable');
+        this.onXMLMinorError('Component B is missing on selectable node');
         rgba.push(defaultColor);
     }else{
         rgba.push(this.reader.getFloat(xmlNode, 'b')); 
     }
     if (!this.reader.hasAttribute(xmlNode, 'a')) {
-        this.onXMLMinorError('Component A is missing on selectable');
+        this.onXMLMinorError('Component A is missing on selectable node');
         rgba.push(defaultColor);
     } else {
         rgba.push(this.reader.getFloat(xmlNode, 'a'));
@@ -1582,6 +1594,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         if (nodeIndex == this.selectedNode){
             this.useShader = true;
             this.shaderRGB = node_to_display.rgba;
+            this.time_range = node_to_display.time_range;
         }
     }
 
@@ -1590,7 +1603,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             let new_time_factor = Math.sin(performance.now() / 1000);
             this.scene.activeShader.setUniformsValues({ time_factor: new_time_factor });
             this.scene.activeShader.setUniformsValues({ saturation_color: [this.shaderRGB[0], this.shaderRGB[1], this.shaderRGB[2], this.shaderRGB[3]] });
-            this.scene.activeShader.setUniformsValues({ time_range: 0.005 });
+            this.scene.activeShader.setUniformsValues({ time_range: this.time_range });
         }
 
         let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack
