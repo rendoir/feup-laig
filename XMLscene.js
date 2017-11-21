@@ -157,10 +157,7 @@ XMLscene.prototype.display = function() {
 };
 
 XMLscene.prototype.update = function(currTime) {
-    this.lastTime = this.lastTime || 0;
-    this.deltaTime = currTime - this.lastTime;
-    this.lastTime = currTime;
     if (this.graph.loadedOk) {
-        this.graph.update(this.deltaTime, this.graph.rootGraphNode);
+        this.graph.update(currTime, this.graph.rootGraphNode);
     }
 };

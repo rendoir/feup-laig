@@ -1637,9 +1637,9 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     this.scene.activeShader.setUniformsValues({time_factor: 0.0});
 }
 
-MySceneGraph.prototype.update = function(deltaTime, node) {
-    node.update(deltaTime);
+MySceneGraph.prototype.update = function(currTime, node) {
+    node.update(currTime);
     node.children.forEach(element => {
-        this.update(deltaTime, element);
+        this.update(currTime, element);
     });
 }
