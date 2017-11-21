@@ -1424,26 +1424,32 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
 
 MySceneGraph.prototype.parseColorXml = function(xmlNode){
     const defaultColor = 1;
-    let rgb = [];
+    let rgba = [];
     if (!this.reader.hasAttribute(xmlNode, 'r')){
         this.onXMLMinorError('Component R is missing on selectable');
-        rgb.push(defaultColor);
+        rgba.push(defaultColor);
     }else{
-        rgb.push(this.reader.getFloat(xmlNode, 'r')); 
+        rgba.push(this.reader.getFloat(xmlNode, 'r')); 
     }
     if (!this.reader.hasAttribute(xmlNode,'g')){
         this.onXMLMinorError('Component G is missing on selectable');
-        rgb.push(defaultColor);
+        rgba.push(defaultColor);
     }else{
-        rgb.push(this.reader.getFloat(xmlNode, 'g')); 
+        rgba.push(this.reader.getFloat(xmlNode, 'g')); 
     }
     if (!this.reader.hasAttribute(xmlNode,'b')){
         this.onXMLMinorError('Component B is missing on selectable');
-        rgb.push(defaultColor);
+        rgba.push(defaultColor);
     }else{
-        rgb.push(this.reader.getFloat(xmlNode, 'b')); 
+        rgba.push(this.reader.getFloat(xmlNode, 'b')); 
     }
-    return rgb;
+    if (!this.reader.hasAttribute(xmlNode, 'a')) {
+        this.onXMLMinorError('Component A is missing on selectable');
+        rgba.push(defaultColor);
+    } else {
+        rgba.push(this.reader.getFloat(xmlNode, 'a'));
+    }
+    return rgba;
 }
 
 /**
