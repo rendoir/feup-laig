@@ -1569,9 +1569,9 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     let isToDeactivateShader = false;
     if (node_to_display == null)
         return;
-    if (this.selectableNodes[node_to_display.nodeID] != null){
-        if (this.selectableNodes[node_to_display.nodeID][0]){
-            if (!this.useShader){ // check if shader was activated previosuly
+    if (this.selectableNodes[node_to_display.nodeID] != null){ //verify if the node is selectable
+        if (this.selectableNodes[node_to_display.nodeID][0]){ //verify if the node is selected right now
+            if (!this.useShader){ // check if shader was not activated previously
                 isToDeactivateShader = true;
             }
             this.useShader = true;
