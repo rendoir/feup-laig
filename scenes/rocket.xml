@@ -135,13 +135,13 @@
   <ANIMATIONS>
     <ANIMATION id="an_linear" speed="1.6" type="linear">
       <controlpoint xx="0" yy="0" zz="0" />
-      <controlpoint xx="0" yy="0" zz="5" />
-      <controlpoint xx="0" yy="0" zz="0" />
-      <controlpoint xx="5" yy="0" zz="0" />
+      <controlpoint xx="5" yy="3" zz="4" />
+      <controlpoint xx="-1" yy="-2" zz="-5" />
+      <controlpoint xx="-1" yy="8" zz="-5" />
     </ANIMATION>
     <ANIMATION id="an_spaceship" speed="100" type="linear">
       <controlpoint xx="0" yy="0" zz="0" />
-      <controlpoint xx="0" yy="10" zz="1000" />
+      <controlpoint xx="0" yy="0" zz="100" />
     </ANIMATION>
   </ANIMATIONS>
 
@@ -358,7 +358,6 @@
         <ROTATION axis="x" angle="-90"/>
         <ROTATION axis="z" angle="180"/>
         <ANIMATIONREFS>
-          <ANIMATIONREF id="an_spaceship"/>
         </ANIMATIONREFS>
         <DESCENDANTS>
           <NODEREF id="spaceship_cone"/>

@@ -43,7 +43,7 @@
     </LIGHT>
     <LIGHT id="light4">
       <enable value ="1" />
-      <position  x="3" y="3" z="3" w="1" />
+      <position  x="1" y="2" z="3" w="1" />
       <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
       <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
       <specular r="0.2" g="0.2" b="0.2" a="1.0" />
@@ -197,20 +197,12 @@
 
   <ANIMATIONS>
   
-    <ANIMATION id="an_1" speed="100" type="circular" 
+    <ANIMATION id="an_circular" speed="5" type="circular" 
+              centerx="1" centery="2" centerz="3" 
+              radius="5" startang="45" rotang="720"/>
+     <ANIMATION id="an_rotate_himself" speed="1" type="circular" 
               centerx="0" centery="0" centerz="0" 
-              radius="5" startang="0" rotang="500000"/>
-    <ANIMATION id="an_moon" speed="130" type="circular" 
-              centerx="0" centery="0" centerz="0" 
-              radius="5" startang="0" rotang="6500000"/>
-    <ANIMATION id="an_rotate_him_self" speed="200" type="circular" 
-              centerx="0" centery="0" centerz="0" 
-              radius="0" startang="0" rotang="360000000"/>
-    <ANIMATION id="panados" speed="1" type="linear">
-      <controlpoint xx="0" yy="0" zz="0"/>
-      <controlpoint xx="5" yy="5" zz="5"/>
-      <controlpoint xx="10" yy="5" zz="5"/>
-    </ANIMATION>
+              radius="0" startang="0" rotang="720"/>
   </ANIMATIONS>
 
   <!-- The nodes -->
@@ -221,7 +213,7 @@
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <ANIMATIONREFS>
-        <ANIMATIONREF id="an_1" />
+        <ANIMATIONREF id="an_circular" />
       </ANIMATIONREFS>
       <DESCENDANTS>
         <NODEREF id="mercury" />
