@@ -202,7 +202,7 @@
               radius="5" startang="45" rotang="720"/>
      <ANIMATION id="an_rotate_himself" speed="1" type="circular" 
               centerx="0" centery="0" centerz="0" 
-              radius="0" startang="0" rotang="720"/>
+              radius="0" startang="0" rotang="1080"/>
   </ANIMATIONS>
 
   <!-- The nodes -->
@@ -225,7 +225,7 @@
       <TEXTURE id="t_mercury" />
       <ROTATION axis="x" angle="-90" />
       <ANIMATIONREFS>
-        <ANIMATIONREF id="an_rotate_him_self" />
+        <ANIMATIONREF id="an_rotate_himself" />
       </ANIMATIONREFS>
       <DESCENDANTS>
         <LEAF id="p_mercury" type="sphere" args="2 20 20" />
