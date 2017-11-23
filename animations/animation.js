@@ -1,6 +1,5 @@
 class Animation {
-    constructor(speed) {
-        this.speed = speed;
+    constructor() {
         this.duration = 0;
     }
 

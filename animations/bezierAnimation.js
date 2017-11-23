@@ -1,6 +1,7 @@
 class BezierAnimation extends Animation {
     constructor(speed, controlPoints) {
-        super(speed);
+        super();
+        this.speed = speed;
         this.controlPoints = controlPoints;
         this.initAnimation();
     }

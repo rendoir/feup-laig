@@ -1176,12 +1176,17 @@ MySceneGraph.prototype.processXMLAnimation = function(XMLAnimation) {
                 if (spanrefs.lenght < 1) {
                     this.onXMLError("Combo animations should have at least 1 SPANREF");
                 }
-                let animationsIds = [];
+                let animations = [];
                 for (let i = 0; i < spanrefs.length; i++) {
-                    animationsIds.push(spanrefs[i].id);
+                    let nextAnimation = this.animations[spanrefs[i].id];
+                    if (nextAnimation != null){
+                        animations.push(nextAnimation);
+                    }else{
+                        this.onXMLMinorError("Combo Animation Error: Skiping animation " + spanrefs[i].id + " because it is not defined yet");
+                    }
+                    
                 }
-                // return new ComboAnimation(animationsIds);
-                return null;
+                return new ComboAnimation(animations);
             }
     }
 }
@@ -1343,15 +1348,17 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     let animationsIndex = specNames.indexOf("ANIMATIONREFS");
     if (animationsIndex > 0) {
         const animationsXml = nodeSpecs[animationsIndex].children;
-        if (animationsXml.length == 1) {
+        if (animationsXml.length == 0){
+            this.onXMLMinorError("No animationref defined on node with id:" + nodeID);
+        }
+        else if (animationsXml.length == 1) {
             newNode.animation = this.animations[animationsXml[0].id];
         } else {
             let animationsList = [];
             for (let i = 0; i < animationsXml.length; i++) {
                 animationsList.push(this.animations[animationsXml[i].id]);
             }
-            //uncomment when Combo Animation is available
-            //newNode.animation = new ComboAnimation(animationsList);
+            newNode.animation = new ComboAnimation(animationsList);
         }
 
 

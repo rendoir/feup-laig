@@ -45,7 +45,7 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
     'primitives/cylinder.js', 'primitives/rectangle.js', 'primitives/sphere.js',
     'primitives/triangle.js', 'primitives/circle.js', 'primitives/nurbs.js',
     'animations/animation.js', 'animations/circularAnimation.js', 'animations/linearAnimation.js',
-    'animations/bezierAnimation.js',
+    'animations/bezierAnimation.js', 'animations/comboAnimation.js',
 
     main = function() {
         // Standard application, scene and interface setup

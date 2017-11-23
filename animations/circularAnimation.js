@@ -1,6 +1,7 @@
 class CircularAnimation extends Animation{
     constructor(radius, speed, center, initialAng, rotationAng) {
-        super(speed);
+        super();
+        this.speed = speed;
         if (radius == 0)
             this.angular_velocity = speed;
         else

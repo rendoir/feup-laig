@@ -1,6 +1,7 @@
 class LinearAnimation extends Animation {
     constructor(control_points, speed) {
-        super(speed);
+        super();
+        this.speed = speed;
         if (control_points.length < 2)
             throw "Insufficient control points!";
         this.control_points = control_points;
