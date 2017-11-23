@@ -133,7 +133,7 @@
 
   <!-- The leaves -->
   <ANIMATIONS>
-    <ANIMATION id="an_linear" speed="1" type="bezier">
+    <ANIMATION id="an_bezier" speed="1" type="bezier">
       <controlpoint xx="2" yy="0" zz="1" /> 
       <controlpoint xx="-2" yy="0" zz="2" /> 
       <controlpoint xx="-2" yy="0" zz="-2" /> 
@@ -158,7 +158,7 @@
       <TRANSLATION x="0" y="0" z="0" />
       <SCALE sx="0.15" sy="0.15" sz="0.15" />
       <ANIMATIONREFS>
-        <ANIMATIONREF id="an_linear" />
+        <ANIMATIONREF id="an_bezier" />
       </ANIMATIONREFS>
       <DESCENDANTS>
         <NODEREF id="main_body" />

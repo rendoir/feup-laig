@@ -7,8 +7,7 @@ class BezierAnimation extends Animation {
 
     initAnimation() {
         this.distance = this.getDistance();
-        this.durantion = this.distance / this.speed;
-        this.animationMatrix = mat4.create();
+        this.duration = this.distance / this.speed;
     }
 
     getDistance() {
@@ -68,26 +67,23 @@ class BezierAnimation extends Animation {
 
     getMatrix(deltaTime) {
         let time;
-        if (deltaTime <= this.durantion) {
-            time = deltaTime / this.durantion;
+        if (deltaTime <= this.duration) {
+            time = deltaTime / this.duration;
         } else
             time = 1;
 
-        mat4.identity(this.animationMatrix);
-        //console.log("Tempo: ", time);
+        let animationMatrix = mat4.create();
 
         let position = vec3.create();
-        //console.log("Old Position: ", this.position);
         position = this.getNextPoint(time);
-        //console.log("New Position: ", this.position);
 
         let angle = vec3.create();
         angle = this.getAngle(time);
 
-        mat4.translate(this.animationMatrix, this.animationMatrix, position);
-        mat4.rotateY(this.animationMatrix, this.animationMatrix, angle);
+        mat4.translate(animationMatrix, animationMatrix, position);
+        mat4.rotateY(animationMatrix, animationMatrix, angle);
 
-        return this.animationMatrix;
+        return animationMatrix;
     }
 
 }

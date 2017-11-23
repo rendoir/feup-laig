@@ -203,7 +203,7 @@
     <ANIMATION id="an_rotate_himself" speed="1" type="circular" 
             centerx="0" centery="0" centerz="0" 
             radius="0" startang="0" rotang="1080"/>
-    <ANIMATION id="an_bezie" speed="1" type="bezier">
+    <ANIMATION id="an_bezier" speed="1" type="bezier">
       <controlpoint xx="0" yy="0" zz="0" /> 
       <controlpoint xx="2" yy="0" zz="0" /> 
       <controlpoint xx="2" yy="2" zz="0" /> 
@@ -220,7 +220,7 @@
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <ANIMATIONREFS>
-        <ANIMATIONREF id="an_bezie" />
+        <ANIMATIONREF id="an_bezier" />
       </ANIMATIONREFS>
       <DESCENDANTS>
         <NODEREF id="mercury" />
