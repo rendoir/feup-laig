@@ -133,11 +133,11 @@
 
   <!-- The leaves -->
   <ANIMATIONS>
-    <ANIMATION id="an_linear" speed="1.6" type="linear">
-      <controlpoint xx="0" yy="0" zz="0" />
-      <controlpoint xx="5" yy="3" zz="4" />
-      <controlpoint xx="-1" yy="-2" zz="-5" />
-      <controlpoint xx="-1" yy="8" zz="-5" />
+    <ANIMATION id="an_linear" speed="1" type="bezier">
+      <controlpoint xx="2" yy="0" zz="1" /> 
+      <controlpoint xx="-2" yy="0" zz="2" /> 
+      <controlpoint xx="-2" yy="0" zz="-2" /> 
+      <controlpoint xx="2" yy="0" zz="-1" /> 
     </ANIMATION>
     <!-- <ANIMATION id="an_spaceship" speed="100" type="linear">
       <controlpoint xx="0" yy="0" zz="0" />

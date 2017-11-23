@@ -22,7 +22,7 @@ function MySceneGraph(filename, scene) {
     this.nodeIDToIndex = [];
     this.animations = [];
     this.useShader = false;
-    this.selectableNodes = {none: -1};
+    this.selectableNodes = { none: -1 };
     this.selectedNode = -1;
     this.idRoot = null; // The id of the root element.
 
@@ -1143,44 +1143,46 @@ MySceneGraph.prototype.processXMLAnimation = function(XMLAnimation) {
         return null;
     }
     switch (type) {
-        case "linear":{
-            let speed = this.reader.getFloat(XMLAnimation, 'speed');
-            let controlPoints = this.parseXMLControlPoints(XMLAnimation.children);
-            return new LinearAnimation(controlPoints, speed);
-        }
-        case "circular":{
-            const speed = this.reader.getFloat(XMLAnimation, 'speed');
-            const centerx = this.reader.getFloat(XMLAnimation, 'centerx');
-            const centery = this.reader.getFloat(XMLAnimation, 'centery');
-            const centerz = this.reader.getFloat(XMLAnimation, 'centerz');
-            const radius = this.reader.getFloat(XMLAnimation, 'radius');
-            const startang = this.reader.getFloat(XMLAnimation, 'startang');
-            const rotang = this.reader.getFloat(XMLAnimation, 'rotang');
-            let centerArray = [centerx, centery, centerz];
-            return new CircularAnimation(radius,speed,centerArray,startang,rotang);
-        }
-        case "bezier":{
-            const speed = this.reader.getFloat(XMLAnimation, 'speed');
-            const controlPoints = this.parseXMLControlPoints(XMLAnimation.children);
-            if (controlPoints.length != 4){
-                this.onXMLError("Bezier Animation has " + controlPoints.length + " control points. It should have 4");
+        case "linear":
+            {
+                let speed = this.reader.getFloat(XMLAnimation, 'speed');
+                let controlPoints = this.parseXMLControlPoints(XMLAnimation.children);
+                return new LinearAnimation(controlPoints, speed);
             }
-            // uncomment when BezierAnimation class is available
-            // return new BezierAnimation(controlPoints,speed);
-            return null;
-        }
-        case "combo":{
-            const spanrefs = XMLAnimation.children;
-            if (spanrefs.lenght < 1){
-                this.onXMLError("Combo animations should have at least 1 SPANREF");
+        case "circular":
+            {
+                const speed = this.reader.getFloat(XMLAnimation, 'speed');
+                const centerx = this.reader.getFloat(XMLAnimation, 'centerx');
+                const centery = this.reader.getFloat(XMLAnimation, 'centery');
+                const centerz = this.reader.getFloat(XMLAnimation, 'centerz');
+                const radius = this.reader.getFloat(XMLAnimation, 'radius');
+                const startang = this.reader.getFloat(XMLAnimation, 'startang');
+                const rotang = this.reader.getFloat(XMLAnimation, 'rotang');
+                let centerArray = [centerx, centery, centerz];
+                return new CircularAnimation(radius, speed, centerArray, startang, rotang);
             }
-            let animationsIds = [];
-            for (let i = 0; i < spanrefs.length; i++){
-                animationsIds.push(spanrefs[i].id);
+        case "bezier":
+            {
+                const speed = this.reader.getFloat(XMLAnimation, 'speed');
+                const controlPoints = this.parseXMLControlPoints(XMLAnimation.children);
+                if (controlPoints.length != 4) {
+                    this.onXMLError("Bezier Animation has " + controlPoints.length + " control points. It should have 4");
+                }
+                return new BezierAnimation(speed, controlPoints);
             }
-            // return new ComboAnimation(animationsIds);
-            return null;
-        }
+        case "combo":
+            {
+                const spanrefs = XMLAnimation.children;
+                if (spanrefs.lenght < 1) {
+                    this.onXMLError("Combo animations should have at least 1 SPANREF");
+                }
+                let animationsIds = [];
+                for (let i = 0; i < spanrefs.length; i++) {
+                    animationsIds.push(spanrefs[i].id);
+                }
+                // return new ComboAnimation(animationsIds);
+                return null;
+            }
     }
 }
 
@@ -1236,14 +1238,14 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     let newNode = new MyGraphNode(nodeID);
     let nodeSpecs = nodeToParse.children;
     let specNames = new Array();
-    let possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS","DESCENDANTS"];
+    let possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS", "DESCENDANTS"];
 
-    if (this.reader.hasAttribute(nodeToParse,'selectable')){
-        let isSelectable = this.reader.getBoolean(nodeToParse,'selectable',true);
-        if (isSelectable){
+    if (this.reader.hasAttribute(nodeToParse, 'selectable')) {
+        let isSelectable = this.reader.getBoolean(nodeToParse, 'selectable', true);
+        if (isSelectable) {
             newNode.rgba = this.parseColorXml(nodeToParse);
             newNode.time_range = this.parseRangeXml(nodeToParse);
-            this.selectableNodes[nodeID]= this.nodeIDToIndex[nodeID];
+            this.selectableNodes[nodeID] = this.nodeIDToIndex[nodeID];
         }
     }
 
@@ -1339,13 +1341,13 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
         }
     }
     let animationsIndex = specNames.indexOf("ANIMATIONREFS");
-    if (animationsIndex > 0){
+    if (animationsIndex > 0) {
         const animationsXml = nodeSpecs[animationsIndex].children;
-        if (animationsXml.length == 1){
+        if (animationsXml.length == 1) {
             newNode.animation = this.animations[animationsXml[0].id];
-        }else{
+        } else {
             let animationsList = [];
-            for (let i = 0; i < animationsXml.length; i++){
+            for (let i = 0; i < animationsXml.length; i++) {
                 animationsList.push(this.animations[animationsXml[i].id]);
             }
             //uncomment when Combo Animation is available
@@ -1427,33 +1429,33 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
 
 MySceneGraph.prototype.parseRangeXml = function(xmlNode) {
     const default_range = 0.005;
-    if (!this.reader.hasAttribute(xmlNode, 'range')){
+    if (!this.reader.hasAttribute(xmlNode, 'range')) {
         this.onXMLMinorError('Component Range is missing on selectable node');
         return default_range;
     }
-    return this.reader.getFloat(xmlNode,'range');
+    return this.reader.getFloat(xmlNode, 'range');
 }
 
-MySceneGraph.prototype.parseColorXml = function(xmlNode){
+MySceneGraph.prototype.parseColorXml = function(xmlNode) {
     const defaultColor = 1;
     let rgba = [];
-    if (!this.reader.hasAttribute(xmlNode, 'r')){
+    if (!this.reader.hasAttribute(xmlNode, 'r')) {
         this.onXMLMinorError('Component R is missing on selectable node');
         rgba.push(defaultColor);
-    }else{
-        rgba.push(this.reader.getFloat(xmlNode, 'r')); 
+    } else {
+        rgba.push(this.reader.getFloat(xmlNode, 'r'));
     }
-    if (!this.reader.hasAttribute(xmlNode,'g')){
+    if (!this.reader.hasAttribute(xmlNode, 'g')) {
         this.onXMLMinorError('Component G is missing on selectable node');
         rgba.push(defaultColor);
-    }else{
-        rgba.push(this.reader.getFloat(xmlNode, 'g')); 
+    } else {
+        rgba.push(this.reader.getFloat(xmlNode, 'g'));
     }
-    if (!this.reader.hasAttribute(xmlNode,'b')){
+    if (!this.reader.hasAttribute(xmlNode, 'b')) {
         this.onXMLMinorError('Component B is missing on selectable node');
         rgba.push(defaultColor);
-    }else{
-        rgba.push(this.reader.getFloat(xmlNode, 'b')); 
+    } else {
+        rgba.push(this.reader.getFloat(xmlNode, 'b'));
     }
     if (!this.reader.hasAttribute(xmlNode, 'a')) {
         this.onXMLMinorError('Component A is missing on selectable node');
@@ -1590,8 +1592,8 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     if (node_to_display == null)
         return;
     let nodeIndex = this.nodeIDToIndex[node_to_display.nodeID];
-    if (this.selectedNode != -1){
-        if (nodeIndex == this.selectedNode){
+    if (this.selectedNode != -1) {
+        if (nodeIndex == this.selectedNode) {
             this.useShader = true;
             this.shaderRGB = node_to_display.rgba;
             this.time_range = node_to_display.time_range;
@@ -1599,7 +1601,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     }
 
     if (node_to_display.leaves.length > 0) {
-        if (this.useShader){
+        if (this.useShader) {
             let new_time_factor = Math.sin(performance.now() / 1000);
             this.scene.activeShader.setUniformsValues({ time_factor: new_time_factor });
             this.scene.activeShader.setUniformsValues({ saturation_color: [this.shaderRGB[0], this.shaderRGB[1], this.shaderRGB[2], this.shaderRGB[3]] });
@@ -1653,7 +1655,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             texture_stack.pop();
         }
     }
-    if (nodeIndex == this.selectedNode){
+    if (nodeIndex == this.selectedNode) {
         this.useShader = false;
     }
     this.scene.activeShader.setUniformsValues({ time_factor: 0.0 });
