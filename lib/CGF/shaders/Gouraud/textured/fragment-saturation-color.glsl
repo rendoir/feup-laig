@@ -10,6 +10,7 @@ uniform sampler2D uSampler;
 uniform bool uUseTexture;
 
 //Pulse
+uniform float time_factor;
 uniform vec4 saturation_color;
 
 void main() {

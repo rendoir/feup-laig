@@ -10,7 +10,6 @@ class LinearAnimation extends Animation {
     }
 
     initAnimation() {
-        this.duration = 0;
         for (let i = 0; i < this.control_points.length - 1; i++) {
             let p1 = vec3.fromValues(this.control_points[i][0], this.control_points[i][1], this.control_points[i][2]);
             let p2 = vec3.fromValues(this.control_points[i + 1][0], this.control_points[i + 1][1], this.control_points[i + 1][2]);

@@ -8,7 +8,9 @@ class CircularAnimation extends Animation{
         this.radius = radius;
         this.center = vec3.fromValues(center[0], center[1], center[2]);
         this.initialAng = initialAng * DEGREE_TO_RAD;
-        this.maxAngle = rotationAng * DEGREE_TO_RAD + this.initialAng;
+        this.rotationAng = rotationAng * DEGREE_TO_RAD
+        this.maxAngle = this.rotationAng + this.initialAng;
+        this.duration = this.rotationAng / this.angular_velocity;
         this.initAnimation();
     }
 
