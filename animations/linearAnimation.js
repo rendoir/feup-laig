@@ -26,7 +26,7 @@ class LinearAnimation extends Animation {
             let projection_xz = vec3.fromValues(subtraction_vector[0], 0, subtraction_vector[2]);
             let unit_vector = vec3.fromValues(0, 0, 1);
             let y_axis = vec3.fromValues(0, 1, 0);
-            let angle_y = vec3.angle(projection_xz, unit_vector);
+            let angle_y = getAngle(unit_vector, projection_xz);
             let matrix_angle = mat4.fromRotation(mat4.create(), angle_y, y_axis);
             this.segments[i] = {
                 matrix_p1: matrix_p1,
@@ -61,4 +61,17 @@ class LinearAnimation extends Animation {
         let final_matrix = mat4.multiply(mat4.create(), temp_matrix, segment.matrix_angle);
         return final_matrix;
     }
+}
+
+getAngle = function (source, destination) {
+    let tmpDestination = destination;
+    vec3.normalize(tmpDestination, tmpDestination);
+
+    let cossine = tmpDestination[2];
+    let alpha = Math.acos(cossine);
+
+    if (tmpDestination[0] < 0)
+        alpha *= -1;
+
+    return alpha;
 }

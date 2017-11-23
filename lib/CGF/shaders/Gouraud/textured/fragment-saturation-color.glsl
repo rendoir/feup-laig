@@ -15,14 +15,12 @@ uniform vec4 saturation_color;
 
 void main() {
 
-	vec3 pulse_color = vec3(saturation_color) * time_factor;
-
 	if (uUseTexture)
 	{
 		vec4 textureColor = texture2D(uSampler, vTextureCoord);
-		gl_FragColor = textureColor * vFinalColor  + vec4(pulse_color, saturation_color.a);
+		gl_FragColor = mix(textureColor * vFinalColor, saturation_color, abs(time_factor));
 	}
 	else
-		gl_FragColor = vFinalColor + vec4(pulse_color, saturation_color.a);
+		gl_FragColor = mix(vFinalColor, saturation_color, abs(time_factor));
 
 }
