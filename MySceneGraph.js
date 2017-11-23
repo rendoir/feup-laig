@@ -1587,7 +1587,7 @@ MySceneGraph.prototype.displayScene = function() {
  * @param node_to_display - An instance of MyGraphNode.
  */
 MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, texture_stack) {
-    this.scene.activeShader.setUniformsValues({ time_factor: 0.0 });
+    this.scene.activeShader.setUniformsValues({ time: 0.0 });
 
     if (node_to_display == null)
         return;
@@ -1602,10 +1602,10 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
 
     if (node_to_display.leaves.length > 0) {
         if (this.useShader) {
-            let new_time_factor = Math.sin(performance.now() / 1000);
-            this.scene.activeShader.setUniformsValues({ time_factor: new_time_factor });
+            let new_time = performance.now() / 1000;
+            this.scene.activeShader.setUniformsValues({ time: new_time });
             this.scene.activeShader.setUniformsValues({ saturation_color: [this.shaderRGB[0], this.shaderRGB[1], this.shaderRGB[2], this.shaderRGB[3]] });
-            this.scene.activeShader.setUniformsValues({ time_range: this.time_range });
+            this.scene.activeShader.setUniformsValues({ pulse_range: this.time_range });
         }
 
         let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack
@@ -1658,7 +1658,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     if (nodeIndex == this.selectedNode) {
         this.useShader = false;
     }
-    this.scene.activeShader.setUniformsValues({ time_factor: 0.0 });
+    this.scene.activeShader.setUniformsValues({ time: 0.0 });
 }
 
 MySceneGraph.prototype.update = function(currTime, node) {
