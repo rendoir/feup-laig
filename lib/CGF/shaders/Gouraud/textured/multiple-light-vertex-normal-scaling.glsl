@@ -44,7 +44,7 @@ uniform materialProperties uFrontMaterial;
 uniform materialProperties uBackMaterial;
 
 //Pulse
-uniform float time;
+uniform float time_factor;
 uniform float pulse_range;
 
 varying vec4 vFinalColor;
@@ -123,12 +123,11 @@ void main() {
 
     vFinalColor = lighting(vertex, E, N);
 
-	float time_factor = sin(time);
 	float ranged_time_factor = time_factor * pulse_range;
     vec4 pulse_vertex = vertex + vec4(N * ranged_time_factor, 1.0);
 	gl_Position = uPMatrix * pulse_vertex;
 
     if (uUseTexture)
-        vTextureCoord = aTextureCoord;
+      vTextureCoord = aTextureCoord;
 
 }

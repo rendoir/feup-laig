@@ -1,4 +1,12 @@
+/**
+ * Class that handles a cubic Bezier curve animation
+ */
 class BezierAnimation extends Animation {
+    /**
+     * @constructor
+     * @param control_points - 3D Points that represent the convex hull
+     * @param speed - Linear speed
+     */
     constructor(speed, controlPoints) {
         super();
         this.speed = speed;
@@ -6,11 +14,19 @@ class BezierAnimation extends Animation {
         this.initAnimation();
     }
 
+    /**
+     * Initializes a cubic Bezier curve animation to optimize rendering by pre-calculating needed information
+     * Calculates the length of the curve and the duration of the animation
+     */
     initAnimation() {
         this.distance = this.getDistance();
         this.duration = this.distance / this.speed;
     }
 
+    /**
+     * Calculates the length of the curve using 0.01 intervals
+     * @return The length of the curve
+     */
     getDistance() {
         let lastPoint = vec3.create();
         let distance = 0;
@@ -22,6 +38,11 @@ class BezierAnimation extends Animation {
         return distance;
     }
 
+    /**
+     * Calculates a 3D point based on the interpolated time
+     * @param time - Interpolated time with time in [0, 1]
+     * @return 3D position point
+     */
     getNextPoint(time) {
         let position = new Array(3);
         position[0] =
@@ -44,6 +65,11 @@ class BezierAnimation extends Animation {
         return position;
     }
 
+    /**
+     * Calculates the angle to rotate around the Y axis based on the interpolated time
+     * @param time - Interpolated time with time in [0, 1]
+     * @return Angle to rotate around the Y axis
+     */
     getAngle(time) {
         let direction = vec3.create();
         let angle = 0;
@@ -66,6 +92,11 @@ class BezierAnimation extends Animation {
         return angle;
     }
 
+    /**
+     * Calculates the bezier animation matrix.
+     * @param deltaTime - Time in seconds since the beginning of the animation
+     * @return Animation matrix
+     */
     getMatrix(deltaTime) {
         let time;
         if (deltaTime <= this.duration) {

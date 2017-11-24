@@ -1,4 +1,15 @@
+/**
+ * Class that handles a circular animation
+ */
 class CircularAnimation extends Animation{
+    /**
+     * @constructor
+     * @param radius - Sets the distance between the center and the object
+     * @param speed - Linear speed
+     * @param center - 3D Point that determines the center of the animation
+     * @param initialAng - Sets the initial angle of the object
+     * @param rotationAng - Sets the angle that the object will rotate over the course of the animation
+     */
     constructor(radius, speed, center, initialAng, rotationAng) {
         super();
         this.speed = speed;
@@ -15,14 +26,21 @@ class CircularAnimation extends Animation{
         this.initAnimation();
     }
 
-
+    /**
+     * Initializes a circular animation to optimize rendering by pre-calculating needed information
+     * Calculates the center, radius and initial rotation matrices
+     */
     initAnimation() {
         this.centerMatrix = mat4.fromTranslation(mat4.create(), this.center);
         this.radiusMatrix = mat4.fromTranslation(mat4.create(), vec3.fromValues(this.radius, 0, 0));
         this.initialRotationMatrix = mat4.fromRotation(mat4.create(), Math.PI, vec3.fromValues(0, 1, 0));
     }
 
-
+    /**
+     * Calculates the animation matrix.
+     * @param deltaTime - Time in seconds since the beginning of the animation
+     * @return Animation matrix
+     */
     getMatrix(deltaTime) {
         let deltaAlpha = this.initialAng + this.angular_velocity * deltaTime;
         if (deltaAlpha > this.maxAngle)
