@@ -12,6 +12,7 @@ class ComboAnimation extends Animation{
         this.initAnimation();
         
     }
+
     /**
      * Sets the timings at which each animation should start.
      */
@@ -21,6 +22,7 @@ class ComboAnimation extends Animation{
             this.initTimes.push(this.animationsList[i].duration);
         }
     }
+
     /**
      * Returns the index of the active animations based on the delta time
      * @param {*} deltaTime - Time in seconds since the beginning of all animations.
@@ -32,6 +34,7 @@ class ComboAnimation extends Animation{
             }
         }
     }
+
     /**
      * Returns the animation matrix of the active animation
      * @param {*} deltaTime - Time in seconds since the beginning of all animations.
