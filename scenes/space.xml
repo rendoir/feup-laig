@@ -268,54 +268,45 @@
   </MATERIALS>
 
   <ANIMATIONS>
-    <ANIMATION id="an_1" speed="1.6" type="linear">
-      <controlpoint xx="1.4" yy="5.3" zz="1.2" />
-      <controlpoint xx="-1" yy="-5.0" zz="-3" />
+    <ANIMATION id="an_rocket" speed="2" type="linear">
+      <controlpoint xx="80" yy="10" zz="0" />
+      <controlpoint xx="100" yy="20" zz="500" />
     </ANIMATION>
-    <ANIMATION id="an_mercury" speed="10227" type="circular" 
+    <ANIMATION id="an_mercury" speed="102" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="50" startang="180" rotang="1000000"/>
-    <ANIMATION id="an_venus" speed="6769" type="circular" 
+    <ANIMATION id="an_venus" speed="67" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="65" startang="180" rotang="550000"/>
-    <ANIMATION id="an_earth" speed="6308" type="circular" 
+    <ANIMATION id="an_earth" speed="63" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="80" startang="90" rotang="500000"/>
-    <ANIMATION id="an_moon" speed="5126" type="circular" 
+    <ANIMATION id="an_moon" speed="51" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="5" startang="180" rotang="6500000"/>
-    <ANIMATION id="an_mars" speed="4729" type="circular" 
+    <ANIMATION id="an_mars" speed="47" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="95" startang="90" rotang="360000"/>
-    <ANIMATION id="an_jupiter" speed="1747" type="circular" 
+    <ANIMATION id="an_jupiter" speed="174" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="145" startang="90" rotang="140000"/>
-    <ANIMATION id="an_saturn" speed="1406" type="circular" 
+    <ANIMATION id="an_saturn" speed="140" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="205" startang="90" rotang="128000"/>
-    <ANIMATION id="an_uranus" speed="762" type="circular" 
+    <ANIMATION id="an_uranus" speed="76" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="255" startang="90" rotang="6400"/>
-    <ANIMATION id="an_neptune" speed="520" type="circular" 
+    <ANIMATION id="an_neptune" speed="52" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="295" startang="90" rotang="3600"/>
-    <ANIMATION id="an_rotate_him_self" speed="10" type="circular" 
+    <ANIMATION id="an_rotate_him_self" speed="1" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="0" startang="0" rotang="360000000"/>
     <ANIMATION id="an_3" speed="10" type="bezier">
-      <controlpoint xx="1" yy="2" zz="3" /> <!-- P1 -->
-      <controlpoint xx="1" yy="2" zz="4" /> <!-- P2 -->
-      <controlpoint xx="1" yy="2" zz="5" /> <!-- P3 -->
-      <controlpoint xx="1" yy="2" zz="6" /> <!-- P4 -->
-    </ANIMATION>
-    <ANIMATION id="an_4" type="combo"> 
-    <!-- pode ser repetida para
-    várias animações.
-    a próxima instrução deve existir pelo menos uma vez
-    com id a referir-se a uma animação definida acima.
-    As animacoes devem ser executadas sequencialmente
-    pela ordem com que sao declaradas -->
-      <SPANREF id="an_1" />
+      <controlpoint xx="1" yy="2" zz="3" />
+      <controlpoint xx="1" yy="2" zz="4" />
+      <controlpoint xx="1" yy="2" zz="5" />
+      <controlpoint xx="1" yy="2" zz="6" />
     </ANIMATION>
   </ANIMATIONS>
 
@@ -338,11 +329,12 @@
       <DESCENDANTS>
         <NODEREF id="sun" />
         <NODEREF id="planets" />
+        <NODEREF id="rocket" />
       </DESCENDANTS>
     </NODE>
 
     <!-- Sun -->
-    <NODE id="sun" selectable="true">
+    <NODE id="sun" selectable="true" range="1" r="1" g="0" b="0" a="1">
       <MATERIAL id="m_sun" />
       <TEXTURE id="t_sun" />
       <ROTATION axis="x" angle="-90" />
@@ -421,7 +413,6 @@
         <ANIMATIONREF id="an_rotate_him_self" />
       </ANIMATIONREFS>
       <DESCENDANTS>
-        <NODEREF id="rocket" />
         <LEAF id="p_venus" type="sphere" args="3 24 24" />
       </DESCENDANTS>
     </NODE>
@@ -1235,9 +1226,10 @@
     <NODE id="rocket">
       <MATERIAL id="m_rocket_stage_body" />
       <TEXTURE id="null" />
-      <TRANSLATION x="0" y="0" z="-3.2" />
-      <SCALE sx="0.25" sy="0.25" sz="0.25" />
-      <ROTATION axis="x" angle="180"/>
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_rocket"/>
+      </ANIMATIONREFS>
+      <ROTATION axis="z" angle="180"/>
       <DESCENDANTS>
         <NODEREF id="main_body" />
         <NODEREF id="side_boosters" />
