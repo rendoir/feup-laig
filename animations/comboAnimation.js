@@ -17,9 +17,10 @@ class ComboAnimation extends Animation{
      * Sets the timings at which each animation should start.
      */
     initAnimation(){
-        this.initTimes = [0];
-        for (let i = 0; i < this.animationsList.length - 1; i++){
-            this.initTimes.push(this.animationsList[i].duration);
+        this.initTimes = [];
+        for (let i = 0; i < this.animationsList.length; i++){
+            this.initTimes.push(this.duration);
+            this.duration += this.animationsList[i].duration;
         }
     }
 

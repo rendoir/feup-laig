@@ -20,7 +20,7 @@ class CircularAnimation extends Animation{
         this.radius = radius;
         this.center = vec3.fromValues(center[0], center[1], center[2]);
         this.initialAng = initialAng * DEGREE_TO_RAD;
-        this.rotationAng = rotationAng * DEGREE_TO_RAD
+        this.rotationAng = rotationAng * DEGREE_TO_RAD;
         this.maxAngle = this.rotationAng + this.initialAng;
         this.duration = this.rotationAng / this.angular_velocity;
         this.initAnimation();
@@ -43,6 +43,7 @@ class CircularAnimation extends Animation{
      */
     getMatrix(deltaTime) {
         let deltaAlpha = this.initialAng + this.angular_velocity * deltaTime;
+            
         if (deltaAlpha > this.maxAngle)
             deltaAlpha = this.maxAngle;
         let deltaAlphaMatrix = mat4.fromRotation(mat4.create(), deltaAlpha, vec3.fromValues(0, 1, 0));

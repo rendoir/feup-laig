@@ -268,10 +268,6 @@
   </MATERIALS>
 
   <ANIMATIONS>
-    <ANIMATION id="an_rocket" speed="2" type="linear">
-      <controlpoint xx="80" yy="10" zz="0" />
-      <controlpoint xx="100" yy="20" zz="500" />
-    </ANIMATION>
     <ANIMATION id="an_mercury" speed="102" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="50" startang="180" rotang="1000000"/>
@@ -302,12 +298,49 @@
     <ANIMATION id="an_rotate_him_self" speed="1" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="0" startang="0" rotang="360000000"/>
-    <ANIMATION id="an_3" speed="10" type="bezier">
-      <controlpoint xx="1" yy="2" zz="3" />
-      <controlpoint xx="1" yy="2" zz="4" />
-      <controlpoint xx="1" yy="2" zz="5" />
-      <controlpoint xx="1" yy="2" zz="6" />
+    
+      <ANIMATION id="an_rocket_linear" speed="20" type="linear">
+      <controlpoint xx="80" yy="20" zz="50" />
+      <controlpoint xx="80" yy="40" zz="-50" />
     </ANIMATION>
+    <ANIMATION id="an_rocket_circular" speed="20" type="circular" 
+              centerx="60" centery="40" centerz="-50" 
+              radius="20" startang="0" rotang="180"/>
+    <ANIMATION id="an_rocket_linear_2" speed="20" type="linear">
+      <controlpoint xx="40" yy="40" zz="-50" />
+      <controlpoint xx="40" yy="40" zz="550" />
+    </ANIMATION>
+    
+    
+    <ANIMATION id="an_spaceship_linear" speed="30" type="linear">
+      <controlpoint xx="50" yy="120" zz="-25" />
+      <controlpoint xx="300" yy="120" zz="-550" />
+    </ANIMATION>
+    <ANIMATION id="an_spaceship_bezier" speed="30" type="bezier">
+      <controlpoint xx="40" yy="40" zz="-50" />
+      <controlpoint xx="10" yy="20" zz="50" />
+      <controlpoint xx="10" yy="20" zz="-150" />
+      <controlpoint xx="-20" yy="80" zz="-50" />
+    </ANIMATION> 
+    <ANIMATION id="an_spaceship_bezier_2" speed="30" type="bezier">
+      <controlpoint xx="-20" yy="80" zz="-50" />
+      <controlpoint xx="-50" yy="140" zz="50" />
+      <controlpoint xx="0" yy="100" zz="75" />
+      <controlpoint xx="50" yy="120" zz="-25" />
+    </ANIMATION> 
+    
+    <ANIMATION id="an_rocket_combo" type="combo">
+      <SPANREF id="an_rocket_linear" />
+      <SPANREF id="an_rocket_circular" />
+      <SPANREF id="an_rocket_linear_2" />
+    </ANIMATION>
+    <ANIMATION id="an_spaceship_combo" type="combo">
+      <SPANREF id="an_rocket_linear" />
+      <SPANREF id="an_rocket_circular" />
+      <SPANREF id="an_spaceship_bezier" />   
+      <SPANREF id="an_spaceship_bezier_2" />    
+      <SPANREF id="an_spaceship_linear" />
+    </ANIMATION> 
   </ANIMATIONS>
 
   <NODES>
@@ -330,11 +363,12 @@
         <NODEREF id="sun" />
         <NODEREF id="planets" />
         <NODEREF id="rocket" />
+        <NODEREF id="spaceship" />
       </DESCENDANTS>
     </NODE>
 
     <!-- Sun -->
-    <NODE id="sun" selectable="true" range="1" r="1" g="0" b="0" a="1">
+    <NODE id="sun" selectable="true" range="0.75" r="1" g="0" b="0" a="1">
       <MATERIAL id="m_sun" />
       <TEXTURE id="t_sun" />
       <ROTATION axis="x" angle="-90" />
@@ -446,6 +480,7 @@
         <ANIMATIONREF id="an_rotate_him_self" />
       </ANIMATIONREFS>
       <DESCENDANTS>
+        <NODEREF id="pyramid" />
         <LEAF id="p_earth" type="sphere" args="3 24 24" />
       </DESCENDANTS>
     </NODE>
@@ -1227,13 +1262,12 @@
       <MATERIAL id="m_rocket_stage_body" />
       <TEXTURE id="null" />
       <ANIMATIONREFS>
-        <ANIMATIONREF id="an_rocket"/>
+        <ANIMATIONREF id="an_rocket_combo"/>
       </ANIMATIONREFS>
       <ROTATION axis="z" angle="180"/>
       <DESCENDANTS>
         <NODEREF id="main_body" />
         <NODEREF id="side_boosters" />
-        <NODEREF id="spaceship" />
       </DESCENDANTS>
     </NODE>
 
@@ -1424,6 +1458,10 @@
     <NODE id="spaceship">       
         <MATERIAL id="m_spaceship_body" />         
         <TEXTURE id="clear" />
+        <ANIMATIONREFS>
+          <ANIMATIONREF id="an_spaceship_combo"/>
+        </ANIMATIONREFS>
+        <ROTATION axis="z" angle="180"/>
         <TRANSLATION x="0" y="-1.5" z="0"/>
         <ROTATION axis="x" angle="90"/>
         <DESCENDANTS>
@@ -1437,7 +1475,7 @@
 
     <NODE id="spaceship_cone">
       <MATERIAL id="null" />
-      <TEXTURE id="cone_t" />
+      <TEXTURE id="null" />
       <DESCENDANTS>
         <LEAF type="patch" args="20 100"> 
           <CPLINE>
