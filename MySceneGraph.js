@@ -1137,6 +1137,7 @@ MySceneGraph.prototype.parseXMLControlPoints = function(XMLControlPoints) {
  * Processes and returns an Animation
  */
 MySceneGraph.prototype.processXMLAnimation = function(XMLAnimation) {
+    // Get type of animation based on a list of possible animation types
     const type = this.reader.getItem(XMLAnimation, 'type', ['linear', 'circular', 'bezier', 'combo']);
     if (type == null) {
         this.onXMLError("Type not defined for animation");
@@ -1172,16 +1173,19 @@ MySceneGraph.prototype.processXMLAnimation = function(XMLAnimation) {
             }
         case "combo":
             {
+                // Spanrefs are nodes of type <SPANREF id="ss"/> which are references to existing animations.
                 const spanrefs = XMLAnimation.children;
                 if (spanrefs.lenght < 1) {
                     this.onXMLError("Combo animations should have at least 1 SPANREF");
                 }
                 let animations = [];
                 for (let i = 0; i < spanrefs.length; i++) {
+                    // Get the animation that corresponds to the spanref.
                     let nextAnimation = this.animations[spanrefs[i].id];
                     if (nextAnimation != null){
                         animations.push(nextAnimation);
                     }else{
+                        // Check that the animation was defined previously on the lsx file.
                         this.onXMLMinorError("Combo Animation Error: Skiping animation " + spanrefs[i].id + " because it is not defined yet");
                     }
                     
@@ -1198,19 +1202,22 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
     if (animationsNode == null) {
         return onXMLError("Null animations node");
     }
-
+    // Get number of animations defined in the lsx file.
     let length = animationsNode.children.length;
     for (let i = 0; i < length; i++) {
         let currentAnimation = animationsNode.children[i];
+        // Get Animation ID
         let animationId = currentAnimation.id;
         if (animationId == null) {
             this.onXMLError("Invalid Animation id");
             return null;
         }
+        // Check that Animation ID is not repeated
         if (this.animations[animationId] !== undefined) {
             this.onXMLError(`Animation ${animationId} defined multiple times`);
             return null;
         }
+        // Process and create the Animation in memory.
         this.animations[animationId] = this.processXMLAnimation(currentAnimation);
     }
 
@@ -1345,6 +1352,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
                 break;
         }
     }
+    // Process Animation Refs for this node.
     let animationsIndex = specNames.indexOf("ANIMATIONREFS");
     if (animationsIndex > 0) {
         const animationsXml = nodeSpecs[animationsIndex].children;
@@ -1354,6 +1362,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
         else if (animationsXml.length == 1) {
             newNode.animation = this.animations[animationsXml[0].id];
         } else {
+            // When there is more than one animation reference, a combo animation is created.
             let animationsList = [];
             for (let i = 0; i < animationsXml.length; i++) {
                 animationsList.push(this.animations[animationsXml[i].id]);
@@ -1434,6 +1443,10 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     return newNode;
 }
 
+/**
+ * Reads the optional range attribute of a node. Range defines how much scalling the object gets when pulsing.
+ * @param {*} xmlNode 
+ */
 MySceneGraph.prototype.parseRangeXml = function(xmlNode) {
     const default_range = 0.005;
     if (!this.reader.hasAttribute(xmlNode, 'range')) {
@@ -1443,6 +1456,10 @@ MySceneGraph.prototype.parseRangeXml = function(xmlNode) {
     return this.reader.getFloat(xmlNode, 'range');
 }
 
+/**
+ * Reads the rgba of a node. This rgba is used for pulsing effect.
+ * @param {*} xmlNode 
+ */
 MySceneGraph.prototype.parseColorXml = function(xmlNode) {
     const defaultColor = 1;
     let rgba = [];
