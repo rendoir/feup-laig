@@ -183,7 +183,7 @@
       <specular r="0.0" g="0.0" b="0.0" a="1" />
       <diffuse r="0.0" g="0.0" b="0.0" a="1" />
       <ambient r="0.0" g="0.0" b="0.0" a="1" />
-      <emission r="1.0" g="0.5" b="0.0" a="1" />
+      <emission r="1.0" g="0.65" b="0.0" a="1" />
     </MATERIAL>
 
     <MATERIAL id="m_robot_steel">
@@ -368,7 +368,7 @@
     </NODE>
 
     <!-- Sun -->
-    <NODE id="sun" selectable="true" range="0.75" r="1" g="0" b="0" a="1">
+    <NODE id="sun" selectable="true" range="0.70" r="1" g="0" b="0" a="1">
       <MATERIAL id="m_sun" />
       <TEXTURE id="t_sun" />
       <ROTATION axis="x" angle="-90" />
@@ -628,7 +628,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="uranus">
+    <NODE id="uranus" selectable="true" range="0.2" r="0" g="0.25" b="0.15" a="0.75">
       <MATERIAL id="null" />
       <TEXTURE id="t_uranus" />
       <ROTATION axis="x" angle="-90" />
@@ -670,7 +670,7 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="neptune">
+    <NODE id="neptune" selectable="true" range="0.1" r="0.75" g="0.5" b="0" a="0.75">
       <MATERIAL id="null" />
       <TEXTURE id="t_neptune" />
       <ROTATION axis="x" angle="-90" />
