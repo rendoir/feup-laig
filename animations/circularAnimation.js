@@ -47,9 +47,6 @@ class CircularAnimation extends Animation{
      * @return Animation matrix
      */
     getMatrix(deltaTime) {
-        if (this.speed < 0){
-            console.log("negative speed");
-        }
         let deltaAlpha = this.initialAng + this.angular_velocity * deltaTime;
         if (this.speed > 0 && deltaAlpha > this.maxAngle){
             deltaAlpha = this.maxAngle;
