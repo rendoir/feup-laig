@@ -1160,7 +1160,7 @@ MySceneGraph.prototype.processXMLAnimation = function(XMLAnimation) {
                 const startang = this.reader.getFloat(XMLAnimation, 'startang');
                 const rotang = this.reader.getFloat(XMLAnimation, 'rotang');
                 let centerArray = [centerx, centery, centerz];
-                return new CircularAnimation(radius, speed, centerArray, startang, rotang);
+                return new CircularAnimation(radius, Math.abs(speed), centerArray, startang, rotang);
             }
         case "bezier":
             {

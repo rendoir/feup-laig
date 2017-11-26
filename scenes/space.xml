@@ -276,7 +276,7 @@
               radius="65" startang="180" rotang="550000"/>
     <ANIMATION id="an_earth" speed="63" type="circular" 
               centerx="0" centery="0" centerz="0" 
-              radius="80" startang="90" rotang="500000"/>
+              radius="80" startang="90" rotang="-500000"/>
     <ANIMATION id="an_moon" speed="51" type="circular" 
               centerx="0" centery="0" centerz="0" 
               radius="5" startang="180" rotang="6500000"/>
