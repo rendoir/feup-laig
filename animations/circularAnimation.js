@@ -12,11 +12,8 @@ class CircularAnimation extends Animation{
      */
     constructor(radius, speed, center, initialAng, rotationAng) {
         super();
-        if (rotationAng < initialAng){
-            if (speed > 0){
-                speed = -speed;
-            }
-        }
+        if (rotationAng < 0)
+          speed *= -1;
         this.speed = speed;
         if (radius == 0)
             this.angular_velocity = speed;
@@ -38,7 +35,10 @@ class CircularAnimation extends Animation{
     initAnimation() {
         this.centerMatrix = mat4.fromTranslation(mat4.create(), this.center);
         this.radiusMatrix = mat4.fromTranslation(mat4.create(), vec3.fromValues(this.radius, 0, 0));
-        this.initialRotationMatrix = mat4.fromRotation(mat4.create(), Math.PI, vec3.fromValues(0, 1, 0));
+        if(this.rotationAng > 0)
+          this.initialRotationMatrix = mat4.fromRotation(mat4.create(), Math.PI, vec3.fromValues(0, 1, 0));
+        else
+          this.initialRotationMatrix = mat4.create();
     }
 
     /**
@@ -48,11 +48,8 @@ class CircularAnimation extends Animation{
      */
     getMatrix(deltaTime) {
         let deltaAlpha = this.initialAng + this.angular_velocity * deltaTime;
-        if (this.speed > 0 && deltaAlpha > this.maxAngle){
-            deltaAlpha = this.maxAngle;
-        }else if (this.speed < 0 && deltaAlpha < this.maxAngle){
-            deltaAlpha = this.maxAngle;
-        }   
+        if(Math.abs(deltaAlpha) > Math.abs(this.maxAngle))
+          deltaAlpha = this.maxAngle;
         let deltaAlphaMatrix = mat4.fromRotation(mat4.create(), deltaAlpha, vec3.fromValues(0, 1, 0));
 
         let tmpMatrix = mat4.create();
