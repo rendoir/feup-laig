@@ -48,20 +48,20 @@ class LatrunculiXXI {
     Inputs a move to prolog and returns the resulting board
   */
   getMoveBoard(move) {
-    return prologRequest('move', this.turn, move, getCurrentBoard());
+    return prologRequest({ command: 'move', args: [this.turn, move, getCurrentBoard()] });
   }
 
   /**
     Requests a valid bot move to prolog and returns it
   */
   getBotMove() {
-    return prologRequest('bot_play', this.turn, getCurrentBoard());
+    return prologRequest({ command: 'bot_play', args: [this.turn, getCurrentBoard()] });
   }
 
   /**
     Inputs a move to prolog to check if it's valid
   */
   isValidMove(move) {
-    return prologRequest('is_valid_move', this.turn, move, getCurrentBoard());
+    return prologRequest({ command: 'is_valid_move', args: [this.turn, move, getCurrentBoard()] });
   }
 }
