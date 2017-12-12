@@ -44,14 +44,14 @@ class LatrunculiXXI {
     Inputs a move to prolog and returns the resulting board
   */
   getMoveBoard(move) {
-    return prologRequest({ command: 'move', args: [this.turn, move, this.getCurrentBoard()], on_success = this.onBoardReceived});
+    return prologRequest({ command: 'move', args: [this.turn, move, this.getCurrentBoard()], onSuccess: this.onBoardReceived});
   }
 
   /**
     Requests a valid bot move to prolog and returns it
   */
   getBotMove() {
-    return prologRequest({ command: 'bot_play', args: [this.turn, this.getCurrentBoard()], on_success = this.onBotMoveReceived});
+    return prologRequest({ command: 'bot_play', args: [this.turn, this.getCurrentBoard()], onSuccess: this.onBotMoveReceived});
   }
 
   /**
@@ -59,6 +59,6 @@ class LatrunculiXXI {
   */
   isValidMove(move) {
     this.move_stack[this.number_plays] = [this.turn, move];
-    return prologRequest({ command: 'is_valid_move', args: [this.turn, move, this.getCurrentBoard()], on_success = this.onValidReceived});
+    return prologRequest({ command: 'is_valid_move', args: [this.turn, move, this.getCurrentBoard()], onSuccess: this.onValidReceived});
   }
 }
