@@ -10,12 +10,12 @@ function getPrologRequest(requestString, onSuccess, onError, port) {
     request.send();
 }
 
-export function prologRequest(request) {
-    let requestParsed = JSON.parse(request);
-
+function prologRequest(request) {
     // Get Parameter Values
-    let requestString = requestParsed.command.toString() + '(' + requestParsed.args.toString() + ')';
+    let requestString = request.command.toString();
+    if (request.args != null)
+        requestString += '(' + request.args.toString() + ')';
 
     // Make Request
-    getPrologRequest(requestString, requestParsed.onSuccess, requestParsed.onError);
+    getPrologRequest(requestString);
 }

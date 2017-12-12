@@ -104,6 +104,7 @@ print_header_line(_).
 % Require your Prolog Files here
 
 parse_input(handshake, handshake).
+parse_input(testConnection, 'Connection OK').
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
 

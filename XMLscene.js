@@ -95,6 +95,9 @@ XMLscene.prototype.onGraphLoaded = function() {
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
     this.interface.addSelectedGroup(this.graph.selectableNodes);
+
+    this.game = new LatrunculiXXI();
+    this.game.testConnection();
 };
 
 /**
@@ -140,7 +143,7 @@ XMLscene.prototype.display = function() {
         this.graph.selectedNode = this.selectedNode;
         // Displays the scene.
         this.graph.displayScene();
-        
+
 
     } else {
         // Draw axis

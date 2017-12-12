@@ -1,5 +1,3 @@
-import { prologRequest } from "./src_Game/server_connection.js";
-
 class LatrunculiXXI {
     constructor() {
         this.board_stack = [];
@@ -65,6 +63,6 @@ class LatrunculiXXI {
     }
 
     testConnection() {
-        return prologRequest({ command: 'test', args: [3, 4] });
+        return prologRequest({ command: 'testConnection' });
     }
 }
