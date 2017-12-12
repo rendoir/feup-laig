@@ -1,3 +1,5 @@
+import { prologRequest } from "./src_Game/server_connection.js";
+
 class LatrunculiXXI {
     constructor() {
         this.board_stack = [];
