@@ -44,6 +44,43 @@ function MySceneGraph(filename, scene) {
     this.reader.open('scenes/' + filename, this);
 }
 
+MySceneGraph.prototype.initializeBoard = function(){
+    let black_soldier,white_soldier,black_dux,white_dux, board_position;
+    let sceneElements = this.rootGraphNode.children;
+    sceneElements.forEach(element =>{
+        if (element.class == "piece"){
+            if (element.nodeID = "white_soldier"){
+                white_soldier = element;
+            }else if (element.nodeID == "black_soldier"){
+                black_soldier = element;
+            }else if (element.nodeID == "black_dux"){
+                black_dux = element;
+            }else if (element.nodeID == "white_dux"){
+                white_dux = element;
+            }
+        }else if (element.class = "board_position"){
+            board_position = element;
+        }
+    });
+    for(let col = 0; col < 7; col++){//line1
+        const position ={
+            x:0,
+            y:col
+        }
+        let new_black_soldier = new MyGraphNode("black"+col,position);
+        this.rootGraphNode.addChild(new_black_soldier);
+    }
+    for(let line = 1; line < 6; line++){
+        for (let col = 0; col < 7; col++){
+            
+        }
+    }
+    for(let col = 0; col < 7; col++){//line7
+
+    }
+}
+
+
 /*
  * Callback to be executed after successful reading
  */

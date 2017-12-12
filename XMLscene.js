@@ -82,6 +82,7 @@ XMLscene.prototype.initCameras = function() {
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
 XMLscene.prototype.onGraphLoaded = function() {
+    this.graph.initializeBoard();
     this.camera.near = this.graph.near;
     this.camera.far = this.graph.far;
     this.axis = new CGFaxis(this, this.graph.referenceLength);
