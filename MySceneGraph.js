@@ -1260,8 +1260,9 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
             this.selectableNodes[nodeID] = this.nodeIDToIndex[nodeID];
         }
     }
-
-
+    if (this.reader.hasAttribute(nodeToParse,'class')){
+        newNode.class = this.reader.getString(nodeToParse,'class',true);
+    }
     for (let j = 0; j < nodeSpecs.length; j++) {
         let specName = nodeSpecs[j].nodeName;
         specNames.push(specName);
@@ -1644,9 +1645,26 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             if (this.last_texture != null)
                 this.last_texture.unbind(); //Unbind if texture_id is "clear"
         }
-        for (let i = 0; i < node_to_display.leaves.length; i++) {
-            node_to_display.leaves[i].display(); //Display the leaves
+        if(node_to_display.display && node_to_display.isPickable){
+            for (let i = 0; i < node_to_display.leaves.length; i++) {
+                this.scene.registerForPick(i+1,node_to_display.leaves[i]);
+                node_to_display.leaves[i].display();
+            }
+        }else if (node_to_display.display && !node_to_display.isPickable){
+            for (let i = 0; i < node_to_display.leaves.length; i++) {
+                if(!this.scene.pickMode){
+                    node_to_display.leaves[i].display();
+                }
+            }
+        }else if (!node_to_display.display && node_to_display.isPickable){
+            for (let i = 0; i < node_to_display.leaves.length; i++) {
+                if(this.scene.pickMode){
+                    this.scene.registerForPick(i+1,node_to_display.leaves[i]);
+                    node_to_display.leaves[i].display();
+                }
+            }
         }
+        
     }
 
     if (node_to_display.children.length > 0) {

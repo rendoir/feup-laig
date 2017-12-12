@@ -68,20 +68,21 @@
       <ROOT id="board" />
 
       <NODE id="board">
-        <MATERIAL id="m_board" />
+        <MATERIAL id="m_white" />
         <TEXTURE id="t_board" />
         <TRANSLATION x="0" y="0" z="8" />
         <ROTATION axis="x" angle="-90" />
         <DESCENDANTS>
           <LEAF id="base" type="rectangle" args="0 8 8 0" />
+          <NODEREF id="quad" />
         </DESCENDANTS>
       </NODE>
 
-      <NODE id="quad">
-        <MATERIAL id="null"/>
+      <NODE id="quad" class="board">
+        <MATERIAL id="m_white"/>
         <TEXTURE id="null"/>
         <DESCENDANTS>
-          <LEAF id="base" type="rectangle" args="0 1 1 0"/>
+          <LEAF id="base2" type="rectangle" args="0 1 1 0"/>
         </DESCENDANTS>
       </NODE>
 

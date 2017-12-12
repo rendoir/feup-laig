@@ -18,6 +18,9 @@ function MyGraphNode(nodeID) {
     this.initialTimestamp = -1;
     this.rgba = null;
     this.time_range = null;
+    this.display = true;
+    this.isPickable = false;
+    this.class = null;
 
     this.animationMatrix = mat4.create();
     this.transformMatrix = mat4.create();
