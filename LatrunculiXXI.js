@@ -1,30 +1,26 @@
 class LatrunculiXXI {
-  constructor(game_mode) {
-    this.game_mode = game_mode;
+  constructor() {
     this.board_stack = [];
     this.move_stack = [];
     this.turn = 1;
     this.number_plays = 0;
   }
 
-  playBot() {
-    let move = getBotMove();
-    this.board_stack[this.number_plays] = getMoveBoard(move);
-    this.move_stack[this.number_plays] = [this.turn, move];
+  onBotMoveReceived(move) {
+    this.move_stack[this.number_plays] = move;
+    this.getMoveBoard(move);
+  }
+
+  onBoardReceived(board) {
+    this.board_stack[this.number_plays] = board;
     this.number_plays++;
     this.turn = (this.turn === 1) ? 2 : 1;
   }
 
-  playHuman(xi, yi, xf, yf) {
-    if(isValidMove(xi, yi, xf, yf)) {
-      let move = [xi, yi, xf, yf];
-      this.board_stack[this.number_plays] = getMoveBoard(move);
-      this.move_stack[this.number_plays] = [this.turn, move];
-      this.number_plays++;
-      this.turn = (this.turn === 1) ? 2 : 1;
-      return true;
-    } else {
-      return false;
+  onValidReceived(valid) {
+    if(valid) {
+      let move = this.move_stack[this.number_plays];
+      this.getMoveBoard(move);
     }
   }
 
@@ -48,20 +44,21 @@ class LatrunculiXXI {
     Inputs a move to prolog and returns the resulting board
   */
   getMoveBoard(move) {
-    return prologRequest({ command: 'move', args: [this.turn, move, getCurrentBoard()] });
+    return prologRequest({ command: 'move', args: [this.turn, move, this.getCurrentBoard()], on_success = this.onBoardReceived});
   }
 
   /**
     Requests a valid bot move to prolog and returns it
   */
   getBotMove() {
-    return prologRequest({ command: 'bot_play', args: [this.turn, getCurrentBoard()] });
+    return prologRequest({ command: 'bot_play', args: [this.turn, this.getCurrentBoard()], on_success = this.onBotMoveReceived});
   }
 
   /**
     Inputs a move to prolog to check if it's valid
   */
   isValidMove(move) {
-    return prologRequest({ command: 'is_valid_move', args: [this.turn, move, getCurrentBoard()] });
+    this.move_stack[this.number_plays] = [this.turn, move];
+    return prologRequest({ command: 'is_valid_move', args: [this.turn, move, this.getCurrentBoard()], on_success = this.onValidReceived});
   }
 }
