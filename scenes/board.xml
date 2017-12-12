@@ -1,6 +1,6 @@
 <SCENE>
 
-  <!-- Initial values -->
+
   <INITIALS>
     <frustum near="0.1" far="100"/>
     <translation x="0" y="0" z="0" />
@@ -12,14 +12,13 @@
   </INITIALS>
 
 
-  <!-- Illumination and clear colour -->
   <ILLUMINATION>
     <ambient r="1" g="1" b="1" a="1" />
     <background r="0" g="0" b="0" a="1" />
   </ILLUMINATION>
 
+
   <LIGHTS>
-    <!-- DEBUG LIGHTS -->
     <LIGHT id="light1">
       <enable value ="1" />
       <position  x="0" y="20" z="0" w="1" />
@@ -30,7 +29,6 @@
   </LIGHTS>
 
 
-  <!-- Textures -->
   <TEXTURES>
      <TEXTURE id="t_board">
       <file path="images/board/board.png" />
@@ -40,52 +38,41 @@
 
 
   <MATERIALS>
-    <MATERIAL id="m_black">
+    <MATERIAL id="m_board">
       <shininess value="1" />
       <specular r="0.5" g="0.5" b="0.5" a="1" />
-      <diffuse r="0.1" g="0.1" b="0.1" a="1" />
+      <diffuse r="0.5" g="0.5" b="0.5" a="1" />
       <ambient r="0.1" g="0.1" b="0.1" a="1" />
-      <emission r="0.0" g="0.0" b="0.0" a="1" />
-    </MATERIAL>
-    <MATERIAL id="m_white">
-      <shininess value="1" />
-      <specular r="0.5" g="0.5" b="0.5" a="1" />
-      <diffuse r="0.9" g="0.9" b="0.9" a="1" />
-      <ambient r="0.9" g="0.9" b="0.9" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
   </MATERIALS>
 
 
-    <!-- The leaves -->
-    <ANIMATIONS>
-    </ANIMATIONS>
+  <ANIMATIONS>
+  </ANIMATIONS>
 
 
-    <!-- The nodes -->
-    <NODES>
+  <NODES>
+    <ROOT id="board" />
 
-      <ROOT id="board" />
+    <NODE id="board">
+      <MATERIAL id="m_board" />
+      <TEXTURE id="t_board" />
+      <TRANSLATION x="0" y="0" z="8" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="base" type="rectangle" args="0 8 8 0" />
+      </DESCENDANTS>
+    </NODE>
 
-      <NODE id="board">
-        <MATERIAL id="m_board" />
-        <TEXTURE id="t_board" />
-        <TRANSLATION x="0" y="0" z="8" />
-        <ROTATION axis="x" angle="-90" />
-        <DESCENDANTS>
-          <LEAF id="base" type="rectangle" args="0 8 8 0" />
-        </DESCENDANTS>
-      </NODE>
+    <NODE id="quad">
+      <MATERIAL id="null"/>
+      <TEXTURE id="clear"/>
+      <DESCENDANTS>
+        <LEAF id="base" type="rectangle" args="0 1 1 0"/>
+      </DESCENDANTS>
+    </NODE>
+  </NODES>
 
-      <NODE id="quad">
-        <MATERIAL id="null"/>
-        <TEXTURE id="null"/>
-        <DESCENDANTS>
-          <LEAF id="base" type="rectangle" args="0 1 1 0"/>
-        </DESCENDANTS>
-      </NODE>
-
-
-    </NODES>
 
 </SCENE>
