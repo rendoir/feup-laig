@@ -1,0 +1,229 @@
+<SCENE>
+
+
+  <INITIALS>
+    <frustum near="0.1" far="100"/>
+    <translation x="0" y="0" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="1" sy="1" sz="1" />
+    <reference length="5" />
+  </INITIALS>
+
+
+  <ILLUMINATION>
+    <ambient r="1" g="1" b="1" a="1" />
+    <background r="0" g="0" b="0" a="1" />
+  </ILLUMINATION>
+
+
+  <LIGHTS>  
+    <LIGHT id="light1">
+      <enable value ="1" />
+      <position  x="20" y="20" z="20" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="1" g="1" b="1" a="1.0" />
+      <specular r="1" g="1" b="1" a="1.0" />
+    </LIGHT>
+  </LIGHTS>
+
+
+  <TEXTURES>
+     <TEXTURE id="t_black">
+      <file path="images/board/black.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+  
+    <TEXTURE id="t_white">
+      <file path="images/board/white.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+  </TEXTURES>
+
+
+  <MATERIALS>
+    <MATERIAL id="m_piece">
+      <shininess value="32" />
+      <specular r="1" g="1" b="1" a="1" />
+      <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+  </MATERIALS>
+
+
+  <ANIMATIONS>
+  </ANIMATIONS>
+
+
+  <NODES>
+    <ROOT id="dux" />
+
+    <NODE id="dux">
+      <MATERIAL id="m_piece" />
+      <TEXTURE id="t_white" />
+      <DESCENDANTS>
+        <NODEREF id="cross_front" />
+        <NODEREF id="head3" />
+        <NODEREF id="head2" />
+        <NODEREF id="head" />
+        <NODEREF id="body2" />
+        <NODEREF id="neck3" />
+        <NODEREF id="neck2" />
+        <NODEREF id="neck" />
+        <NODEREF id="body" />
+        <NODEREF id="ellipsoid2" />
+        <NODEREF id="ellipsoid" />
+        <NODEREF id="base" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="cross_front">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="10" z="0" />
+      <DESCENDANTS>
+        <!--
+        <LEAF id="_cross_front" type="patch" args="32 32" >
+          <CPLINE>
+            <CPOINT xx="0" yy="2" zz="0" ww="1.0" />
+            <CPOINT xx="2" yy="2" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="2" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="2" yy="2" zz="0" ww="1.0" />
+            <CPOINT xx="2" yy="0" zz="0" ww="1.0" />
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="0" zz="0" ww="1.0" />
+            <CPOINT xx="1" yy="1" zz="0" ww="1.0" />
+            <CPOINT xx="0" yy="2" zz="0" ww="1.0" />
+          </CPLINE>
+        </LEAF> -->
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="head3">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="2.25" z="0" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_head" type="sphere" args="0.07 32 32" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="head2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="1.95" z="0" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_head" type="sphere" args="0.075 32 32" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="head">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="1.9" z="0" />
+      <SCALE sx="1" sy="0.3" sz="1" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_head" type="sphere" args="0.26 32 32" />
+      </DESCENDANTS>
+    </NODE>
+    
+    <NODE id="body2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="1.5" z="0" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_body2" type="cylinder" args="0.4 0.18 0.26 32 32 0 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="neck3">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="1.58" z="0" />
+      <SCALE sx="1" sy="0.2" sz="1" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_neck3" type="sphere" args="0.22 32 32" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="neck2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="1.5" z="0" />
+      <SCALE sx="1" sy="0.225" sz="1" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_neck2" type="sphere" args="0.225 32 32" />
+      </DESCENDANTS>
+    </NODE>
+    
+    <NODE id="neck">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="1.4" z="0" />
+      <SCALE sx="1" sy="0.3" sz="1" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_neck" type="sphere" args="0.3 32 32" />
+      </DESCENDANTS>
+    </NODE>
+    
+    <NODE id="body">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0.375" z="0" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_body" type="cylinder" args="1 0.24 0.18 32 32 0 0" />
+      </DESCENDANTS>
+    </NODE>
+    
+    <NODE id="ellipsoid2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0.34" z="0" />
+      <SCALE sx="1" sy="0.25" sz="1" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_ellipsoid2" type="sphere" args="0.3 32 32" />
+      </DESCENDANTS>
+    </NODE>
+    
+    <NODE id="ellipsoid">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0.2" z="0" />
+      <SCALE sx="1" sy="0.4" sz="1" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_ellipsoid" type="sphere" args="0.45 32 32" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="base">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <SCALE sx="1" sy="0.2" sz="1" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_base" type="sphere" args="0.5 32 32" />
+      </DESCENDANTS>
+    </NODE>
+    
+  
+  </NODES>
+
+</SCENE>
