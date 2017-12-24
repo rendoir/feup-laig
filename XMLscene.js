@@ -73,16 +73,22 @@ XMLscene.prototype.initLights = function() {
 /**
  * Initializes the scene cameras.
  */
-XMLscene.prototype.initCameras = function() {
+XMLscene.prototype.initCameras = function () {
+    this.player_camera = [];
+    this.player_camera[1] = vec3.fromValues(4, 20, 20);
+    this.player_camera[2] = vec3.fromValues(4, 20, -20);
     this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+    this.camera.setTarget(vec3.fromValues(4, 0, 4));
+    this.camera_position = null;
+    this.camera.setPosition(this.player_camera[1]);
+    this.interface.disableCamera = true;
+    this.interface.cameraMoving = true;
 };
 
 /* Handler called when the graph is finally loaded. 
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
 XMLscene.prototype.onGraphLoaded = function() {
-    this.camera.near = this.graph.near;
-    this.camera.far = this.graph.far;
     this.axis = new CGFaxis(this, this.graph.referenceLength);
 
     this.setGlobalAmbientLight(this.graph.ambientIllumination[0], this.graph.ambientIllumination[1],
@@ -97,6 +103,7 @@ XMLscene.prototype.onGraphLoaded = function() {
     this.interface.addSelectedGroup(this.graph.selectableNodes);
 
     this.game = new LatrunculiXXI();
+    this.setPlayer(1);
     this.game.testConnection();
 };
 
@@ -160,5 +167,24 @@ XMLscene.prototype.display = function() {
 XMLscene.prototype.update = function(currTime) {
     if (this.graph.loadedOk) {
         this.graph.update(currTime, this.graph.rootGraphNode);
+        this.updateCamera(currTime);
     }
+};
+
+XMLscene.prototype.updateCamera = function (currTime) {
+    if (this.interface.cameraMoving) {
+        if (this.camera_position[0] == this.camera.position[0] &&
+            this.camera_position[1] == this.camera.position[1] &&
+            this.camera_position[2] == this.camera.position[2]) {
+            this.interface.cameraMoving = false;
+        } else {
+            //update camera bezier curve animation
+        }
+    }
+};
+
+XMLscene.prototype.setPlayer = function (player) {
+    this.camera_position = this.player_camera[player];
+    this.interface.cameraMoving = true;
+    //init camera bezier curve animation
 };
