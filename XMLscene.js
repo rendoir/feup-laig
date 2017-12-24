@@ -34,6 +34,10 @@ XMLscene.prototype.init = function(application) {
 
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(1000 / UPDATES_PER_SECONDS);
+
+    this.game = new LatrunculiXXI();
+    this.turn = this.game.turn;
+    this.initUI();
 };
 
 /**
@@ -83,7 +87,7 @@ XMLscene.prototype.initCameras = function () {
     this.camera_radius = vec3.length(vec3.subtract(vec3.create(), player_camera[2], player_camera[1])) / 2;
     this.camera_center = vec3.scale(vec3.create(), vec3.add(vec3.create(), player_camera[2], player_camera[1]), 0.5);
     this.camera_speed = 20;
-    //this.interface.disableCamera = true;
+    this.interface.disableCamera = true;
     this.cameraMoving = false;
 };
 
@@ -102,18 +106,12 @@ XMLscene.prototype.onGraphLoaded = function() {
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
-
-    this.game = new LatrunculiXXI();
-    //this.game.testConnection();
-    //this.setPlayer(2);
 };
 
 /**
  * Displays the scene.
  */
 XMLscene.prototype.display = function() {
-    // ---- BEGIN Background, camera and axis setup
-
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -151,25 +149,29 @@ XMLscene.prototype.display = function() {
         this.graph.selectedNode = this.selectedNode;
         // Displays the scene.
         this.graph.displayScene();
-
-
     } else {
         // Draw axis
         this.axis.display();
     }
 
-
     this.popMatrix();
 
-    // ---- END Background, camera and axis setup
-
+    this.renderUI();
 };
 
 XMLscene.prototype.update = function(currTime) {
     if (this.graph.loadedOk) {
         this.graph.update(currTime, this.graph.rootGraphNode);
         this.updateCamera(currTime);
+        this.updateGame(currTime);
     }
+};
+
+XMLscene.prototype.updateGame = function (currTime) {
+  if(this.turn !== this.game.turn) {
+    this.turn = this.game.turn;
+    this.setPlayer(this.turn);
+  }
 };
 
 XMLscene.prototype.updateCamera = function (currTime) {
@@ -191,4 +193,14 @@ XMLscene.prototype.setPlayer = function (player) {
     if(player === 1)
       this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 270);
     else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
+};
+
+XMLscene.prototype.renderUI = function () {
+  for(let i = 0; i < this.ui_elements.length; i++) {
+
+  }
+};
+
+XMLscene.prototype.initUI = function () {
+  this.ui_elements = [];
 };
