@@ -48,8 +48,10 @@ class CircularAnimation extends Animation{
      */
     getMatrix(deltaTime) {
         let deltaAlpha = this.initialAng + this.angular_velocity * deltaTime;
-        if(Math.abs(deltaAlpha) > Math.abs(this.maxAngle))
+        if(Math.abs(deltaAlpha) > Math.abs(this.maxAngle)) {
           deltaAlpha = this.maxAngle;
+          this.ended = true;
+        }
         let deltaAlphaMatrix = mat4.fromRotation(mat4.create(), deltaAlpha, vec3.fromValues(0, 1, 0));
 
         let tmpMatrix = mat4.create();

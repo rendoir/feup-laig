@@ -7,6 +7,7 @@ class Animation {
      */
     constructor() {
         this.duration = 0;
+        this.ended = false;
     }
 
     /**

@@ -74,18 +74,20 @@ XMLscene.prototype.initLights = function() {
  * Initializes the scene cameras.
  */
 XMLscene.prototype.initCameras = function () {
-    this.player_camera = [];
-    this.player_camera[1] = vec3.fromValues(4, 20, 20);
-    this.player_camera[2] = vec3.fromValues(4, 20, -20);
+    let player_camera = [];
+    player_camera[1] = vec3.fromValues(4, 20, 20);
+    player_camera[2] = vec3.fromValues(4, 20, -20);
     this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     this.camera.setTarget(vec3.fromValues(4, 0, 4));
-    this.camera_position = null;
-    this.camera.setPosition(this.player_camera[1]);
+    this.camera.setPosition(player_camera[1]);
+    this.camera_radius = vec3.length(vec3.subtract(vec3.create(), player_camera[2], player_camera[1])) / 2;
+    this.camera_center = vec3.scale(vec3.create(), vec3.add(vec3.create(), player_camera[2], player_camera[1]), 0.5);
+    this.camera_speed = 20;
     this.interface.disableCamera = true;
-    this.interface.cameraMoving = true;
+    this.cameraMoving = false;
 };
 
-/* Handler called when the graph is finally loaded. 
+/* Handler called when the graph is finally loaded.
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
 XMLscene.prototype.onGraphLoaded = function() {
@@ -100,11 +102,9 @@ XMLscene.prototype.onGraphLoaded = function() {
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
-    this.interface.addSelectedGroup(this.graph.selectableNodes);
 
     this.game = new LatrunculiXXI();
-    this.setPlayer(1);
-    this.game.testConnection();
+    this.setPlayer(2);
 };
 
 /**
@@ -172,19 +172,22 @@ XMLscene.prototype.update = function(currTime) {
 };
 
 XMLscene.prototype.updateCamera = function (currTime) {
-    if (this.interface.cameraMoving) {
-        if (this.camera_position[0] == this.camera.position[0] &&
-            this.camera_position[1] == this.camera.position[1] &&
-            this.camera_position[2] == this.camera.position[2]) {
-            this.interface.cameraMoving = false;
+    if (this.cameraMoving) {
+        if (this.camera_animation.ended) {
+            this.cameraMoving = false;
         } else {
-            //update camera bezier curve animation
+          let deltaTime = (currTime - this.initial_camera_timestamp) / 1000;
+          let camera_animation_matrix = this.camera_animation.getMatrix(deltaTime);
+          let camera_position = vec3.transformMat4(vec3.create(), vec3.create(), camera_animation_matrix);
+          this.camera.setPosition(camera_position);
         }
     }
 };
 
 XMLscene.prototype.setPlayer = function (player) {
-    this.camera_position = this.player_camera[player];
-    this.interface.cameraMoving = true;
-    //init camera bezier curve animation
+    this.cameraMoving = true;
+    this.initial_camera_timestamp = performance.now();
+    if(player === 1)
+      this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 270);
+    else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
 };
