@@ -1,5 +1,6 @@
 class LatrunculiXXI {
     constructor() {
+        this.game_over = false;
         this.board_stack = [];
         this.move_stack = [];
         this.turn = 1;
@@ -22,6 +23,10 @@ class LatrunculiXXI {
             let move = this.move_stack[this.number_plays];
             this.getMoveBoard(move);
         }
+    }
+
+    onGameOver(game_over) {
+      this.game_over = game_over;
     }
 
     undo() {
@@ -60,6 +65,13 @@ class LatrunculiXXI {
     isValidMove(move) {
         this.move_stack[this.number_plays] = [this.turn, move];
         return prologRequest({ command: 'is_valid_move', args: [this.turn, move, this.getCurrentBoard()], onSuccess: this.onValidReceived });
+    }
+
+    /**
+      Checks if the game is over
+    */
+    isGameOver() {
+      return prologRequest({ command: 'is_game_over', onSuccess: this.onGameOver });
     }
 
     testConnection() {
