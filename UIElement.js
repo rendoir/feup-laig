@@ -4,6 +4,7 @@ class UIElement {
     this.vertices = vertices;
     this.text_coords = text_coords;
     this.indices = indices;
+    this.scene.enableTextures(true);
     this.texture = new CGFtexture(this.scene, "./scenes/" + texture_path);
     this.init();
   }
@@ -46,6 +47,6 @@ class UIElement {
 
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
-    this.scene.enableTextures(true);
+    this.texture.unbind();
   }
 }
