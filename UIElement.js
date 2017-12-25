@@ -4,7 +4,6 @@ class UIElement {
     this.vertices = vertices;
     this.text_coords = text_coords;
     this.indices = indices;
-    this.scene.enableTextures(true);
     this.texture = new CGFtexture(this.scene, "./scenes/" + texture_path);
     this.init();
   }
@@ -37,14 +36,14 @@ class UIElement {
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vertsBuffer);
     gl.vertexAttribPointer(shader.attributes.aVertexPosition, 2, gl.FLOAT, false, 0, 0);
 
-    this.texture.bind();
     gl.enableVertexAttribArray(shader.attributes.aTextureCoord);
     gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordsBuffer);
     gl.vertexAttribPointer(shader.attributes.aTextureCoord, 2, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indicesBuffer);
+    this.texture.bind();
     gl.drawElements(this.scene.gl.TRIANGLES, this.indicesBuffer.numValues, gl.UNSIGNED_SHORT, 0);
-
+    
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
     this.texture.unbind();

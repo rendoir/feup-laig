@@ -87,7 +87,7 @@ XMLscene.prototype.initCameras = function () {
     this.camera_radius = vec3.length(vec3.subtract(vec3.create(), player_camera[2], player_camera[1])) / 2;
     this.camera_center = vec3.scale(vec3.create(), vec3.add(vec3.create(), player_camera[2], player_camera[1]), 0.5);
     this.camera_speed = 20;
-    this.interface.disableCamera = true;
+    //this.interface.disableCamera = true;
     this.cameraMoving = false;
 };
 
@@ -148,7 +148,7 @@ XMLscene.prototype.display = function() {
         }
         this.graph.selectedNode = this.selectedNode;
         // Displays the scene.
-        this.graph.displayScene();
+        //this.graph.displayScene();
     } else {
         // Draw axis
         this.axis.display();
@@ -198,28 +198,36 @@ XMLscene.prototype.setPlayer = function (player) {
 XMLscene.prototype.renderUI = function () {
   let previous_shader = this.activeShader;
   this.setActiveShader(this.ui_shader);
+  this.gl.disable(this.gl.DEPTH_TEST);
 
   for(let i = 0; i < this.ui_elements.length; i++) {
     this.ui_elements[i].render();
   }
 
+  this.gl.enable(this.gl.DEPTH_TEST);
   this.setActiveShader(previous_shader);
 };
 
 XMLscene.prototype.initUI = function () {
   this.ui_elements = [];
   let test_button = new UIElement(this,
-                                [ 0.0,  0.0,
-                                  10.0, 0.0,
-                                  0.0,  10.0,
-                                  10.0, 10.0 ],
-                                [ 0.0, 0.0,
+                                [ 0.5, 0.5,
+                                  0.5, -0.5,
+                                  -0.5, -0.5,
+                                  -0.5, 0.5 ],
+                                [ 1.0, 1.0,
                                   1.0, 0.0,
                                   0.0, 1.0,
-                                  1.0, 1.0 ],
-                                [ 0, 2, 1,
+                                  0.0, 1.0 ],
+                                [ 0, 1, 3,
                                   1, 2, 3 ],
-                                "images/board/white.png");
+                                "images/board/board.png");
   this.ui_elements.push(test_button);
   this.ui_shader = new CGFshader(this.gl, '../lib/CGF/shaders/UI/ui_vertex.glsl', '../lib/CGF/shaders/UI/ui_frag.glsl');
+
+  let previous_shader = this.activeShader;
+  this.setActiveShader(this.ui_shader);
+  this.gl.activeTexture(this.gl.TEXTURE0);
+  this.gl.uniform1i(this.ui_shader.uniforms.uSampler, 0);
+  this.setActiveShader(previous_shader);
 };
