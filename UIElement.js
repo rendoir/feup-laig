@@ -5,7 +5,7 @@ class UIElement {
     this.text_coords = text_coords;
     this.indices = indices;
     this.texture = new CGFtexture(this.scene, "./scenes/" + texture_path);
-    init();
+    this.init();
   }
 
   init() {

@@ -208,5 +208,18 @@ XMLscene.prototype.renderUI = function () {
 
 XMLscene.prototype.initUI = function () {
   this.ui_elements = [];
+  let test_button = new UIElement(this,
+                                [ 0.0,  0.0,
+                                  10.0, 0.0,
+                                  0.0,  10.0,
+                                  10.0, 10.0 ],
+                                [ 0.0, 0.0,
+                                  1.0, 0.0,
+                                  0.0, 1.0,
+                                  1.0, 1.0 ],
+                                [ 0, 2, 1,
+                                  1, 2, 3 ],
+                                "images/board/white.png");
+  this.ui_elements.push(test_button);
   this.ui_shader = new CGFshader(this.gl, '../lib/CGF/shaders/UI/ui_vertex.glsl', '../lib/CGF/shaders/UI/ui_frag.glsl');
 };
