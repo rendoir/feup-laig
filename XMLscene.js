@@ -196,11 +196,17 @@ XMLscene.prototype.setPlayer = function (player) {
 };
 
 XMLscene.prototype.renderUI = function () {
-  for(let i = 0; i < this.ui_elements.length; i++) {
+  let previous_shader = this.activeShader;
+  this.setActiveShader(this.ui_shader);
 
+  for(let i = 0; i < this.ui_elements.length; i++) {
+    this.ui_elements[i].render();
   }
+
+  this.setActiveShader(previous_shader);
 };
 
 XMLscene.prototype.initUI = function () {
   this.ui_elements = [];
+  this.ui_shader = new CGFshader(this.gl, '../lib/CGF/shaders/UI/ui_vertex.glsl', '../lib/CGF/shaders/UI/ui_frag.glsl');
 };

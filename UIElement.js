@@ -9,42 +9,43 @@ class UIElement {
   }
 
   init() {
-      /*
-      unsigned int VBO, VAO, EBO;
-      glGenVertexArrays(1, &VAO);
-      glGenBuffers(1, &VBO);
-      glGenBuffers(1, &EBO);
-      // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-      glBindVertexArray(VAO);
+    let gl = this.scene.gl;
 
-      glBindBuffer(GL_ARRAY_BUFFER, VBO);
-      glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    this.vertsBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.vertsBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.vertices), gl.STATIC_DRAW);
 
-      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-      glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    this.indicesBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indicesBuffer);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(this.indices), gl.STATIC_DRAW);
 
-      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-      glEnableVertexAttribArray(0);
+    this.texCoordsBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordsBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.text_coords), gl.STATIC_DRAW);
 
-      // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-      glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-      // remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
-      //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-      // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-      // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-      glBindVertexArray(0);
-      */
+    this.indicesBuffer.numValues = this.indices.length;
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
   }
 
   render() {
-    /*
-    glUseProgram(shaderProgram);
-    glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-    //glDrawArrays(GL_TRIANGLES, 0, 6);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-    // glBindVertexArray(0); // no need to unbind it every time
-    */
+    let shader = this.scene.activeShader;
+    let gl = this.scene.gl;
+
+    gl.enableVertexAttribArray(shader.attributes.aVertexPosition);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.vertsBuffer);
+    gl.vertexAttribPointer(shader.attributes.aVertexPosition, 2, gl.FLOAT, false, 0, 0);
+
+    this.texture.bind();
+    gl.enableVertexAttribArray(shader.attributes.aTextureCoord);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordsBuffer);
+    gl.vertexAttribPointer(shader.attributes.aTextureCoord, 2, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indicesBuffer);
+    gl.drawElements(this.scene.gl.TRIANGLES, this.indicesBuffer.numValues, gl.UNSIGNED_SHORT, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+    this.scene.enableTextures(true);
   }
 }
