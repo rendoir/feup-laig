@@ -46,7 +46,8 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
     'primitives/triangle.js', 'primitives/circle.js', 'primitives/nurbs.js',
     'animations/animation.js', 'animations/circularAnimation.js', 'animations/linearAnimation.js',
     'animations/bezierAnimation.js', 'animations/comboAnimation.js',
-    'latrunculiXXI/server_connection.js', 'LatrunculiXXi.js', 'UIElement.js','MyPieceNode.js',
+    'latrunculiXXI/server_connection.js', 'LatrunculiXXi.js', 'UIElement.js', 'MyPieceNode.js',
+    'UserInterface.js',
 
     main = function() {
         // Standard application, scene and interface setup

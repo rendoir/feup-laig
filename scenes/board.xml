@@ -32,14 +32,6 @@
       <file path="images/board/board.png" />
       <amplif_factor s="8" t="8" />
     </TEXTURE>
-    <TEXTURE id="t_black">
-      <file path="images/board/black.png" />
-      <amplif_factor s="1" t="1" />
-    </TEXTURE>
-    <TEXTURE id="t_white">
-      <file path="images/board/white.png" />
-      <amplif_factor s="1" t="1" />
-    </TEXTURE>
   </TEXTURES>
 
 
@@ -51,10 +43,17 @@
       <ambient r="0.1" g="0.1" b="0.1" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
-    <MATERIAL id="m_piece">
+    <MATERIAL id="m_black_piece">
       <shininess value="32" />
-      <specular r="1" g="1" b="1" a="1" />
-      <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+      <specular r="1.0" g="1.0" b="1.0" a="1" />
+      <diffuse r="0.0" g="0.0" b="0.0" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+    <MATERIAL id="m_white_piece">
+      <shininess value="32" />
+      <specular r="1.0" g="1.0" b="1.0" a="1" />
+      <diffuse r="1.0" g="1.0" b="1.0" a="1" />
       <ambient r="0.1" g="0.1" b="0.1" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
@@ -98,8 +97,8 @@
     </NODE>
 
     <NODE id="dux" class="piece">
-      <MATERIAL id="m_piece" />
-      <TEXTURE id="null" />
+      <MATERIAL id="m_white_piece" />
+      <TEXTURE id="clear" />
       <DESCENDANTS>
         <NODEREF id="dux_cross" />
         <NODEREF id="dux_head3" />
@@ -355,8 +354,8 @@
     </NODE>
 
     <NODE id="soldier" class="piece">
-      <MATERIAL id="m_piece" />
-      <TEXTURE id="null" />
+      <MATERIAL id="m_black_piece" />
+      <TEXTURE id="clear" />
       <DESCENDANTS>
         <NODEREF id="soldier_head" />
         <NODEREF id="soldier_neck2" />

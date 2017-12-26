@@ -28,6 +28,7 @@ moveComputer(Board, Player, NewBoard, Difficulty) :-
 	The 'dumb' bot selects a random piece from the list of possible moves.
 	The 'intelligent' bot tries to make a move that ends the game. If it fails to do so, he tries to find an offensive mode. Lastly, if that also fails, it plays a random move.
 **/
+pickMove(_,_,[],[]).
 pickMove(1, _, MoveList, Move) :-
   length(MoveList, ListLength),
   random(0, ListLength, RandomIndex),
@@ -75,6 +76,8 @@ testOffensiveMove(Board, TestMove, Move) :-
   applyComputerMove/3: Applies a move to the board.
     Board, Move, ModifiedBoard.
 **/
+applyComputerMove(Board, [], Board) :-
+  write('Can\'t move'), nl.
 applyComputerMove(Board, Move, NewBoard) :-
   getListElement(0, Move, Xi),
   getListElement(1, Move, Yi),

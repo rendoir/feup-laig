@@ -38,7 +38,7 @@ XMLscene.prototype.init = function(application) {
 
     this.game = Game;
     this.turn = this.game.turn;
-    this.initUI();
+    this.ui = new UserInterface(this, this.game);
 };
 
 /**
@@ -106,9 +106,6 @@ XMLscene.prototype.onGraphLoaded = function() {
     this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
     this.initLights();
-
-    // Adds lights group.
-    this.interface.addLightsGroup(this.graph.lights);
 };
 
 
@@ -183,7 +180,7 @@ XMLscene.prototype.display = function() {
 
     this.popMatrix();
 
-    this.renderUI();
+    this.ui.render();
 };
 
 XMLscene.prototype.update = function(currTime) {
@@ -220,39 +217,5 @@ XMLscene.prototype.setPlayer = function(player) {
     if (player === 1)
         this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 270);
     else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
-};
-
-XMLscene.prototype.renderUI = function() {
-    let previous_shader = this.activeShader;
-    this.setActiveShader(this.ui_shader);
-    this.gl.disable(this.gl.DEPTH_TEST);
-
-    for (let i = 0; i < this.ui_elements.length; i++) {
-        this.ui_elements[i].render();
-    }
-
-    this.gl.enable(this.gl.DEPTH_TEST);
-    this.setActiveShader(previous_shader);
-};
-
-XMLscene.prototype.initUI = function() {
-    this.ui_elements = [];
-    let test_button = new UIElement(this, [0.5, 0.5,
-            0.5, -0.5, -0.5, -0.5, -0.5, 0.5
-        ], [1.0, 1.0,
-            1.0, 0.0,
-            0.0, 1.0,
-            0.0, 1.0
-        ], [0, 1, 3,
-            1, 2, 3
-        ],
-        "images/board/board.png");
-    this.ui_elements.push(test_button);
-    this.ui_shader = new CGFshader(this.gl, '../lib/CGF/shaders/UI/ui_vertex.glsl', '../lib/CGF/shaders/UI/ui_frag.glsl');
-
-    let previous_shader = this.activeShader;
-    this.setActiveShader(this.ui_shader);
-    this.gl.activeTexture(this.gl.TEXTURE0);
-    this.gl.uniform1i(this.ui_shader.uniforms.uSampler, 0);
-    this.setActiveShader(previous_shader);
+    this.ui.update();
 };

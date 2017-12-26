@@ -105,7 +105,8 @@ getBlockedPaths(_, _, _, Counter) :- Counter is 0.
     Board, X, Y, ModifiedBoard.
 **/
 capturePiece(Board, X, Y, ModifiedBoard) :-
-  setMatrixElement(Y, X, empty_cell, Board, ModifiedBoard).
+  getEmptyCell(EmptyCell),
+  setMatrixElement(Y, X, EmptyCell, Board, ModifiedBoard).
 
 
 /**
@@ -399,23 +400,27 @@ captureClassic(Board, Xf, Yf, FinalBoard) :-
     Board.
 **/
 gameIsOver(Board, Winner) :-
-  not(findMatrixElement(Board, black_dux)),
+  getBlackDux(Dux),
+  not(findMatrixElement(Board, Dux)),
   Winner = 'White',
   write('Winner: '), write(Winner), nl.
 gameIsOver(Board, Winner) :-
-  not(findMatrixElement(Board, white_dux)),
+  getWhiteDux(Dux),
+  not(findMatrixElement(Board, Dux)),
   Winner = 'Black',
   write('Winner: '), write(Winner), nl.
 gameIsOver(Board, Winner) :-
-  not(findMatrixElement(Board, black_soldier)),
+  getBlackSoldier(Soldier),
+  not(findMatrixElement(Board, Soldier)),
   Winner = 'White',
   write('Winner: '), write(Winner), nl.
 gameIsOver(Board, Winner) :-
-  not(findMatrixElement(Board, white_soldier)),
+  getWhiteSoldier(Soldier),
+  not(findMatrixElement(Board, Soldier)),
   Winner = 'Black',
   write('Winner: '), write(Winner), nl.
 
-gameIsOver(Board) :- not(findMatrixElement(Board, black_dux)).
-gameIsOver(Board) :- not(findMatrixElement(Board, white_dux)).
-gameIsOver(Board) :- not(findMatrixElement(Board, black_soldier)).
-gameIsOver(Board) :- not(findMatrixElement(Board, white_soldier)).
+gameIsOver(Board) :- getBlackDux(Dux), not(findMatrixElement(Board, Dux)).
+gameIsOver(Board) :- getWhiteDux(Dux), not(findMatrixElement(Board, Dux)).
+gameIsOver(Board) :- getBlackSoldier(Soldier), not(findMatrixElement(Board, Soldier)).
+gameIsOver(Board) :- getWhiteSoldier(Soldier), not(findMatrixElement(Board, Soldier)).

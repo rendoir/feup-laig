@@ -1,10 +1,15 @@
 class UIElement {
-  constructor(scene, vertices, text_coords, indices, texture_path) {
+  /**
+    Vertices: left-top, right-top, left-bottom, right-bottom
+    Indices: counter-clock-wise
+  */
+  constructor(scene, vertices, text_coords, indices, texture_path, on_click) {
     this.scene = scene;
     this.vertices = vertices;
     this.text_coords = text_coords;
     this.indices = indices;
     this.texture = new CGFtexture(this.scene, "./scenes/" + texture_path);
+    this.on_click = on_click;
     this.init();
   }
 
@@ -47,5 +52,20 @@ class UIElement {
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
     this.texture.unbind();
+  }
+
+  onClick() {
+      if (this.on_click)
+          this.on_click();
+  }
+
+  isInside(x, y, canvas_width, canvas_height) {
+      let top = (-this.vertices[1] + 1) / 2 * canvas_height;
+      let bottom = (-this.vertices[5] + 1) / 2 * canvas_height;
+      let left = (this.vertices[0] + 1) / 2 * canvas_width;
+      let right = (this.vertices[2] + 1) / 2 * canvas_width;
+      let height = Math.abs(bottom - top);
+      let width = Math.abs(right - left);
+      return y >= top && y <= top + height && x >= left && x <= left + width;
   }
 }
