@@ -1,0 +1,152 @@
+<SCENE>
+
+
+  <INITIALS>
+    <frustum near="0.1" far="100"/>
+    <translation x="0" y="0" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="1" sy="1" sz="1" />
+    <reference length="5" />
+  </INITIALS>
+
+
+  <ILLUMINATION>
+    <ambient r="1" g="1" b="1" a="1" />
+    <background r="0" g="0" b="0" a="1" />
+  </ILLUMINATION>
+
+
+  <LIGHTS>  
+    <LIGHT id="light1">
+      <enable value ="1" />
+      <position  x="20" y="20" z="20" w="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+      <diffuse r="1" g="1" b="1" a="1.0" />
+      <specular r="1" g="1" b="1" a="1.0" />
+    </LIGHT>
+  </LIGHTS>
+
+
+  <TEXTURES>
+     <TEXTURE id="t_black">
+      <file path="images/board/black.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+  
+    <TEXTURE id="t_white">
+      <file path="images/board/white.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+  </TEXTURES>
+
+
+  <MATERIALS>
+    <MATERIAL id="m_piece">
+      <shininess value="32" />
+      <specular r="1" g="1" b="1" a="1" />
+      <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+  </MATERIALS>
+
+
+  <ANIMATIONS>
+  </ANIMATIONS>
+
+
+  <NODES>
+    <ROOT id="soldier" />
+
+    <NODE id="soldier">
+      <MATERIAL id="m_piece" />
+      <TEXTURE id="t_white" />
+      <DESCENDANTS>
+        <NODEREF id="soldier_head" />
+        <NODEREF id="soldier_neck2" />
+        <NODEREF id="soldier_neck" />
+        <NODEREF id="soldier_body" />
+        <NODEREF id="soldier_ellipsoid2" />
+        <NODEREF id="soldier_ellipsoid" />
+        <NODEREF id="soldier_base" />
+      </DESCENDANTS>
+    </NODE>
+    
+    <NODE id="soldier_head">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="1.6" z="0" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_head" type="sphere" args="0.35 32 32" />
+      </DESCENDANTS>
+    </NODE>
+    
+    <NODE id="soldier_neck2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="1.2" z="0" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_neck2" type="cylinder" args="0.1 0.25 0.155 32 32 0 0" />
+      </DESCENDANTS>
+    </NODE>
+    
+    <NODE id="soldier_neck">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="1.1" z="0" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_neck" type="cylinder" args="0.1 0.155 0.25 32 32 0 0" />
+      </DESCENDANTS>
+    </NODE>
+    
+    <NODE id="soldier_body">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0.375" z="0" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_body" type="cylinder" args="0.75 0.225 0.155 32 32 0 0" />
+      </DESCENDANTS>
+    </NODE>
+    
+    <NODE id="soldier_ellipsoid2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0.34" z="0" />
+      <SCALE sx="1" sy="0.25" sz="1" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_ellipsoid2" type="sphere" args="0.3 32 32" />
+      </DESCENDANTS>
+    </NODE>
+    
+    <NODE id="soldier_ellipsoid">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0.2" z="0" />
+      <SCALE sx="1" sy="0.4" sz="1" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_ellipsoid" type="sphere" args="0.45 32 32" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="soldier_base">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <SCALE sx="1" sy="0.2" sz="1" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF id="_base" type="sphere" args="0.5 32 32" />
+      </DESCENDANTS>
+    </NODE>
+    
+  
+  </NODES>
+
+</SCENE>

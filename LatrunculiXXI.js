@@ -1,67 +1,86 @@
 class LatrunculiXXI {
-  constructor(game_mode) {
-    this.game_mode = game_mode;
-    this.board_stack = [];
-    this.move_stack = [];
-    this.turn = 1;
-    this.number_plays = 0;
-  }
-
-  playBot() {
-    let move = getBotMove();
-    this.board_stack[this.number_plays] = getMoveBoard(move);
-    this.move_stack[this.number_plays] = [this.turn, move];
-    this.number_plays++;
-    this.turn = (this.turn === 1) ? 2 : 1;
-  }
-
-  playHuman(xi, yi, xf, yf) {
-    if(isValidMove(xi, yi, xf, yf)) {
-      let move = [xi, yi, xf, yf];
-      this.board_stack[this.number_plays] = getMoveBoard(move);
-      this.move_stack[this.number_plays] = [this.turn, move];
-      this.number_plays++;
-      this.turn = (this.turn === 1) ? 2 : 1;
-      return true;
-    } else {
-      return false;
+    constructor() {
+        this.game_over = false;
+        this.board_stack = [];
+        this.move_stack = [];
+        this.turn = 1;
+        this.number_plays = 0;
+        this.initBoard();
     }
-  }
 
-  undo() {
-    if(this.number_plays > 0) {
-      this.board_stack.pop();
-      this.move_stack.pop();
-      this.number_plays--;
-      this.turn = (this.turn === 1) ? 2 : 1;
-      return true;
-    } else {
-      return false;
+    initBoard() {
+        let reply = function(data) {
+            Game.onBoardReceived(data.board);
+        };
+        return prologRequest({ command: 'initialBoard', onSuccess: reply });
     }
-  }
 
-  getCurrentBoard() {
-    return this.board_stack[this.number_plays];
-  }
+    onBotMoveReceived(move) {
+        this.move_stack[this.number_plays] = move;
+        this.getMoveBoard(move);
+    }
 
-  /**
-    Inputs a move to prolog and returns the resulting board
-  */
-  getMoveBoard(move) {
-    return prologRequest({ command: 'move', args: [this.turn, move, getCurrentBoard()] });
-  }
+    onBoardReceived(board) {
+        this.board_stack[this.number_plays] = board;
+        this.number_plays++;
+        this.turn = (this.turn === 1) ? 2 : 1;
+    }
 
-  /**
-    Requests a valid bot move to prolog and returns it
-  */
-  getBotMove() {
-    return prologRequest({ command: 'bot_play', args: [this.turn, getCurrentBoard()] });
-  }
+    onValidReceived(valid) {
+        if (valid) {
+            let move = this.move_stack[this.number_plays];
+            this.getMoveBoard(move);
+        }
+    }
 
-  /**
-    Inputs a move to prolog to check if it's valid
-  */
-  isValidMove(move) {
-    return prologRequest({ command: 'is_valid_move', args: [this.turn, move, getCurrentBoard()] });
-  }
+    onGameOver(game_over) {
+        this.game_over = game_over;
+    }
+
+    undo() {
+        if (this.number_plays > 0) {
+            this.board_stack.pop();
+            this.move_stack.pop();
+            this.number_plays--;
+            this.turn = (this.turn === 1) ? 2 : 1;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    getCurrentBoard() {
+        return this.board_stack[this.number_plays];
+    }
+
+    /**
+      Inputs a move to prolog and returns the resulting board
+    */
+    getMoveBoard(move) {
+        return prologRequest({ command: 'move', args: [this.turn, move, this.getCurrentBoard()], onSuccess: this.onBoardReceived });
+    }
+
+    /**
+      Requests a valid bot move to prolog and returns it
+    */
+    getBotMove() {
+        return prologRequest({ command: 'bot_play', args: [this.turn, this.getCurrentBoard()], onSuccess: this.onBotMoveReceived });
+    }
+
+    /**
+      Inputs a move to prolog to check if it's valid
+    */
+    isValidMove(move) {
+        this.move_stack[this.number_plays] = [this.turn, move];
+        return prologRequest({ command: 'is_valid_move', args: [this.turn, move, this.getCurrentBoard()], onSuccess: this.onValidReceived });
+    }
+
+    /**
+      Checks if the game is over
+    */
+    isGameOver() {
+        return prologRequest({ command: 'is_game_over', onSuccess: this.onGameOver });
+    }
 }
+
+var Game = new LatrunculiXXI();

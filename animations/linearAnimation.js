@@ -71,8 +71,10 @@ class LinearAnimation extends Animation {
      */
     getMatrix(deltaTime) {
         let segment = this.getSegment(deltaTime);
-        if (deltaTime > this.duration)
-            deltaTime = this.duration;
+        if (deltaTime > this.duration) {
+          deltaTime = this.duration;
+          this.ended = true;  
+        }
         let dT = deltaTime - segment.init_time;
         let deltaX = dT * segment.speed[0];
         let deltaY = dT * segment.speed[1];

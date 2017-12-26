@@ -101,8 +101,10 @@ class BezierAnimation extends Animation {
         let time;
         if (deltaTime <= this.duration) {
             time = deltaTime / this.duration;
-        } else
-            time = 1;
+        } else {
+          time = 1;
+          this.ended = true;
+        }
 
         let animationMatrix = mat4.create();
 
