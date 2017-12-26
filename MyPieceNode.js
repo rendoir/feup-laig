@@ -12,14 +12,15 @@ class MyPieceNode extends MyGraphNode{
     transform() {
         let newPosVec = vec3.fromValues(this.position.x + 0.5,0,this.position.y + 0.5);
         mat4.fromTranslation(this.transformMatrix, newPosVec);
+        this.world_position = mat4.getTranslation(vec4.create(), this.transformMatrix);
 
         //This is just a test
         let control_points = [
-            [0, 0, 0],
-            [0, 0, 10],
-            [8, 8, 10],
-            [8, 8, 0]
-        ];
+            [this.world_position[0], this.world_position[1], this.world_position[2]],
+            [this.world_position[0], 10, this.world_position[2]],
+            [8, 10, 8],
+            [8, this.world_position[1], 8]
+        ]
         this.animation = new BezierAnimation(5, control_points);
     }
 
