@@ -5,6 +5,14 @@ class LatrunculiXXI {
         this.move_stack = [];
         this.turn = 1;
         this.number_plays = 0;
+        this.initBoard();
+    }
+
+    initBoard() {
+        let reply = function(data) {
+            Game.onBoardReceived(data.board);
+        };
+        return prologRequest({ command: 'initialBoard', onSuccess: reply });
     }
 
     onBotMoveReceived(move) {
@@ -26,7 +34,7 @@ class LatrunculiXXI {
     }
 
     onGameOver(game_over) {
-      this.game_over = game_over;
+        this.game_over = game_over;
     }
 
     undo() {
@@ -71,10 +79,8 @@ class LatrunculiXXI {
       Checks if the game is over
     */
     isGameOver() {
-      return prologRequest({ command: 'is_game_over', onSuccess: this.onGameOver });
-    }
-
-    testConnection() {
-        return prologRequest({ command: 'testConnection' });
+        return prologRequest({ command: 'is_game_over', onSuccess: this.onGameOver });
     }
 }
+
+var Game = new LatrunculiXXI();

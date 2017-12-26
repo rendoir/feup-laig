@@ -102,12 +102,22 @@ print_header_line(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Require your Prolog Files here
+:- include('toAtom.pl').
+:- include('board.pl').
 
-parse_input(handshake, handshake).
-parse_input(testConnection, 'Connection OK').
-parse_input(test(C,N), Res) :- test(C,Res,N).
-parse_input(quit, goodbye).
+parse_input(handshake, JsonReply) :-
+	JsonReply = '{"msg": "handshake"}'.
+parse_input(testConnection, JsonReply) :- 
+	JsonReply = '{"msg": "Connection OK"}'.
+parse_input(quit, JsonReply) :-
+	JsonReply = '{"msg": "goodbye"}'.
 
-test(_,[],N) :- N =< 0.
-test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
+
+% Game
+
+parse_input(initialBoard, JsonReply) :-
+	initialBoard(Board),
+	toAtom(Board, BoardAtom),
+	atom_concat('{"msg": "InitialBoard", "board": ', BoardAtom, Json1),
+	atom_concat(Json1, '}', JsonReply).
 	

@@ -35,7 +35,7 @@ XMLscene.prototype.init = function(application) {
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(1000 / UPDATES_PER_SECONDS);
 
-    this.game = new LatrunculiXXI();
+    this.game = Game;
     this.turn = this.game.turn;
     this.initUI();
 };
@@ -77,7 +77,7 @@ XMLscene.prototype.initLights = function() {
 /**
  * Initializes the scene cameras.
  */
-XMLscene.prototype.initCameras = function () {
+XMLscene.prototype.initCameras = function() {
     let player_camera = [];
     player_camera[1] = vec3.fromValues(4, 20, 24);
     player_camera[2] = vec3.fromValues(4, 20, -16);
@@ -167,67 +167,65 @@ XMLscene.prototype.update = function(currTime) {
     }
 };
 
-XMLscene.prototype.updateGame = function (currTime) {
-  if(this.turn !== this.game.turn) {
-    this.turn = this.game.turn;
-    this.setPlayer(this.turn);
-  }
+XMLscene.prototype.updateGame = function(currTime) {
+    if (this.turn !== this.game.turn) {
+        this.turn = this.game.turn;
+        this.setPlayer(this.turn);
+    }
 };
 
-XMLscene.prototype.updateCamera = function (currTime) {
+XMLscene.prototype.updateCamera = function(currTime) {
     if (this.cameraMoving) {
         if (this.camera_animation.ended) {
             this.cameraMoving = false;
         } else {
-          let deltaTime = (currTime - this.initial_camera_timestamp) / 1000;
-          let camera_animation_matrix = this.camera_animation.getMatrix(deltaTime);
-          let camera_position = vec3.transformMat4(vec3.create(), vec3.create(), camera_animation_matrix);
-          this.camera.setPosition(camera_position);
+            let deltaTime = (currTime - this.initial_camera_timestamp) / 1000;
+            let camera_animation_matrix = this.camera_animation.getMatrix(deltaTime);
+            let camera_position = vec3.transformMat4(vec3.create(), vec3.create(), camera_animation_matrix);
+            this.camera.setPosition(camera_position);
         }
     }
 };
 
-XMLscene.prototype.setPlayer = function (player) {
+XMLscene.prototype.setPlayer = function(player) {
     this.cameraMoving = true;
     this.initial_camera_timestamp = performance.now();
-    if(player === 1)
-      this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 270);
+    if (player === 1)
+        this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 270);
     else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
 };
 
-XMLscene.prototype.renderUI = function () {
-  let previous_shader = this.activeShader;
-  this.setActiveShader(this.ui_shader);
-  this.gl.disable(this.gl.DEPTH_TEST);
+XMLscene.prototype.renderUI = function() {
+    let previous_shader = this.activeShader;
+    this.setActiveShader(this.ui_shader);
+    this.gl.disable(this.gl.DEPTH_TEST);
 
-  for(let i = 0; i < this.ui_elements.length; i++) {
-    this.ui_elements[i].render();
-  }
+    for (let i = 0; i < this.ui_elements.length; i++) {
+        this.ui_elements[i].render();
+    }
 
-  this.gl.enable(this.gl.DEPTH_TEST);
-  this.setActiveShader(previous_shader);
+    this.gl.enable(this.gl.DEPTH_TEST);
+    this.setActiveShader(previous_shader);
 };
 
-XMLscene.prototype.initUI = function () {
-  this.ui_elements = [];
-  let test_button = new UIElement(this,
-                                [ 0.5, 0.5,
-                                  0.5, -0.5,
-                                  -0.5, -0.5,
-                                  -0.5, 0.5 ],
-                                [ 1.0, 1.0,
-                                  1.0, 0.0,
-                                  0.0, 1.0,
-                                  0.0, 1.0 ],
-                                [ 0, 1, 3,
-                                  1, 2, 3 ],
-                                "images/board/board.png");
-  this.ui_elements.push(test_button);
-  this.ui_shader = new CGFshader(this.gl, '../lib/CGF/shaders/UI/ui_vertex.glsl', '../lib/CGF/shaders/UI/ui_frag.glsl');
+XMLscene.prototype.initUI = function() {
+    this.ui_elements = [];
+    let test_button = new UIElement(this, [0.5, 0.5,
+            0.5, -0.5, -0.5, -0.5, -0.5, 0.5
+        ], [1.0, 1.0,
+            1.0, 0.0,
+            0.0, 1.0,
+            0.0, 1.0
+        ], [0, 1, 3,
+            1, 2, 3
+        ],
+        "images/board/board.png");
+    this.ui_elements.push(test_button);
+    this.ui_shader = new CGFshader(this.gl, '../lib/CGF/shaders/UI/ui_vertex.glsl', '../lib/CGF/shaders/UI/ui_frag.glsl');
 
-  let previous_shader = this.activeShader;
-  this.setActiveShader(this.ui_shader);
-  this.gl.activeTexture(this.gl.TEXTURE0);
-  this.gl.uniform1i(this.ui_shader.uniforms.uSampler, 0);
-  this.setActiveShader(previous_shader);
+    let previous_shader = this.activeShader;
+    this.setActiveShader(this.ui_shader);
+    this.gl.activeTexture(this.gl.TEXTURE0);
+    this.gl.uniform1i(this.ui_shader.uniforms.uSampler, 0);
+    this.setActiveShader(previous_shader);
 };
