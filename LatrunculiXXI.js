@@ -3,7 +3,8 @@ class LatrunculiXXI {
         this.game_over = false;
         this.board_stack = [];
         this.move_stack = [];
-        this.turn = 1;
+        this.turn = 1; //1 or 2
+        this.type = "player"; //"player" or "bot"
         this.number_plays = 0;
         this.initBoard();
     }

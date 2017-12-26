@@ -4,22 +4,48 @@ class UserInterface {
         this.game = game;
         this.gl = scene.gl;
         this.init();
+        this.update();
     };
 
     init() {
         //Init elements
         this.ui_elements = [];
+        let text_coords = 
+            [0.0, 0.0,
+             1.0, 0.0,
+             0.0, 1.0,
+             1.0, 1.0];
+        let indices =
+            [0, 2, 3,
+             0, 3, 1];
+
+        let player_type_position =
+            [-0.2, 0.95,
+             0.1, 0.95,
+             -0.2, 0.75,
+             0.1, 0.75];
+        let player = new UIElement(this.scene, player_type_position, text_coords, indices, "images/ui/player.png");
+        let bot = new UIElement(this.scene, player_type_position, text_coords, indices, "images/ui/bot.png");
+        this.ui_elements["player"] = player;
+        this.ui_elements["bot"] = bot;
+
+        let player_number_position =
+            [0.15, 0.95,
+             0.2, 0.95,
+             0.15, 0.75,
+             0.2, 0.75];
+        let player1 = new UIElement(this.scene, player_number_position, text_coords, indices, "images/ui/1.png");
+        let player2 = new UIElement(this.scene, player_number_position, text_coords, indices, "images/ui/2.png");
+        this.ui_elements["player1"] = player1;
+        this.ui_elements["player2"] = player2;
+
         let undo = new UIElement(this.scene,
             [0.7, 0.5,
              0.95, 0.5,
              0.7, 0.25,
              0.95, 0.25],
-            [0.0, 0.0,
-             1.0, 0.0,
-             0.0, 1.0,
-             1.0, 1.0],
-            [0, 2, 3,
-             0, 3, 1],
+            text_coords,
+            indices,
             "images/ui/undo.png",
             this.game.undo);
         this.ui_elements.push(undo);
@@ -55,8 +81,15 @@ class UserInterface {
         this.ui_elements.forEach(function (element) {
             element.render();
         });
+        this.ui_elements[this.current_type].render();
+        this.ui_elements[this.current_turn].render();
 
         this.gl.enable(this.gl.DEPTH_TEST);
         this.scene.setActiveShader(previous_shader);
     };
-}
+
+    update() {
+        this.current_type = this.game.type;
+        this.current_turn = "player" + this.game.turn;
+    };
+};

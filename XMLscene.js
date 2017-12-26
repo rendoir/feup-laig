@@ -106,9 +106,6 @@ XMLscene.prototype.onGraphLoaded = function() {
     this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
     this.initLights();
-
-    // Adds lights group.
-    this.interface.addLightsGroup(this.graph.lights);
 };
 
 
@@ -220,4 +217,5 @@ XMLscene.prototype.setPlayer = function(player) {
     if (player === 1)
         this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 270);
     else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
+    this.ui.update();
 };

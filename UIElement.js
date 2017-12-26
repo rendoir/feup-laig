@@ -1,4 +1,8 @@
 class UIElement {
+  /**
+    Vertices: left-top, right-top, left-bottom, right-bottom
+    Indices: counter-clock-wise
+  */
   constructor(scene, vertices, text_coords, indices, texture_path, on_click) {
     this.scene = scene;
     this.vertices = vertices;
