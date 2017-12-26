@@ -31,6 +31,7 @@ function MySceneGraph(filename, scene) {
     this.axisCoords['y'] = [0, 1, 0];
     this.axisCoords['z'] = [0, 0, 1];
 
+    let quad_model, soldier_model, dux_model;
 
     // File reading
     this.reader = new CGFXMLreader();
@@ -45,36 +46,15 @@ function MySceneGraph(filename, scene) {
 }
 
 MySceneGraph.prototype.initializeBoard = function(){
-    let soldier, dux, board_position;
-    let sceneElements = this.rootGraphNode.children;
-    sceneElements.forEach(element =>{
-        if (element.class != null){
-            if (element.class == "piece"){
-                if (element.nodeID = "soldier"){
-                    soldier = element;
-                }else if (element.nodeID == "dux"){
-                    dux = element;
-                }
-            }else if (element.class = "board_position"){
-                board_position = element;
-            }
-        }
-    });
-    for(let col = 0; col < 7; col++){//line1
+    for(let col = 0; col < 8; col++){//line1
         const position ={
             x:0,
             y:col
         }
-        let new_soldier = new MyGraphNode("black"+col,position);
-        this.rootGraphNode.addChild(new_soldier);
-    }
-    for(let line = 1; line < 6; line++){
-        for (let col = 0; col < 7; col++){
-            
-        }
-    }
-    for(let col = 0; col < 7; col++){//line7
+        let new_soldier = new MySoldierNode("black"+col,position);
+        new_soldier.initByModel(soldier_model);
 
+        this.rootGraphNode.addChild(new_soldier);
     }
 }
 
@@ -1424,7 +1404,20 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
             let nodeID = this.reader.getString(child, 'id');
             let nodeIndexInXMLNodes = this.nodeIDToIndex[nodeID];
             if (nodeIndexInXMLNodes != null && nodeIndexInXMLNodes > -1) {
-                newNode.addChild(this.parseNode(this.xmlNodes[nodeIndexInXMLNodes], textureStack));
+                let new_child = this.parseNode(this.xmlNodes[nodeIndexInXMLNodes], textureStack);
+                if (new_child.class == null){
+                    newNode.addChild(new_child);
+                }else{
+                    if (new_child.class == "piece"){
+                        if (new_child.nodeID == "soldier"){
+                            soldier_model = new_child;
+                        }else if (new_child.nodeID == "dux"){
+                            dux_model = new_child;
+                        }
+                    }else if (new_child.class == "board_position"){
+                        quad_model = new_child;
+                    }
+                }
             } else {
                 this.onXMLMinorError("Descendant id: " + nodeID + " is not declared.");
             }

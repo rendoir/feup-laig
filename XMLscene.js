@@ -175,7 +175,7 @@ XMLscene.prototype.display = function() {
         }
         this.graph.selectedNode = this.selectedNode;
         // Displays the scene.
-        //this.graph.displayScene();
+        this.graph.displayScene();
     } else {
         // Draw axis
         this.axis.display();
