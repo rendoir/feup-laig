@@ -1,6 +1,7 @@
-class MySoldierNode extends MyGraphNode{
-    constructor(nodeID,position){
+class MyPieceNode extends MyGraphNode{
+    constructor(nodeID,position,type){
         super(nodeID);
+        this.type = type;
         this.position = position;
         this.transform();
         this.display = true;

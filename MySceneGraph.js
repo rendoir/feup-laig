@@ -48,14 +48,16 @@ function MySceneGraph(filename, scene) {
 MySceneGraph.prototype.initializeBoard = function(){
     for(let col = 0; col < 8; col++){//line1
         const position ={
-            x:0,
-            y:col
+            x:col,
+            y:0
         }
-        let new_soldier = new MySoldierNode("black"+col,position);
+        let new_soldier = new MyPieceNode("black"+col,position,"soldier");
         new_soldier.initByModel(soldier_model);
-
         this.rootGraphNode.addChild(new_soldier);
     }
+    let new_dux = new MyPieceNode("black_dux", {x:3,y:1},"dux");
+    new_dux.initByModel(dux_model);
+    this.rootGraphNode.addChild(new_dux);
 }
 
 
@@ -1652,6 +1654,11 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             this.time_range = node_to_display.time_range;
         }
     }
+    let disablePickAtEnd = false;
+    if (node_to_display.isPickable == true){
+        this.isPickable = true;
+        disablePickAtEnd = true;
+    }
 
     if (node_to_display.leaves.length > 0) {
         if (this.useShader) {
@@ -1673,18 +1680,18 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             if (this.last_texture != null)
                 this.last_texture.unbind(); //Unbind if texture_id is "clear"
         }
-        if(node_to_display.display && node_to_display.isPickable){
+        if(node_to_display.display && this.isPickable){
             for (let i = 0; i < node_to_display.leaves.length; i++) {
                 this.scene.registerForPick(i+1,node_to_display.leaves[i]);
                 node_to_display.leaves[i].display();
             }
-        }else if (node_to_display.display && !node_to_display.isPickable){
+        }else if (node_to_display.display && !this.isPickable){
             for (let i = 0; i < node_to_display.leaves.length; i++) {
                 if(!this.scene.pickMode){
                     node_to_display.leaves[i].display();
                 }
             }
-        }else if (!node_to_display.display && node_to_display.isPickable){
+        }else if (!node_to_display.display && this.isPickable){
             for (let i = 0; i < node_to_display.leaves.length; i++) {
                 if(this.scene.pickMode){
                     this.scene.registerForPick(i+1,node_to_display.leaves[i]);
@@ -1724,6 +1731,9 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             material_stack.pop();
             texture_stack.pop();
         }
+    }
+    if (disablePickAtEnd){
+        this.isPickable = false;
     }
     if (nodeIndex == this.selectedNode) {
         this.useShader = false;
