@@ -103,7 +103,7 @@ print_header_line(_).
 
 % Require your Prolog Files here
 :- include('toAtom.pl').
-:- include('board.pl').
+:- include('game.pl').
 
 parse_input(handshake, JsonReply) :-
 	JsonReply = '{"msg": "handshake"}'.
@@ -112,19 +112,17 @@ parse_input(testConnection, JsonReply) :-
 parse_input(quit, JsonReply) :-
 	JsonReply = '{"msg": "goodbye"}'.
 
-
 % Game
-
 parse_input(initialBoard, JsonReply) :-
 	initialBoard(Board),
 	toAtom(Board, BoardAtom),
 	atom_concat('{"msg": "InitialBoard", "board": ', BoardAtom, Json1),
 	atom_concat(Json1, '}', JsonReply).
-	
-parse_input(gameIsOver(Board), JsonReply) :-
+
+parse_input(gameIsOver(Board), JsonReply) :- 
 	gameIsOver(Board, Winner),
 	toAtom(Winner, WinnerAtom),
 	atom_concat('{"msg": "gameIsOver: return yes", "gameIsOver": true, "winner": ', WinnerAtom, Json1),
 	atom_concat(Json1, '}', JsonReply).
-parse_input(gameIsOver(Board), JsonReply) :-
+parse_input(gameIsOver(_), JsonReply) :- 
 	JsonReply = '{"msg": "gameIsOver: return no", "gameIsOver": false, "winner": null}'.
