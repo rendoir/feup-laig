@@ -10,7 +10,7 @@ class LatrunculiXXI {
 
     initBoard() {
         let reply = function(data) {
-            Game.onBoardReceived(data.board);
+            Game.board_stack[Game.number_plays] = data.board;
         };
         return prologRequest({ command: 'initialBoard', onSuccess: reply });
     }
@@ -21,8 +21,8 @@ class LatrunculiXXI {
     }
 
     onBoardReceived(board) {
-        this.board_stack[this.number_plays] = board;
         this.number_plays++;
+        this.board_stack[this.number_plays] = board;
         this.turn = (this.turn === 1) ? 2 : 1;
     }
 
@@ -33,8 +33,8 @@ class LatrunculiXXI {
         }
     }
 
-    onGameOver(game_over) {
-        this.game_over = game_over;
+    onGameOver(isGameOver, winner) {
+        this.game_over = isGameOver;
     }
 
     undo() {
@@ -54,6 +54,10 @@ class LatrunculiXXI {
         return this.board_stack[this.number_plays];
     }
 
+    getCurrentBoardJSON() {
+        return JSON.stringify(this.board_stack[this.number_plays]);
+    }
+
     /**
       Inputs a move to prolog and returns the resulting board
     */
@@ -71,7 +75,7 @@ class LatrunculiXXI {
     /**
       Inputs a move to prolog to check if it's valid
     */
-    isValidMove(move) {
+    checkValidMove(move) {
         this.move_stack[this.number_plays] = [this.turn, move];
         return prologRequest({ command: 'is_valid_move', args: [this.turn, move, this.getCurrentBoard()], onSuccess: this.onValidReceived });
     }
@@ -79,8 +83,11 @@ class LatrunculiXXI {
     /**
       Checks if the game is over
     */
-    isGameOver() {
-        return prologRequest({ command: 'is_game_over', onSuccess: this.onGameOver });
+    checkGameOver() {
+        let reply = function(data) {
+            Game.onGameOver(data.gameIsOver, data.winner);
+        };
+        return prologRequest({ command: 'gameIsOver', args: [this.getCurrentBoardJSON()], onSuccess: reply });
     }
 }
 

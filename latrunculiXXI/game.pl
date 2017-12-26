@@ -100,7 +100,7 @@ playComputer(Board, Player, NewBoard, Difficulty) :-
 playPlayerVsPlayer :-
   clearScreen,
   initialBoard(Board),
-  drawBoard(Board),
+  drawBoard(Board), !,
   gameLoopPlayerVsPlayer(Board).
 
 /**
@@ -110,11 +110,11 @@ playPlayerVsPlayer :-
 gameLoopPlayerVsPlayer(Board) :-
   playPlayer(Board, 1, Board2),
   clearScreen,
-  drawBoard(Board2),
+  drawBoard(Board2), !,
   not(gameIsOver(Board2, _)),
   playPlayer(Board2, 2, Board3),
   clearScreen,
-  drawBoard(Board3),
+  drawBoard(Board3), !, 
   not(gameIsOver(Board3, _)),
   gameLoopPlayerVsPlayer(Board3).
 gameLoopPlayerVsPlayer(_).
@@ -132,7 +132,7 @@ gameLoopPlayerVsPlayer(_).
 playPlayerVsComputer(Difficulty) :-
   clearScreen,
   initialBoard(Board),
-  drawBoard(Board),
+  drawBoard(Board), !,
   gameLoopPlayerVsComputer(Board, Difficulty).
 
 
@@ -143,11 +143,11 @@ playPlayerVsComputer(Difficulty) :-
 gameLoopPlayerVsComputer(Board, Difficulty) :-
   playPlayer(Board, 1, Board2),
   clearScreen,
-  drawBoard(Board2),
+  drawBoard(Board2), !,
   not(gameIsOver(Board2, _)),
   playComputer(Board2, 2, Board3, Difficulty),
   clearScreen,
-  drawBoard(Board3),
+  drawBoard(Board3), !,
   not(gameIsOver(Board3, _)),
   gameLoopPlayerVsComputer(Board3, Difficulty).
 gameLoopPlayerVsComputer(_, _).
@@ -165,7 +165,7 @@ gameLoopPlayerVsComputer(_, _).
 playComputerVsComputer(Difficulty) :-
   clearScreen,
   initialBoard(Board),
-  drawBoard(Board),
+  drawBoard(Board), !,
   gameLoopComputerVsComputer(Board, Difficulty).
 
 
@@ -176,11 +176,11 @@ playComputerVsComputer(Difficulty) :-
 gameLoopComputerVsComputer(Board, Difficulty) :-
   playComputer(Board, 1, Board2, Difficulty),
   clearScreen,
-  drawBoard(Board2),
+  drawBoard(Board2),!,
   not(gameIsOver(Board2, _)),
   playComputer(Board2, 2, Board3, Difficulty),
   clearScreen,
-  drawBoard(Board3),
+  drawBoard(Board3),!,
   not(gameIsOver(Board3, _)),
   gameLoopComputerVsComputer(Board3, Difficulty).
 gameLoopComputerVsComputer(_,_).
