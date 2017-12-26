@@ -60,8 +60,8 @@ close_stream(Stream) :- flush_output(Stream), close(Stream).
 % Returns 200 OK on successful aplication of parse_input on request
 % Returns 400 Bad Request on syntax error (received from parser) or on failure of parse_input
 handle_request(Request, MyReply, '200 OK') :- catch(parse_input(Request, MyReply),error(_,_),fail), !.
-handle_request(syntax_error, 'Syntax Error', '400 Bad Request') :- !.
-handle_request(_, 'Bad Request', '400 Bad Request').
+handle_request(syntax_error, '{"msg": "Syntax Error"}', '400 Bad Request') :- !.
+handle_request(_, '{"msg": "Bad Request"}', '400 Bad Request').
 
 % Reads first Line of HTTP Header and parses request
 % Returns term parsed from Request-URI
@@ -121,3 +121,10 @@ parse_input(initialBoard, JsonReply) :-
 	atom_concat('{"msg": "InitialBoard", "board": ', BoardAtom, Json1),
 	atom_concat(Json1, '}', JsonReply).
 	
+parse_input(gameIsOver(Board), JsonReply) :-
+	gameIsOver(Board, Winner),
+	toAtom(Winner, WinnerAtom),
+	atom_concat('{"msg": "gameIsOver: return yes", "gameIsOver": true, "winner": ', WinnerAtom, Json1),
+	atom_concat(Json1, '}', JsonReply).
+parse_input(gameIsOver(Board), JsonReply) :-
+	JsonReply = '{"msg": "gameIsOver: return no", "gameIsOver": false, "winner": null}'.

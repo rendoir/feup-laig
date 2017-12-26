@@ -57,11 +57,12 @@ drawDownSeparatorLine   :- write('    |_____|_____|_____|_____|_____|_____|_____
   drawCell/1: Writes a board atom to the console.
     Atom.
 **/
-drawCell('"black_soldier"') :- write('  x  |').
-drawCell('"white_soldier"') :- write('  o  |').
-drawCell('"black_dux"')     :- write('  X  |').
-drawCell('"white_dux"')     :- write('  O  |').
-drawCell('"empty_cell"')    :- write('     |').
+drawCell(X) :- getBlackSoldier(X), write('  x  |').
+drawCell(O) :- getWhiteSoldier(O), write('  o  |').
+drawCell(X):- getBlackDux(X), write('  X  |').
+drawCell(O):- getWhiteDux(O) ,write('  O  |').
+drawCell(E) :- getEmptyCell(E) ,write('     |').
+
 
 
 /**

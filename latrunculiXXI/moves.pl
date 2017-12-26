@@ -119,7 +119,8 @@ moveIsOneSquare(_, Yi, _, Yf) :-
 **/
 simulateMove(Board, Xi, Yi, Xf, Yf, FinalBoard) :-
   getMatrixElement(Yi, Xi, Board, FromCell),
-  setMatrixElement(Yi, Xi, empty_cell, Board, ModifiedBoard),
+  getEmptyCell(EmptyCell),
+  setMatrixElement(Yi, Xi, EmptyCell, Board, ModifiedBoard),
   setMatrixElement(Yf, Xf, FromCell, ModifiedBoard, FinalBoard).
 
 
@@ -193,7 +194,8 @@ move(Board, Xi, Yi, Xf, Yf, FinalBoard) :-
 
   captureXXI(Board, Xi, Yi, Xf, Yf, CaptureBoard),
 
-  setMatrixElement(Yi, Xi, empty_cell, CaptureBoard, MovedBoard),
+  getEmptyCell(EmptyCell),
+  setMatrixElement(Yi, Xi, EmptyCell, CaptureBoard, MovedBoard),
   setMatrixElement(Yf, Xf, FromCell, MovedBoard, MovedBoard2),
 
   captureClassic(MovedBoard2, Xf, Yf, FinalBoard).

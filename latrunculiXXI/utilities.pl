@@ -6,15 +6,14 @@
 
 
 :- use_module(library(random)).
+:- use_module(library(lists)).
 
 /**
   getListElement/3: Gets the List Element at Index.
     Index, List, Element.
 **/
-getListElement(0, [HeadElement | _], HeadElement).
-getListElement(Index, [_ | RemainingElements], Element):-
-  NewIndex is Index - 1,
-  getListElement(NewIndex, RemainingElements, Element).
+getListElement(Index, List, Element):-
+  nth0(Index, List, Element).
 
 
 /**
@@ -31,12 +30,9 @@ setListElement(Index, Element, [Head | Tail], [Head | NewTail]):-
   getMatrixElement/4: Gets the Matrix Element at the pair "Row and Column".
     Row, Column, Matrix, Element.
 **/
-getMatrixElement(0, ElementColumn, [Row|_], Element):-
-  getListElement(ElementColumn, Row, Element).
-getMatrixElement(ElementRow, ElementColumn, [_|RemainingLists], Element):-
-  isInsideBoard(ElementColumn, ElementRow),
-  NextRow is ElementRow - 1,
-  getMatrixElement(NextRow, ElementColumn, RemainingLists, Element).
+getMatrixElement(ElementRow, ElementColumn, Matrix, Element):-
+  nth0(ElementRow, Matrix, Row),
+  nth0(ElementColumn, Row, Element).
 
 
 /**
