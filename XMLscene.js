@@ -248,7 +248,7 @@ XMLscene.prototype.initUI = function() {
            1.0, 1.0 ],
         [ 0, 2, 3,
           0, 3, 1 ],
-        "images/ui/undo.png");
+        "images/ui/undo.png", this.game.undo);
     this.ui_elements.push(test_button);
     this.ui_shader = new CGFshader(this.gl, '../lib/CGF/shaders/UI/ui_vertex.glsl', '../lib/CGF/shaders/UI/ui_frag.glsl');
 
@@ -257,4 +257,17 @@ XMLscene.prototype.initUI = function() {
     this.gl.activeTexture(this.gl.TEXTURE0);
     this.gl.uniform1i(this.ui_shader.uniforms.uSampler, 0);
     this.setActiveShader(previous_shader);
+
+    let ui_scene = this;
+    let canvas = document.getElementsByTagName('canvas')[0];
+    canvas.addEventListener('click', function (event) {
+        let x = event.pageX - canvas.offsetLeft;
+        let y = event.pageY - canvas.offsetTop;
+
+        ui_scene.ui_elements.forEach(function (element) {
+            if (element.isInside(x, y, canvas.width, canvas.height)) {
+                element.onClick();
+            }
+        });
+    });
 };

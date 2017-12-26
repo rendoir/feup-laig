@@ -38,6 +38,7 @@ class LatrunculiXXI {
     }
 
     undo() {
+        console.log("Undo");
         if (this.number_plays > 0) {
             this.board_stack.pop();
             this.move_stack.pop();
