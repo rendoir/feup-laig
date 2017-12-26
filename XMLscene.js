@@ -38,7 +38,7 @@ XMLscene.prototype.init = function(application) {
 
     this.game = Game;
     this.turn = this.game.turn;
-    this.initUI();
+    this.ui = new UserInterface(this, this.game);
 };
 
 /**
@@ -183,7 +183,7 @@ XMLscene.prototype.display = function() {
 
     this.popMatrix();
 
-    this.renderUI();
+    this.ui.render();
 };
 
 XMLscene.prototype.update = function(currTime) {
@@ -220,54 +220,4 @@ XMLscene.prototype.setPlayer = function(player) {
     if (player === 1)
         this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 270);
     else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
-};
-
-XMLscene.prototype.renderUI = function() {
-    let previous_shader = this.activeShader;
-    this.setActiveShader(this.ui_shader);
-    this.gl.disable(this.gl.DEPTH_TEST);
-
-    for (let i = 0; i < this.ui_elements.length; i++) {
-        this.ui_elements[i].render();
-    }
-
-    this.gl.enable(this.gl.DEPTH_TEST);
-    this.setActiveShader(previous_shader);
-};
-
-XMLscene.prototype.initUI = function() {
-    this.ui_elements = [];
-    let test_button = new UIElement(this,
-        [ 0.7, 0.5,
-          0.95, 0.5,
-          0.7, 0.25,
-          0.95, 0.25],
-        [  0.0, 0.0,
-           1.0, 0.0,
-           0.0, 1.0,
-           1.0, 1.0 ],
-        [ 0, 2, 3,
-          0, 3, 1 ],
-        "images/ui/undo.png", this.game.undo);
-    this.ui_elements.push(test_button);
-    this.ui_shader = new CGFshader(this.gl, '../lib/CGF/shaders/UI/ui_vertex.glsl', '../lib/CGF/shaders/UI/ui_frag.glsl');
-
-    let previous_shader = this.activeShader;
-    this.setActiveShader(this.ui_shader);
-    this.gl.activeTexture(this.gl.TEXTURE0);
-    this.gl.uniform1i(this.ui_shader.uniforms.uSampler, 0);
-    this.setActiveShader(previous_shader);
-
-    let ui_scene = this;
-    let canvas = document.getElementsByTagName('canvas')[0];
-    canvas.addEventListener('click', function (event) {
-        let x = event.pageX - canvas.offsetLeft;
-        let y = event.pageY - canvas.offsetTop;
-
-        ui_scene.ui_elements.forEach(function (element) {
-            if (element.isInside(x, y, canvas.width, canvas.height)) {
-                element.onClick();
-            }
-        });
-    });
 };
