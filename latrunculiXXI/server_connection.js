@@ -23,7 +23,7 @@ function createRequest(command, args, onSuccess, onError) {
 }
 
 /**
- * Transform the {@link request} in a string and send the request.
+ * Transform the request in a string and send it to server.
  * @param {PrologRequest} request 
  * @see getPrologRequest
  */

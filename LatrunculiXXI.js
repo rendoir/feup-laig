@@ -8,7 +8,6 @@ class LatrunculiXXI {
         this.playerOneType = "player"; //"player" or "bot"
         this.playerTwoType = "player"; //"player" or "bot"
         this.number_plays = 0;
-
         this.captured_pieces = [];
         this.initBoard();
     }
@@ -22,6 +21,7 @@ class LatrunculiXXI {
         this.board_stack[this.number_plays] = board;
         this.turn = (this.turn === 1) ? 2 : 1;
         this.calculateCapturedPieces();
+        this.getAllMoves();
     }
 
     setGameOver(isGameOver, winner) {
@@ -77,6 +77,7 @@ class LatrunculiXXI {
          */
         let reply = function(data) {
             this.board_stack[this.number_plays] = data.board;
+            this.getAllMoves();
         };
         let request = createRequest('initialBoard', null, reply.bind(this));
         return prologRequest(request);
@@ -97,9 +98,8 @@ class LatrunculiXXI {
 
     /**
      * Requests for all possible moves for one player;
-     * @param {number} player Player number to get his possible moves;
      */
-    getAllMoves(player) {
+    getAllMoves() {
         /**
          * Receive the reply from server, when requested 'getAllMoves';
          * @param {ReplyMoves} data Object with the reply from server;
@@ -107,7 +107,7 @@ class LatrunculiXXI {
         let reply = function(data) {
             this.allMoves = data.moves;
         };
-        let request = createRequest('getAllMoves', [player | this.turn, this.getCurrentBoardString()], reply.bind(this));
+        let request = createRequest('getAllMoves', [this.turn, this.getCurrentBoardString()], reply.bind(this));
         prologRequest(request);
     }
 
@@ -136,18 +136,24 @@ class LatrunculiXXI {
      * @param {object[]} move array of positions --> [Xi, Yi, Xf, Yf];
      */
     move(move) {
-        this.move_stack[this.number_plays] = [this.turn, move];
         /**
          * Receive the reply from server when requested 'move';
          * @param {ReplyBoard} data Object with the reply from server;
          */
         let reply = function(data) {
             if (!data.return) {
-                // Send a message to the User saying is not a valid move;
+                /** @todo Send a message to the User saying is not a valid move; */
                 return false;
             }
-            this.onBoardReceived(data.board);
+            this.addBoard(data.board);
         };
+        if (!this.allMoves.some(element => {
+                return equals(element, move);
+            })) {
+            /** @todo Send a message to the User saying is not a valid move; */
+            return false;
+        }
+        this.move_stack[this.number_plays] = [this.turn, move];
         let request = createRequest('move', [this.turn, JSON.stringify(move), this.getCurrentBoardString()], reply.bind(this));
         prologRequest(request);
     }
@@ -168,20 +174,47 @@ class LatrunculiXXI {
     }
 
     calculateCapturedPieces() {
-        let new_board = this.number_plays[this.number_plays];
-        let old_board = this.number_plays[this.number_plays - 1];
-        let empty_cell = 0;
-        let board_size = 8;
+        let new_board = this.board_stack[this.number_plays];
+        let old_board = this.board_stack[this.number_plays - 1];
+        let board_size = new_board.length;
+        let lastMove_Xi = this.move_stack[this.number_plays - 1][0];
+        let lastMove_Yi = this.move_stack[this.number_plays - 1][1];
 
         this.captured_pieces = [];
         for (let i = 0; i < board_size; i++) {
             for (let j = 0; j < board_size; j++) {
-                if (old_board[i][j] !== empty_cell && new_board[i][j] === empty_cell) {
-                    captured_pieces.push([i, j]);
+                if (i == lastMove_Yi && j == lastMove_Xi) {
+                    continue;
+                }
+                if (old_board[i][j] !== 0 && new_board[i][j] === 0) {
+                    this.captured_pieces.push([i, j]);
                 }
             }
         }
     }
+
+}
+
+/**
+ * Compare two Arrays
+ * @param {Array} param1 
+ * @param {Array} param2 
+ */
+function equals(param1, param2) {
+    if (!Array.isArray)
+        return;
+    if (!Array.isArray(param1) || !Array.isArray(param2)) {
+        return false;
+    }
+    if (param1.length != param2.length) {
+        return false;
+    }
+    for (i = 0; i < param1.length; i++) {
+        if ((param1[i] === param2[i]))
+            continue;
+        return false;
+    }
+    return true;
 }
 
 var Game = new LatrunculiXXI();
