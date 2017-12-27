@@ -109,25 +109,23 @@ XMLscene.prototype.onGraphLoaded = function() {
 };
 
 
-XMLscene.prototype.logPicking = function ()
-{
-	if (this.pickMode == false) {
-		if (this.pickResults != null && this.pickResults.length > 0) {
-			for (let i=0; i< this.pickResults.length; i++) {
-				let obj = this.pickResults[i][0];
-				if (obj)
-				{
-				    let customId = this.pickResults[i][1];
-					//console.log("Picked object: " + obj + ", with pick id " + customId);
+XMLscene.prototype.logPicking = function() {
+    if (this.pickMode == false) {
+        if (this.pickResults != null && this.pickResults.length > 0) {
+            for (let i = 0; i < this.pickResults.length; i++) {
+                let obj = this.pickResults[i][0];
+                if (obj) {
+                    let customId = this.pickResults[i][1];
+                    //console.log("Picked object: " + obj + ", with pick id " + customId);
 
-					if (customId === this.graph.selectedNode)
-					    this.graph.selectedNode = -1;
+                    if (customId === this.graph.selectedNode)
+                        this.graph.selectedNode = -1;
                     else this.graph.selectedNode = customId;
-				}
-			}
-			this.pickResults.splice(0,this.pickResults.length);
-		}		
-	}
+                }
+            }
+            this.pickResults.splice(0, this.pickResults.length);
+        }
+    }
 }
 
 
@@ -137,7 +135,7 @@ XMLscene.prototype.logPicking = function ()
 XMLscene.prototype.display = function() {
 
     this.logPicking();
-	this.clearPickRegistration();
+    this.clearPickRegistration();
     // ---- BEGIN Background, camera and axis setup
 
     // Clear image and depth buffer everytime we update the scene
@@ -200,7 +198,7 @@ XMLscene.prototype.updateGame = function(currTime) {
         this.setPlayer(this.turn);
     }
     if (this.game.captured_pieces.length > 0) {
-        //TODO Init animations for this pieces
+        /** @todo TODO Init animations for this pieces */
         this.game.captured_pieces = [];
     }
 };
