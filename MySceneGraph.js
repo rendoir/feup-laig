@@ -21,9 +21,9 @@ function MySceneGraph(filename, scene) {
     this.rootGraphNode = null;
     this.nodeIDToIndex = [];
     this.animations = [];
-    this.useShader = false;
     this.selectableNodes = {};
     this.selectedNode = -1;
+    this.selectedNodeRef = null;
     this.idRoot = null; // The id of the root element.
 
     this.axisCoords = [];
@@ -1629,6 +1629,24 @@ MySceneGraph.prototype.displayScene = function() {
         this.scene.multMatrix(this.rootGraphNode.transformMatrix);
     }
     this.displayNode(this.rootGraphNode, material_stack, texture_stack);
+
+    if (this.selectedNodeRef != null) {
+        let previous_shader = this.scene.activeShader;
+        this.scene.setActiveShader(this.scene.outline_shader);
+        this.scene.updateProjectionMatrix();
+        this.scene.gl.cullFace(this.scene.gl.FRONT);
+
+        this.scene.multMatrix(this.selectedNodeRef.animationMatrix);
+        this.scene.multMatrix(this.selectedNodeRef.transformMatrix);
+
+        this.displayOutline(this.selectedNodeRef);
+
+        this.scene.gl.cullFace(this.scene.gl.BACK);
+        this.scene.setActiveShader(previous_shader);
+
+        this.selectedNodeRef = null;
+    }
+    
 }
 
 /**
@@ -1639,8 +1657,8 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     if (node_to_display == null)
         return;
     if (this.selectedNode != -1) {
-        if (this.selectedNode == this.selectableNodes[node_to_display.nodeID]) {
-            this.useShader = true;
+        if (this.selectedNode == this.selectableNodes[node_to_display.nodeID] && this.selectedNodeRef == null) {
+            this.selectedNodeRef = node_to_display;
         }
     }
     let disablePickAtEnd = false;
@@ -1664,9 +1682,6 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         }
 
         if (node_to_display.display && this.isToPick) {
-            if (this.useShader) {
-                this.displayOutline(node_to_display);
-            }
             for (let i = 0; i < node_to_display.leaves.length; i++) {
                 this.scene.registerForPick(this.selectableNodes[this.isToPick],node_to_display.leaves[i]);
                 node_to_display.leaves[i].display();
@@ -1721,23 +1736,21 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     if (disablePickAtEnd){
         this.isToPick = null;
     }
-    if (this.selectedNode == this.selectableNodes[node_to_display.nodeID]) {
-        this.useShader = false;
-    }
 }
 
 MySceneGraph.prototype.displayOutline = function (node_to_display) {
-    let previous_shader = this.scene.activeShader;
-    this.scene.setActiveShader(this.scene.outline_shader);
-    this.scene.updateProjectionMatrix();
-    this.scene.gl.cullFace(this.scene.gl.FRONT);
-
     for (let i = 0; i < node_to_display.leaves.length; i++) {
         node_to_display.leaves[i].displayOutline();
     }
 
-    this.scene.gl.cullFace(this.scene.gl.BACK);
-    this.scene.setActiveShader(previous_shader);
+    for (let i = 0; i < node_to_display.children.length; i++) {
+        const node = node_to_display.children[i];
+        this.scene.pushMatrix();
+        this.scene.multMatrix(node.animationMatrix);
+        this.scene.multMatrix(node.transformMatrix);
+        this.displayOutline(node);
+        this.scene.popMatrix();
+    }
 }
 
 MySceneGraph.prototype.update = function(currTime, node) {
