@@ -21,7 +21,6 @@ XMLscene.prototype.constructor = XMLscene;
  */
 XMLscene.prototype.init = function(application) {
     CGFscene.prototype.init.call(this, application);
-
     this.initCameras();
 
     this.enableTextures(true);
@@ -34,7 +33,6 @@ XMLscene.prototype.init = function(application) {
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(1000 / UPDATES_PER_SECONDS);
     this.setPickEnabled(true);
-
     this.game = Game;
     this.turn = this.game.turn;
     this.ui = new UserInterface(this, this.game);
@@ -92,12 +90,14 @@ XMLscene.prototype.initCameras = function() {
     this.cameraMoving = false;
 };
 
+
+
 /* Handler called when the graph is finally loaded.
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
 XMLscene.prototype.onGraphLoaded = function() {
 
-    this.graph.initializeBoard();
+    
     this.axis = new CGFaxis(this, this.graph.referenceLength);
 
     this.setGlobalAmbientLight(this.graph.ambientIllumination[0], this.graph.ambientIllumination[1],
