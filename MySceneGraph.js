@@ -1650,10 +1650,6 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     }
 
     if (node_to_display.leaves.length > 0) {
-        if (this.useShader) {
-            this.displayOutline(node_to_display);
-        }
-
         let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack
         this.materials[material_id].apply(); //Use the material
 
@@ -1677,9 +1673,6 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             }
         }else if (node_to_display.display && !this.isToPick){
             if (!this.scene.pickMode) {
-                if (this.useShader) {
-                    this.displayOutline(node_to_display);
-                }
                 for (let i = 0; i < node_to_display.leaves.length; i++) {
                     node_to_display.leaves[i].display();
                 }
