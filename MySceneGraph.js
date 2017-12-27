@@ -1650,8 +1650,6 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     if (this.selectedNode != -1) {
         if (nodeIndex == this.selectedNode) {
             this.useShader = true;
-            this.shaderRGB = node_to_display.rgba;
-            this.time_range = node_to_display.time_range;
         }
     }
     let disablePickAtEnd = false;
@@ -1662,10 +1660,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
 
     if (node_to_display.leaves.length > 0) {
         if (this.useShader) {
-            let new_time_factor = Math.sin(performance.now() / 1000);
-            this.scene.activeShader.setUniformsValues({ time_factor: new_time_factor });
-            this.scene.activeShader.setUniformsValues({ saturation_color: [this.shaderRGB[0], this.shaderRGB[1], this.shaderRGB[2], this.shaderRGB[3]] });
-            this.scene.activeShader.setUniformsValues({ pulse_range: this.time_range });
+            this.displayOutline(node_to_display);
         }
 
         let material_id = material_stack[material_stack.length - 1]; //Leaf uses last material on the stack
@@ -1680,14 +1675,15 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             if (this.last_texture != null)
                 this.last_texture.unbind(); //Unbind if texture_id is "clear"
         }
-        if(node_to_display.display && this.isPickable){
+
+        if (node_to_display.display && this.isPickable) {
             for (let i = 0; i < node_to_display.leaves.length; i++) {
                 this.scene.registerForPick(i+1,node_to_display.leaves[i]);
                 node_to_display.leaves[i].display();
             }
         }else if (node_to_display.display && !this.isPickable){
-            for (let i = 0; i < node_to_display.leaves.length; i++) {
-                if(!this.scene.pickMode){
+            if (!this.scene.pickMode) {
+                for (let i = 0; i < node_to_display.leaves.length; i++) {
                     node_to_display.leaves[i].display();
                 }
             }
@@ -1738,7 +1734,20 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     if (nodeIndex == this.selectedNode) {
         this.useShader = false;
     }
-    this.scene.activeShader.setUniformsValues({ time_factor: 0.0 });
+}
+
+MySceneGraph.prototype.displayOutline = function (node_to_display) {
+    let previous_shader = this.scene.activeShader;
+    this.scene.setActiveShader(this.scene.outline_shader);
+    this.scene.updateProjectionMatrix();
+    this.scene.gl.cullFace(this.scene.gl.FRONT);
+
+    for (let i = 0; i < node_to_display.leaves.length; i++) {
+       node_to_display.leaves[i].display();
+    }
+
+    this.scene.gl.cullFace(this.scene.gl.BACK);
+    this.scene.setActiveShader(previous_shader);
 }
 
 MySceneGraph.prototype.update = function(currTime, node) {

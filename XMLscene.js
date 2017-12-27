@@ -39,6 +39,7 @@ XMLscene.prototype.init = function(application) {
     this.game = Game;
     this.turn = this.game.turn;
     this.ui = new UserInterface(this, this.game);
+    this.outline_shader = new CGFshader(this.gl, '../lib/CGF/shaders/Outline/outline_vertex.glsl', '../lib/CGF/shaders/Outline/outline_frag.glsl');
 };
 
 /**

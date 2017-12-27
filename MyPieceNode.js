@@ -6,6 +6,7 @@ class MyPieceNode extends MyGraphNode{
         this.transform();
         this.display = true;
         this.isPickable = true;
+        this.selected = true; //Just for testing
         this.class = "piece";
     }
 
