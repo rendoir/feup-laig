@@ -1733,7 +1733,7 @@ MySceneGraph.prototype.displayOutline = function (node_to_display) {
     this.scene.gl.cullFace(this.scene.gl.FRONT);
 
     for (let i = 0; i < node_to_display.leaves.length; i++) {
-       node_to_display.leaves[i].display();
+        node_to_display.leaves[i].displayOutline();
     }
 
     this.scene.gl.cullFace(this.scene.gl.BACK);
