@@ -1634,7 +1634,7 @@ MySceneGraph.prototype.displayScene = function() {
     if (this.rootGraphNode.transformMatrix != null) {
         this.scene.multMatrix(this.rootGraphNode.transformMatrix);
     }
-    this.selectedNode = Math.floor(Math.random() * 32 + 1); //TODO Remove - Testing
+    //this.selectedNode = Math.floor(Math.random() * 32 + 1); //TODO Remove - Testing
     this.displayNode(this.rootGraphNode, material_stack, texture_stack);
 }
 

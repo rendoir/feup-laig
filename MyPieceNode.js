@@ -15,13 +15,13 @@ class MyPieceNode extends MyGraphNode{
         this.world_position = mat4.getTranslation(vec4.create(), this.transformMatrix);
 
         //TODO Remove - Testing
-        let control_points = [
+        /*let control_points = [
             [this.world_position[0], this.world_position[1], this.world_position[2]],
             [this.world_position[0], 10, this.world_position[2]],
             [8, 10, 8],
             [8, this.world_position[1], 8]
         ]
-        this.animation = new BezierAnimation(5, control_points);
+        this.animation = new BezierAnimation(5, control_points);*/
     }
 
     initByModel(model) {
