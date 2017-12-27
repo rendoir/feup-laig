@@ -36,6 +36,9 @@ function MySceneGraph(filename, scene) {
     // File reading
     this.reader = new CGFXMLreader();
 
+    document.addEventListener('gameLoaded',
+        this.initializeBoard
+    );
     /*
      * Read the contents of the xml file, and refer to this class for loading and error handlers.
      * After the file is read, the reader calls onXMLReady on this object.
@@ -45,21 +48,41 @@ function MySceneGraph(filename, scene) {
     this.reader.open('scenes/' + filename, this);
 }
 
-MySceneGraph.prototype.initializeBoard = function(){
-    for(let col = 0; col < 8; col++){//line1
-        const position ={
-            x:col,
-            y:0
+MySceneGraph.prototype.initializeBoard = function(event){
+    let data = event.board;
+    let new_piece = null;
+    for (let line = 0; line < 8; line++){
+        for(let col = 0; col < 8; col++){
+            
+            const current_data = data[line][col];
+            const position = {
+                x: col,
+                y: line
+            };
+            if (current_data > 0){
+                if (current_data == 1){ //white_soldier
+                    new_piece = new MyPieceNode("white_"+col,position,"soldier");
+                    new_piece.initByModel(this.soldier_model);
+                    new_piece.materialID = "m_white_piece";
+                }
+                else if (current_data == 2){
+                    new_piece = new MyPieceNode("black_"+col,position,"soldier");
+                    new_piece.initByModel(this.soldier_model);
+                    new_piece.materialID = "m_black_piece";
+                }else if (current_data == 11){
+                    new_piece = new MyPieceNode("white_"+col,position,"dux");
+                    new_piece.initByModel(this.dux_model);
+                    new_piece.materialID = "m_white_piece";
+                }else if (current_data == 12){
+                    new_piece = new MyPieceNode("white_"+col,position,"dux");
+                    new_piece.initByModel(this.dux_model);
+                    new_piece.materialID = "m_black_piece";
+                }
+                this.rootGraphNode.addChild(new_piece);
+                this.selectableNodes[new_piece.nodeID] = line*10 + col;
+            }
         }
-        let new_soldier = new MyPieceNode("black"+col,position,"soldier");
-        new_soldier.initByModel(this.soldier_model);
-        this.rootGraphNode.addChild(new_soldier);
-        this.selectableNodes[new_soldier.nodeID] = col;
     }
-    let new_dux = new MyPieceNode("black_dux", {x:3,y:1},"dux");
-    this.selectableNodes[new_dux.nodeID] = 8;
-    new_dux.initByModel(this.dux_model);
-    this.rootGraphNode.addChild(new_dux);
 }
 
 
