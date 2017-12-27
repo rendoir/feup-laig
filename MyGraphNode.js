@@ -12,7 +12,6 @@ class MyGraphNode {
         this.display = true;
         this.isPickable = false;
         this.class = null;
-        this.selected = true; //Just for testing
         this.animationMatrix = mat4.create();
         this.transformMatrix = mat4.create();
     }

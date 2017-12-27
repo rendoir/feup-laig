@@ -1634,6 +1634,7 @@ MySceneGraph.prototype.displayScene = function() {
     if (this.rootGraphNode.transformMatrix != null) {
         this.scene.multMatrix(this.rootGraphNode.transformMatrix);
     }
+    this.selectedNode = Math.floor(Math.random() * 32 + 1); //TODO Remove - Testing
     this.displayNode(this.rootGraphNode, material_stack, texture_stack);
 }
 
@@ -1642,8 +1643,6 @@ MySceneGraph.prototype.displayScene = function() {
  * @param node_to_display - An instance of MyGraphNode.
  */
 MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, texture_stack) {
-    this.scene.activeShader.setUniformsValues({ time_factor: 0.0 });
-
     if (node_to_display == null)
         return;
     let nodeIndex = this.nodeIDToIndex[node_to_display.nodeID];
@@ -1677,12 +1676,18 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         }
 
         if (node_to_display.display && this.isPickable) {
+            if (this.useShader) {
+                this.displayOutline(node_to_display);
+            }
             for (let i = 0; i < node_to_display.leaves.length; i++) {
                 this.scene.registerForPick(i+1,node_to_display.leaves[i]);
                 node_to_display.leaves[i].display();
             }
         }else if (node_to_display.display && !this.isPickable){
             if (!this.scene.pickMode) {
+                if (this.useShader) {
+                    this.displayOutline(node_to_display);
+                }
                 for (let i = 0; i < node_to_display.leaves.length; i++) {
                     node_to_display.leaves[i].display();
                 }

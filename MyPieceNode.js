@@ -6,7 +6,6 @@ class MyPieceNode extends MyGraphNode{
         this.transform();
         this.display = true;
         this.isPickable = true;
-        this.selected = true; //Just for testing
         this.class = "piece";
     }
 
@@ -15,7 +14,7 @@ class MyPieceNode extends MyGraphNode{
         mat4.fromTranslation(this.transformMatrix, newPosVec);
         this.world_position = mat4.getTranslation(vec4.create(), this.transformMatrix);
 
-        //This is just a test
+        //TODO Remove - Testing
         let control_points = [
             [this.world_position[0], this.world_position[1], this.world_position[2]],
             [this.world_position[0], 10, this.world_position[2]],
