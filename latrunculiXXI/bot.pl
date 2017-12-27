@@ -18,6 +18,12 @@ moveComputer(Board, Player, NewBoard, Difficulty) :-
   pickMove(Difficulty, Board, MoveList, Move),
   applyComputerMove(Board, Move, NewBoard).
 
+moveComputer(Board, Player, NewBoard, Difficulty, Move) :-
+  getAllMoves(Board, Player, MoveList),
+  length(MoveList, L), format('  Generated ~d moves.', [L]), nl,
+  pickMove(Difficulty, Board, MoveList, Move),
+  applyComputerMove(Board, Move, NewBoard).
+
 
 /**
   pickMove/4: Picks a move from the list of all the possible moves.
@@ -83,8 +89,6 @@ applyComputerMove(Board, Move, NewBoard) :-
   getListElement(1, Move, Yi),
   getListElement(2, Move, Xf),
   getListElement(3, Move, Yf),
-  format('  Moving from (~d,~d) to (~d,~d).', [Xi, Yi, Xf, Yf]), nl,
-  pressEnterToContinue,
   move(Board, Xi, Yi, Xf, Yf, NewBoard).
 
 
@@ -92,6 +96,7 @@ applyComputerMove(Board, Move, NewBoard) :-
   getAllMoves/3: Gets all the possible moves into a list.
     Board, PlayerNumber, PossibleMoveList.
 **/
+getAllMoves([], _, []).
 getAllMoves(Board, Player, MoveList) :-
   runThroughBoard(Board, Player, _, MoveList, -1).
 

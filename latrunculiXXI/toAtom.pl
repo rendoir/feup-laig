@@ -1,7 +1,8 @@
 toAtom(Element, AtomElement) :-
     open('/latronculli_cache', write, StreamWrite),
     write(StreamWrite, '\''),
-    write(StreamWrite, Element),
+    checkElement(Element, ElementToWrite),
+    write(StreamWrite, ElementToWrite),
     write(StreamWrite, '\''),
     write(StreamWrite, '.'),
     close(StreamWrite),
@@ -9,4 +10,8 @@ toAtom(Element, AtomElement) :-
     read(StreamRead, AtomElement),
     close(StreamRead),
     atom(AtomElement).
-    
+
+checkElement(Element, ElementToWrite) :-
+    var(Element),
+    ElementToWrite = 'null'.
+checkElement(Element, Element).

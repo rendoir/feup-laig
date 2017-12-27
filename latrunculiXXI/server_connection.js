@@ -1,3 +1,32 @@
+/**
+ * @typedef {Object} PrologRequest
+ * @property {string} command
+ * @property {string[]} args
+ * @property {Function} onSuccess 
+ * @property {Function} onError
+ * 
+ * Create a object with some properties to makes a request
+ * @param {string} command 
+ * @param {string[]} args 
+ * @param {Function} onSuccess 
+ * @param {Function} onError 
+ * @returns {PrologRequest}
+ */
+function createRequest(command, args, onSuccess, onError) {
+    let request = {
+        command: command,
+        args: args,
+        onSuccess: onSuccess,
+        onError: onError
+    };
+    return request;
+}
+
+/**
+ * Transform the {@link request} in a string and send the request.
+ * @param {PrologRequest} request 
+ * @see getPrologRequest
+ */
 function prologRequest(request) {
     // Get Parameter Values
     let requestString = request.command.toString();
@@ -5,9 +34,16 @@ function prologRequest(request) {
         requestString += '(' + request.args.toString() + ')';
 
     // Make Request
-    getPrologRequest(requestString, request.onSuccess);
+    getPrologRequest(requestString, request.onSuccess, request.onError);
 }
 
+/**
+ * Send the @param requestString to the server, and set the function to call when receive de reply
+ * @param {string} requestString 
+ * @param {Function} onSuccess 
+ * @param {Function} onError 
+ * @param {number} port 
+ */
 function getPrologRequest(requestString, onSuccess, onError, port) {
     var requestPort = port || 8081
     var request = new XMLHttpRequest();
@@ -23,7 +59,7 @@ function getPrologRequest(requestString, onSuccess, onError, port) {
         if (onSuccess && data.target.status == 200)
             onSuccess(reply);
         else
-            console.log("Reply Message: ", reply.msg);
+            console.log("Reply Message: ", reply.msg, "; Return Value: ", reply.return);
     };
     request.onerror = onError || function() { console.log("Error waiting for response"); };
 
@@ -36,7 +72,7 @@ function closeServer() {
 }
 
 function testConnection() {
-    return prologRequest({ command: 'testConnection' });
+    getPrologRequest('testConnection');
 }
 
 testConnection();

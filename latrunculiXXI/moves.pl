@@ -18,13 +18,13 @@ isElementBetween(_, X, Y, X, Y).
 isElementBetween(Board, Xi, Yi, Xf, Yf) :-
   Yf = Yi,
   nextStep(Xi,Xf,Xn),
-  getMatrixElement(Yf, Xn, Board, CurrentCell),
+  getMatrixElement(Yf, Xn, Board, CurrentCell),!,
   isEmptyCell(CurrentCell),
   isElementBetween(Board, Xn, Yi, Xf, Yf).
 isElementBetween(Board, Xi, Yi, Xf, Yf) :-
   Xf = Xi,
   nextStep(Yi,Yf,Yn),
-  getMatrixElement(Yn, Xf, Board, CurrentCell),
+  getMatrixElement(Yn, Xf, Board, CurrentCell),!,
   isEmptyCell(CurrentCell),
   isElementBetween(Board, Xi, Yn, Xf, Yf).
 
@@ -177,19 +177,19 @@ checkDuxMobility(Board, Xi, Yi, Xf, Yf, 2) :-
     Board, Xi, Yi, Xf, Yf, ModifiedBoard. 
  **/
 move(Board, Xi, Yi, Xf, Yf, FinalBoard) :-
-  isInsideBoard(Xi, Yi),
-  isInsideBoard(Xf, Yf),
-  isOrthogonal(Xi, Yi, Xf, Yf),
+  isInsideBoard(Xi, Yi),!,
+  isInsideBoard(Xf, Yf),!,
+  isOrthogonal(Xi, Yi, Xf, Yf),!,
 
-  getMatrixElement(Yi, Xi, Board, FromCell),
-  getMatrixElement(Yf, Xf, Board, ToCell),
+  getMatrixElement(Yi, Xi, Board, FromCell),!,
+  not(isEmptyCell(FromCell)),!,
 
-  not(isEmptyCell(FromCell)),
-  isEmptyCell(ToCell),
+  getMatrixElement(Yf, Xf, Board, ToCell),!,
+  isEmptyCell(ToCell),!,
 
-  isElementBetween(Board, Xi, Yi, Xf, Yf),
-  checkLockedSoldier(Board, Xi, Yi, Xf, Yf),
-  checkDuxMobility(Board, Xi, Yi, Xf, Yf),
+  isElementBetween(Board, Xi, Yi, Xf, Yf),!,
+  checkLockedSoldier(Board, Xi, Yi, Xf, Yf),!,
+  checkDuxMobility(Board, Xi, Yi, Xf, Yf),!,
   not(friendDuxImmobilized(Board, Xi, Yi, Xf, Yf)),
 
   captureXXI(Board, Xi, Yi, Xf, Yf, CaptureBoard),
