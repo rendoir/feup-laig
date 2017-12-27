@@ -106,23 +106,35 @@ print_header_line(_).
 :- include('game.pl').
 
 parse_input(handshake, JsonReply) :-
-	JsonReply = '{"msg": "handshake"}'.
+	JsonReply = '{"msg": "handshake", "return": true}'.
 parse_input(testConnection, JsonReply) :- 
-	JsonReply = '{"msg": "Connection OK"}'.
+	JsonReply = '{"msg": "Connection OK", "return": true}'.
 parse_input(quit, JsonReply) :-
-	JsonReply = '{"msg": "goodbye"}'.
+	JsonReply = '{"msg": "goodbye", "return": true}'.
 
 % Game
 parse_input(initialBoard, JsonReply) :-
 	initialBoard(Board),
 	toAtom(Board, BoardAtom),
-	atom_concat('{"msg": "InitialBoard", "board": ', BoardAtom, Json1),
-	atom_concat(Json1, '}', JsonReply).
+	concat_list_atom(['{"msg": "InitialBoard", "return": true, "board": ', BoardAtom, '}'], JsonReply).
 
 parse_input(gameIsOver(Board), JsonReply) :- 
-	gameIsOver(Board, Winner),
+	call_with_result(gameIsOver(Board, Winner), Result),
 	toAtom(Winner, WinnerAtom),
-	atom_concat('{"msg": "gameIsOver: return yes", "gameIsOver": true, "winner": ', WinnerAtom, Json1),
-	atom_concat(Json1, '}', JsonReply).
-parse_input(gameIsOver(_), JsonReply) :- 
-	JsonReply = '{"msg": "gameIsOver: return no", "gameIsOver": false, "winner": null}'.
+	concat_list_atom(['{"msg": "gameIsOver", "return": ', Result, ', "winner": ', WinnerAtom, '}'], JsonReply).
+
+parse_input(move(Turn, [Xi, Yi, Xf, Yf], Board), JsonReply) :-
+	call_with_result(move(Turn, Board, Xi, Yi, Xf, Yf, FinalBoard), Result),
+	toAtom(FinalBoard, BoardAtom),
+	concat_list_atom(['{"msg": "move", "return": ', Result, ', "board": ', BoardAtom, '}'], JsonReply).
+
+parse_input(getAllMoves(Turn, Board), JsonReply) :-
+	call_with_result(getAllMoves(Board, Turn, MoveList), Result),
+	toAtom(MoveList, MoveListAtom),
+	concat_list_atom(['{"msg": "getAllMoves", "return": ', Result, ', "moves": ', MoveListAtom, '}'], JsonReply).
+
+parse_input(makeMove(Player, Board, Difficulty), JsonReply) :-
+	call_with_result(moveComputer(Board, Player, NewBoard, Difficulty, Move) ,Result),
+	toAtom(NewBoard, NewBoardAtom),
+	toAtom(Move, MoveAtom),
+	concat_list_atom(['{"msg": "makeMove", "return": ', Result, ', "board": ', NewBoardAtom, ', "move": ', MoveAtom,'}'], JsonReply).

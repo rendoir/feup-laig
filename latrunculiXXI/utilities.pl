@@ -233,4 +233,17 @@ readCoordinates(_, _) :-
 pressEnterToContinue:-
   write('Press [Enter] to continue.'), nl,
   get_char(_).
-		
+
+/**
+  Know the resulte of predicate
+**/
+  call_with_result(Term, Result) :-
+    Result = true,
+    call(Term).
+  call_with_result(_, false).
+
+concat_list_atom([],'').
+concat_list_atom([H|T], Atom) :-
+  concat_list_atom(T, NewAtom),
+  atom_concat(H, NewAtom, Atom).
+  
