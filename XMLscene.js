@@ -39,6 +39,7 @@ XMLscene.prototype.init = function(application) {
     this.game = Game;
     this.turn = this.game.turn;
     this.ui = new UserInterface(this, this.game);
+    this.outline_shader = new CGFshader(this.gl, '../lib/CGF/shaders/Outline/outline_vertex.glsl', '../lib/CGF/shaders/Outline/outline_frag.glsl');
 };
 
 /**
@@ -88,7 +89,7 @@ XMLscene.prototype.initCameras = function() {
     this.camera_radius = vec3.length(vec3.subtract(vec3.create(), player_camera[2], player_camera[1])) / 2;
     this.camera_center = vec3.scale(vec3.create(), vec3.add(vec3.create(), player_camera[2], player_camera[1]), 0.5);
     this.camera_speed = 20;
-    //this.interface.disableCamera = true;
+    //this.interface.disableCamera = true; TODO Uncoment this
     this.cameraMoving = false;
 };
 
@@ -170,7 +171,6 @@ XMLscene.prototype.display = function() {
                 i++;
             }
         }
-        this.graph.selectedNode = this.selectedNode;
         // Displays the scene.
         this.graph.displayScene();
     } else {
@@ -195,6 +195,10 @@ XMLscene.prototype.updateGame = function(currTime) {
     if (this.turn !== this.game.turn) {
         this.turn = this.game.turn;
         this.setPlayer(this.turn);
+    }
+    if (this.game.captured_pieces.length > 0) {
+        //TODO Init animations for this pieces
+        this.game.captured_pieces = [];
     }
 };
 
