@@ -4,9 +4,8 @@ class MyPieceNode extends MyGraphNode{
         this.type = type;
         this.position = position;
         this.transform();
-        this.display = true;
-        this.isPickable = true;
         this.class = "piece";
+        this.isPickable = true;
     }
 
     transform() {
@@ -29,5 +28,6 @@ class MyPieceNode extends MyGraphNode{
         this.leaves = model.leaves;
         this.materialID = model.materialID;
         this.textureID = model.textureID;
+        this.display = model.display;
     }
 }

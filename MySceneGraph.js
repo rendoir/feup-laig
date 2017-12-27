@@ -22,7 +22,7 @@ function MySceneGraph(filename, scene) {
     this.nodeIDToIndex = [];
     this.animations = [];
     this.useShader = false;
-    this.selectableNodes = { none: -1 };
+    this.selectableNodes = {};
     this.selectedNode = -1;
     this.idRoot = null; // The id of the root element.
 
@@ -31,7 +31,7 @@ function MySceneGraph(filename, scene) {
     this.axisCoords['y'] = [0, 1, 0];
     this.axisCoords['z'] = [0, 0, 1];
 
-    let quad_model, soldier_model, dux_model;
+    this.quad_model, this.soldier_model, this.dux_model;
 
     // File reading
     this.reader = new CGFXMLreader();
@@ -52,11 +52,13 @@ MySceneGraph.prototype.initializeBoard = function(){
             y:0
         }
         let new_soldier = new MyPieceNode("black"+col,position,"soldier");
-        new_soldier.initByModel(soldier_model);
+        new_soldier.initByModel(this.soldier_model);
         this.rootGraphNode.addChild(new_soldier);
+        this.selectableNodes[new_soldier.nodeID] = col;
     }
     let new_dux = new MyPieceNode("black_dux", {x:3,y:1},"dux");
-    new_dux.initByModel(dux_model);
+    this.selectableNodes[new_dux.nodeID] = 8;
+    new_dux.initByModel(this.dux_model);
     this.rootGraphNode.addChild(new_dux);
 }
 
@@ -1269,14 +1271,6 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     let specNames = new Array();
     let possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS", "DESCENDANTS"];
 
-    if (this.reader.hasAttribute(nodeToParse, 'selectable')) {
-        let isSelectable = this.reader.getBoolean(nodeToParse, 'selectable', true);
-        if (isSelectable) {
-            newNode.rgba = this.parseColorXml(nodeToParse);
-            newNode.time_range = this.parseRangeXml(nodeToParse);
-            this.selectableNodes[nodeID] = this.nodeIDToIndex[nodeID];
-        }
-    }
     if (this.reader.hasAttribute(nodeToParse,'class')){
         newNode.class = this.reader.getString(nodeToParse,'class',true);
     }
@@ -1412,12 +1406,12 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
                 }else{
                     if (new_child.class == "piece"){
                         if (new_child.nodeID == "soldier"){
-                            soldier_model = new_child;
+                            this.soldier_model = new_child;
                         }else if (new_child.nodeID == "dux"){
-                            dux_model = new_child;
+                            this.dux_model = new_child;
                         }
                     }else if (new_child.class == "board_position"){
-                        quad_model = new_child;
+                        this.quad_model = new_child;
                     }
                 }
             } else {
@@ -1634,7 +1628,6 @@ MySceneGraph.prototype.displayScene = function() {
     if (this.rootGraphNode.transformMatrix != null) {
         this.scene.multMatrix(this.rootGraphNode.transformMatrix);
     }
-    this.selectedNode = Math.floor(Math.random() * 32 + 1); //TODO Remove - Testing
     this.displayNode(this.rootGraphNode, material_stack, texture_stack);
 }
 
@@ -1645,15 +1638,14 @@ MySceneGraph.prototype.displayScene = function() {
 MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, texture_stack) {
     if (node_to_display == null)
         return;
-    let nodeIndex = this.nodeIDToIndex[node_to_display.nodeID];
     if (this.selectedNode != -1) {
-        if (nodeIndex == this.selectedNode) {
+        if (this.selectedNode == this.selectableNodes[node_to_display.nodeID]) {
             this.useShader = true;
         }
     }
     let disablePickAtEnd = false;
     if (node_to_display.isPickable == true){
-        this.isPickable = true;
+        this.isToPick = node_to_display.nodeID;
         disablePickAtEnd = true;
     }
 
@@ -1675,15 +1667,15 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
                 this.last_texture.unbind(); //Unbind if texture_id is "clear"
         }
 
-        if (node_to_display.display && this.isPickable) {
+        if (node_to_display.display && this.isToPick) {
             if (this.useShader) {
                 this.displayOutline(node_to_display);
             }
             for (let i = 0; i < node_to_display.leaves.length; i++) {
-                this.scene.registerForPick(i+1,node_to_display.leaves[i]);
+                this.scene.registerForPick(this.selectableNodes[this.isToPick],node_to_display.leaves[i]);
                 node_to_display.leaves[i].display();
             }
-        }else if (node_to_display.display && !this.isPickable){
+        }else if (node_to_display.display && !this.isToPick){
             if (!this.scene.pickMode) {
                 if (this.useShader) {
                     this.displayOutline(node_to_display);
@@ -1692,10 +1684,10 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
                     node_to_display.leaves[i].display();
                 }
             }
-        }else if (!node_to_display.display && this.isPickable){
+        }else if (!node_to_display.display && this.isToPick){
             for (let i = 0; i < node_to_display.leaves.length; i++) {
                 if(this.scene.pickMode){
-                    this.scene.registerForPick(i+1,node_to_display.leaves[i]);
+                    this.scene.registerForPick(this.selectableNodes[this.isToPick],node_to_display.leaves[i]);
                     node_to_display.leaves[i].display();
                 }
             }
@@ -1734,9 +1726,9 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         }
     }
     if (disablePickAtEnd){
-        this.isPickable = false;
+        this.isToPick = null;
     }
-    if (nodeIndex == this.selectedNode) {
+    if (this.selectedNode == this.selectableNodes[node_to_display.nodeID]) {
         this.useShader = false;
     }
 }
