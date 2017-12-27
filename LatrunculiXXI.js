@@ -6,6 +6,8 @@ class LatrunculiXXI {
         this.turn = 1; //1 or 2
         this.type = "player"; //"player" or "bot"
         this.number_plays = 0;
+
+        this.captured_pieces = [];
         this.initBoard();
     }
 
@@ -25,6 +27,7 @@ class LatrunculiXXI {
         this.number_plays++;
         this.board_stack[this.number_plays] = board;
         this.turn = (this.turn === 1) ? 2 : 1;
+        this.calculateCapturedPieces();
     }
 
     onValidReceived(valid) {
@@ -89,6 +92,22 @@ class LatrunculiXXI {
             Game.onGameOver(data.gameIsOver, data.winner);
         };
         return prologRequest({ command: 'gameIsOver', args: [this.getCurrentBoardJSON()], onSuccess: reply });
+    }
+
+    calculateCapturedPieces() {
+        let new_board = this.number_plays[this.number_plays];
+        let old_board = this.number_plays[this.number_plays - 1];
+        let empty_cell = 0;
+        let board_size = 8;
+
+        this.captured_pieces = [];
+        for (let i = 0; i < board_size; i++) {
+            for (let j = 0; j < board_size; j++) {
+                if (old_board[i][j] !== empty_cell && new_board[i][j] === empty_cell) {
+                    captured_pieces.push([i, j]);
+                }
+            }
+        }
     }
 }
 
