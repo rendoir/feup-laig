@@ -39,3 +39,7 @@ Nurbs.prototype.getKnotsVector = function (degree) {
 Nurbs.prototype.display = function() {
     this.object.display();
 }
+
+Nurbs.prototype.displayOutline = function () {
+    this.object.displayNurbsOutline();
+}

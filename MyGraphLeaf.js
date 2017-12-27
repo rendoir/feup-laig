@@ -94,3 +94,7 @@ MyGraphLeaf.prototype.initPatch = function () {
 MyGraphLeaf.prototype.display = function() {
   this.primitive.display();
 }
+
+MyGraphLeaf.prototype.displayOutline = function () {
+    this.primitive.displayOutline();
+}

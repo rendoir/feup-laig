@@ -34,6 +34,22 @@ Cylinder.prototype.display = function() {
     }
 }
 
+Cylinder.prototype.displayOutline = function () {
+    this.body.displayOutline();
+    if (this.has_top_cap) {
+        this.scene.pushMatrix();
+        this.scene.translate(0, 0, this.height);
+        this.top_cap.displayOutline();
+        this.scene.popMatrix();
+    }
+    if (this.has_bottom_cap) {
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI, 1, 0, 0);
+        this.bottom_cap.displayOutline();
+        this.scene.popMatrix();
+    }
+}
+
 /**
  * CylinderBody
  * @constructor

@@ -19,7 +19,7 @@
   <LIGHTS>
     <LIGHT id="light1">
       <enable value ="1" />
-      <position  x="20" y="20" z="4" w="1" />
+      <position  x="4" y="8" z="4" w="1" />
       <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
       <diffuse r="1" g="1" b="1" a="1.0" />
       <specular r="1" g="1" b="1" a="1.0" />
@@ -35,6 +35,10 @@
     <TEXTURE id="t_board_side">
       <file path="images/board/board_side.png" />
       <amplif_factor s="8" t="1" />
+    </TEXTURE>
+    <TEXTURE id="t_abajur">
+      <file path="images/abajur.png" />
+      <amplif_factor s="1" t="1" />
     </TEXTURE>
   </TEXTURES>
 
@@ -61,6 +65,20 @@
       <ambient r="0.1" g="0.1" b="0.1" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
+    <MATERIAL id="m_abajur">
+      <shininess value="1" />
+      <specular r="0.0" g="0.0" b="0.0" a="1" />
+      <diffuse r="0.0" g="0.0" b="0.0" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+    <MATERIAL id="m_lightbulb">
+      <shininess value="1" />
+      <specular r="0.0" g="0.0" b="0.0" a="1" />
+      <diffuse r="0.0" g="0.0" b="0.0" a="1" />
+      <ambient r="1.0" g="1.0" b="1.0" a="1" />
+      <emission r="1.0" g="1.0" b="1.0" a="1" />
+    </MATERIAL>
   </MATERIALS>
 
 
@@ -79,8 +97,12 @@
         <NODEREF id="quad"/>
         <NODEREF id="dux"/>
         <NODEREF id="soldier"/>
+        <NODEREF id="lamp" />
       </DESCENDANTS>
     </NODE>
+    
+    
+    <!-- Board -->
 
     <NODE id="board">
       <MATERIAL id="m_board" />
@@ -166,6 +188,9 @@
         <LEAF type="rectangle" args="0 1 1 0"/>
       </DESCENDANTS>
     </NODE>
+    
+    
+    <!-- Dux -->
 
     <NODE id="dux" class="piece">
       <MATERIAL id="m_white_piece" />
@@ -423,6 +448,9 @@
         <LEAF type="sphere" args="0.5 32 32" />
       </DESCENDANTS>
     </NODE>
+    
+    
+    <!-- Soldier -->
 
     <NODE id="soldier" class="piece">
       <MATERIAL id="m_black_piece" />
@@ -507,6 +535,35 @@
       <ROTATION axis="x" angle="-90" />
       <DESCENDANTS>
         <LEAF type="sphere" args="0.5 32 32" />
+      </DESCENDANTS>
+    </NODE>
+    
+    
+    <!-- Lamp -->
+    <NODE id="lamp">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="4" y="8" z="4" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <NODEREF id="lightbulb" />
+        <NODEREF id="lamp_abajur" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="lightbulb">
+      <MATERIAL id="m_lightbulb" />
+      <TEXTURE id="clear" />
+      <DESCENDANTS>
+        <LEAF type="sphere" args="0.5 32 32" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="lamp_abajur">
+      <MATERIAL id="m_abajur" />
+      <TEXTURE id="t_abajur" />
+      <DESCENDANTS>
+        <LEAF type="sphere" args="1 32 32" />
       </DESCENDANTS>
     </NODE>
 

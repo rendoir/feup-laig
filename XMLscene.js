@@ -11,7 +11,6 @@ function XMLscene(interface) {
     this.interface = interface;
 
     this.lightValues = {};
-    this.selectedNode = -1;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -112,14 +111,18 @@ XMLscene.prototype.onGraphLoaded = function() {
 
 XMLscene.prototype.logPicking = function ()
 {
-	if (this.pickMode == true) {
+	if (this.pickMode == false) {
 		if (this.pickResults != null && this.pickResults.length > 0) {
-			for (var i=0; i< this.pickResults.length; i++) {
-				var obj = this.pickResults[i][0];
+			for (let i=0; i< this.pickResults.length; i++) {
+				let obj = this.pickResults[i][0];
 				if (obj)
 				{
-					var customId = this.pickResults[i][1];				
+					let customId = this.pickResults[i][1];				
 					console.log("Picked object: " + obj + ", with pick id " + customId);
+
+					if (customId === this.graph.selectedNode)
+					    this.graph.selectedNode = -1;
+                    else this.graph.selectedNode = customId;
 				}
 			}
 			this.pickResults.splice(0,this.pickResults.length);
