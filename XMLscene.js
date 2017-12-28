@@ -209,13 +209,24 @@ XMLscene.prototype.updateGame = function(currTime) {
         if (this.graph.piece_moving) {
             this.graph.last_selected_piece.update(currTime);
             if (this.graph.last_selected_piece.animation.ended) {
+                mat4.multiply(this.graph.last_selected_piece.transformMatrix, this.graph.last_selected_piece.transformMatrix, this.graph.last_selected_piece.animationMatrix);
+                mat4.identity(this.graph.last_selected_piece.animationMatrix);
+                this.graph.last_selected_piece.animation = null;
+                this.graph.last_selected_piece.initialTimestamp = -1;
+
                 this.graph.last_selected_piece = null;
                 this.graph.last_selected_quad = null;
                 this.graph.selectedNode = -1;
                 this.graph.piece_moving = false;
             }
         } else {
-            this.graph.initPieceAnimation();
+            if (this.game.move([this.graph.last_selected_piece.position.x, this.graph.last_selected_piece.position.y, this.graph.last_selected_quad.position.x, this.graph.last_selected_quad.position.y])) {
+                this.graph.initPieceAnimation();
+            } else {
+                this.graph.last_selected_piece = null;
+                this.graph.last_selected_quad = null;
+                this.graph.selectedNode = -1;
+            }
         }
     }
     if (this.turn !== this.game.turn) {
@@ -245,10 +256,10 @@ XMLscene.prototype.setPlayer = function(player) {
     this.cameraMoving = true;
     this.initial_camera_timestamp = performance.now();
     if (player === 1)
-        this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 270);
+        this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 180);
     else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
     this.ui.update();
-    this.scene.updatePick(this.scene.turn, false);
+    this.updatePick(this.turn, false);
 };
 
 XMLscene.prototype.updatePick = function(player, withBoardPieces) {

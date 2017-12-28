@@ -1832,11 +1832,16 @@ MySceneGraph.prototype.setPickableNode = function(node, pickable) {
 
 MySceneGraph.prototype.initPieceAnimation = function() {
     this.piece_moving = true;
+    let x_diff = this.last_selected_quad.position.x - this.last_selected_piece.position.x;
+    let z_diff = this.last_selected_quad.position.y - this.last_selected_piece.position.y;
     let control_points = [
         [0, 0, 0],
-        [0, 10, 0],
-        [5, 10, 5],
-        [5, 0, 5]
-];
-    this.last_selected_piece.animation = new BezierAnimation(5,control_points);
+        [0, 8, 0],
+        [x_diff, 8, z_diff],
+        [x_diff, 0, z_diff]
+    ];
+    this.last_selected_piece.initialTimestamp = -1;
+    this.last_selected_piece.animation = new BezierAnimation(10, control_points);
+    this.last_selected_piece.position.x = this.last_selected_quad.position.x;
+    this.last_selected_piece.position.y = this.last_selected_quad.position.y;
 }
