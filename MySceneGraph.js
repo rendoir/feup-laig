@@ -46,10 +46,17 @@ function MySceneGraph(filename, scene) {
     this.reader.open('scenes/' + filename, this);
 }
 
+/**
+ * Function to initialize the board scene 
+ * @param {event} event 
+ * @listens gameLoaded
+ */
 MySceneGraph.prototype.initializeBoard = function(event) {
     let data = event.detail;
     let new_piece = null;
-    this.mapCoordsPiece = new Map();
+    this.mapPickId_to_Piece = new Map();
+    this.mapCoords_to_Piece = new Map();
+    this.mapBoardPiece_to_Coords = new Map();
     for (let line = 0; line < 8; line++) {
         for (let col = 0; col < 8; col++) {
 
@@ -76,21 +83,25 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                     new_piece.initByModel(this.dux_model);
                     new_piece.materialID = "m_black_piece";
                 }
-                this.mapCoordsPiece.set([col, line], new_piece);
                 this.rootGraphNode.addChild(new_piece);
-                this.selectableNodes[new_piece.nodeID] = line * 10 + col;
+                let pickId = line * 10 + col;
+                this.selectableNodes[new_piece.nodeID] = pickId;
+                this.mapCoords_to_Piece.set([col, line], new_piece);
+                this.mapPickId_to_Piece.set(pickId, new_piece);
             }
-            let pos_id = (line+1) * 100 + ((col+1) * 10);
-            let new_board_position = new MyPieceNode("pos_" + pos_id,position,"board_pos");
+            let pos_id = (line + 1) * 100 + ((col + 1) * 10);
+            let new_board_position = new MyPieceNode("pos_" + pos_id, position, "board_pos");
             new_board_position.initByModel(this.quad_model);
-            if ((line+col) % 2 == 0){
+            if ((line + col) % 2 == 0) {
                 new_board_position.materialID = "m_black_piece";
-            }else{
+            } else {
                 new_board_position.materialID = "m_white_piece";
             }
             new_board_position.rotateInX();
-            this.selectableNodes[new_board_position.nodeID] = pos_id;
             this.rootGraphNode.addChild(new_board_position);
+            this.selectableNodes[new_board_position.nodeID] = pos_id;
+            this.mapBoardPiece_to_Coords.set(new_board_position, [col, line]);
+            this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
 }
@@ -1804,5 +1815,14 @@ MySceneGraph.prototype.update = function(currTime, node) {
     node.update(currTime);
     node.children.forEach(element => {
         this.update(currTime, element);
+    });
+}
+
+MySceneGraph.prototype.setPickableNode = function(node, pickable) {
+    node.leaves.forEach(Leave => {
+        Leave.setPickEnabled(pickable);
+    });
+    node.children.forEach(Elem => {
+        this.setPickableNode(Elem, pickable);
     });
 }
