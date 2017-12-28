@@ -106,7 +106,8 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
-}
+    this.scene.updatePick(this.scene.turn, false);
+};
 
 
 /*
@@ -1828,13 +1829,13 @@ MySceneGraph.prototype.setPickableNode = function(node, pickable) {
     });
 }
 
-MySceneGraph.prototype.initPieceAnimation = function () {
+MySceneGraph.prototype.initPieceAnimation = function() {
     this.piece_moving = true;
     let control_points = [
-            [0, 0, 0],
-            [0, 10, 0],
-            [5, 10, 5],
-            [5, 0, 5]
+        [0, 0, 0],
+        [0, 10, 0],
+        [5, 10, 5],
+        [5, 0, 5]
     ];
     this.last_selected_piece.animation = new BezierAnimation(5, control_points);
 }
