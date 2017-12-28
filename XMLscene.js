@@ -33,6 +33,7 @@ XMLscene.prototype.init = function(application) {
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(1000 / UPDATES_PER_SECONDS);
     this.setPickEnabled(true);
+    this.selectedPiece = -1;
     this.game = Game;
     this.turn = this.game.turn;
     this.ui = new UserInterface(this, this.game);
@@ -122,11 +123,12 @@ XMLscene.prototype.logPicking = function() {
                     if (customId === this.graph.selectedNode){
                         this.graph.selectedNode = -1;
                     }
-                    else if (customId > 100 && this.graph.selectedNode < 100 && this.graph.selectedNode > 0){
+                    else if (customId > 100 && this.graph.selectedNode < 100 && this.graph.selectedNode > -1){
                         this.graph.selectedNode = customId;
                     }
                     else if (customId < 100){
                         this.graph.selectedNode = customId;
+                        this.selectedPiece = customId;
                     }
                 }
             }
