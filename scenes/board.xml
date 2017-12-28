@@ -184,8 +184,9 @@
     <NODE id="quad" class="board_position">
       <MATERIAL id="null"/>
       <TEXTURE id="clear"/>
+      <ROTATION axis="x" angle="-90" />
       <DESCENDANTS>
-        <LEAF type="rectangle" args="0 1 1 0"/>
+        <LEAF type="rectangle" args="-0.5 0.5 0.5 -0.5"/>
       </DESCENDANTS>
     </NODE>
     
