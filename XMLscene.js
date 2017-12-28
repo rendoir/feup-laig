@@ -237,11 +237,6 @@ XMLscene.prototype.updateGame = function(currTime) {
         this.turn = this.game.turn;
         this.setPlayer(this.turn);
     }
-    if (this.game.captured_pieces.length > 0) {
-        /** @todo TODO Init animations for this pieces */
-        console.log("Pelo menos uma peça devia ter sido eleminada");
-        this.game.captured_pieces = [];
-    }
 };
 
 XMLscene.prototype.updateCamera = function(currTime) {
@@ -271,6 +266,8 @@ XMLscene.prototype.updatePick = function(player, withBoardPieces) {
     let changePick = function(value, key, map) {
         if (key > 100 && withBoardPieces) {
             value.isPickable = true;
+        } else if (value.position.x == -1 || value.position.y == -1) {
+            value.isPickable = false;
         } else if (value.nodeID.indexOf("white") != -1 && player == 1) {
             value.isPickable = true;
         } else if (value.nodeID.indexOf("black") != -1 && player == 1) {

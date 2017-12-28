@@ -195,6 +195,9 @@ class LatrunculiXXI {
                 }
             }
         }
+        if (this.captured_pieces.length > 0) {
+            dispatchEvent(new Event('pieceCapture', {}));
+        }
     }
 
 }

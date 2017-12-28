@@ -41,6 +41,7 @@ function MySceneGraph(filename, scene) {
     this.reader = new CGFXMLreader();
 
     addEventListener('gameLoaded', this.initializeBoard.bind(this));
+    addEventListener('pieceCapture', this.pieceCaptureHandler.bind(this));
     /*
      * Read the contents of the xml file, and refer to this class for loading and error handlers.
      * After the file is read, the reader calls onXMLReady on this object.
@@ -64,33 +65,26 @@ MySceneGraph.prototype.initializeBoard = function(event) {
         for (let col = 0; col < 8; col++) {
 
             const current_data = data[line][col];
-<<<<<<< HEAD
             position = {
-=======
-            let position = {
-                x: col,
-                y: line
-            };
-            let position2 = {
->>>>>>> 0586fee43b18115dfac097c77b4c2547e088b215
                 x: col,
                 y: line
             };
             if (current_data > 0) {
+                let position2 = Object.assign({}, position);
                 if (current_data == 1) { //white_soldier
-                    new_piece = new MyPieceNode("white_soldier" + col, position, "soldier");
+                    new_piece = new MyPieceNode("white_soldier" + col, position2, "soldier");
                     new_piece.initByModel(this.soldier_model);
                     new_piece.materialID = "m_white_piece";
                 } else if (current_data == 2) {
-                    new_piece = new MyPieceNode("black_soldier" + col, position, "soldier");
+                    new_piece = new MyPieceNode("black_soldier" + col, position2, "soldier");
                     new_piece.initByModel(this.soldier_model);
                     new_piece.materialID = "m_black_piece";
                 } else if (current_data == 11) {
-                    new_piece = new MyPieceNode("white_dux" + col, position, "dux");
+                    new_piece = new MyPieceNode("white_dux" + col, position2, "dux");
                     new_piece.initByModel(this.dux_model);
                     new_piece.materialID = "m_white_piece";
                 } else if (current_data == 12) {
-                    new_piece = new MyPieceNode("black_dux" + col, position, "dux");
+                    new_piece = new MyPieceNode("black_dux" + col, position2, "dux");
                     new_piece.initByModel(this.dux_model);
                     new_piece.materialID = "m_black_piece";
                 }
@@ -101,11 +95,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                 this.mapPickId_to_Piece.set(pickId, new_piece);
             }
             let pos_id = (line + 1) * 100 + ((col + 1) * 10);
-<<<<<<< HEAD
-            let new_board_position = new MyPieceNode("pos_" + pos_id, Object.assign({}, position), "board_pos");
-=======
-            let new_board_position = new MyPieceNode("pos_" + pos_id, position2, "board_pos");
->>>>>>> 0586fee43b18115dfac097c77b4c2547e088b215
+            let new_board_position = new MyPieceNode("pos_" + pos_id, position, "board_pos");
             new_board_position.initByModel(this.quad_model);
             if ((line + col) % 2 == 0) {
                 new_board_position.materialID = "m_black_piece";
@@ -1864,4 +1854,12 @@ MySceneGraph.prototype.initBotMoveAnimation = function(move) {
     this.last_selected_piece = this.mapCoords_to_Piece.get(JSON.stringify([move[0], move[1]]));
     this.last_selected_quad = this.mapCoords_to_Piece.get(JSON.stringify([move[2], move[3]]));
     this.initPieceAnimation();
+}
+
+MySceneGraph.prototype.pieceCaptureHandler = function(event) {
+    this.scene.game.captured_pieces.forEach(Elem => {
+        console.log("Piece Capture: ", Elem);
+        //this.initCaptureAnimation(Elem);
+    });
+    this.scene.game.captured_pieces = [];
 }
