@@ -9,7 +9,6 @@ class LatrunculiXXI {
         this.playerTwoType = "player"; //"player" or "bot"
         this.number_plays = 0;
         this.captured_pieces = [];
-        this.initBoard();
     }
 
     addMove(move) {

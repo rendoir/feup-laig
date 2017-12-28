@@ -96,8 +96,8 @@ XMLscene.prototype.initCameras = function() {
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
 XMLscene.prototype.onGraphLoaded = function() {
+    this.game.initBoard();
 
-    
     this.axis = new CGFaxis(this, this.graph.referenceLength);
 
     this.setGlobalAmbientLight(this.graph.ambientIllumination[0], this.graph.ambientIllumination[1],
