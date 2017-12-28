@@ -207,7 +207,6 @@ XMLscene.prototype.update = function(currTime) {
 XMLscene.prototype.updateGame = function(currTime) {
     if (this.graph.last_selected_piece !== null && this.graph.last_selected_quad !== null) {
         if (this.graph.piece_moving) {
-            this.graph.last_selected_piece.update(currTime);
             if (this.graph.last_selected_piece.animation.ended) {
                 mat4.multiply(this.graph.last_selected_piece.transformMatrix, this.graph.last_selected_piece.transformMatrix, this.graph.last_selected_piece.animationMatrix);
                 mat4.identity(this.graph.last_selected_piece.animationMatrix);
@@ -232,10 +231,6 @@ XMLscene.prototype.updateGame = function(currTime) {
     if (this.turn !== this.game.turn && !this.graph.piece_moving && !this.cameraMoving) {
         this.turn = this.game.turn;
         this.setPlayer(this.turn);
-    }
-    if (this.game.captured_pieces.length > 0) {
-        /** @todo TODO Init animations for this pieces */
-        this.game.captured_pieces = [];
     }
 };
 

@@ -36,6 +36,8 @@ function MySceneGraph(filename, scene) {
     this.last_selected_quad = null;
     this.last_selected_piece = null;
     this.piece_moving = false;
+    this.captured_pieces_black = 0;
+    this.captured_pieces_white = 0;
 
     // File reading
     this.reader = new CGFXMLreader();
@@ -1842,8 +1844,8 @@ MySceneGraph.prototype.initPieceAnimation = function() {
     let z_diff = this.last_selected_quad.position.y - this.last_selected_piece.position.y;
     let control_points = [
         [0, 0, 0],
-        [0, 8, 0],
-        [x_diff, 8, z_diff],
+        [0, 7, 0],
+        [x_diff, 7, z_diff],
         [x_diff, 0, z_diff]
     ];
     this.last_selected_piece.initialTimestamp = -1;
@@ -1856,4 +1858,31 @@ MySceneGraph.prototype.initBotMoveAnimation = function (move) {
     this.last_selected_piece = this.mapCoords_to_Piece.get(JSON.stringify([move[0], move[1]]));
     this.last_selected_quad = this.mapCoords_to_Piece.get(JSON.stringify([move[2], move[3]]));
     this.initPieceAnimation();
+}
+
+MySceneGraph.prototype.initCapturedAnimation = function (piece_position) {
+    let piece = this.mapCoords_to_Piece.get(JSON.stringify([piece_position[0], piece_position[1]]));
+    piece.isPickable = false;
+
+    let side_board_position;
+
+    if (piece.nodeID.indexOf("white") != -1) {
+        side_board_position = [9.0, 0.0, this.captured_pieces_black];
+        this.captured_pieces_black++;
+    } else if (piece.nodeID.indexOf("black") != -1) {
+        side_board_position = [-1.0, 0.0, this.captured_pieces_white];
+        this.captured_pieces_white++;
+    }
+
+    let control_points = [
+        [0, 0, 0],
+        [0, 7, 0],
+        [side_board_position[0], 7, side_board_position[2]],
+        [side_board_position[0], 0, side_board_position[2]]
+    ];
+    piece.initialTimestamp = -1;
+    piece.animation = new BezierAnimation(10, control_points);
+
+    piece.position.x = -1;
+    piece.position.y = -1;
 }
