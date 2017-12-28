@@ -122,7 +122,7 @@ XMLscene.prototype.logPicking = function() {
                     if (customId === this.graph.selectedNode){
                         this.graph.selectedNode = -1;
                     }
-                    else if (customId > 100 && this.graph.selectedNode < 100 && this.graph.selectedNode > 0){
+                    else if (customId > 100 && this.graph.selectedNode < 100 && this.graph.selectedNode >= 0){
                         this.graph.selectedNode = customId;
                     }
                     else if (customId < 100){
