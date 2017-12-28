@@ -64,7 +64,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
         for (let col = 0; col < 8; col++) {
 
             const current_data = data[line][col];
-            const position = {
+            position = {
                 x: col,
                 y: line
             };
@@ -93,7 +93,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                 this.mapPickId_to_Piece.set(pickId, new_piece);
             }
             let pos_id = (line + 1) * 100 + ((col + 1) * 10);
-            let new_board_position = new MyPieceNode("pos_" + pos_id, position, "board_pos");
+            let new_board_position = new MyPieceNode("pos_" + pos_id, Object.assign({}, position), "board_pos");
             new_board_position.initByModel(this.quad_model);
             if ((line + col) % 2 == 0) {
                 new_board_position.materialID = "m_black_piece";
@@ -103,7 +103,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             new_board_position.rotateInX();
             this.rootGraphNode.addChild(new_board_position);
             this.selectableNodes[new_board_position.nodeID] = pos_id;
-            if(this.mapCoords_to_Piece.get(JSON.stringify([col, line])) == null)
+            if (this.mapCoords_to_Piece.get(JSON.stringify([col, line])) == null)
                 this.mapCoords_to_Piece.set(JSON.stringify([col, line]), new_board_position);
             this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
@@ -1772,7 +1772,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             this.scene.pushMatrix();
             this.scene.multMatrix(node.transformMatrix); //Apply current node's transformation matrix
             this.scene.multMatrix(node.animationMatrix);
-            
+
 
             if (node.materialID == "null") { //Should inherit
                 if (material_stack.length > 0) { //Can inherit
@@ -1848,7 +1848,7 @@ MySceneGraph.prototype.initPieceAnimation = function() {
     this.last_selected_piece.position.y = this.last_selected_quad.position.y;
 }
 
-MySceneGraph.prototype.initBotMoveAnimation = function (move) {
+MySceneGraph.prototype.initBotMoveAnimation = function(move) {
     this.last_selected_piece = this.mapCoords_to_Piece.get(JSON.stringify([move[0], move[1]]));
     this.last_selected_quad = this.mapCoords_to_Piece.get(JSON.stringify([move[2], move[3]]));
     this.initPieceAnimation();

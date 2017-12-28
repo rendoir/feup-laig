@@ -181,8 +181,8 @@ class LatrunculiXXI {
         let new_board = this.board_stack[this.number_plays];
         let old_board = this.board_stack[this.number_plays - 1];
         let board_size = new_board.length;
-        let lastMove_Xi = this.move_stack[this.number_plays - 1][0];
-        let lastMove_Yi = this.move_stack[this.number_plays - 1][1];
+        let lastMove_Xi = this.move_stack[this.number_plays - 1][1][0];
+        let lastMove_Yi = this.move_stack[this.number_plays - 1][1][1];
 
         this.captured_pieces = [];
         for (let i = 0; i < board_size; i++) {
