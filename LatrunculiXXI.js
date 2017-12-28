@@ -5,7 +5,7 @@ class LatrunculiXXI {
         this.move_stack = [];
         this.turn = 1; //1 or 2
         this.playerOneType = "player"; //"player" or "bot"
-        this.playerTwoType = "bot"; //"player" or "bot"
+        this.playerTwoType = "player"; //"player" or "bot"
         this.type = this.playerOneType; //"player" or "bot"
         this.number_plays = 0;
         this.captured_pieces = [];
