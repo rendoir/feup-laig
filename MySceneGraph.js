@@ -36,9 +36,7 @@ function MySceneGraph(filename, scene) {
     // File reading
     this.reader = new CGFXMLreader();
 
-    document.addEventListener('gameLoaded',
-        this.initializeBoard
-    );
+    document.addEventListener('gameLoaded', this.initializeBoard.bind(this));
     /*
      * Read the contents of the xml file, and refer to this class for loading and error handlers.
      * After the file is read, the reader calls onXMLReady on this object.
@@ -48,38 +46,37 @@ function MySceneGraph(filename, scene) {
     this.reader.open('scenes/' + filename, this);
 }
 
-MySceneGraph.prototype.initializeBoard = function(event){
-    let data = event.board;
+MySceneGraph.prototype.initializeBoard = function(event) {
+    let data = event.detail;
     let new_piece = null;
-    for (let line = 0; line < 8; line++){
-        for(let col = 0; col < 8; col++){
-            
+    for (let line = 0; line < 8; line++) {
+        for (let col = 0; col < 8; col++) {
+
             const current_data = data[line][col];
             const position = {
                 x: col,
                 y: line
             };
-            if (current_data > 0){
-                if (current_data == 1){ //white_soldier
-                    new_piece = new MyPieceNode("white_"+col,position,"soldier");
+            if (current_data > 0) {
+                if (current_data == 1) { //white_soldier
+                    new_piece = new MyPieceNode("white_" + col, position, "soldier");
                     new_piece.initByModel(this.soldier_model);
                     new_piece.materialID = "m_white_piece";
-                }
-                else if (current_data == 2){
-                    new_piece = new MyPieceNode("black_"+col,position,"soldier");
+                } else if (current_data == 2) {
+                    new_piece = new MyPieceNode("black_" + col, position, "soldier");
                     new_piece.initByModel(this.soldier_model);
                     new_piece.materialID = "m_black_piece";
-                }else if (current_data == 11){
-                    new_piece = new MyPieceNode("white_"+col,position,"dux");
+                } else if (current_data == 11) {
+                    new_piece = new MyPieceNode("white_" + col, position, "dux");
                     new_piece.initByModel(this.dux_model);
                     new_piece.materialID = "m_white_piece";
-                }else if (current_data == 12){
-                    new_piece = new MyPieceNode("white_"+col,position,"dux");
+                } else if (current_data == 12) {
+                    new_piece = new MyPieceNode("white_" + col, position, "dux");
                     new_piece.initByModel(this.dux_model);
                     new_piece.materialID = "m_black_piece";
                 }
                 this.rootGraphNode.addChild(new_piece);
-                this.selectableNodes[new_piece.nodeID] = line*10 + col;
+                this.selectableNodes[new_piece.nodeID] = line * 10 + col;
             }
         }
     }
@@ -1224,13 +1221,13 @@ MySceneGraph.prototype.processXMLAnimation = function(XMLAnimation) {
                 for (let i = 0; i < spanrefs.length; i++) {
                     // Get the animation that corresponds to the spanref.
                     let nextAnimation = this.animations[spanrefs[i].id];
-                    if (nextAnimation != null){
+                    if (nextAnimation != null) {
                         animations.push(nextAnimation);
-                    }else{
+                    } else {
                         // Check that the animation was defined previously on the lsx file.
                         this.onXMLMinorError("Combo Animation Error: Skiping animation " + spanrefs[i].id + " because it is not defined yet");
                     }
-                    
+
                 }
                 return new ComboAnimation(animations);
             }
@@ -1294,8 +1291,8 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     let specNames = new Array();
     let possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "ANIMATIONREFS", "DESCENDANTS"];
 
-    if (this.reader.hasAttribute(nodeToParse,'class')){
-        newNode.class = this.reader.getString(nodeToParse,'class',true);
+    if (this.reader.hasAttribute(nodeToParse, 'class')) {
+        newNode.class = this.reader.getString(nodeToParse, 'class', true);
     }
     for (let j = 0; j < nodeSpecs.length; j++) {
         let specName = nodeSpecs[j].nodeName;
@@ -1391,10 +1388,9 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
     let animationsIndex = specNames.indexOf("ANIMATIONREFS");
     if (animationsIndex > 0) {
         const animationsXml = nodeSpecs[animationsIndex].children;
-        if (animationsXml.length == 0){
+        if (animationsXml.length == 0) {
             this.onXMLMinorError("No animationref defined on node with id:" + nodeID);
-        }
-        else if (animationsXml.length == 1) {
+        } else if (animationsXml.length == 1) {
             newNode.animation = this.animations[animationsXml[0].id];
         } else {
             // When there is more than one animation reference, a combo animation is created.
@@ -1424,16 +1420,16 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
             let nodeIndexInXMLNodes = this.nodeIDToIndex[nodeID];
             if (nodeIndexInXMLNodes != null && nodeIndexInXMLNodes > -1) {
                 let new_child = this.parseNode(this.xmlNodes[nodeIndexInXMLNodes], textureStack);
-                if (new_child.class == null){
+                if (new_child.class == null) {
                     newNode.addChild(new_child);
-                }else{
-                    if (new_child.class == "piece"){
-                        if (new_child.nodeID == "soldier"){
+                } else {
+                    if (new_child.class == "piece") {
+                        if (new_child.nodeID == "soldier") {
                             this.soldier_model = new_child;
-                        }else if (new_child.nodeID == "dux"){
+                        } else if (new_child.nodeID == "dux") {
                             this.dux_model = new_child;
                         }
-                    }else if (new_child.class == "board_position"){
+                    } else if (new_child.class == "board_position") {
                         this.quad_model = new_child;
                     }
                 }
@@ -1669,7 +1665,7 @@ MySceneGraph.prototype.displayScene = function() {
 
         this.selectedNodeRef = null;
     }
-    
+
 }
 
 /**
@@ -1685,7 +1681,7 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         }
     }
     let disablePickAtEnd = false;
-    if (node_to_display.isPickable == true){
+    if (node_to_display.isPickable == true) {
         this.isToPick = node_to_display.nodeID;
         disablePickAtEnd = true;
     }
@@ -1706,24 +1702,24 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
 
         if (node_to_display.display && this.isToPick) {
             for (let i = 0; i < node_to_display.leaves.length; i++) {
-                this.scene.registerForPick(this.selectableNodes[this.isToPick],node_to_display.leaves[i]);
+                this.scene.registerForPick(this.selectableNodes[this.isToPick], node_to_display.leaves[i]);
                 node_to_display.leaves[i].display();
             }
-        }else if (node_to_display.display && !this.isToPick){
+        } else if (node_to_display.display && !this.isToPick) {
             if (!this.scene.pickMode) {
                 for (let i = 0; i < node_to_display.leaves.length; i++) {
                     node_to_display.leaves[i].display();
                 }
             }
-        }else if (!node_to_display.display && this.isToPick){
+        } else if (!node_to_display.display && this.isToPick) {
             for (let i = 0; i < node_to_display.leaves.length; i++) {
-                if(this.scene.pickMode){
-                    this.scene.registerForPick(this.selectableNodes[this.isToPick],node_to_display.leaves[i]);
+                if (this.scene.pickMode) {
+                    this.scene.registerForPick(this.selectableNodes[this.isToPick], node_to_display.leaves[i]);
                     node_to_display.leaves[i].display();
                 }
             }
         }
-        
+
     }
 
     if (node_to_display.children.length > 0) {
@@ -1756,12 +1752,12 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
             texture_stack.pop();
         }
     }
-    if (disablePickAtEnd){
+    if (disablePickAtEnd) {
         this.isToPick = null;
     }
 }
 
-MySceneGraph.prototype.displayOutline = function (node_to_display) {
+MySceneGraph.prototype.displayOutline = function(node_to_display) {
     for (let i = 0; i < node_to_display.leaves.length; i++) {
         node_to_display.leaves[i].displayOutline();
     }
