@@ -33,6 +33,10 @@ function MySceneGraph(filename, scene) {
 
     this.quad_model, this.soldier_model, this.dux_model;
 
+    this.last_selected_quad = null;
+    this.last_selected_piece = null;
+    this.piece_moving = false;
+
     // File reading
     this.reader = new CGFXMLreader();
 
@@ -56,7 +60,6 @@ MySceneGraph.prototype.initializeBoard = function(event) {
     let new_piece = null;
     this.mapPickId_to_Piece = new Map();
     this.mapCoords_to_Piece = new Map();
-    this.mapBoardPiece_to_Coords = new Map();
     for (let line = 0; line < 8; line++) {
         for (let col = 0; col < 8; col++) {
 
@@ -100,7 +103,6 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             new_board_position.rotateInX();
             this.rootGraphNode.addChild(new_board_position);
             this.selectableNodes[new_board_position.nodeID] = pos_id;
-            this.mapBoardPiece_to_Coords.set(new_board_position, [col, line]);
             this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
@@ -1674,7 +1676,9 @@ MySceneGraph.prototype.displayScene = function() {
     }
     this.displayNode(this.rootGraphNode, material_stack, texture_stack);
 
-    if (this.selectedNodeRef != null) {
+    if (this.selectedNode != -1) {
+        this.selectedNodeRef = this.mapPickId_to_Piece.get(this.selectedNode);
+
         if (this.selectedNodeRef.class === "piece") {
             let previous_shader = this.scene.activeShader;
             this.scene.setActiveShader(this.scene.outline_shader);
@@ -1688,6 +1692,8 @@ MySceneGraph.prototype.displayScene = function() {
 
             this.scene.gl.cullFace(this.scene.gl.BACK);
             this.scene.setActiveShader(previous_shader);
+
+            this.last_selected_piece = this.selectedNodeRef;
         } else if (this.selectedNodeRef.class === "board_position") {
             let previous_shader = this.scene.activeShader;
             this.scene.setActiveShader(this.scene.highlight_shader);
@@ -1700,9 +1706,9 @@ MySceneGraph.prototype.displayScene = function() {
             this.displayOutline(this.selectedNodeRef);
 
             this.scene.setActiveShader(previous_shader);
-        }
 
-        this.selectedNodeRef = null;
+            this.last_selected_quad = this.selectedNodeRef;
+        }
     }
 
 }
@@ -1714,11 +1720,6 @@ MySceneGraph.prototype.displayScene = function() {
 MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, texture_stack) {
     if (node_to_display == null)
         return;
-    if (this.selectedNode != -1) {
-        if (this.selectedNode == this.selectableNodes[node_to_display.nodeID] && this.selectedNodeRef == null) {
-            this.selectedNodeRef = node_to_display;
-        }
-    }
     let disablePickAtEnd = false;
     if (node_to_display.isPickable == true) {
         this.isToPick = node_to_display.nodeID;
@@ -1825,4 +1826,13 @@ MySceneGraph.prototype.setPickableNode = function(node, pickable) {
     node.children.forEach(Elem => {
         this.setPickableNode(Elem, pickable);
     });
+}
+
+MySceneGraph.prototype.initPieceAnimation = function () {
+    this.piece_moving = true;
+    let control_points = [
+            [0, 0, 0],
+            [0, 10, 0]
+    ];
+    this.last_selected_piece.animation = new LinearAnimation(control_points,5);
 }

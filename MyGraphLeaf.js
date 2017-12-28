@@ -100,7 +100,3 @@ MyGraphLeaf.prototype.display = function() {
 MyGraphLeaf.prototype.displayOutline = function() {
     this.primitive.displayOutline();
 };
-
-MyGraphLeaf.prototype.setPickEnabled = function(pickable) {
-    this.primitive.setPickEnabled(pickable);
-};
