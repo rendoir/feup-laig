@@ -3,13 +3,12 @@ class MyPieceNode extends MyGraphNode{
         super(nodeID);
         this.type = type;
         this.position = position;
-        this.transform();
-        this.class = "piece";
         this.isPickable = true;
+        this.moveToPosition();
     }
 
-    transform() {
-        let newPosVec = vec3.fromValues(this.position.x + 0.5,0,this.position.y + 0.5);
+    moveToPosition() {
+        let newPosVec = vec3.fromValues(this.position.x + 0.5,5,this.position.y + 0.5);
         mat4.fromTranslation(this.transformMatrix, newPosVec);
         this.world_position = mat4.getTranslation(vec4.create(), this.transformMatrix);
 
@@ -22,12 +21,18 @@ class MyPieceNode extends MyGraphNode{
         ]
         this.animation = new BezierAnimation(5, control_points);*/
     }
+    rotateInX(){
+        let xAxis = vec3.fromValues(1,0,0);
+        let rotationM = mat4.create();
+        mat4.fromRotation(rotationM,-Math.PI/2,xAxis);
+        mat4.multiply(this.transformMatrix, this.transformMatrix, rotationM);
+    }
 
     initByModel(model) {
         this.children = model.children;
         this.leaves = model.leaves;
-        this.materialID = model.materialID;
         this.textureID = model.textureID;
         this.display = model.display;
+        this.class = model.class;
     }
 }

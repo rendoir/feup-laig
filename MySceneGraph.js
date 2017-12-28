@@ -60,19 +60,19 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             };
             if (current_data > 0) {
                 if (current_data == 1) { //white_soldier
-                    new_piece = new MyPieceNode("white_" + col, position, "soldier");
+                    new_piece = new MyPieceNode("white_soldier" + col, position, "soldier");
                     new_piece.initByModel(this.soldier_model);
                     new_piece.materialID = "m_white_piece";
                 } else if (current_data == 2) {
-                    new_piece = new MyPieceNode("black_" + col, position, "soldier");
+                    new_piece = new MyPieceNode("black_soldier" + col, position, "soldier");
                     new_piece.initByModel(this.soldier_model);
                     new_piece.materialID = "m_black_piece";
                 } else if (current_data == 11) {
-                    new_piece = new MyPieceNode("white_" + col, position, "dux");
+                    new_piece = new MyPieceNode("white_dux" + col, position, "dux");
                     new_piece.initByModel(this.dux_model);
                     new_piece.materialID = "m_white_piece";
                 } else if (current_data == 12) {
-                    new_piece = new MyPieceNode("white_" + col, position, "dux");
+                    new_piece = new MyPieceNode("black_dux" + col, position, "dux");
                     new_piece.initByModel(this.dux_model);
                     new_piece.materialID = "m_black_piece";
                 }
@@ -80,6 +80,16 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                 this.rootGraphNode.addChild(new_piece);
                 this.selectableNodes[new_piece.nodeID] = line * 10 + col;
             }
+            let new_board_position = new MyPieceNode("pos_" + line*10 + col,position,"board_pos");
+            new_board_position.initByModel(this.quad_model);
+            if ((line+col) % 2 == 0){
+                new_board_position.materialID = "m_black_piece";
+            }else{
+                new_board_position.materialID = "m_white_piece";
+            }
+            new_board_position.rotateInX();
+            this.selectableNodes[new_board_position.nodeID] = (line+1) * 100 + (col * 10);
+            this.rootGraphNode.addChild(new_board_position);
         }
     }
 }
@@ -1433,6 +1443,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
                         }
                     } else if (new_child.class == "board_position") {
                         this.quad_model = new_child;
+                        this.quad_model.display = true;
                     }
                 }
             } else {
