@@ -659,7 +659,7 @@
     </NODE>
 
     <NODE id="table_top">
-      <MATERIAL id="null" />
+      <MATERIAL id="m_white_piece" />
       <TEXTURE id="t_marble" />
       <TRANSLATION x="-2" y="-0.5" z="-2"/>
       <SCALE sx="12" sy="1" sz="12" />
