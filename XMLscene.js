@@ -220,7 +220,11 @@ XMLscene.prototype.updateGame = function(currTime) {
                 this.graph.piece_moving = false;
             }
         } else {
-            if (this.game.move([this.graph.last_selected_piece.position.x, this.graph.last_selected_piece.position.y, this.graph.last_selected_quad.position.x, this.graph.last_selected_quad.position.y])) {
+            if (this.game.move([this.graph.last_selected_piece.position.x,
+                    this.graph.last_selected_piece.position.y,
+                    this.graph.last_selected_quad.position.x,
+                    this.graph.last_selected_quad.position.y
+                ])) {
                 this.graph.initPieceAnimation();
             } else {
                 this.graph.last_selected_piece = null;
@@ -235,6 +239,7 @@ XMLscene.prototype.updateGame = function(currTime) {
     }
     if (this.game.captured_pieces.length > 0) {
         /** @todo TODO Init animations for this pieces */
+        console.log("Pelo menos uma peça devia ter sido eleminada");
         this.game.captured_pieces = [];
     }
 };
