@@ -106,7 +106,8 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
-}
+    this.scene.updatePick(this.scene.turn, false);
+};
 
 
 /*
@@ -1767,8 +1768,9 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
         for (let i = 0; i < node_to_display.children.length; i++) {
             const node = node_to_display.children[i];
             this.scene.pushMatrix();
-            this.scene.multMatrix(node.animationMatrix);
             this.scene.multMatrix(node.transformMatrix); //Apply current node's transformation matrix
+            this.scene.multMatrix(node.animationMatrix);
+            
 
             if (node.materialID == "null") { //Should inherit
                 if (material_stack.length > 0) { //Can inherit
@@ -1805,8 +1807,8 @@ MySceneGraph.prototype.displayOutline = function(node_to_display) {
     for (let i = 0; i < node_to_display.children.length; i++) {
         const node = node_to_display.children[i];
         this.scene.pushMatrix();
-        this.scene.multMatrix(node.animationMatrix);
         this.scene.multMatrix(node.transformMatrix);
+        this.scene.multMatrix(node.animationMatrix);
         this.displayOutline(node);
         this.scene.popMatrix();
     }
@@ -1828,11 +1830,12 @@ MySceneGraph.prototype.setPickableNode = function(node, pickable) {
     });
 }
 
-MySceneGraph.prototype.initPieceAnimation = function () {
+MySceneGraph.prototype.initPieceAnimation = function() {
     this.piece_moving = true;
     let control_points = [
             [0, 0, 0],
-            [0, 10, 0]
+            [0, 10, 0],
+            [0,0,0]
     ];
     this.last_selected_piece.animation = new LinearAnimation(control_points,5);
 }
