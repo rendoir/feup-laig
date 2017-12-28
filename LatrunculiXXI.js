@@ -73,6 +73,7 @@ class LatrunculiXXI {
         /**
          * Receive the reply from server, when requested 'initialBoard';
          * @param {ReplyBoard} data 
+         * @event gameLoaded
          */
         let reply = function(data) {
             this.board_stack[this.number_plays] = data.board;
@@ -167,7 +168,7 @@ class LatrunculiXXI {
          * @param {ReplyIsOver} data Object with the reply from server; 
          */
         let reply = function(data) {
-            this.onGameOver(data.return, data.winner);
+            this.onGameOver(data.return, data.winner); /** @todo check winner received from server */
         };
         let request = createRequest('gameIsOver', [this.getCurrentBoardString()], reply.bind(this));
         prologRequest(request);

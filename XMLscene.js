@@ -219,8 +219,24 @@ XMLscene.prototype.updateCamera = function(currTime) {
 XMLscene.prototype.setPlayer = function(player) {
     this.cameraMoving = true;
     this.initial_camera_timestamp = performance.now();
+    this.updatePick(player);
     if (player === 1)
         this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 270);
     else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
     this.ui.update();
+};
+
+XMLscene.prototype.updatePick = function(player) {
+    let changePick = function(value, key, map) {
+        if (value.nodeID.indexOf("white") != -1 && player == 1) {
+            this.graph.setPickableNode(value, true);
+        } else if (value.nodeID.indexOf("black") != -1 && player == 1) {
+            this.graph.setPickableNode(value, false);
+        } else if (value.nodeID.indexOf("white") != -1 && player == 2) {
+            this.graph.setPickableNode(value, false);
+        } else if (value.nodeID.indexOf("black") != -1 && player == 2) {
+            this.graph.setPickableNode(value, true);
+        }
+    };
+    //this.graph.mapPickId_to_Piece.forEach(changePick.bind(this));
 };
