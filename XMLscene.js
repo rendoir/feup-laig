@@ -33,6 +33,7 @@ XMLscene.prototype.init = function(application) {
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(1000 / UPDATES_PER_SECONDS);
     this.setPickEnabled(true);
+    this.selectedPiece = -1;
     this.game = Game;
     this.turn = this.game.turn;
     this.ui = new UserInterface(this, this.game);
@@ -119,14 +120,13 @@ XMLscene.prototype.logPicking = function() {
                     let customId = this.pickResults[i][1];
                     console.log("Picked object: " + obj + ", with pick id " + customId);
 
-                    if (customId === this.graph.selectedNode){
+                    if (customId === this.graph.selectedNode) {
                         this.graph.selectedNode = -1;
-                    }
-                    else if (customId > 100 && this.graph.selectedNode < 100 && this.graph.selectedNode >= 0){
+                    } else if (customId > 100 && this.graph.selectedNode < 100 && this.graph.selectedNode >= 0) {
                         this.graph.selectedNode = customId;
-                    }
-                    else if (customId < 100){
+                    } else if (customId < 100) {
                         this.graph.selectedNode = customId;
+                        this.selectedPiece = customId;
                     }
                 }
             }
@@ -235,4 +235,19 @@ XMLscene.prototype.setPlayer = function(player) {
         this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 270);
     else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
     this.ui.update();
+};
+
+XMLscene.prototype.updatePick = function(player) {
+    let changePick = function(value, key, map) {
+        if (value.nodeID.indexOf("white") != -1 && player == 1) {
+            value.isPickable = true;
+        } else if (value.nodeID.indexOf("black") != -1 && player == 1) {
+            value.isPickable = false;
+        } else if (value.nodeID.indexOf("white") != -1 && player == 2) {
+            value.isPickable = false;
+        } else if (value.nodeID.indexOf("black") != -1 && player == 2) {
+            value.isPickable = true;
+        }
+    };
+    this.graph.mapPickId_to_Piece.forEach(changePick.bind(this));
 };
