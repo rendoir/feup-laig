@@ -245,10 +245,10 @@ XMLscene.prototype.setPlayer = function(player) {
     this.cameraMoving = true;
     this.initial_camera_timestamp = performance.now();
     if (player === 1)
-        this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 270);
+        this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 180);
     else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
     this.ui.update();
-    this.scene.updatePick(this.scene.turn, false);
+    this.updatePick(this.turn, false);
 };
 
 XMLscene.prototype.updatePick = function(player, withBoardPieces) {
