@@ -33,6 +33,9 @@ function MySceneGraph(filename, scene) {
 
     this.quad_model, this.soldier_model, this.dux_model;
 
+    this.last_selected_quad = null;
+    this.last_selected_piece = null;
+
     // File reading
     this.reader = new CGFXMLreader();
 
@@ -1674,7 +1677,9 @@ MySceneGraph.prototype.displayScene = function() {
     }
     this.displayNode(this.rootGraphNode, material_stack, texture_stack);
 
-    if (this.selectedNodeRef != null) {
+    if (this.selectedNode != -1) {
+        this.selectedNodeRef = this.mapPickId_to_Piece.get(this.selectedNode);
+
         if (this.selectedNodeRef.class === "piece") {
             let previous_shader = this.scene.activeShader;
             this.scene.setActiveShader(this.scene.outline_shader);
@@ -1688,6 +1693,8 @@ MySceneGraph.prototype.displayScene = function() {
 
             this.scene.gl.cullFace(this.scene.gl.BACK);
             this.scene.setActiveShader(previous_shader);
+
+            this.last_selected_piece = this.selectedNodeRef;
         } else if (this.selectedNodeRef.class === "board_position") {
             let previous_shader = this.scene.activeShader;
             this.scene.setActiveShader(this.scene.highlight_shader);
@@ -1700,9 +1707,9 @@ MySceneGraph.prototype.displayScene = function() {
             this.displayOutline(this.selectedNodeRef);
 
             this.scene.setActiveShader(previous_shader);
-        }
 
-        this.selectedNodeRef = null;
+            this.last_selected_quad = this.selectedNodeRef;
+        }
     }
 
 }
@@ -1714,11 +1721,6 @@ MySceneGraph.prototype.displayScene = function() {
 MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, texture_stack) {
     if (node_to_display == null)
         return;
-    if (this.selectedNode != -1) {
-        if (this.selectedNode == this.selectableNodes[node_to_display.nodeID] && this.selectedNodeRef == null) {
-            this.selectedNodeRef = node_to_display;
-        }
-    }
     let disablePickAtEnd = false;
     if (node_to_display.isPickable == true) {
         this.isToPick = node_to_display.nodeID;
@@ -1825,4 +1827,8 @@ MySceneGraph.prototype.setPickableNode = function(node, pickable) {
     node.children.forEach(Elem => {
         this.setPickableNode(Elem, pickable);
     });
+}
+
+MySceneGraph.prototype.initPieceAnimation = function () {
+    //this.last_selected_piece.position.x;
 }
