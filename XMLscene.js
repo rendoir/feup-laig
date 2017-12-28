@@ -119,13 +119,11 @@ XMLscene.prototype.logPicking = function() {
                     let customId = this.pickResults[i][1];
                     console.log("Picked object: " + obj + ", with pick id " + customId);
 
-                    if (customId === this.graph.selectedNode){
+                    if (customId === this.graph.selectedNode) {
                         this.graph.selectedNode = -1;
-                    }
-                    else if (customId > 100 && this.graph.selectedNode < 100 && this.graph.selectedNode > 0){
+                    } else if (customId > 100 && this.graph.selectedNode < 100 && this.graph.selectedNode > 0) {
                         this.graph.selectedNode = customId;
-                    }
-                    else if (customId < 100){
+                    } else if (customId < 100) {
                         this.graph.selectedNode = customId;
                     }
                 }
@@ -236,14 +234,14 @@ XMLscene.prototype.setPlayer = function(player) {
 XMLscene.prototype.updatePick = function(player) {
     let changePick = function(value, key, map) {
         if (value.nodeID.indexOf("white") != -1 && player == 1) {
-            this.graph.setPickableNode(value, true);
+            value.isPickable = true;
         } else if (value.nodeID.indexOf("black") != -1 && player == 1) {
-            this.graph.setPickableNode(value, false);
+            value.isPickable = false;
         } else if (value.nodeID.indexOf("white") != -1 && player == 2) {
-            this.graph.setPickableNode(value, false);
+            value.isPickable = false;
         } else if (value.nodeID.indexOf("black") != -1 && player == 2) {
-            this.graph.setPickableNode(value, true);
+            value.isPickable = true;
         }
     };
-    //this.graph.mapPickId_to_Piece.forEach(changePick.bind(this));
+    this.graph.mapPickId_to_Piece.forEach(changePick.bind(this));
 };

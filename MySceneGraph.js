@@ -56,7 +56,6 @@ MySceneGraph.prototype.initializeBoard = function(event) {
     let new_piece = null;
     this.mapPickId_to_Piece = new Map();
     this.mapCoords_to_Piece = new Map();
-    this.mapBoardPiece_to_Coords = new Map();
     for (let line = 0; line < 8; line++) {
         for (let col = 0; col < 8; col++) {
 
@@ -100,7 +99,6 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             new_board_position.rotateInX();
             this.rootGraphNode.addChild(new_board_position);
             this.selectableNodes[new_board_position.nodeID] = pos_id;
-            this.mapBoardPiece_to_Coords.set(new_board_position, [col, line]);
             this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
@@ -1815,14 +1813,5 @@ MySceneGraph.prototype.update = function(currTime, node) {
     node.update(currTime);
     node.children.forEach(element => {
         this.update(currTime, element);
-    });
-}
-
-MySceneGraph.prototype.setPickableNode = function(node, pickable) {
-    node.leaves.forEach(Leave => {
-        Leave.setPickEnabled(pickable);
-    });
-    node.children.forEach(Elem => {
-        this.setPickableNode(Elem, pickable);
     });
 }
