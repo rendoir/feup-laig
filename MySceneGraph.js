@@ -89,7 +89,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                 this.rootGraphNode.addChild(new_piece);
                 let pickId = line * 10 + col;
                 this.selectableNodes[new_piece.nodeID] = pickId;
-                this.mapCoords_to_Piece.set([col, line], new_piece);
+                this.mapCoords_to_Piece.set(JSON.stringify([col, line]), new_piece);
                 this.mapPickId_to_Piece.set(pickId, new_piece);
             }
             let pos_id = (line + 1) * 100 + ((col + 1) * 10);
@@ -103,6 +103,8 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             new_board_position.rotateInX();
             this.rootGraphNode.addChild(new_board_position);
             this.selectableNodes[new_board_position.nodeID] = pos_id;
+            if(this.mapCoords_to_Piece.get(JSON.stringify([col, line])) == null)
+                this.mapCoords_to_Piece.set(JSON.stringify([col, line]), new_board_position);
             this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
@@ -1844,4 +1846,10 @@ MySceneGraph.prototype.initPieceAnimation = function() {
     this.last_selected_piece.animation = new BezierAnimation(10, control_points);
     this.last_selected_piece.position.x = this.last_selected_quad.position.x;
     this.last_selected_piece.position.y = this.last_selected_quad.position.y;
+}
+
+MySceneGraph.prototype.initBotMoveAnimation = function (move) {
+    this.last_selected_piece = this.mapCoords_to_Piece.get(JSON.stringify([move[0], move[1]]));
+    this.last_selected_quad = this.mapCoords_to_Piece.get(JSON.stringify([move[2], move[3]]));
+    this.initPieceAnimation();
 }

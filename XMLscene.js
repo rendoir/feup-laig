@@ -117,9 +117,9 @@ XMLscene.prototype.logPicking = function() {
                 let obj = this.pickResults[i][0];
                 if (obj) {
                     let customId = this.pickResults[i][1];
-                    console.log("Picked object: " + obj + ", with pick id " + customId);
+                    //console.log("Picked object: " + obj + ", with pick id " + customId);
 
-                    if (!this.graph.piece_moving) {
+                    if (!this.graph.piece_moving && !this.cameraMoving && this.game.type !== "bot") {
                         if (customId === this.graph.selectedNode) {
                             this.graph.selectedNode = -1;
                             customId = 101;
@@ -233,7 +233,7 @@ XMLscene.prototype.updateGame = function(currTime) {
             }
         }
     }
-    if (this.turn !== this.game.turn) {
+    if (this.turn !== this.game.turn && !this.graph.piece_moving && !this.cameraMoving) {
         this.turn = this.game.turn;
         this.setPlayer(this.turn);
     }
