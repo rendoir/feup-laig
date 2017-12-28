@@ -22,7 +22,7 @@ MyInterface.prototype.init = function(application) {
     // init GUI. For more information on the methods, check:
     //  http://workshop.chromeexperiments.com/examples/gui
     
-    //this.gui = new dat.GUI();
+    this.gui = new dat.GUI();
 
     // add a group of controls (and open/expand by defult)
     
@@ -46,15 +46,5 @@ MyInterface.prototype.addLightsGroup = function(lights) {
             group.add(this.scene.lightValues, key);
         }
     }
-}
-
-MyInterface.prototype.addSelectedGroup = function(selectableNodes){
-    /*let group = this.gui.addFolder("Selected Nodes");
-    group.open();
-    for (let nodeId in selectableNodes){
-        this.scene.selectedValues[nodeId] = selectableNodes[nodeId][0];
-        group.add(this.scene.selectedValues, nodeId);
-    }*/
-    this.gui.add(this.scene, 'selectedNode', selectableNodes);
 }
 
