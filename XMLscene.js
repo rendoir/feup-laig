@@ -37,6 +37,7 @@ XMLscene.prototype.init = function(application) {
     this.turn = this.game.turn;
     this.ui = new UserInterface(this, this.game);
     this.outline_shader = new CGFshader(this.gl, '../lib/CGF/shaders/Outline/outline_vertex.glsl', '../lib/CGF/shaders/Outline/outline_frag.glsl');
+    this.highlight_shader = new CGFshader(this.gl, '../lib/CGF/shaders/Outline/highlight_vertex.glsl', '../lib/CGF/shaders/Outline/highlight_frag.glsl');
 };
 
 /**
@@ -118,9 +119,15 @@ XMLscene.prototype.logPicking = function() {
                     let customId = this.pickResults[i][1];
                     console.log("Picked object: " + obj + ", with pick id " + customId);
 
-                    if (customId === this.graph.selectedNode)
+                    if (customId === this.graph.selectedNode){
                         this.graph.selectedNode = -1;
-                    else this.graph.selectedNode = customId;
+                    }
+                    else if (customId > 100 && this.graph.selectedNode < 100 && this.graph.selectedNode > 0){
+                        this.graph.selectedNode = customId;
+                    }
+                    else if (customId < 100){
+                        this.graph.selectedNode = customId;
+                    }
                 }
             }
             this.pickResults.splice(0, this.pickResults.length);

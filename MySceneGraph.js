@@ -89,7 +89,8 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                 this.mapCoords_to_Piece.set([col, line], new_piece);
                 this.mapPickId_to_Piece.set(pickId, new_piece);
             }
-            let new_board_position = new MyPieceNode("pos_" + line * 10 + col, position, "board_pos");
+            let pos_id = (line + 1) * 100 + ((col + 1) * 10);
+            let new_board_position = new MyPieceNode("pos_" + pos_id, position, "board_pos");
             new_board_position.initByModel(this.quad_model);
             if ((line + col) % 2 == 0) {
                 new_board_position.materialID = "m_black_piece";
@@ -98,10 +99,9 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             }
             new_board_position.rotateInX();
             this.rootGraphNode.addChild(new_board_position);
-            let pickId = (line + 1) * 100 + (col * 10);
-            this.selectableNodes[new_board_position.nodeID] = pickId;
+            this.selectableNodes[new_board_position.nodeID] = pos_id;
             this.mapBoardPiece_to_Coords.set(new_board_position, [col, line]);
-            this.mapPickId_to_Piece.set(pickId, new_board_position);
+            this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
 }
@@ -1675,18 +1675,32 @@ MySceneGraph.prototype.displayScene = function() {
     this.displayNode(this.rootGraphNode, material_stack, texture_stack);
 
     if (this.selectedNodeRef != null) {
-        let previous_shader = this.scene.activeShader;
-        this.scene.setActiveShader(this.scene.outline_shader);
-        this.scene.updateProjectionMatrix();
-        this.scene.gl.cullFace(this.scene.gl.FRONT);
+        if (this.selectedNodeRef.class === "piece") {
+            let previous_shader = this.scene.activeShader;
+            this.scene.setActiveShader(this.scene.outline_shader);
+            this.scene.updateProjectionMatrix();
+            this.scene.gl.cullFace(this.scene.gl.FRONT);
 
-        this.scene.multMatrix(this.selectedNodeRef.animationMatrix);
-        this.scene.multMatrix(this.selectedNodeRef.transformMatrix);
+            this.scene.multMatrix(this.selectedNodeRef.animationMatrix);
+            this.scene.multMatrix(this.selectedNodeRef.transformMatrix);
 
-        this.displayOutline(this.selectedNodeRef);
+            this.displayOutline(this.selectedNodeRef);
 
-        this.scene.gl.cullFace(this.scene.gl.BACK);
-        this.scene.setActiveShader(previous_shader);
+            this.scene.gl.cullFace(this.scene.gl.BACK);
+            this.scene.setActiveShader(previous_shader);
+        } else if (this.selectedNodeRef.class === "board_position") {
+            let previous_shader = this.scene.activeShader;
+            this.scene.setActiveShader(this.scene.highlight_shader);
+            this.scene.gl.uniform1f(this.scene.highlight_shader.uniforms.alpha, Math.sin(performance.now() * 0.005));
+            this.scene.updateProjectionMatrix();
+
+            this.scene.multMatrix(this.selectedNodeRef.animationMatrix);
+            this.scene.multMatrix(this.selectedNodeRef.transformMatrix);
+
+            this.displayOutline(this.selectedNodeRef);
+
+            this.scene.setActiveShader(previous_shader);
+        }
 
         this.selectedNodeRef = null;
     }
