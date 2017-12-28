@@ -1679,36 +1679,29 @@ MySceneGraph.prototype.displayScene = function() {
     if (this.selectedNode != -1) {
         this.selectedNodeRef = this.mapPickId_to_Piece.get(this.selectedNode);
 
-        if (this.selectedNodeRef.class === "piece") {
-            let previous_shader = this.scene.activeShader;
-            this.scene.setActiveShader(this.scene.outline_shader);
-            this.scene.updateProjectionMatrix();
-            this.scene.gl.cullFace(this.scene.gl.FRONT);
-
+        let multAndDisplay = function() {
             this.scene.multMatrix(this.selectedNodeRef.animationMatrix);
             this.scene.multMatrix(this.selectedNodeRef.transformMatrix);
 
             this.displayOutline(this.selectedNodeRef);
+        }
 
+        let previous_shader = this.scene.activeShader;
+        if (this.selectedNodeRef.class === "piece") {
+            this.scene.setActiveShader(this.scene.outline_shader);
+            this.scene.updateProjectionMatrix();
+            this.scene.gl.cullFace(this.scene.gl.FRONT);
+            (multAndDisplay.bind(this))();
             this.scene.gl.cullFace(this.scene.gl.BACK);
-            this.scene.setActiveShader(previous_shader);
-
-            this.last_selected_piece = this.selectedNodeRef;
         } else if (this.selectedNodeRef.class === "board_position") {
-            let previous_shader = this.scene.activeShader;
             this.scene.setActiveShader(this.scene.highlight_shader);
             this.scene.gl.uniform1f(this.scene.highlight_shader.uniforms.alpha, Math.sin(performance.now() * 0.005));
             this.scene.updateProjectionMatrix();
 
-            this.scene.multMatrix(this.selectedNodeRef.animationMatrix);
-            this.scene.multMatrix(this.selectedNodeRef.transformMatrix);
-
-            this.displayOutline(this.selectedNodeRef);
-
-            this.scene.setActiveShader(previous_shader);
-
-            this.last_selected_quad = this.selectedNodeRef;
+            (multAndDisplay.bind(this))();
         }
+        this.scene.setActiveShader(previous_shader);
+        this.last_selected_quad = this.selectedNodeRef;
     }
 
 }
