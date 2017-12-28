@@ -181,8 +181,8 @@ class LatrunculiXXI {
         let new_board = this.board_stack[this.number_plays];
         let old_board = this.board_stack[this.number_plays - 1];
         let board_size = new_board.length;
-        let lastMove_Xi = this.move_stack[this.number_plays - 1][0];
-        let lastMove_Yi = this.move_stack[this.number_plays - 1][1];
+        let lastMove_Xi = this.move_stack[this.number_plays - 1][1][0];
+        let lastMove_Yi = this.move_stack[this.number_plays - 1][1][1];
 
         this.captured_pieces = [];
         for (let i = 0; i < board_size; i++) {
@@ -191,9 +191,12 @@ class LatrunculiXXI {
                     continue;
                 }
                 if (old_board[i][j] !== 0 && new_board[i][j] === 0) {
-                    this.captured_pieces.push([i, j]);
+                    this.captured_pieces.push([j, i]);
                 }
             }
+        }
+        if (this.captured_pieces.length > 0) {
+            dispatchEvent(new Event('pieceCapture', {}));
         }
     }
 

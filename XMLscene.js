@@ -219,7 +219,11 @@ XMLscene.prototype.updateGame = function(currTime) {
                 this.graph.piece_moving = false;
             }
         } else {
-            if (this.game.move([this.graph.last_selected_piece.position.x, this.graph.last_selected_piece.position.y, this.graph.last_selected_quad.position.x, this.graph.last_selected_quad.position.y])) {
+            if (this.game.move([this.graph.last_selected_piece.position.x,
+                    this.graph.last_selected_piece.position.y,
+                    this.graph.last_selected_quad.position.x,
+                    this.graph.last_selected_quad.position.y
+                ])) {
                 this.graph.initPieceAnimation();
             } else {
                 this.graph.last_selected_piece = null;
@@ -261,6 +265,8 @@ XMLscene.prototype.updatePick = function(player, withBoardPieces) {
     let changePick = function(value, key, map) {
         if (key > 100 && withBoardPieces) {
             value.isPickable = true;
+        } else if (value.position.x == -1 || value.position.y == -1) {
+            value.isPickable = false;
         } else if (value.nodeID.indexOf("white") != -1 && player == 1) {
             value.isPickable = true;
         } else if (value.nodeID.indexOf("black") != -1 && player == 1) {
