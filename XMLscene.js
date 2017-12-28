@@ -119,9 +119,15 @@ XMLscene.prototype.logPicking = function() {
                     let customId = this.pickResults[i][1];
                     console.log("Picked object: " + obj + ", with pick id " + customId);
 
-                    if (customId === this.graph.selectedNode)
+                    if (customId === this.graph.selectedNode){
                         this.graph.selectedNode = -1;
-                    else this.graph.selectedNode = customId;
+                    }
+                    else if (customId > 100 && this.graph.selectedNode < 100 && this.graph.selectedNode > 0){
+                        this.graph.selectedNode = customId;
+                    }
+                    else if (customId < 100){
+                        this.graph.selectedNode = customId;
+                    }
                 }
             }
             this.pickResults.splice(0, this.pickResults.length);

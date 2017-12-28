@@ -8,7 +8,7 @@ class MyPieceNode extends MyGraphNode{
     }
 
     moveToPosition() {
-        let newPosVec = vec3.fromValues(this.position.x + 0.5,5,this.position.y + 0.5);
+        let newPosVec = vec3.fromValues(this.position.x + 0.5,0.01,this.position.y + 0.5);
         mat4.fromTranslation(this.transformMatrix, newPosVec);
         this.world_position = mat4.getTranslation(vec4.create(), this.transformMatrix);
 

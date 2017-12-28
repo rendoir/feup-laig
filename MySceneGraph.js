@@ -80,7 +80,8 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                 this.rootGraphNode.addChild(new_piece);
                 this.selectableNodes[new_piece.nodeID] = line * 10 + col;
             }
-            let new_board_position = new MyPieceNode("pos_" + line*10 + col,position,"board_pos");
+            let pos_id = (line+1) * 100 + ((col+1) * 10);
+            let new_board_position = new MyPieceNode("pos_" + pos_id,position,"board_pos");
             new_board_position.initByModel(this.quad_model);
             if ((line+col) % 2 == 0){
                 new_board_position.materialID = "m_black_piece";
@@ -88,7 +89,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                 new_board_position.materialID = "m_white_piece";
             }
             new_board_position.rotateInX();
-            this.selectableNodes[new_board_position.nodeID] = (line+1) * 100 + (col * 10);
+            this.selectableNodes[new_board_position.nodeID] = pos_id;
             this.rootGraphNode.addChild(new_board_position);
         }
     }
