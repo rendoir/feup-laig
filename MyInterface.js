@@ -29,6 +29,10 @@ MyInterface.prototype.init = function(application) {
     return true;
 };
 
+MyInterface.prototype.addAvailableScenes = function(availableScenes){
+    this.gui.add(this.scene, 'currentScene',availableScenes);    
+}
+
 /**
  * Adds a folder containing the IDs of the lights passed as parameter.
  */

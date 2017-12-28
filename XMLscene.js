@@ -11,6 +11,8 @@ function XMLscene(interface) {
     this.interface = interface;
 
     this.lightValues = {};
+    this.availableScenes = ["classic", "futuristic"];
+    this.currentScene = this.availableScenes[0];
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -107,6 +109,7 @@ XMLscene.prototype.onGraphLoaded = function() {
     this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
     this.initLights();
+    this.interface.addAvailableScenes(this.availableScenes);
 };
 
 
