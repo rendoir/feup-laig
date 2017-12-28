@@ -248,6 +248,7 @@ XMLscene.prototype.setPlayer = function(player) {
         this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 270);
     else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
     this.ui.update();
+    this.scene.updatePick(this.scene.turn, false);
 };
 
 XMLscene.prototype.updatePick = function(player, withBoardPieces) {
