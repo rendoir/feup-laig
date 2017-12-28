@@ -1836,12 +1836,12 @@ MySceneGraph.prototype.initPieceAnimation = function() {
     let z_diff = this.last_selected_quad.position.y - this.last_selected_piece.position.y;
     let control_points = [
         [0, 0, 0],
-        [0, 10, 0],
-        [x_diff, 10, z_diff],
+        [0, 8, 0],
+        [x_diff, 8, z_diff],
         [x_diff, 0, z_diff]
     ];
     this.last_selected_piece.initialTimestamp = -1;
-    this.last_selected_piece.animation = new BezierAnimation(5, control_points);
+    this.last_selected_piece.animation = new BezierAnimation(10, control_points);
     this.last_selected_piece.position.x = this.last_selected_quad.position.x;
     this.last_selected_piece.position.y = this.last_selected_quad.position.y;
 }

@@ -220,7 +220,13 @@ XMLscene.prototype.updateGame = function(currTime) {
                 this.graph.piece_moving = false;
             }
         } else {
-            this.graph.initPieceAnimation();
+            if (this.game.move([this.graph.last_selected_piece.position.x, this.graph.last_selected_piece.position.y, this.graph.last_selected_quad.position.x, this.graph.last_selected_quad.position.y])) {
+                this.graph.initPieceAnimation();
+            } else {
+                this.graph.last_selected_piece = null;
+                this.graph.last_selected_quad = null;
+                this.graph.selectedNode = -1;
+            }
         }
     }
     if (this.turn !== this.game.turn) {
