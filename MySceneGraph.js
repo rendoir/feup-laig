@@ -35,6 +35,7 @@ function MySceneGraph(filename, scene) {
 
     this.last_selected_quad = null;
     this.last_selected_piece = null;
+    this.piece_moving = false;
 
     // File reading
     this.reader = new CGFXMLreader();
@@ -1828,5 +1829,12 @@ MySceneGraph.prototype.setPickableNode = function(node, pickable) {
 }
 
 MySceneGraph.prototype.initPieceAnimation = function () {
-    //this.last_selected_piece.position.x;
+    this.piece_moving = true;
+    let control_points = [
+            [0, 0, 0],
+            [0, 10, 0],
+            [5, 10, 5],
+            [5, 0, 5]
+    ];
+    this.last_selected_piece.animation = new BezierAnimation(5, control_points);
 }
