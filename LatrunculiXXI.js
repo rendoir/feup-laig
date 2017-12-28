@@ -4,9 +4,9 @@ class LatrunculiXXI {
         this.board_stack = [];
         this.move_stack = [];
         this.turn = 1; //1 or 2
-        this.type = "player"; //"player" or "bot"
         this.playerOneType = "player"; //"player" or "bot"
-        this.playerTwoType = "player"; //"player" or "bot"
+        this.playerTwoType = "bot"; //"player" or "bot"
+        this.type = this.playerOneType; //"player" or "bot"
         this.number_plays = 0;
         this.captured_pieces = [];
     }
@@ -18,6 +18,7 @@ class LatrunculiXXI {
     addBoard(board) {
         this.number_plays++;
         this.board_stack[this.number_plays] = board;
+        this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
         this.turn = (this.turn === 1) ? 2 : 1;
         this.calculateCapturedPieces();
         this.getAllMoves();
@@ -90,6 +91,7 @@ class LatrunculiXXI {
             this.board_stack.pop();
             this.move_stack.pop();
             this.number_plays--;
+            this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
             this.turn = (this.turn === 1) ? 2 : 1;
             return true;
         } else {
