@@ -40,6 +40,10 @@
       <file path="images/abajur.png" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
+    <TEXTURE id="t_marble">
+      <file path="images/table/marble.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
   </TEXTURES>
 
 
@@ -98,6 +102,7 @@
         <NODEREF id="dux"/>
         <NODEREF id="soldier"/>
         <NODEREF id="lamp" />
+        <NODEREF id="table" />
       </DESCENDANTS>
     </NODE>
     
@@ -178,6 +183,83 @@
       <ROTATION axis="z" angle="180" />
       <DESCENDANTS>
         <LEAF type="rectangle" args="0 0.5 8 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="box">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="box_top" />
+        <NODEREF id="box_bottom" />
+        <NODEREF id="box_left" />
+        <NODEREF id="box_right" />
+        <NODEREF id="box_front" />
+        <NODEREF id="box_back" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="box_top">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="1" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 1 1 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="box_bottom">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="1" y="-1" z="0" />
+      <ROTATION axis="z" angle="180" />
+      <ROTATION axis="y" angle="270" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 1 1 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="box_front">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_board_side" />
+      <TRANSLATION x="0" y="-1" z="1" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 1 1 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="box_left">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_board_side" />
+      <TRANSLATION x="0" y="0" z="1" />
+      <ROTATION axis="y" angle="-90" />
+      <ROTATION axis="z" angle="180" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 1 1 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="box_right">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_board_side" />
+      <TRANSLATION x="1" y="0" z="0" />
+      <ROTATION axis="z" angle="180" />
+      <ROTATION axis="y" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 1 1 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="box_back">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_board_side" />
+      <TRANSLATION x="1" y="-1" z="0" />
+      <ROTATION axis="x" angle="180" />
+      <ROTATION axis="z" angle="180" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 1 1 0" />
       </DESCENDANTS>
     </NODE>
 
@@ -567,6 +649,25 @@
         <LEAF type="sphere" args="1 32 32" />
       </DESCENDANTS>
     </NODE>
+
+    <NODE id="table">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="table_top" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="table_top">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_marble" />
+      <TRANSLATION x="-2" y="-0.5" z="-2"/>
+      <SCALE sx="12" sy="1" sz="12" />
+      <DESCENDANTS>
+        <NODEREF id="box" />
+      </DESCENDANTS>
+    </NODE>
+
 
   </NODES>
 
