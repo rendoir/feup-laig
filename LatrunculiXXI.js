@@ -157,6 +157,7 @@ class LatrunculiXXI {
         this.move_stack[this.number_plays] = [this.turn, move];
         let request = createRequest('move', [this.turn, JSON.stringify(move), this.getCurrentBoardString()], reply.bind(this));
         prologRequest(request);
+        return true;
     }
 
     /**
