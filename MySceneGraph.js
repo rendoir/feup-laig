@@ -36,7 +36,7 @@ function MySceneGraph(filename, scene) {
     // File reading
     this.reader = new CGFXMLreader();
 
-    document.addEventListener('gameLoaded', this.initializeBoard.bind(this));
+    addEventListener('gameLoaded', this.initializeBoard.bind(this));
     /*
      * Read the contents of the xml file, and refer to this class for loading and error handlers.
      * After the file is read, the reader calls onXMLReady on this object.
@@ -49,6 +49,7 @@ function MySceneGraph(filename, scene) {
 MySceneGraph.prototype.initializeBoard = function(event) {
     let data = event.detail;
     let new_piece = null;
+    this.mapCoordsPiece = new Map();
     for (let line = 0; line < 8; line++) {
         for (let col = 0; col < 8; col++) {
 
@@ -75,6 +76,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                     new_piece.initByModel(this.dux_model);
                     new_piece.materialID = "m_black_piece";
                 }
+                this.mapCoordsPiece.set([col, line], new_piece);
                 this.rootGraphNode.addChild(new_piece);
                 this.selectableNodes[new_piece.nodeID] = line * 10 + col;
             }
