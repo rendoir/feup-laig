@@ -1833,9 +1833,10 @@ MySceneGraph.prototype.setPickableNode = function(node, pickable) {
 MySceneGraph.prototype.initPieceAnimation = function() {
     this.piece_moving = true;
     let control_points = [
-            [0, 0, 0],
-            [0, 10, 0],
-            [0,0,0]
-    ];
-    this.last_selected_piece.animation = new LinearAnimation(control_points,5);
+        [0, 0, 0],
+        [0, 10, 0],
+        [5, 10, 5],
+        [5, 0, 5]
+];
+    this.last_selected_piece.animation = new BezierAnimation(5,control_points);
 }
