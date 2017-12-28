@@ -105,7 +105,8 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
-}
+    this.scene.updatePick(this.scene.turn);
+};
 
 
 /*
@@ -1827,6 +1828,6 @@ MySceneGraph.prototype.setPickableNode = function(node, pickable) {
     });
 }
 
-MySceneGraph.prototype.initPieceAnimation = function () {
+MySceneGraph.prototype.initPieceAnimation = function() {
     //this.last_selected_piece.position.x;
 }
