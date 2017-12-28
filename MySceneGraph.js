@@ -1661,18 +1661,32 @@ MySceneGraph.prototype.displayScene = function() {
     this.displayNode(this.rootGraphNode, material_stack, texture_stack);
 
     if (this.selectedNodeRef != null) {
-        let previous_shader = this.scene.activeShader;
-        this.scene.setActiveShader(this.scene.outline_shader);
-        this.scene.updateProjectionMatrix();
-        this.scene.gl.cullFace(this.scene.gl.FRONT);
+        if (this.selectedNodeRef.class === "piece") {
+            let previous_shader = this.scene.activeShader;
+            this.scene.setActiveShader(this.scene.outline_shader);
+            this.scene.updateProjectionMatrix();
+            this.scene.gl.cullFace(this.scene.gl.FRONT);
 
-        this.scene.multMatrix(this.selectedNodeRef.animationMatrix);
-        this.scene.multMatrix(this.selectedNodeRef.transformMatrix);
+            this.scene.multMatrix(this.selectedNodeRef.animationMatrix);
+            this.scene.multMatrix(this.selectedNodeRef.transformMatrix);
 
-        this.displayOutline(this.selectedNodeRef);
+            this.displayOutline(this.selectedNodeRef);
 
-        this.scene.gl.cullFace(this.scene.gl.BACK);
-        this.scene.setActiveShader(previous_shader);
+            this.scene.gl.cullFace(this.scene.gl.BACK);
+            this.scene.setActiveShader(previous_shader);
+        } else if (this.selectedNodeRef.class === "board_position") {
+            let previous_shader = this.scene.activeShader;
+            this.scene.setActiveShader(this.scene.highlight_shader);
+            this.scene.gl.uniform1f(this.scene.highlight_shader.uniforms.alpha, Math.sin(performance.now() * 0.005));
+            this.scene.updateProjectionMatrix();
+
+            this.scene.multMatrix(this.selectedNodeRef.animationMatrix);
+            this.scene.multMatrix(this.selectedNodeRef.transformMatrix);
+
+            this.displayOutline(this.selectedNodeRef);
+
+            this.scene.setActiveShader(previous_shader);
+        }
 
         this.selectedNodeRef = null;
     }
