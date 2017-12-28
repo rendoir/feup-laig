@@ -77,7 +77,7 @@ class LatrunculiXXI {
         let reply = function(data) {
             this.board_stack[this.number_plays] = data.board;
             this.getAllMoves();
-            document.dispatchEvent(new CustomEvent('gameLoaded', { detail: data.board }));
+            dispatchEvent(new CustomEvent('gameLoaded', { detail: data.board }));
         };
         let request = createRequest('initialBoard', null, reply.bind(this));
         return prologRequest(request);
