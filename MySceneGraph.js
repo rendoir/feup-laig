@@ -64,7 +64,15 @@ MySceneGraph.prototype.initializeBoard = function(event) {
         for (let col = 0; col < 8; col++) {
 
             const current_data = data[line][col];
+<<<<<<< HEAD
             position = {
+=======
+            let position = {
+                x: col,
+                y: line
+            };
+            let position2 = {
+>>>>>>> 0586fee43b18115dfac097c77b4c2547e088b215
                 x: col,
                 y: line
             };
@@ -93,7 +101,11 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                 this.mapPickId_to_Piece.set(pickId, new_piece);
             }
             let pos_id = (line + 1) * 100 + ((col + 1) * 10);
+<<<<<<< HEAD
             let new_board_position = new MyPieceNode("pos_" + pos_id, Object.assign({}, position), "board_pos");
+=======
+            let new_board_position = new MyPieceNode("pos_" + pos_id, position2, "board_pos");
+>>>>>>> 0586fee43b18115dfac097c77b4c2547e088b215
             new_board_position.initByModel(this.quad_model);
             if ((line + col) % 2 == 0) {
                 new_board_position.materialID = "m_black_piece";
