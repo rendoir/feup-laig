@@ -40,10 +40,10 @@ function MySceneGraph(filename, scene, id) {
 
     this.createEventHandlers();
     this.createEventListeners();
-}
+};
 
-MySceneGraph.prototype.loadNewScene = function(filename){
-
+MySceneGraph.prototype.loadNewScene = function(filename) {
+    this.loadedOk = null;
     /*
      * Read the contents of the xml file, and refer to this class for loading and error handlers.
      * After the file is read, the reader calls onXMLReady on this object.
@@ -53,8 +53,8 @@ MySceneGraph.prototype.loadNewScene = function(filename){
     this.nodeIDToIndex = [];
     this.animations = [];
     this.reader = new CGFXMLreader();
-    this.reader.open('scenes/' + filename,this);
-}
+    this.reader.open('scenes/' + filename, this);
+};
 
 MySceneGraph.prototype.createEventListeners = function() {
     addEventListener('gameLoaded', this.gameLoadedHandler);
@@ -1632,7 +1632,7 @@ MySceneGraph.prototype.parseNodesXMLTag = function(nodesNode) {
         return "Invalid Root ID";
     }
     this.rootGraphNode = this.parseNode(this.xmlNodes[this.nodeIDToIndex[this.idRoot]]);
-    if (this.allPiecesNode.children.length > 0){
+    if (this.allPiecesNode.children.length > 0) {
         this.rootGraphNode.addChild(this.allPiecesNode);
     }
 
