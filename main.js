@@ -58,10 +58,11 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
         app.init();
         app.setScene(myScene);
         app.setInterface(myInterface);
-        
-        
+
+
 
         myInterface.setActiveCamera(myScene.camera);
+        myInterface.addCameraMoving();
 
         // get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
         // or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor)
@@ -69,7 +70,7 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
 
         // create and load graph, and associate it to scene.
         // Check console for loading errors
-        var myGraph = new MySceneGraph(filename, myScene,1);
+        var myGraph = new MySceneGraph(filename, myScene, 1);
 
         // start
         app.run();

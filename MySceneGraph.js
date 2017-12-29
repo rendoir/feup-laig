@@ -53,19 +53,19 @@ function MySceneGraph(filename, scene, id) {
     this.reader.open('scenes/' + filename, this);
 }
 
-MySceneGraph.prototype.createEventListeners = function(){
+MySceneGraph.prototype.createEventListeners = function() {
     addEventListener('gameLoaded', this.gameLoadedHandler);
     addEventListener('pieceCapture', this.pieceCaptureHandler);
     addEventListener('gameOver', this.gameOverHandler);
     addEventListener('receivedMove', this.receivedMoveHandler);
-}
+};
 
-MySceneGraph.prototype.createEventHandlers = function(){
+MySceneGraph.prototype.createEventHandlers = function() {
     this.gameLoadedHandler = this.initializeBoard.bind(this);
     this.pieceCaptureHandler = this.pieceCaptureHandler.bind(this);
     this.gameOverHandler = this.onGameOver.bind(this);
     this.receivedMoveHandler = this.receivedMove.bind(this);
-}
+};
 
 /**
  * Function to initialize the board scene 

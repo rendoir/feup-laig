@@ -1,36 +1,37 @@
  /**
- * MyInterface class, creating a GUI interface.
- * @constructor
- */
-function MyInterface() {
-    //call CGFinterface constructor 
-    CGFinterface.call(this);
-}
-;
+  * MyInterface class, creating a GUI interface.
+  * @constructor
+  */
+ function MyInterface() {
+     //call CGFinterface constructor 
+     CGFinterface.call(this);
+ }
 
-MyInterface.prototype = Object.create(CGFinterface.prototype);
-MyInterface.prototype.constructor = MyInterface;
+ MyInterface.prototype = Object.create(CGFinterface.prototype);
+ MyInterface.prototype.constructor = MyInterface;
 
-/**
- * Initializes the interface.
- * @param {CGFapplication} application
- */
-MyInterface.prototype.init = function(application) {
-    // call CGFinterface init
-    CGFinterface.prototype.init.call(this, application);
+ /**
+  * Initializes the interface.
+  * @param {CGFapplication} application
+  */
+ MyInterface.prototype.init = function(application) {
+     // call CGFinterface init
+     CGFinterface.prototype.init.call(this, application);
 
-    // init GUI. For more information on the methods, check:
-    //  http://workshop.chromeexperiments.com/examples/gui
-    
-    this.gui = new dat.GUI();
+     // init GUI. For more information on the methods, check:
+     //  http://workshop.chromeexperiments.com/examples/gui
 
-    // add a group of controls (and open/expand by defult)
-    
-    return true;
-};
+     this.gui = new dat.GUI();
 
-MyInterface.prototype.addAvailableScenes = function(availableScenes){
-    return this.gui.add(this.scene, 'currentScene',availableScenes);    
-}
+     // add a group of controls (and open/expand by defult)
 
+     return true;
+ };
 
+ MyInterface.prototype.addAvailableScenes = function(availableScenes) {
+     return this.gui.add(this.scene, 'currentScene', availableScenes);
+ };
+
+ MyInterface.prototype.addCameraMoving = function() {
+     return this.gui.add(this, 'disableCamera');
+ };

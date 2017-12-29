@@ -121,7 +121,7 @@ XMLscene.prototype.onSceneChange = function(newScene) {
     removeEventListener('gameLoaded', this.graph.gameLoadedHandler);
     removeEventListener('pieceCapture', this.pieceCaptureHandler);
     removeEventListener('gameOver', this.graph.gameOverHandler);
-    removeEventListener('receivedMove',this.graph.receivedMoveHandler);
+    removeEventListener('receivedMove', this.graph.receivedMoveHandler);
     let nextId = this.graph.id + 1;
     this.graph = null;
     let new_graph = new MySceneGraph(newScene + ".xml", this, nextId);
@@ -270,7 +270,7 @@ XMLscene.prototype.updateCamera = function(currTime) {
     }
 };
 
-XMLscene.prototype.setPlayer = function (player) {
+XMLscene.prototype.setPlayer = function(player) {
     if (!this.game.game_over) {
         this.cameraMoving = true;
         this.initial_camera_timestamp = performance.now();
