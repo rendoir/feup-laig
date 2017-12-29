@@ -1913,6 +1913,8 @@ MySceneGraph.prototype.initReverseCaptureAnimation = function() {
         return;
     }
     let piece = this.captured_pieces[this.captured_pieces.length - 1];
+    this.captured_pieces.pop();
+    this.mapCoords_to_Piece.get(piece.position.x).set(piece.position.y, piece);
     let side_board_position;
 
     if (piece.nodeID.indexOf("white") != -1) {
@@ -1931,9 +1933,6 @@ MySceneGraph.prototype.initReverseCaptureAnimation = function() {
     ];
     piece.initialTimestamp = -1;
     piece.animation = new BezierAnimation(20, control_points);
-
-    this.captured_pieces.pop();
-    this.mapCoords_to_Piece.get(piece.position.x).set(piece.position.y, piece);
 }
 
 MySceneGraph.prototype.pieceCaptureHandler = function(event) {

@@ -133,6 +133,10 @@ class LatrunculiXXI {
             this.number_plays--;
             this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
             this.turn = (this.turn === 1) ? 2 : 1;
+            if (this.game_over) {
+                this.game_over = false;
+                this.winner = null;
+            }
             this.getAllMoves();
             dispatchEvent(new Event('undoCapture', {}));
             dispatchEvent(new CustomEvent('receivedMove', {
