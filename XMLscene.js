@@ -104,7 +104,6 @@ XMLscene.prototype.onGraphLoaded = function() {
         this.game.initBoard();
     } else {
         let current_board = this.game.getCurrentBoard();
-        dispatchEvent(new CustomEvent('gameLoaded', { detail: current_board }));
     }
     this.axis = new CGFaxis(this, this.graph.referenceLength);
 
@@ -118,13 +117,7 @@ XMLscene.prototype.onGraphLoaded = function() {
 
 XMLscene.prototype.onSceneChange = function(newScene) {
     this.isFirstScene = false;
-    removeEventListener('gameLoaded', this.graph.gameLoadedHandler);
-    removeEventListener('pieceCapture', this.graph.pieceCaptureHandler);
-    removeEventListener('gameOver', this.graph.gameOverHandler);
-    removeEventListener('receivedMove',this.graph.receivedMoveHandler);
-    let nextId = this.graph.id + 1;
-    this.graph = null;
-    let new_graph = new MySceneGraph(newScene + ".xml", this, nextId);
+    this.graph.loadNewScene(newScene+".xml");
 }
 
 XMLscene.prototype.logPicking = function() {
@@ -229,7 +222,6 @@ XMLscene.prototype.updateGame = function(currTime) {
                 mat4.identity(this.graph.last_selected_piece.animationMatrix);
                 this.graph.last_selected_piece.animation = null;
                 this.graph.last_selected_piece.initialTimestamp = -1;
-
                 this.graph.last_selected_piece = null;
                 this.graph.last_selected_quad = null;
                 this.graph.selectedNode = -1;

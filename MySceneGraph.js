@@ -13,14 +13,10 @@ let NODES_INDEX = 6;
  */
 function MySceneGraph(filename, scene, id) {
     this.loadedOk = null;
-    this.id = id;
     // Establish bidirectional references between scene and graph.
     this.scene = scene;
     scene.graph = this;
-
-    this.rootGraphNode = null;
-    this.nodeIDToIndex = [];
-    this.animations = [];
+    this.allPiecesNode = new MyGraphNode('all_pieces');
     this.selectableNodes = {};
     this.selectedNode = -1;
     this.selectedNodeRef = null;
@@ -40,17 +36,24 @@ function MySceneGraph(filename, scene, id) {
     this.captured_pieces_white = [];
 
     // File reading
-    this.reader = new CGFXMLreader();
+    this.loadNewScene(filename);
 
     this.createEventHandlers();
     this.createEventListeners();
+}
+
+MySceneGraph.prototype.loadNewScene = function(filename){
+
     /*
      * Read the contents of the xml file, and refer to this class for loading and error handlers.
      * After the file is read, the reader calls onXMLReady on this object.
      * If any error occurs, the reader calls onXMLError on this object, with an error message
      */
-
-    this.reader.open('scenes/' + filename, this);
+    this.rootGraphNode = null;
+    this.nodeIDToIndex = [];
+    this.animations = [];
+    this.reader = new CGFXMLreader();
+    this.reader.open('scenes/' + filename,this);
 }
 
 MySceneGraph.prototype.createEventListeners = function(){
@@ -106,7 +109,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                     new_piece.initByModel(this.dux_model);
                     new_piece.materialID = "m_black_piece";
                 }
-                this.rootGraphNode.addChild(new_piece);
+                this.allPiecesNode.addChild(new_piece);
                 let pickId = line * 10 + col;
                 this.selectableNodes[new_piece.nodeID] = pickId;
                 let map = this.mapCoords_to_Piece.get(new_piece.position.x);
@@ -124,7 +127,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                 new_board_position.materialID = "m_white_piece";
             }
             new_board_position.rotateInX();
-            this.rootGraphNode.addChild(new_board_position);
+            this.allPiecesNode.addChild(new_board_position);
             this.selectableNodes[new_board_position.nodeID] = pos_id;
             let map = this.mapCoords_to_Quad.get(new_board_position.position.x);
             if (map == null)
@@ -133,6 +136,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
+    this.rootGraphNode.addChild(this.allPiecesNode);
     this.scene.updatePick(this.scene.turn, false);
 };
 
@@ -1596,6 +1600,8 @@ MySceneGraph.prototype.parseNodesXMLTag = function(nodesNode) {
 
     // Traverses nodes.
     this.xmlNodes = nodesNode.children;
+    this.idRoot = null;
+    this.nodeIDToIndex = [];
 
     for (let i = 0; i < this.xmlNodes.length; i++) {
         let nodeName;
@@ -1626,6 +1632,9 @@ MySceneGraph.prototype.parseNodesXMLTag = function(nodesNode) {
         return "Invalid Root ID";
     }
     this.rootGraphNode = this.parseNode(this.xmlNodes[this.nodeIDToIndex[this.idRoot]]);
+    if (this.allPiecesNode.children.length > 0){
+        this.rootGraphNode.addChild(this.allPiecesNode);
+    }
 
     console.log("Parsed nodes");
     return null;
