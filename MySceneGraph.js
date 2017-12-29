@@ -1496,7 +1496,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
             let type = this.reader.getItem(child, 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
             let argsString = this.reader.getString(child, 'args').trim();
             let argsArray = argsString.split(" ");
-            if (type === "rectangle" || type === "triangle") {
+            if (type === "rectangle" || type === "triangle" || type === 'sphere') {
                 let textureID = textureStack[textureStack.length - 1];
                 let currentTexture = this.textures[textureID];
                 let afs = null,

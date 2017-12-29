@@ -2,11 +2,13 @@
  * Sphere
  * @constructor
  */
-function Sphere(scene, radius, slices, stacks) {
+function Sphere(scene, radius, slices, stacks, uFactor, vFactor) {
     CGFobject.call(this, scene);
     this.radius = radius;
     this.slices = slices;
     this.stacks = stacks;
+    this.uFactor = uFactor;
+    this.vFactor = vFactor;
     this.initBuffers();
 };
 
@@ -31,7 +33,7 @@ Sphere.prototype.initBuffers = function() {
             var u = 1 - (slice / this.slices);
             this.vertices.push(x, y, z);
             this.normals.push(x, y, z);
-            this.texCoords.push(u, v);
+            this.texCoords.push(u * this.uFactor, v * this.vFactor);
             theta += 2 * Math.PI / this.slices;
         }
         theta = 0.0;

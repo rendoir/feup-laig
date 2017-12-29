@@ -56,7 +56,7 @@ MyGraphLeaf.prototype.initCylinder = function() {
  */
 MyGraphLeaf.prototype.initSphere = function() {
     if (this.args_array.length == 3)
-        this.primitive = new Sphere(this.scene, parseFloat(this.args_array[0]), parseInt(this.args_array[1]), parseInt(this.args_array[2]));
+        this.primitive = new Sphere(this.scene, parseFloat(this.args_array[0]), parseInt(this.args_array[1]), parseInt(this.args_array[2]), this.afs, this.aft);
     else console.log("Invalid arguments for a sphere");
 };
 
