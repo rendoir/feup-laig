@@ -87,6 +87,13 @@
       <ambient r="1.0" g="1.0" b="1.0" a="1" />
       <emission r="1.0" g="1.0" b="1.0" a="1" />
     </MATERIAL>
+    <MATERIAL id="m_wood">
+      <shininess value="6" />
+      <specular r="1.0" g="0.67" b="0.46" a="1" />
+      <diffuse r="0.6" g="0.27" b="0.06" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
   </MATERIALS>
 
 
@@ -655,7 +662,7 @@
     </NODE>
 
     <NODE id="table">
-      <MATERIAL id="null" />
+      <MATERIAL id="m_wood" />
       <TEXTURE id="null" />
       <DESCENDANTS>
         <NODEREF id="table_top" />
@@ -664,7 +671,7 @@
     </NODE>
 
     <NODE id="table_top">
-      <MATERIAL id="m_white_piece" />
+      <MATERIAL id="null" />
       <TEXTURE id="t_wood" />
       <TRANSLATION x="-2" y="-0.5" z="-2"/>
       <SCALE sx="12" sy="1" sz="12" />
