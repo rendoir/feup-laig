@@ -36,6 +36,9 @@ function MySceneGraph(filename, scene, id) {
     this.white_pieces_captured = 0;
     this.black_pieces_captured = 0;
 
+    this.black_score = 0;
+    this.white_score = 0;
+
     // File reading
     this.loadNewScene(filename);
 

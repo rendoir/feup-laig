@@ -4,8 +4,8 @@ class UserInterface {
         this.game = game;
         this.gl = scene.gl;
         this.init();
+        this.updatePlayer();
         this.update();
-        this.updateTimer();
     };
 
     init() {
@@ -71,6 +71,7 @@ class UserInterface {
         this.ui_elements["game_over"] = game_over;
 
         this.initTimer(text_coords, indices);
+        this.initCounter(text_coords, indices);
 
         //Init shader
         this.ui_shader = new CGFshader(this.gl, '../lib/CGF/shaders/UI/ui_vertex.glsl', '../lib/CGF/shaders/UI/ui_frag.glsl');
@@ -108,6 +109,9 @@ class UserInterface {
         this.ui_elements["separator"].render();
         this.ui_elements["seconds0"].render();
         this.ui_elements["seconds1"].render();
+        this.ui_elements["white_score"].render();
+        this.ui_elements["minus"].render();
+        this.ui_elements["black_score"].render();
         if (!this.game.game_over) {
             this.ui_elements[this.current_type].render();
             this.ui_elements[this.current_turn].render();
@@ -120,12 +124,12 @@ class UserInterface {
         this.scene.setActiveShader(previous_shader);
     };
 
-    update() {
+    updatePlayer() {
         this.current_type = this.game.type;
         this.current_turn = "player" + this.game.turn;
     };
 
-    updateTimer() {
+    update() {
         let now = performance.now();
         let diff = now - this.initTime;
         let seconds = Math.floor((diff % (1000 * 60)) / 1000);
@@ -135,6 +139,11 @@ class UserInterface {
         this.ui_elements["minutes1"].texture = this.timer_textures[minutes % 10];
         this.ui_elements["seconds0"].texture = this.timer_textures[Math.floor(seconds / 10)];
         this.ui_elements["seconds1"].texture = this.timer_textures[seconds % 10];
+
+        if (this.scene.graph) {
+            this.ui_elements["white_score"].texture = this.timer_textures[this.scene.graph.white_score];
+            this.ui_elements["black_score"].texture = this.timer_textures[this.scene.graph.black_score];
+        }
     }
 
     initTimer(text_coords, indices) {
@@ -161,5 +170,23 @@ class UserInterface {
         this.ui_elements["separator"].texture = this.timer_textures[10];
 
         this.initTime = performance.now();
+    }
+
+    initCounter(text_coords, indices) {
+        let ids = ["white_score", "minus", "black_score"];
+        let width = 0.03;
+        let space_between = 0.005;
+        let initial_x = -0.95 - space_between;
+        for (let i = 0; i < ids.length; i++) {
+            let vertices = [
+                i * width + (i + 1) * space_between + initial_x, 0.85,
+                (i + 1) * width + (i + 1) * space_between + initial_x, 0.85,
+                i * width + (i + 1) * space_between + initial_x, 0.8,
+                (i + 1) * width + (i + 1) * space_between + initial_x, 0.8
+            ];
+            this.ui_elements[ids[i]] = new UIElement(this.scene, vertices, text_coords, indices);
+        }
+        this.timer_textures[11] = new CGFtexture(this.scene, "./scenes/" + "images/numbers/minus.png");
+        this.ui_elements["minus"].texture = this.timer_textures[11];
     }
 };

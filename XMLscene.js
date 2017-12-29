@@ -240,7 +240,7 @@ XMLscene.prototype.updateGame = function(currTime) {
         }
     }
     if (!this.game.game_over) {
-        this.ui.updateTimer();
+        this.ui.update();
     }
     if (this.turn !== this.game.turn && !this.graph.piece_moving && !this.cameraMoving && !this.game.game_over) {
         this.turn = this.game.turn;
@@ -269,7 +269,7 @@ XMLscene.prototype.setPlayer = function(player) {
             this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 180);
         else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
         this.updatePick(this.turn, false);
-        this.ui.update();
+        this.ui.updatePlayer();
     }
 };
 
