@@ -1904,6 +1904,8 @@ MySceneGraph.prototype.initCaptureAnimation = function(piece_position) {
 
     piece.position.x = -1;
     piece.position.y = -1;
+
+    this.mapCoords_to_Piece.get(piece_position[0]).delete(piece_position[1]);
 }
 
 MySceneGraph.prototype.pieceCaptureHandler = function(event) {
