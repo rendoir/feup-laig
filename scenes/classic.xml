@@ -48,6 +48,18 @@
       <file path="images/table/fine_wood.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
+    <TEXTURE id="t_floor">
+      <file path="images/floor.jpg" />
+      <amplif_factor s="20" t="20" />
+    </TEXTURE>
+    <TEXTURE id="t_center_floor">
+      <file path="images/center_floor.jpg" />
+      <amplif_factor s="20" t="20" />
+    </TEXTURE>
+    <TEXTURE id="t_ceiling">
+      <file path="images/ceiling.jpg" />
+      <amplif_factor s="10" t="10" />
+    </TEXTURE>
   </TEXTURES>
 
 
@@ -94,6 +106,13 @@
       <ambient r="0.1" g="0.1" b="0.1" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
+    <MATERIAL id="m_house">
+      <shininess value="1" />
+      <specular r="1.0" g="1.0" b="1.0" a="1" />
+      <diffuse r="1.0" g="1.0" b="1.0" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
   </MATERIALS>
 
 
@@ -113,11 +132,14 @@
         <NODEREF id="dux"/>
         <NODEREF id="soldier"/>
         <NODEREF id="table" />
+        <NODEREF id="ceiling" />
+        <NODEREF id="center_floor" />
+        <NODEREF id="floor" />
         <NODEREF id="lamp" />
       </DESCENDANTS>
     </NODE>
-    
-    
+
+
     <!-- Board -->
 
     <NODE id="board">
@@ -282,8 +304,8 @@
         <LEAF type="rectangle" args="-0.5 0.5 0.5 -0.5"/>
       </DESCENDANTS>
     </NODE>
-    
-    
+
+
     <!-- Dux -->
 
     <NODE id="dux" class="piece">
@@ -376,7 +398,7 @@
 
     <NODE id="dux_cross_right">
       <MATERIAL id="null" />
-      <TEXTURE id="null" />  
+      <TEXTURE id="null" />
       <ROTATION axis="y" angle="180" />
       <DESCENDANTS>
         <NODEREF id="dux_cross_left"/>
@@ -457,7 +479,7 @@
         <LEAF type="sphere" args="0.26 32 32" />
       </DESCENDANTS>
     </NODE>
-    
+
     <NODE id="dux_body2">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -489,7 +511,7 @@
         <LEAF type="sphere" args="0.225 32 32" />
       </DESCENDANTS>
     </NODE>
-    
+
     <NODE id="dux_neck">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -500,7 +522,7 @@
         <LEAF type="sphere" args="0.3 32 32" />
       </DESCENDANTS>
     </NODE>
-    
+
     <NODE id="dux_body">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -510,7 +532,7 @@
         <LEAF type="cylinder" args="1 0.24 0.18 32 32 0 0" />
       </DESCENDANTS>
     </NODE>
-    
+
     <NODE id="dux_ellipsoid2">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -521,7 +543,7 @@
         <LEAF type="sphere" args="0.3 32 32" />
       </DESCENDANTS>
     </NODE>
-    
+
     <NODE id="dux_ellipsoid">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -542,8 +564,8 @@
         <LEAF type="sphere" args="0.5 32 32" />
       </DESCENDANTS>
     </NODE>
-    
-    
+
+
     <!-- Soldier -->
 
     <NODE id="soldier" class="piece">
@@ -559,7 +581,7 @@
         <NODEREF id="soldier_base" />
       </DESCENDANTS>
     </NODE>
-    
+
     <NODE id="soldier_head">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -569,7 +591,7 @@
         <LEAF type="sphere" args="0.35 32 32" />
       </DESCENDANTS>
     </NODE>
-    
+
     <NODE id="soldier_neck2">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -579,7 +601,7 @@
         <LEAF type="cylinder" args="0.1 0.25 0.155 32 32 0 0" />
       </DESCENDANTS>
     </NODE>
-    
+
     <NODE id="soldier_neck">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -589,7 +611,7 @@
         <LEAF type="cylinder" args="0.1 0.155 0.25 32 32 0 0" />
       </DESCENDANTS>
     </NODE>
-    
+
     <NODE id="soldier_body">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -599,7 +621,7 @@
         <LEAF type="cylinder" args="0.75 0.225 0.155 32 32 0 0" />
       </DESCENDANTS>
     </NODE>
-    
+
     <NODE id="soldier_ellipsoid2">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -610,7 +632,7 @@
         <LEAF type="sphere" args="0.3 32 32" />
       </DESCENDANTS>
     </NODE>
-    
+
     <NODE id="soldier_ellipsoid">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -631,6 +653,71 @@
         <LEAF type="sphere" args="0.5 32 32" />
       </DESCENDANTS>
     </NODE>
+
+
+    <!-- House -->
+    <NODE id="center_floor">
+      <MATERIAL id="m_house" />
+      <TEXTURE id="t_center_floor" />
+      <TRANSLATION x="14" y="-5.9" z="-6" />
+      <ROTATION axis="y" angle="180" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 20 20 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="floor">
+      <MATERIAL id="m_house" />
+      <TEXTURE id="t_floor" />
+      <TRANSLATION x="-16" y="-6" z="24" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 40 40 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="ceiling">
+      <MATERIAL id="m_house" />
+      <TEXTURE id="t_ceiling" />
+      <TRANSLATION x="-16" y="19" z="-16" />
+      <ROTATION axis="x" angle="90" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 40 40 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- 
+<NODE id="walls">
+  <MATERIAL id="m_walls" />
+  <TEXTURE id="clear" />
+  <DESCENDANTS>
+    <NODEREF id="left_wall" />
+    <NODEREF id="right_wall" />
+        <NODEREF id="back_wall" />
+        <NODEREF id="front_wall" />
+  </DESCENDANTS>
+</NODE>
+
+<NODE id="left_wall">
+  <MATERIAL id="null" />
+  <TEXTURE id="clear" />
+  <TRANSLATION x="-16" y="-6" z="24" />
+  <ROTATION axis="y" angle="90" />
+  <DESCENDANTS>
+    <LEAF type="rectangle" args="0 25 40 0" />
+  </DESCENDANTS>
+</NODE>
+
+<NODE id="right_wall">
+  <MATERIAL id="null" />
+  <TEXTURE id="clear" />
+  <TRANSLATION x="-16" y="-6" z="24" />
+  <ROTATION axis="y" angle="-90" />
+  <DESCENDANTS>
+    <LEAF type="rectangle" args="0 25 40 0" />
+  </DESCENDANTS>
+</NODE>-->
     
     
     <!-- Lamp -->
