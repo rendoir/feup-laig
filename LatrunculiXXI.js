@@ -1,4 +1,8 @@
 class LatrunculiXXI {
+    /**
+     * Creates an instance of LatrunculiXXI.
+     * @memberof LatrunculiXXI
+     */
     constructor() {
         this.game_over = false;
         this.board_stack = [];
@@ -11,10 +15,20 @@ class LatrunculiXXI {
         this.captured_pieces = [];
     }
 
+    /**
+     * (description)
+     * @param {any} move 
+     * @memberof LatrunculiXXI
+     */
     addMove(move) {
         this.move_stack[this.number_plays] = [this.turn, move];
     }
 
+    /**
+     * (description)
+     * @param {Object[][]} board 
+     * @memberof LatrunculiXXI
+     */
     addBoard(board) {
         this.number_plays++;
         this.board_stack[this.number_plays] = board;
@@ -24,6 +38,13 @@ class LatrunculiXXI {
         this.calculateCapturedPieces();
     }
 
+    /**
+     * (description)
+     * @param {boolean} isGameOver 
+     * @param {number} winner 
+     * @event gameOver fires the event when game is over
+     * @memberof LatrunculiXXI
+     */
     setGameOver(isGameOver, winner) {
         if (isGameOver) {
             console.log('Game Is Over');
@@ -38,6 +59,7 @@ class LatrunculiXXI {
     /**
      * Get the current board
      * @returns {Object[][]} with the current board representation
+     * @memberof LatrunculiXXI
      */
     getCurrentBoard() {
         return this.board_stack[this.number_plays];
@@ -46,6 +68,7 @@ class LatrunculiXXI {
     /**
      * Get the current board in a String
      * @returns {string} with one Array of arrays of the current board representation;
+     * @memberof LatrunculiXXI
      */
     getCurrentBoardString() {
         return JSON.stringify(this.board_stack[this.number_plays]);
@@ -76,6 +99,7 @@ class LatrunculiXXI {
 
     /**
      * Request of the initial board representation;
+     * @memberof LatrunculiXXI
      */
     initBoard() {
         /**
@@ -92,6 +116,11 @@ class LatrunculiXXI {
         return prologRequest(request);
     }
 
+    /**
+     * (description)
+     * @returns {boolean} if can do undo or not
+     * @memberof LatrunculiXXI
+     */
     undo() {
         console.log("Undo");
         if (this.number_plays > 0) {
@@ -108,6 +137,7 @@ class LatrunculiXXI {
 
     /**
      * Requests for all possible moves for one player;
+     * @memberof LatrunculiXXI
      */
     getAllMoves() {
         /**
@@ -124,6 +154,7 @@ class LatrunculiXXI {
     /**
      * Requests a valid bot move to prolog and returns it and the board after the move;
      * @todo change hardcoded difficulty when called makeMove
+     * @memberof LatrunculiXXI
      */
     makeMove() {
         /**
@@ -144,6 +175,7 @@ class LatrunculiXXI {
     /**
      * Inputs a move to prolog to get the NewBoard and check if is a valid move;
      * @param {object[]} move array of positions --> [Xi, Yi, Xf, Yf];
+     * @memberof LatrunculiXXI
      */
     move(move) {
         /**
@@ -171,6 +203,7 @@ class LatrunculiXXI {
 
     /**
      * Send a request to know if game is over;
+     * @memberof LatrunculiXXI
      */
     checkGameOver() {
         /**
@@ -184,6 +217,11 @@ class LatrunculiXXI {
         prologRequest(request);
     }
 
+    /**
+     * (description)
+     * @event pieceCapture fires the event when a piece is capture
+     * @memberof LatrunculiXXI
+     */
     calculateCapturedPieces() {
         let new_board = this.board_stack[this.number_plays];
         let old_board = this.board_stack[this.number_plays - 1];
