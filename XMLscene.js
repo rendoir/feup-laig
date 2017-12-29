@@ -218,10 +218,6 @@ XMLscene.prototype.updateGame = function(currTime) {
     if (this.graph.last_selected_piece !== null && this.graph.last_selected_quad !== null) {
         if (this.graph.piece_moving) {
             if (this.graph.last_selected_piece.animation.ended) {
-                mat4.multiply(this.graph.last_selected_piece.transformMatrix, this.graph.last_selected_piece.transformMatrix, this.graph.last_selected_piece.animationMatrix);
-                mat4.identity(this.graph.last_selected_piece.animationMatrix);
-                this.graph.last_selected_piece.animation = null;
-                this.graph.last_selected_piece.initialTimestamp = -1;
                 this.graph.last_selected_piece = null;
                 this.graph.last_selected_quad = null;
                 this.graph.selectedNode = -1;
@@ -278,7 +274,7 @@ XMLscene.prototype.updatePick = function(player, withBoardPieces) {
     let changePick = function(value, key, map) {
         if (key > 100 && withBoardPieces) {
             value.isPickable = true;
-        } else if (value.position.x == -1 || value.position.y == -1) {
+        } else if (this.graph.captured_pieces.includes(value)) {
             value.isPickable = false;
         } else if (value.nodeID.indexOf("white") != -1 && player == 1) {
             value.isPickable = true;

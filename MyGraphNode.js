@@ -23,13 +23,17 @@ class MyGraphNode {
     }
     update(currTime) {
         if (this.animation != null) {
-            if (this.initialTimestamp == -1)
-                this.initialTimestamp = currTime;
-            let deltaTime = (currTime - this.initialTimestamp) / 1000;
-            this.animationMatrix = this.animation.getMatrix(deltaTime);
+            if (this.animation.ended) {
+                mat4.multiply(this.transformMatrix, this.transformMatrix, this.animationMatrix);
+                mat4.identity(this.animationMatrix);
+                this.animation = null;
+                this.initialTimestamp = -1;
+            } else {
+                if (this.initialTimestamp == -1)
+                    this.initialTimestamp = currTime;
+                let deltaTime = (currTime - this.initialTimestamp) / 1000;
+                this.animationMatrix = this.animation.getMatrix(deltaTime);
+            }
         }
     }
 }
-
-
-
