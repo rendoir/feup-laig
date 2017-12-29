@@ -9,10 +9,8 @@ function XMLscene(interface) {
     CGFscene.call(this);
 
     this.interface = interface;
-
     this.lightValues = {};
     this.availableScenes = ["classic", "futuristic"];
-    this.currentScene = this.availableScenes[0];
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -31,13 +29,14 @@ XMLscene.prototype.init = function(application) {
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
-
+    this.isFirstScene = true;
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(1000 / UPDATES_PER_SECONDS);
     this.setPickEnabled(true);
     this.game = Game;
     this.turn = this.game.turn;
     this.ui = new UserInterface(this, this.game);
+    this.currentScene = this.availableScenes[0];
     this.outline_shader = new CGFshader(this.gl, '../lib/CGF/shaders/Outline/outline_vertex.glsl', '../lib/CGF/shaders/Outline/outline_frag.glsl');
     this.highlight_shader = new CGFshader(this.gl, '../lib/CGF/shaders/Outline/highlight_vertex.glsl', '../lib/CGF/shaders/Outline/highlight_frag.glsl');
 };
@@ -99,8 +98,14 @@ XMLscene.prototype.initCameras = function() {
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
 XMLscene.prototype.onGraphLoaded = function() {
-    this.game.initBoard();
-
+    if (this.isFirstScene){
+        let controller = this.interface.addAvailableScenes(this.availableScenes);
+        controller.onChange(this.onSceneChange.bind(this));
+        this.game.initBoard();
+    }else{
+        let current_board = this.game.getCurrentBoard();
+        dispatchEvent(new CustomEvent('gameLoaded', { detail: current_board }));
+    }
     this.axis = new CGFaxis(this, this.graph.referenceLength);
 
     this.setGlobalAmbientLight(this.graph.ambientIllumination[0], this.graph.ambientIllumination[1],
@@ -109,9 +114,16 @@ XMLscene.prototype.onGraphLoaded = function() {
     this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
     this.initLights();
-    this.interface.addAvailableScenes(this.availableScenes);
 };
 
+XMLscene.prototype.onSceneChange = function(newScene){
+        this.isFirstScene = false;
+        this.loadNewScene(newScene);
+}
+
+XMLscene.prototype.loadNewScene = function(newScene){
+    this.graph = new MySceneGraph(newScene + ".xml",this);
+}
 
 XMLscene.prototype.logPicking = function() {
     if (this.pickMode == false) {
@@ -210,7 +222,6 @@ XMLscene.prototype.update = function(currTime) {
 XMLscene.prototype.updateGame = function(currTime) {
     if (this.graph.last_selected_piece !== null && this.graph.last_selected_quad !== null) {
         if (this.graph.piece_moving) {
-            this.graph.last_selected_piece.update(currTime);
             if (this.graph.last_selected_piece.animation.ended) {
                 mat4.multiply(this.graph.last_selected_piece.transformMatrix, this.graph.last_selected_piece.transformMatrix, this.graph.last_selected_piece.animationMatrix);
                 mat4.identity(this.graph.last_selected_piece.animationMatrix);
@@ -239,11 +250,6 @@ XMLscene.prototype.updateGame = function(currTime) {
     if (this.turn !== this.game.turn && !this.graph.piece_moving && !this.cameraMoving) {
         this.turn = this.game.turn;
         this.setPlayer(this.turn);
-    }
-    if (this.game.captured_pieces.length > 0) {
-        /** @todo TODO Init animations for this pieces */
-        console.log("Pelo menos uma peça devia ter sido eleminada");
-        this.game.captured_pieces = [];
     }
 };
 
@@ -274,6 +280,8 @@ XMLscene.prototype.updatePick = function(player, withBoardPieces) {
     let changePick = function(value, key, map) {
         if (key > 100 && withBoardPieces) {
             value.isPickable = true;
+        } else if (value.position.x == -1 || value.position.y == -1) {
+            value.isPickable = false;
         } else if (value.nodeID.indexOf("white") != -1 && player == 1) {
             value.isPickable = true;
         } else if (value.nodeID.indexOf("black") != -1 && player == 1) {

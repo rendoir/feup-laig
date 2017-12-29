@@ -36,11 +36,19 @@ function MySceneGraph(filename, scene) {
     this.last_selected_quad = null;
     this.last_selected_piece = null;
     this.piece_moving = false;
+    this.captured_pieces_black = 0;
+    this.captured_pieces_white = 0;
+    
+    //Maps
+    this.mapPickId_to_Piece = new Map();
+    this.mapCoords_to_Piece = new Map();
+    this.mapCoords_to_Quad = new Map();
 
     // File reading
     this.reader = new CGFXMLreader();
 
     addEventListener('gameLoaded', this.initializeBoard.bind(this));
+    addEventListener('pieceCapture', this.pieceCaptureHandler.bind(this));
     /*
      * Read the contents of the xml file, and refer to this class for loading and error handlers.
      * After the file is read, the reader calls onXMLReady on this object.
@@ -58,35 +66,30 @@ function MySceneGraph(filename, scene) {
 MySceneGraph.prototype.initializeBoard = function(event) {
     let data = event.detail;
     let new_piece = null;
-    this.mapPickId_to_Piece = new Map();
-    this.mapCoords_to_Piece = new Map();
     for (let line = 0; line < 8; line++) {
         for (let col = 0; col < 8; col++) {
 
             const current_data = data[line][col];
-            let position = {
-                x: col,
-                y: line
-            };
-            let position2 = {
+            position = {
                 x: col,
                 y: line
             };
             if (current_data > 0) {
+                let position2 = Object.assign({}, position);
                 if (current_data == 1) { //white_soldier
-                    new_piece = new MyPieceNode("white_soldier" + col, position, "soldier");
+                    new_piece = new MyPieceNode("white_soldier" + col, position2, "soldier");
                     new_piece.initByModel(this.soldier_model);
                     new_piece.materialID = "m_white_piece";
                 } else if (current_data == 2) {
-                    new_piece = new MyPieceNode("black_soldier" + col, position, "soldier");
+                    new_piece = new MyPieceNode("black_soldier" + col, position2, "soldier");
                     new_piece.initByModel(this.soldier_model);
                     new_piece.materialID = "m_black_piece";
                 } else if (current_data == 11) {
-                    new_piece = new MyPieceNode("white_dux" + col, position, "dux");
+                    new_piece = new MyPieceNode("white_dux" + col, position2, "dux");
                     new_piece.initByModel(this.dux_model);
                     new_piece.materialID = "m_white_piece";
                 } else if (current_data == 12) {
-                    new_piece = new MyPieceNode("black_dux" + col, position, "dux");
+                    new_piece = new MyPieceNode("black_dux" + col, position2, "dux");
                     new_piece.initByModel(this.dux_model);
                     new_piece.materialID = "m_black_piece";
                 }
@@ -97,7 +100,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                 this.mapPickId_to_Piece.set(pickId, new_piece);
             }
             let pos_id = (line + 1) * 100 + ((col + 1) * 10);
-            let new_board_position = new MyPieceNode("pos_" + pos_id, position2, "board_pos");
+            let new_board_position = new MyPieceNode("pos_" + pos_id, position, "board_pos");
             new_board_position.initByModel(this.quad_model);
             if ((line + col) % 2 == 0) {
                 new_board_position.materialID = "m_black_piece";
@@ -107,8 +110,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             new_board_position.rotateInX();
             this.rootGraphNode.addChild(new_board_position);
             this.selectableNodes[new_board_position.nodeID] = pos_id;
-            if (this.mapCoords_to_Piece.get(JSON.stringify([col, line])) == null)
-                this.mapCoords_to_Piece.set(JSON.stringify([col, line]), new_board_position);
+            this.mapCoords_to_Quad.set(JSON.stringify([col, line]), new_board_position);
             this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
@@ -1842,8 +1844,8 @@ MySceneGraph.prototype.initPieceAnimation = function() {
     let z_diff = this.last_selected_quad.position.y - this.last_selected_piece.position.y;
     let control_points = [
         [0, 0, 0],
-        [0, 8, 0],
-        [x_diff, 8, z_diff],
+        [0, 7, 0],
+        [x_diff, 7, z_diff],
         [x_diff, 0, z_diff]
     ];
     this.last_selected_piece.initialTimestamp = -1;
@@ -1854,6 +1856,41 @@ MySceneGraph.prototype.initPieceAnimation = function() {
 
 MySceneGraph.prototype.initBotMoveAnimation = function(move) {
     this.last_selected_piece = this.mapCoords_to_Piece.get(JSON.stringify([move[0], move[1]]));
-    this.last_selected_quad = this.mapCoords_to_Piece.get(JSON.stringify([move[2], move[3]]));
+    this.last_selected_quad = this.mapCoords_to_Quad.get(JSON.stringify([move[2], move[3]]));
     this.initPieceAnimation();
+}
+
+MySceneGraph.prototype.initCaptureAnimation = function (piece_position) {
+    let piece = this.mapCoords_to_Piece.get(JSON.stringify([piece_position[0], piece_position[1]]));
+    piece.isPickable = false;
+
+    let side_board_position;
+
+    if (piece.nodeID.indexOf("white") != -1) {
+        side_board_position = [9.0, 0.0, this.captured_pieces_black];
+        this.captured_pieces_black++;
+    } else if (piece.nodeID.indexOf("black") != -1) {
+        side_board_position = [-1.0, 0.0, this.captured_pieces_white];
+        this.captured_pieces_white++;
+    }
+
+    let control_points = [
+        [0, 0, 0],
+        [0, 7, 0],
+        [side_board_position[0], 7, side_board_position[2]],
+        [side_board_position[0], 0, side_board_position[2]]
+    ];
+    piece.initialTimestamp = -1;
+    piece.animation = new BezierAnimation(10, control_points);
+
+    piece.position.x = -1;
+    piece.position.y = -1;
+}
+
+MySceneGraph.prototype.pieceCaptureHandler = function(event) {
+    this.scene.game.captured_pieces.forEach(Elem => {
+        console.log("Piece Capture: ", Elem);
+        this.initCaptureAnimation(Elem);
+    });
+    this.scene.game.captured_pieces = [];
 }

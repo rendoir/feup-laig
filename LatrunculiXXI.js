@@ -191,9 +191,12 @@ class LatrunculiXXI {
                     continue;
                 }
                 if (old_board[i][j] !== 0 && new_board[i][j] === 0) {
-                    this.captured_pieces.push([i, j]);
+                    this.captured_pieces.push([j, i]);
                 }
             }
+        }
+        if (this.captured_pieces.length > 0) {
+            dispatchEvent(new Event('pieceCapture', {}));
         }
     }
 
