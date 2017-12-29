@@ -1909,6 +1909,9 @@ MySceneGraph.prototype.initCaptureAnimation = function(piece_position) {
 }
 
 MySceneGraph.prototype.initReverseCaptureAnimation = function() {
+    if (this.captured_pieces.length <= 0) {
+        return;
+    }
     let piece = this.captured_pieces[this.captured_pieces.length - 1];
     let side_board_position;
 
