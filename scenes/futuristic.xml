@@ -101,6 +101,7 @@
         <NODEREF id="quad"/>
         <NODEREF id="lamp" />
         <NODEREF id="table" />
+        <NODEREF id="spaceship" />
       </DESCENDANTS>
     </NODE>
     
@@ -313,6 +314,13 @@
       <SCALE sx="12" sy="1" sz="12" />
       <DESCENDANTS>
         <NODEREF id="box" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="spaceship">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
       </DESCENDANTS>
     </NODE>
 
