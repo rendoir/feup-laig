@@ -1850,8 +1850,8 @@ MySceneGraph.prototype.initPieceAnimation = function() {
     let z_diff = this.last_selected_quad.position.y - this.last_selected_piece.position.y;
     let control_points = [
         [0, 0, 0],
-        [0, 7, 0],
-        [x_diff, 7, z_diff],
+        [0, 5, 0],
+        [x_diff, 5, z_diff],
         [x_diff, 0, z_diff]
     ];
     this.last_selected_piece.initialTimestamp = -1;
@@ -1882,8 +1882,8 @@ MySceneGraph.prototype.initCaptureAnimation = function(piece_position) {
 
     let control_points = [
         [0, 0, 0],
-        [0, 7, 0],
-        [side_board_position[0] - piece_position[0], 7, side_board_position[2] - piece_position[1]],
+        [0, 5, 0],
+        [side_board_position[0] - piece_position[0], 5, side_board_position[2] - piece_position[1]],
         [side_board_position[0] - piece_position[0], side_board_position[1], side_board_position[2] - piece_position[1]]
     ];
     piece.initialTimestamp = -1;
