@@ -124,11 +124,21 @@ class LatrunculiXXI {
     undo() {
         console.log("Undo");
         if (this.number_plays > 0) {
+            let lastMove = this.move_stack[this.number_plays - 1];
             this.board_stack.pop();
             this.move_stack.pop();
             this.number_plays--;
             this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
             this.turn = (this.turn === 1) ? 2 : 1;
+            this.getAllMoves();
+            dispatchEvent(new CustomEvent('receivedMove', {
+                detail: [
+                    lastMove[1][2],
+                    lastMove[1][3],
+                    lastMove[1][0],
+                    lastMove[1][1]
+                ]
+            }));
             return true;
         } else {
             return false;
