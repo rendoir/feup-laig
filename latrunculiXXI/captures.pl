@@ -402,23 +402,33 @@ captureClassic(Board, Xf, Yf, FinalBoard) :-
 gameIsOver(Board, Winner) :-
   getBlackDux(Dux),
   not(findMatrixElement(Board, Dux)),
-  Winner = 'White',
+  Winner = '1',
   write('Winner: '), write(Winner), nl.
 gameIsOver(Board, Winner) :-
   getWhiteDux(Dux),
   not(findMatrixElement(Board, Dux)),
-  Winner = 'Black',
+  Winner = '2',
   write('Winner: '), write(Winner), nl.
 gameIsOver(Board, Winner) :-
   getBlackSoldier(Soldier),
   not(findMatrixElement(Board, Soldier)),
-  Winner = 'White',
+  Winner = '1',
   write('Winner: '), write(Winner), nl.
 gameIsOver(Board, Winner) :-
   getWhiteSoldier(Soldier),
   not(findMatrixElement(Board, Soldier)),
-  Winner = 'Black',
+  Winner = '2',
   write('Winner: '), write(Winner), nl.
+gameIsOver(Board, Winner) :-
+  getAllMoves(Board, 1, M),
+  length(M, Length),
+  Length = 0,
+  Winner = '2'.
+gameIsOver(Board, Winner) :-
+  getAllMoves(Board, 2, M),
+  length(M, Length),
+  Length = 0,
+  Winner = '1'.
 
 gameIsOver(Board) :- getBlackDux(Dux), not(findMatrixElement(Board, Dux)).
 gameIsOver(Board) :- getWhiteDux(Dux), not(findMatrixElement(Board, Dux)).

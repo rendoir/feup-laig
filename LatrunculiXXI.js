@@ -12,7 +12,7 @@ class LatrunculiXXI {
     }
 
     addMove(move) {
-        this.move_stack[this.number_plays] = move;
+        this.move_stack[this.number_plays] = [this.turn, move];
     }
 
     addBoard(board) {
@@ -20,12 +20,17 @@ class LatrunculiXXI {
         this.board_stack[this.number_plays] = board;
         this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
         this.turn = (this.turn === 1) ? 2 : 1;
+        this.checkGameOver();
         this.calculateCapturedPieces();
-        this.getAllMoves();
     }
 
     setGameOver(isGameOver, winner) {
-        this.game_over = isGameOver;
+        if (isGameOver) {
+            this.game_over = isGameOver;
+            this.winner = winner;
+        } else {
+            this.getAllMoves();
+        }
     }
 
     /**
@@ -156,7 +161,7 @@ class LatrunculiXXI {
             /** @todo Send a message to the User saying is not a valid move; */
             return false;
         }
-        this.move_stack[this.number_plays] = [this.turn, move];
+        this.addMove(move);
         let request = createRequest('move', [this.turn, JSON.stringify(move), this.getCurrentBoardString()], reply.bind(this));
         prologRequest(request);
         return true;
@@ -171,7 +176,7 @@ class LatrunculiXXI {
          * @param {ReplyIsOver} data Object with the reply from server; 
          */
         let reply = function(data) {
-            this.onGameOver(data.return, data.winner); /** @todo check winner received from server */
+            this.setGameOver(data.return, data.winner); /** @todo check winner received from server */
         };
         let request = createRequest('gameIsOver', [this.getCurrentBoardString()], reply.bind(this));
         prologRequest(request);

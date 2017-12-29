@@ -98,7 +98,7 @@ applyComputerMove(Board, Move, NewBoard) :-
 **/
 getAllMoves([], _, []).
 getAllMoves(Board, Player, MoveList) :-
-  runThroughBoard(Board, Player, _, MoveList, -1).
+  runThroughBoard(Board, Player, _, MoveList, -1), !.
 
 
 /**
