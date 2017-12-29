@@ -44,6 +44,7 @@ function MySceneGraph(filename, scene, id) {
     addEventListener('gameLoaded', this.initializeBoard.bind(this));
     addEventListener('pieceCapture', this.pieceCaptureHandler.bind(this));
     addEventListener('gameOver', this.onGameOver.bind(this));
+    addEventListener('receivedMove', this.receivedMove.bind(this));
     /*
      * Read the contents of the xml file, and refer to this class for loading and error handlers.
      * After the file is read, the reader calls onXMLReady on this object.
@@ -1914,4 +1915,8 @@ MySceneGraph.prototype.onGameOver = function(event) {
         value.isPickable = false;
     };
     this.mapPickId_to_Piece.forEach(disablePick.bind(this));
+}
+
+MySceneGraph.prototype.receivedMove = function(event) {
+    this.initBotMoveAnimation(event.detail);
 }

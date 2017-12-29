@@ -167,6 +167,7 @@ class LatrunculiXXI {
             }
             this.addMove(data.move);
             this.addBoard(data.board);
+            dispatchEvent(new CustomEvent('receivedMove', { detail: data.move }));
         };
         let request = createRequest('makeMove', [this.turn, this.getCurrentBoardString(), 2], reply.bind(this));
         prologRequest(request);
