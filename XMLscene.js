@@ -87,8 +87,8 @@ XMLscene.prototype.initCameras = function() {
     this.camera.setPosition(player_camera[1]);
     this.camera_radius = vec3.length(vec3.subtract(vec3.create(), player_camera[2], player_camera[1])) / 2;
     this.camera_center = vec3.scale(vec3.create(), vec3.add(vec3.create(), player_camera[2], player_camera[1]), 0.5);
-    this.camera_speed = 20;
-    //this.interface.disableCamera = true; TODO Uncoment this
+    this.camera_speed = 40;
+    this.interface.disableCamera = true;
     this.cameraMoving = false;
 };
 
@@ -234,11 +234,13 @@ XMLscene.prototype.updateGame = function(currTime) {
                 this.graph.piece_moving = false;
             }
         } else {
-            if (this.game.move([this.graph.last_selected_piece.position.x,
+            let move = [this.graph.last_selected_piece.position.x,
                     this.graph.last_selected_piece.position.y,
                     this.graph.last_selected_quad.position.x,
                     this.graph.last_selected_quad.position.y
-                ])) {
+            ];
+            if (this.game.move(move)) {
+                this.graph.updateMap(move);
                 this.graph.initPieceAnimation();
             } else {
                 this.graph.last_selected_piece = null;

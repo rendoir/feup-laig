@@ -96,7 +96,10 @@ MySceneGraph.prototype.initializeBoard = function(event) {
                 this.rootGraphNode.addChild(new_piece);
                 let pickId = line * 10 + col;
                 this.selectableNodes[new_piece.nodeID] = pickId;
-                this.mapCoords_to_Piece.set(JSON.stringify([col, line]), new_piece);
+                let map = this.mapCoords_to_Piece.get(new_piece.position.x);
+                if (map == null)
+                    this.mapCoords_to_Piece.set(new_piece.position.x, new Map());
+                this.mapCoords_to_Piece.get(new_piece.position.x).set(new_piece.position.y, new_piece);
                 this.mapPickId_to_Piece.set(pickId, new_piece);
             }
             let pos_id = (line + 1) * 100 + ((col + 1) * 10);
@@ -110,7 +113,10 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             new_board_position.rotateInX();
             this.rootGraphNode.addChild(new_board_position);
             this.selectableNodes[new_board_position.nodeID] = pos_id;
-            this.mapCoords_to_Quad.set(JSON.stringify([col, line]), new_board_position);
+            let map = this.mapCoords_to_Quad.get(new_board_position.position.x);
+            if (map == null)
+                this.mapCoords_to_Quad.set(new_board_position.position.x, new Map());
+            this.mapCoords_to_Quad.get(new_board_position.position.x).set(new_board_position.position.y, new_board_position);
             this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
@@ -1849,39 +1855,39 @@ MySceneGraph.prototype.initPieceAnimation = function() {
         [x_diff, 0, z_diff]
     ];
     this.last_selected_piece.initialTimestamp = -1;
-    this.last_selected_piece.animation = new BezierAnimation(10, control_points);
+    this.last_selected_piece.animation = new BezierAnimation(20, control_points);
     this.last_selected_piece.position.x = this.last_selected_quad.position.x;
     this.last_selected_piece.position.y = this.last_selected_quad.position.y;
 }
 
 MySceneGraph.prototype.initBotMoveAnimation = function(move) {
-    this.last_selected_piece = this.mapCoords_to_Piece.get(JSON.stringify([move[0], move[1]]));
-    this.last_selected_quad = this.mapCoords_to_Quad.get(JSON.stringify([move[2], move[3]]));
+    this.last_selected_piece = this.mapCoords_to_Piece.get(move[0]).get(move[1]);
+    this.last_selected_quad = this.mapCoords_to_Quad.get(move[2]).get(move[3]);
     this.initPieceAnimation();
 }
 
 MySceneGraph.prototype.initCaptureAnimation = function (piece_position) {
-    let piece = this.mapCoords_to_Piece.get(JSON.stringify([piece_position[0], piece_position[1]]));
+    let piece = this.mapCoords_to_Piece.get(piece_position[0]).get(piece_position[1]);
     piece.isPickable = false;
 
     let side_board_position;
 
     if (piece.nodeID.indexOf("white") != -1) {
-        side_board_position = [9.0, 0.0, this.captured_pieces_black];
+        side_board_position = [9.0, -0.5, this.captured_pieces_black];
         this.captured_pieces_black++;
     } else if (piece.nodeID.indexOf("black") != -1) {
-        side_board_position = [-1.0, 0.0, this.captured_pieces_white];
+        side_board_position = [-2.0, -0.5, this.captured_pieces_white];
         this.captured_pieces_white++;
     }
 
     let control_points = [
         [0, 0, 0],
         [0, 7, 0],
-        [side_board_position[0], 7, side_board_position[2]],
-        [side_board_position[0], 0, side_board_position[2]]
+        [side_board_position[0] - piece_position[0], 7, side_board_position[2] - piece_position[1]],
+        [side_board_position[0] - piece_position[0], side_board_position[1], side_board_position[2] - piece_position[1]]
     ];
     piece.initialTimestamp = -1;
-    piece.animation = new BezierAnimation(10, control_points);
+    piece.animation = new BezierAnimation(20, control_points);
 
     piece.position.x = -1;
     piece.position.y = -1;
@@ -1893,4 +1899,13 @@ MySceneGraph.prototype.pieceCaptureHandler = function(event) {
         this.initCaptureAnimation(Elem);
     });
     this.scene.game.captured_pieces = [];
+}
+
+MySceneGraph.prototype.updateMap = function (move) {
+    let piece = this.mapCoords_to_Piece.get(move[0]).get(move[1]);
+    this.mapCoords_to_Piece.get(move[0]).delete(move[1]);
+    let map = this.mapCoords_to_Piece.get(move[2]);
+    if (map == null)
+        this.mapCoords_to_Piece.set(move[2], new Map());
+    this.mapCoords_to_Piece.get(move[2]).set(move[3], piece);
 }
