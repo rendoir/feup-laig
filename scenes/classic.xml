@@ -37,11 +37,11 @@
       <amplif_factor s="8" t="1" />
     </TEXTURE>
     <TEXTURE id="t_abajur">
-      <file path="images/abajur.png" />
-      <amplif_factor s="1" t="1" />
+      <file path="images/abajur-piece.png" />
+      <amplif_factor s="10" t="6" />
     </TEXTURE>
     <TEXTURE id="t_marble">
-      <file path="images/table/marble.png" />
+      <file path="images/table/marble.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
   </TEXTURES>

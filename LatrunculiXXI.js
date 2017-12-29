@@ -17,7 +17,7 @@ class LatrunculiXXI {
 
     /**
      * (description)
-     * @param {any} move 
+     * @param {number[]} move 
      * @memberof LatrunculiXXI
      */
     addMove(move) {
@@ -26,7 +26,7 @@ class LatrunculiXXI {
 
     /**
      * (description)
-     * @param {Object[][]} board 
+     * @param {number[][]} board 
      * @memberof LatrunculiXXI
      */
     addBoard(board) {
@@ -58,7 +58,7 @@ class LatrunculiXXI {
 
     /**
      * Get the current board
-     * @returns {Object[][]} with the current board representation
+     * @returns {number[][]} with the current board representation
      * @memberof LatrunculiXXI
      */
     getCurrentBoard() {
@@ -175,7 +175,7 @@ class LatrunculiXXI {
 
     /**
      * Inputs a move to prolog to get the NewBoard and check if is a valid move;
-     * @param {object[]} move array of positions --> [Xi, Yi, Xf, Yf];
+     * @param {number[]} move array of positions --> [Xi, Yi, Xf, Yf];
      * @memberof LatrunculiXXI
      */
     move(move) {
