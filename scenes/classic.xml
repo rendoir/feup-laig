@@ -40,8 +40,12 @@
       <file path="images/abajur-piece.png" />
       <amplif_factor s="10" t="6" />
     </TEXTURE>
-    <TEXTURE id="t_marble">
-      <file path="images/table/marble.jpg" />
+    <TEXTURE id="t_wood">
+      <file path="images/table/wood.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+    <TEXTURE id="t_fine_wood">
+      <file path="images/table/fine_wood.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
   </TEXTURES>
@@ -223,7 +227,7 @@
 
     <NODE id="box_front">
       <MATERIAL id="null" />
-      <TEXTURE id="t_board_side" />
+      <TEXTURE id="null" />
       <TRANSLATION x="0" y="-1" z="1" />
       <DESCENDANTS>
         <LEAF type="rectangle" args="0 1 1 0" />
@@ -232,7 +236,7 @@
 
     <NODE id="box_left">
       <MATERIAL id="null" />
-      <TEXTURE id="t_board_side" />
+      <TEXTURE id="null" />
       <TRANSLATION x="0" y="0" z="1" />
       <ROTATION axis="y" angle="-90" />
       <ROTATION axis="z" angle="180" />
@@ -243,7 +247,7 @@
 
     <NODE id="box_right">
       <MATERIAL id="null" />
-      <TEXTURE id="t_board_side" />
+      <TEXTURE id="null" />
       <TRANSLATION x="1" y="0" z="0" />
       <ROTATION axis="z" angle="180" />
       <ROTATION axis="y" angle="-90" />
@@ -254,7 +258,7 @@
 
     <NODE id="box_back">
       <MATERIAL id="null" />
-      <TEXTURE id="t_board_side" />
+      <TEXTURE id="null" />
       <TRANSLATION x="1" y="-1" z="0" />
       <ROTATION axis="x" angle="180" />
       <ROTATION axis="z" angle="180" />
@@ -655,12 +659,13 @@
       <TEXTURE id="null" />
       <DESCENDANTS>
         <NODEREF id="table_top" />
+        <NODEREF id="table_legs" />
       </DESCENDANTS>
     </NODE>
 
     <NODE id="table_top">
       <MATERIAL id="m_white_piece" />
-      <TEXTURE id="t_marble" />
+      <TEXTURE id="t_wood" />
       <TRANSLATION x="-2" y="-0.5" z="-2"/>
       <SCALE sx="12" sy="1" sz="12" />
       <DESCENDANTS>
@@ -668,7 +673,62 @@
       </DESCENDANTS>
     </NODE>
 
+    <NODE id="table_legs">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_fine_wood" />
+      <TRANSLATION x="0" y="-1.5" z="0"/>
+      <DESCENDANTS>
+        <NODEREF id="table_leg_1" />
+        <NODEREF id="table_leg_2" />
+        <NODEREF id="table_leg_3" />
+        <NODEREF id="table_leg_4" />
+      </DESCENDANTS>
+    </NODE>
 
+    <NODE id="table_leg_1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="-2" y="0" z="-2" />
+      <DESCENDANTS>
+        <NODEREF id="table_leg_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="table_leg_2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="9" y="0" z="-2" />
+      <DESCENDANTS>
+        <NODEREF id="table_leg_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="table_leg_3">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="9" y="0" z="9" />
+      <DESCENDANTS>
+        <NODEREF id="table_leg_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="table_leg_4">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="-2" y="0" z="9" />
+      <DESCENDANTS>
+        <NODEREF id="table_leg_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="table_leg_model">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <SCALE sx="1" sy="5" sz="1"/>
+      <DESCENDANTS>
+        <NODEREF id="box" />
+      </DESCENDANTS>
+    </NODE>
   </NODES>
 
   
