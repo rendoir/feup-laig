@@ -112,8 +112,8 @@
         <NODEREF id="quad"/>
         <NODEREF id="dux"/>
         <NODEREF id="soldier"/>
-        <NODEREF id="lamp" />
         <NODEREF id="table" />
+        <NODEREF id="lamp" />
       </DESCENDANTS>
     </NODE>
     

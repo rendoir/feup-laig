@@ -239,6 +239,9 @@ XMLscene.prototype.updateGame = function(currTime) {
             }
         }
     }
+    if (!this.game.game_over) {
+        this.ui.updateTimer();
+    }
     if (this.turn !== this.game.turn && !this.graph.piece_moving && !this.cameraMoving && !this.game.game_over) {
         this.turn = this.game.turn;
         this.setPlayer(this.turn);

@@ -8,7 +8,9 @@ class UIElement {
     this.vertices = vertices;
     this.text_coords = text_coords;
     this.indices = indices;
-    this.texture = new CGFtexture(this.scene, "./scenes/" + texture_path);
+    if (texture_path != null)
+        this.texture = new CGFtexture(this.scene, "./scenes/" + texture_path);
+    else this.texture = null;
     this.on_click = on_click;
     this.init();
   }
@@ -46,12 +48,14 @@ class UIElement {
     gl.vertexAttribPointer(shader.attributes.aTextureCoord, 2, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indicesBuffer);
-    this.texture.bind();
+    if (this.texture != null)
+      this.texture.bind();
     gl.drawElements(this.scene.gl.TRIANGLES, this.indicesBuffer.numValues, gl.UNSIGNED_SHORT, 0);
     
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
-    this.texture.unbind();
+    if (this.texture != null)
+       this.texture.unbind();
   }
 
   onClick() {
