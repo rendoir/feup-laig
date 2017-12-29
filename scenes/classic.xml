@@ -60,6 +60,26 @@
       <file path="images/ceiling.jpg" />
       <amplif_factor s="10" t="10" />
     </TEXTURE>
+    <TEXTURE id="t_roman_empire">
+      <file path="images/roman_empire.jpg" />
+      <amplif_factor s="40" t="25" />
+    </TEXTURE>
+    <TEXTURE id="t_roman_painting">
+      <file path="images/roman_painting.jpg" />
+      <amplif_factor s="40" t="25" />
+    </TEXTURE>
+    <TEXTURE id="t_roman_jupiter">
+      <file path="images/roman_jupiter.jpg" />
+      <amplif_factor s="40" t="25" />
+    </TEXTURE>
+    <TEXTURE id="t_roman_wall">
+      <file path="images/roman_wall.png" />
+      <amplif_factor s="8" t="8.5" />
+    </TEXTURE>
+    <TEXTURE id="t_door">
+      <file path="images/door.png" />
+      <amplif_factor s="12.5" t="20" />
+    </TEXTURE>
   </TEXTURES>
 
 
@@ -82,13 +102,6 @@
       <shininess value="32" />
       <specular r="1.0" g="1.0" b="1.0" a="1" />
       <diffuse r="1.0" g="1.0" b="1.0" a="1" />
-      <ambient r="0.1" g="0.1" b="0.1" a="1" />
-      <emission r="0.0" g="0.0" b="0.0" a="1" />
-    </MATERIAL>
-    <MATERIAL id="m_abajur">
-      <shininess value="1" />
-      <specular r="0.0" g="0.0" b="0.0" a="1" />
-      <diffuse r="0.0" g="0.0" b="0.0" a="1" />
       <ambient r="0.1" g="0.1" b="0.1" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
@@ -135,6 +148,7 @@
         <NODEREF id="ceiling" />
         <NODEREF id="center_floor" />
         <NODEREF id="floor" />
+        <NODEREF id="walls" />
         <NODEREF id="lamp" />
       </DESCENDANTS>
     </NODE>
@@ -659,8 +673,7 @@
     <NODE id="center_floor">
       <MATERIAL id="m_house" />
       <TEXTURE id="t_center_floor" />
-      <TRANSLATION x="14" y="-5.9" z="-6" />
-      <ROTATION axis="y" angle="180" />
+      <TRANSLATION x="-6" y="-5.9" z="14" />
       <ROTATION axis="x" angle="-90" />
       <DESCENDANTS>
         <LEAF type="rectangle" args="0 20 20 0" />
@@ -687,38 +700,67 @@
       </DESCENDANTS>
     </NODE>
 
-    <!-- 
-<NODE id="walls">
-  <MATERIAL id="m_walls" />
-  <TEXTURE id="clear" />
-  <DESCENDANTS>
-    <NODEREF id="left_wall" />
-    <NODEREF id="right_wall" />
+    <NODE id="walls">
+      <MATERIAL id="m_house" />
+      <TEXTURE id="clear" />
+      <DESCENDANTS>
+        <NODEREF id="left_wall" />
+        <NODEREF id="right_wall" />
         <NODEREF id="back_wall" />
         <NODEREF id="front_wall" />
-  </DESCENDANTS>
-</NODE>
+        <NODEREF id="door" />
+      </DESCENDANTS>
+    </NODE>
 
-<NODE id="left_wall">
-  <MATERIAL id="null" />
-  <TEXTURE id="clear" />
-  <TRANSLATION x="-16" y="-6" z="24" />
-  <ROTATION axis="y" angle="90" />
-  <DESCENDANTS>
-    <LEAF type="rectangle" args="0 25 40 0" />
-  </DESCENDANTS>
-</NODE>
+    <NODE id="back_wall">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_roman_empire" />
+      <TRANSLATION x="-16" y="-6" z="-16" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 25 40 0" />
+      </DESCENDANTS>
+    </NODE>
 
-<NODE id="right_wall">
-  <MATERIAL id="null" />
-  <TEXTURE id="clear" />
-  <TRANSLATION x="-16" y="-6" z="24" />
-  <ROTATION axis="y" angle="-90" />
-  <DESCENDANTS>
-    <LEAF type="rectangle" args="0 25 40 0" />
-  </DESCENDANTS>
-</NODE>-->
+    <NODE id="front_wall">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_roman_wall" />
+      <TRANSLATION x="24" y="-6" z="24" />
+      <ROTATION axis="y" angle="180" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 25 40 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="left_wall">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_roman_painting" />
+      <TRANSLATION x="-16" y="-6" z="24" />
+      <ROTATION axis="y" angle="90" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 25 40 0" />
+      </DESCENDANTS>
+    </NODE>
     
+    <NODE id="right_wall">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_roman_jupiter" />
+      <TRANSLATION x="24" y="-6" z="-16" />
+      <ROTATION axis="y" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 25 40 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="door">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_door" />
+      <TRANSLATION x="10.5" y="-6" z="23.9" />
+      <ROTATION axis="y" angle="180" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 20 12.5 0" />
+      </DESCENDANTS>
+    </NODE>
+   
     
     <!-- Lamp -->
     <NODE id="lamp">
@@ -728,7 +770,6 @@
       <ROTATION axis="x" angle="-90" />
       <DESCENDANTS>
         <NODEREF id="lightbulb" />
-        <NODEREF id="lamp_abajur" />
       </DESCENDANTS>
     </NODE>
 
@@ -737,14 +778,6 @@
       <TEXTURE id="clear" />
       <DESCENDANTS>
         <LEAF type="sphere" args="0.5 32 32" />
-      </DESCENDANTS>
-    </NODE>
-
-    <NODE id="lamp_abajur">
-      <MATERIAL id="m_abajur" />
-      <TEXTURE id="t_abajur" />
-      <DESCENDANTS>
-        <LEAF type="sphere" args="1 32 32" />
       </DESCENDANTS>
     </NODE>
 
@@ -818,7 +851,7 @@
     <NODE id="table_leg_model">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
-      <SCALE sx="1" sy="5" sz="1"/>
+      <SCALE sx="1" sy="4.5" sz="1"/>
       <DESCENDANTS>
         <NODEREF id="box" />
       </DESCENDANTS>
