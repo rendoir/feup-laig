@@ -32,14 +32,14 @@ function MySceneGraph(filename, scene, id) {
     this.last_selected_quad = null;
     this.last_selected_piece = null;
     this.piece_moving = false;
-    this.captured_pieces_black = [];
-    this.captured_pieces_white = [];
+    this.captured_pieces = [];
+    this.white_pieces_captured = 0;
+    this.black_pieces_captured = 0;
 
     // File reading
     this.loadNewScene(filename);
 
-    this.createEventHandlers();
-    this.createEventListeners();
+    this.addEventListeners();
 };
 
 MySceneGraph.prototype.loadNewScene = function(filename) {
@@ -56,18 +56,12 @@ MySceneGraph.prototype.loadNewScene = function(filename) {
     this.reader.open('scenes/' + filename, this);
 };
 
-MySceneGraph.prototype.createEventListeners = function() {
-    addEventListener('gameLoaded', this.gameLoadedHandler);
-    addEventListener('pieceCapture', this.pieceCaptureHandler);
-    addEventListener('gameOver', this.gameOverHandler);
-    addEventListener('receivedMove', this.receivedMoveHandler);
-};
-
-MySceneGraph.prototype.createEventHandlers = function() {
-    this.gameLoadedHandler = this.initializeBoard.bind(this);
-    this.pieceCaptureHandler = this.pieceCaptureHandler.bind(this);
-    this.gameOverHandler = this.onGameOver.bind(this);
-    this.receivedMoveHandler = this.receivedMove.bind(this);
+MySceneGraph.prototype.addEventListeners = function() {
+    addEventListener('gameLoaded', this.initializeBoard.bind(this));
+    addEventListener('pieceCapture', this.pieceCaptureHandler.bind(this));
+    addEventListener('gameOver', this.onGameOver.bind(this));
+    addEventListener('receivedMove', this.receivedMove.bind(this));
+    addEventListener('undoCapture', this.initReverseCaptureAnimation.bind(this));
 };
 
 /**
@@ -1890,17 +1884,17 @@ MySceneGraph.prototype.initBotMoveAnimation = function(move) {
 
 MySceneGraph.prototype.initCaptureAnimation = function(piece_position) {
     let piece = this.mapCoords_to_Piece.get(piece_position[0]).get(piece_position[1]);
-    piece.isPickable = false;
 
     let side_board_position;
 
     if (piece.nodeID.indexOf("white") != -1) {
-        side_board_position = [9.0, -0.5, this.captured_pieces_black.length];
-        this.captured_pieces_black.push(piece);
+        side_board_position = [9.0, -0.5, this.black_pieces_captured];
+        this.black_pieces_captured++;
     } else if (piece.nodeID.indexOf("black") != -1) {
-        side_board_position = [-2.0, -0.5, this.captured_pieces_white.length];
-        this.captured_pieces_white.push(piece);
+        side_board_position = [-2.0, -0.5, this.white_pieces_captured];
+        this.white_pieces_captured++;
     }
+    this.captured_pieces.push(piece);
 
     let control_points = [
         [0, 0, 0],
@@ -1911,10 +1905,32 @@ MySceneGraph.prototype.initCaptureAnimation = function(piece_position) {
     piece.initialTimestamp = -1;
     piece.animation = new BezierAnimation(20, control_points);
 
-    piece.position.x = -1;
-    piece.position.y = -1;
-
     this.mapCoords_to_Piece.get(piece_position[0]).delete(piece_position[1]);
+}
+
+MySceneGraph.prototype.initReverseCaptureAnimation = function() {
+    let piece = this.captured_pieces[this.captured_pieces.length - 1];
+    let side_board_position;
+
+    if (piece.nodeID.indexOf("white") != -1) {
+        this.black_pieces_captured--;
+        side_board_position = [9.0, 0.5, this.black_pieces_captured];
+    } else if (piece.nodeID.indexOf("black") != -1) {
+        this.white_pieces_captured--;
+        side_board_position = [-2.0, 0.5, this.white_pieces_captured];
+    }
+
+    let control_points = [
+        [0, 0, 0],
+        [0, 5, 0],
+        [piece.position.x - side_board_position[0], 5, piece.position.y - side_board_position[2]],
+        [piece.position.x - side_board_position[0], side_board_position[1], piece.position.y - side_board_position[2]]
+    ];
+    piece.initialTimestamp = -1;
+    piece.animation = new BezierAnimation(20, control_points);
+
+    this.captured_pieces.pop();
+    this.mapCoords_to_Piece.get(piece.position.x).set(piece.position.y, piece);
 }
 
 MySceneGraph.prototype.pieceCaptureHandler = function(event) {

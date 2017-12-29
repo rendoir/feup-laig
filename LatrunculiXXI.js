@@ -7,6 +7,7 @@ class LatrunculiXXI {
         this.game_over = false;
         this.board_stack = [];
         this.move_stack = [];
+        this.captured_pieces_stack = [];
         this.turn = 1; //1 or 2
         this.playerOneType = "player"; //"player" or "bot"
         this.playerTwoType = "player"; //"player" or "bot"
@@ -125,12 +126,15 @@ class LatrunculiXXI {
         console.log("Undo");
         if (this.number_plays > 0) {
             let lastMove = this.move_stack[this.number_plays - 1];
+            let capture = this.captured_pieces_stack[this.number_plays - 1];
             this.board_stack.pop();
             this.move_stack.pop();
+            this.captured_pieces_stack.pop();
             this.number_plays--;
             this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
             this.turn = (this.turn === 1) ? 2 : 1;
             this.getAllMoves();
+            dispatchEvent(new Event('undoCapture', {}));
             dispatchEvent(new CustomEvent('receivedMove', {
                 detail: [
                     lastMove[1][2],
@@ -251,6 +255,7 @@ class LatrunculiXXI {
                 }
             }
         }
+        this.captured_pieces_stack[this.number_plays] = this.captured_pieces;
         if (this.captured_pieces.length > 0) {
             dispatchEvent(new Event('pieceCapture', {}));
         }
