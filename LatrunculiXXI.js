@@ -26,8 +26,10 @@ class LatrunculiXXI {
 
     setGameOver(isGameOver, winner) {
         if (isGameOver) {
+            console.log('Game Is Over');
             this.game_over = isGameOver;
             this.winner = winner;
+            dispatchEvent(new Event('gameOver', {}));
         } else {
             this.getAllMoves();
         }

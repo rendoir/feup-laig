@@ -98,11 +98,11 @@ XMLscene.prototype.initCameras = function() {
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
 XMLscene.prototype.onGraphLoaded = function() {
-    if (this.isFirstScene){
+    if (this.isFirstScene) {
         let controller = this.interface.addAvailableScenes(this.availableScenes);
         controller.onChange(this.onSceneChange.bind(this));
         this.game.initBoard();
-    }else{
+    } else {
         let current_board = this.game.getCurrentBoard();
         dispatchEvent(new CustomEvent('gameLoaded', { detail: current_board }));
     }
@@ -116,13 +116,13 @@ XMLscene.prototype.onGraphLoaded = function() {
     this.initLights();
 };
 
-XMLscene.prototype.onSceneChange = function(newScene){
-        this.isFirstScene = false;
-        removeEventListener('gameLoaded',this.graph.gameLoadedHandler);
-        removeEventListener('pieceCapture', this.pieceCaptureHandler);
-        let nextId = this.graph.id + 1;
-        this.graph = null;
-        let new_graph = new MySceneGraph(newScene + ".xml",this,nextId);
+XMLscene.prototype.onSceneChange = function(newScene) {
+    this.isFirstScene = false;
+    removeEventListener('gameLoaded', this.graph.gameLoadedHandler);
+    removeEventListener('pieceCapture', this.pieceCaptureHandler);
+    let nextId = this.graph.id + 1;
+    this.graph = null;
+    let new_graph = new MySceneGraph(newScene + ".xml", this, nextId);
 }
 
 XMLscene.prototype.logPicking = function() {
@@ -235,9 +235,9 @@ XMLscene.prototype.updateGame = function(currTime) {
             }
         } else {
             let move = [this.graph.last_selected_piece.position.x,
-                    this.graph.last_selected_piece.position.y,
-                    this.graph.last_selected_quad.position.x,
-                    this.graph.last_selected_quad.position.y
+                this.graph.last_selected_piece.position.y,
+                this.graph.last_selected_quad.position.x,
+                this.graph.last_selected_quad.position.y
             ];
             if (this.game.move(move)) {
                 this.graph.updateMap(move);
@@ -275,7 +275,8 @@ XMLscene.prototype.setPlayer = function(player) {
         this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 180);
     else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
     this.ui.update();
-    this.updatePick(this.turn, false);
+    if (!this.game.game_over)
+        this.updatePick(this.turn, false);
 };
 
 XMLscene.prototype.updatePick = function(player, withBoardPieces) {

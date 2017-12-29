@@ -11,7 +11,7 @@ let NODES_INDEX = 6;
  * MySceneGraph class, representing the scene graph.
  * @constructor
  */
-function MySceneGraph(filename, scene,id) {
+function MySceneGraph(filename, scene, id) {
     this.loadedOk = null;
     this.id = id;
     // Establish bidirectional references between scene and graph.
@@ -41,10 +41,9 @@ function MySceneGraph(filename, scene,id) {
 
     // File reading
     this.reader = new CGFXMLreader();
-    this.gameLoadedHandler = this.initializeBoard.bind(this);
-    this.pieceCaptureHandler = this.pieceCaptureHandler.bind(this);
-    addEventListener('gameLoaded', this.gameLoadedHandler);
-    addEventListener('pieceCapture', this.pieceCaptureHandler);
+    addEventListener('gameLoaded', this.initializeBoard.bind(this));
+    addEventListener('pieceCapture', this.pieceCaptureHandler.bind(this));
+    addEventListener('gameOver', this.onGameOver.bind(this));
     /*
      * Read the contents of the xml file, and refer to this class for loading and error handlers.
      * After the file is read, the reader calls onXMLReady on this object.
@@ -1866,7 +1865,7 @@ MySceneGraph.prototype.initBotMoveAnimation = function(move) {
     this.initPieceAnimation();
 }
 
-MySceneGraph.prototype.initCaptureAnimation = function (piece_position) {
+MySceneGraph.prototype.initCaptureAnimation = function(piece_position) {
     let piece = this.mapCoords_to_Piece.get(piece_position[0]).get(piece_position[1]);
     piece.isPickable = false;
 
@@ -1901,11 +1900,19 @@ MySceneGraph.prototype.pieceCaptureHandler = function(event) {
     this.scene.game.captured_pieces = [];
 }
 
-MySceneGraph.prototype.updateMap = function (move) {
+MySceneGraph.prototype.updateMap = function(move) {
     let piece = this.mapCoords_to_Piece.get(move[0]).get(move[1]);
     this.mapCoords_to_Piece.get(move[0]).delete(move[1]);
     let map = this.mapCoords_to_Piece.get(move[2]);
     if (map == null)
         this.mapCoords_to_Piece.set(move[2], new Map());
     this.mapCoords_to_Piece.get(move[2]).set(move[3], piece);
+}
+
+MySceneGraph.prototype.onGameOver = function(event) {
+    let disablePick = function(value, key, map) {
+        value.isPickable = false;
+    };
+    this.mapPickId_to_Piece.forEach(disablePick.bind(this));
+    /** @todo send msg to user of Game Over */
 }
