@@ -36,8 +36,8 @@ function MySceneGraph(filename, scene, id) {
     this.last_selected_quad = null;
     this.last_selected_piece = null;
     this.piece_moving = false;
-    this.captured_pieces_black = 0;
-    this.captured_pieces_white = 0;
+    this.captured_pieces_black = [];
+    this.captured_pieces_white = [];
 
     // File reading
     this.reader = new CGFXMLreader();
@@ -1886,11 +1886,11 @@ MySceneGraph.prototype.initCaptureAnimation = function(piece_position) {
     let side_board_position;
 
     if (piece.nodeID.indexOf("white") != -1) {
-        side_board_position = [9.0, -0.5, this.captured_pieces_black];
-        this.captured_pieces_black++;
+        side_board_position = [9.0, -0.5, this.captured_pieces_black.length];
+        this.captured_pieces_black.push(piece);
     } else if (piece.nodeID.indexOf("black") != -1) {
-        side_board_position = [-2.0, -0.5, this.captured_pieces_white];
-        this.captured_pieces_white++;
+        side_board_position = [-2.0, -0.5, this.captured_pieces_white.length];
+        this.captured_pieces_white.push(piece);
     }
 
     let control_points = [
