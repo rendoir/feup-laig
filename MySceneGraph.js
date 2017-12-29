@@ -1919,4 +1919,5 @@ MySceneGraph.prototype.onGameOver = function(event) {
 
 MySceneGraph.prototype.receivedMove = function(event) {
     this.initBotMoveAnimation(event.detail);
+    this.updateMap(event.detail);
 }
