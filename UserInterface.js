@@ -19,13 +19,18 @@ class UserInterface {
             [0, 2, 3,
              0, 3, 1];
 
-        let player_type_position =
-            [-0.2, 0.95,
+        let player_position =
+            [-0.3, 0.95,
              0.1, 0.95,
-             -0.2, 0.75,
+             -0.3, 0.75,
              0.1, 0.75];
-        let player = new UIElement(this.scene, player_type_position, text_coords, indices, "images/ui/player.png");
-        let bot = new UIElement(this.scene, player_type_position, text_coords, indices, "images/ui/bot.png");
+        let bot_position =
+           [-0.2, 0.95,
+            0.0, 0.95,
+            -0.2, 0.75,
+            0.0, 0.75];
+        let player = new UIElement(this.scene, player_position, text_coords, indices, "images/ui/player.png");
+        let bot = new UIElement(this.scene, bot_position, text_coords, indices, "images/ui/bot.png");
         this.ui_elements["player"] = player;
         this.ui_elements["bot"] = bot;
 
@@ -49,6 +54,14 @@ class UserInterface {
             "images/ui/undo.png",
             this.game.undo);
         this.ui_elements.push(undo);
+
+        let game_over_position =
+            [-0.5, 0.95,
+             0.5, 0.95,
+             -0.5, 0.75,
+             0.5, 0.75];
+        let game_over = new UIElement(this.scene, game_over_position, text_coords, indices, "images/ui/game_over.png");
+        this.ui_elements["game_over"] = game_over;
 
         //Init shader
         this.ui_shader = new CGFshader(this.gl, '../lib/CGF/shaders/UI/ui_vertex.glsl', '../lib/CGF/shaders/UI/ui_frag.glsl');
@@ -81,8 +94,13 @@ class UserInterface {
         this.ui_elements.forEach(function (element) {
             element.render();
         });
-        this.ui_elements[this.current_type].render();
-        this.ui_elements[this.current_turn].render();
+        if (!this.game.game_over) {
+            this.ui_elements[this.current_type].render();
+            this.ui_elements[this.current_turn].render();
+        } else {
+            this.ui_elements["game_over"].render();
+        }
+        
 
         this.gl.enable(this.gl.DEPTH_TEST);
         this.scene.setActiveShader(previous_shader);
