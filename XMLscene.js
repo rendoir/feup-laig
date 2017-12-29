@@ -79,14 +79,14 @@ XMLscene.prototype.initLights = function() {
  * Initializes the scene cameras.
  */
 XMLscene.prototype.initCameras = function() {
-    let player_camera = [];
-    player_camera[1] = vec3.fromValues(4, 20, 24);
-    player_camera[2] = vec3.fromValues(4, 20, -16);
+    this.player_camera = [];
+    this.player_camera[1] = vec3.fromValues(4, 20, 24);
+    this.player_camera[2] = vec3.fromValues(4, 20, -16);
     this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     this.camera.setTarget(vec3.fromValues(4, 0, 4));
-    this.camera.setPosition(player_camera[1]);
-    this.camera_radius = vec3.length(vec3.subtract(vec3.create(), player_camera[2], player_camera[1])) / 2;
-    this.camera_center = vec3.scale(vec3.create(), vec3.add(vec3.create(), player_camera[2], player_camera[1]), 0.5);
+    this.camera.setPosition(this.player_camera[1]);
+    this.camera_radius = vec3.length(vec3.subtract(vec3.create(), this.player_camera[2], this.player_camera[1])) / 2;
+    this.camera_center = vec3.scale(vec3.create(), vec3.add(vec3.create(), this.player_camera[2], this.player_camera[1]), 0.5);
     this.camera_speed = 40;
     this.interface.disableCamera = true;
     this.cameraMoving = false;
@@ -289,4 +289,12 @@ XMLscene.prototype.updatePick = function(player, withBoardPieces) {
         }
     };
     this.graph.mapPickId_to_Piece.forEach(changePick.bind(this));
+};
+
+XMLscene.prototype.onCameraChange = function (value) {
+    if (value) {
+        this.camera.setTarget(vec3.fromValues(4, 0, 4));
+        this.camera.setPosition(this.player_camera[this.turn]);
+        this.camera._up = vec3.fromValues(0.0, 1.0, 0.0);
+    }
 };
