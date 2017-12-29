@@ -118,11 +118,11 @@ XMLscene.prototype.onGraphLoaded = function() {
 
 XMLscene.prototype.onSceneChange = function(newScene){
         this.isFirstScene = false;
-        this.loadNewScene(newScene);
-}
-
-XMLscene.prototype.loadNewScene = function(newScene){
-    this.graph = new MySceneGraph(newScene + ".xml",this);
+        removeEventListener('gameLoaded',this.graph.gameLoadedHandler);
+        removeEventListener('pieceCapture', this.pieceCaptureHandler);
+        let nextId = this.graph.id + 1;
+        this.graph = null;
+        let new_graph = new MySceneGraph(newScene + ".xml",this,nextId);
 }
 
 XMLscene.prototype.logPicking = function() {

@@ -11,9 +11,9 @@ let NODES_INDEX = 6;
  * MySceneGraph class, representing the scene graph.
  * @constructor
  */
-function MySceneGraph(filename, scene) {
+function MySceneGraph(filename, scene,id) {
     this.loadedOk = null;
-
+    this.id = id;
     // Establish bidirectional references between scene and graph.
     this.scene = scene;
     scene.graph = this;
@@ -38,17 +38,13 @@ function MySceneGraph(filename, scene) {
     this.piece_moving = false;
     this.captured_pieces_black = 0;
     this.captured_pieces_white = 0;
-    
-    //Maps
-    this.mapPickId_to_Piece = new Map();
-    this.mapCoords_to_Piece = new Map();
-    this.mapCoords_to_Quad = new Map();
 
     // File reading
     this.reader = new CGFXMLreader();
-
-    addEventListener('gameLoaded', this.initializeBoard.bind(this));
-    addEventListener('pieceCapture', this.pieceCaptureHandler.bind(this));
+    this.gameLoadedHandler = this.initializeBoard.bind(this);
+    this.pieceCaptureHandler = this.pieceCaptureHandler.bind(this);
+    addEventListener('gameLoaded', this.gameLoadedHandler);
+    addEventListener('pieceCapture', this.pieceCaptureHandler);
     /*
      * Read the contents of the xml file, and refer to this class for loading and error handlers.
      * After the file is read, the reader calls onXMLReady on this object.
@@ -66,6 +62,10 @@ function MySceneGraph(filename, scene) {
 MySceneGraph.prototype.initializeBoard = function(event) {
     let data = event.detail;
     let new_piece = null;
+    //Maps
+    this.mapPickId_to_Piece = new Map();
+    this.mapCoords_to_Piece = new Map();
+    this.mapCoords_to_Quad = new Map();
     for (let line = 0; line < 8; line++) {
         for (let col = 0; col < 8; col++) {
 
