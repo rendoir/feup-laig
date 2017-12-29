@@ -297,7 +297,7 @@ XMLscene.prototype.updatePick = function(player, withBoardPieces) {
     this.graph.mapPickId_to_Piece.forEach(changePick.bind(this));
 };
 
-XMLscene.prototype.onCameraChange = function (value) {
+XMLscene.prototype.onCameraChange = function(value) {
     if (value) {
         this.camera.setTarget(vec3.fromValues(4, 0, 4));
         this.camera.setPosition(this.player_camera[this.turn]);

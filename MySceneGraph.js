@@ -79,6 +79,8 @@ MySceneGraph.prototype.initializeBoard = function(event) {
     this.mapPickId_to_Piece = new Map();
     this.mapCoords_to_Piece = new Map();
     this.mapCoords_to_Quad = new Map();
+    this.allPiecesNode.children = [];
+    this.selectableNodes = [];
     for (let line = 0; line < 8; line++) {
         for (let col = 0; col < 8; col++) {
 
@@ -133,7 +135,6 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
-    this.rootGraphNode.addChild(this.allPiecesNode);
     this.scene.updatePick(this.scene.turn, false);
 };
 
@@ -154,10 +155,11 @@ MySceneGraph.prototype.onXMLReady = function() {
     }
 
     this.loadedOk = true;
+    this.rootGraphNode.addChild(this.allPiecesNode);
 
     // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
     this.scene.onGraphLoaded();
-}
+};
 
 /**
  * Parses the LSX file, processing each block.
@@ -1629,9 +1631,6 @@ MySceneGraph.prototype.parseNodesXMLTag = function(nodesNode) {
         return "Invalid Root ID";
     }
     this.rootGraphNode = this.parseNode(this.xmlNodes[this.nodeIDToIndex[this.idRoot]]);
-    if (this.allPiecesNode.children.length > 0) {
-        this.rootGraphNode.addChild(this.allPiecesNode);
-    }
 
     console.log("Parsed nodes");
     return null;
