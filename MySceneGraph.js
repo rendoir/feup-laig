@@ -1914,5 +1914,4 @@ MySceneGraph.prototype.onGameOver = function(event) {
         value.isPickable = false;
     };
     this.mapPickId_to_Piece.forEach(disablePick.bind(this));
-    /** @todo send msg to user of Game Over */
 }

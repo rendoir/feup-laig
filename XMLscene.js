@@ -249,7 +249,7 @@ XMLscene.prototype.updateGame = function(currTime) {
             }
         }
     }
-    if (this.turn !== this.game.turn && !this.graph.piece_moving && !this.cameraMoving) {
+    if (this.turn !== this.game.turn && !this.graph.piece_moving && !this.cameraMoving && !this.game.game_over) {
         this.turn = this.game.turn;
         this.setPlayer(this.turn);
     }
@@ -268,15 +268,16 @@ XMLscene.prototype.updateCamera = function(currTime) {
     }
 };
 
-XMLscene.prototype.setPlayer = function(player) {
-    this.cameraMoving = true;
-    this.initial_camera_timestamp = performance.now();
-    if (player === 1)
-        this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 180);
-    else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
-    this.ui.update();
-    if (!this.game.game_over)
+XMLscene.prototype.setPlayer = function (player) {
+    if (!this.game.game_over) {
+        this.cameraMoving = true;
+        this.initial_camera_timestamp = performance.now();
+        if (player === 1)
+            this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 180);
+        else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
         this.updatePick(this.turn, false);
+        this.ui.update();
+    }
 };
 
 XMLscene.prototype.updatePick = function(player, withBoardPieces) {
