@@ -41,10 +41,9 @@ function MySceneGraph(filename, scene, id) {
 
     // File reading
     this.reader = new CGFXMLreader();
-    addEventListener('gameLoaded', this.initializeBoard.bind(this));
-    addEventListener('pieceCapture', this.pieceCaptureHandler.bind(this));
-    addEventListener('gameOver', this.onGameOver.bind(this));
-    addEventListener('receivedMove', this.receivedMove.bind(this));
+
+    this.createEventHandlers();
+    this.createEventListeners();
     /*
      * Read the contents of the xml file, and refer to this class for loading and error handlers.
      * After the file is read, the reader calls onXMLReady on this object.
@@ -52,6 +51,20 @@ function MySceneGraph(filename, scene, id) {
      */
 
     this.reader.open('scenes/' + filename, this);
+}
+
+MySceneGraph.prototype.createEventListeners = function(){
+    addEventListener('gameLoaded', this.gameLoadedHandler);
+    addEventListener('pieceCapture', this.pieceCaptureHandler);
+    addEventListener('gameOver', this.gameOverHandler);
+    addEventListener('receivedMove', this.receivedMoveHandler);
+}
+
+MySceneGraph.prototype.createEventHandlers = function(){
+    this.gameLoadedHandler = this.initializeBoard.bind(this);
+    this.pieceCaptureHandler = this.pieceCaptureHandler.bind(this);
+    this.gameOverHandler = this.onGameOver.bind(this);
+    this.receivedMoveHandler = this.receivedMove.bind(this);
 }
 
 /**

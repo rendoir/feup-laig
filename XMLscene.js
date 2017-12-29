@@ -120,6 +120,8 @@ XMLscene.prototype.onSceneChange = function(newScene) {
     this.isFirstScene = false;
     removeEventListener('gameLoaded', this.graph.gameLoadedHandler);
     removeEventListener('pieceCapture', this.pieceCaptureHandler);
+    removeEventListener('gameOver', this.graph.gameOverHandler);
+    removeEventListener('receivedMove',this.graph.receivedMoveHandler);
     let nextId = this.graph.id + 1;
     this.graph = null;
     let new_graph = new MySceneGraph(newScene + ".xml", this, nextId);
