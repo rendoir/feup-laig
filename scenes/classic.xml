@@ -36,10 +36,6 @@
       <file path="images/board/board_side.png" />
       <amplif_factor s="8" t="1" />
     </TEXTURE>
-    <TEXTURE id="t_abajur">
-      <file path="images/abajur-piece.png" />
-      <amplif_factor s="10" t="6" />
-    </TEXTURE>
     <TEXTURE id="t_wood">
       <file path="images/table/wood.jpg" />
       <amplif_factor s="1" t="1" />
