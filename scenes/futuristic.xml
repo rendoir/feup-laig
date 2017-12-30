@@ -320,6 +320,7 @@
     <NODE id="spaceship">
       <MATERIAL id="m_white_piece" />
       <TEXTURE id="null" />
+      <TRANSLATION x="-3" y="0" z="0" />
       <DESCENDANTS>
         <NODEREF id="spaceship_top" />
         <NODEREF id="spaceship_bottom" />
@@ -330,38 +331,98 @@
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="spaceship_left" />
+    <NODE id="spaceship_left">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
+      <TRANSLATION x="-19" y="0" z="60" />
+      <ROTATION axis="y" angle="90"/>
       <DESCENDANTS>
-        <NODEREF id="spaceship_side" />
-      </DESCENDANTS>
-    </NODEREF>
-
-    <NODE id="spaceship_side" />
-      <MATERIAL id="m_white_piece" />
-      <TEXTURE id="null" />
-      <DESCENDANTS>
-        <NODEREF id="side_top" />
-        <NODEREF id="side_bottom" />
+        <NODEREF id="spaceship_long_side" />
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="side_top" />
+    <NODE id="spaceship_right">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
-      <TRANSLATION x="0" y="25" z="0"/>
-      <SCALE sx="50" sy="5" sz="1" />
+      <TRANSLATION x="31" y="0" z="60" />
+      <ROTATION axis="y" angle="90"/>
+      <DESCENDANTS>
+        <NODEREF id="spaceship_long_side" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="spaceship_back">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="-19" y="0" z="-19" />
+      <DESCENDANTS>
+        <NODEREF id="spaceship_small_side" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="spaceship_front">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="-19" y="0" z="31" />
+      <DESCENDANTS>
+        <NODEREF id="spaceship_small_side" />
+      </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="spaceship_long_side">
+      <MATERIAL id="m_white_piece" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="long_side_top" />
+        <NODEREF id="long_side_bottom" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="spaceship_small_side">
+      <MATERIAL id="m_white_piece" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="small_side_top" />
+        <NODEREF id="small_side_bottom" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="long_side_top">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="40" z="0"/>
+      <SCALE sx="120" sy="20" sz="1" />
       <DESCENDANTS>
         <NODEREF id="box" />
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="side_bottom" />
+    <NODE id="long_side_bottom">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
-      <TRANSLATION x="0" y="-10" z="0"/>
-      <SCALE sx="50" sy="5" sz="1" />
+      <TRANSLATION x="0" y="0" z="0"/>
+      <SCALE sx="90" sy="20" sz="1" />
+      <DESCENDANTS>
+        <NODEREF id="box" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="small_side_top">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="30" z="0"/>
+      <SCALE sx="50" sy="10" sz="1" />
+      <DESCENDANTS>
+        <NODEREF id="box" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="small_side_bottom">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="0"/>
+      <SCALE sx="50" sy="10" sz="1" />
       <DESCENDANTS>
         <NODEREF id="box" />
       </DESCENDANTS>
