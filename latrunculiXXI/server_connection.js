@@ -61,7 +61,9 @@ function getPrologRequest(requestString, onSuccess, onError, port) {
         else
             console.log("Reply Message: ", reply.msg, "; Return Value: ", reply.return);
     };
-    request.onerror = onError || function() { console.log("Error waiting for response"); };
+    request.onerror = onError || function() {
+        console.log("Error waiting for response");
+    };
 
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     request.send();
