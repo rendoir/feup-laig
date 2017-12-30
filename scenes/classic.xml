@@ -150,6 +150,7 @@
         <NODEREF id="floor" />
         <NODEREF id="walls" />
         <NODEREF id="lamp" />
+        <NODEREF id="pillars" />
       </DESCENDANTS>
     </NODE>
 
@@ -856,8 +857,26 @@
         <NODEREF id="box" />
       </DESCENDANTS>
     </NODE>
-  </NODES>
 
-  
+    <NODE id="pillars">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="pillar" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="pillar">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="-14" y="-6" z="-14" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <NODEREF id="pillar_base" />
+        <LEAF type="cylinder" args="15 1.5 1.5 32 32 0 0" />
+      </DESCENDANTS>
+    </NODE>
+    
+  </NODES>
 
 </SCENE>
