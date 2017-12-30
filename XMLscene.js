@@ -238,7 +238,8 @@ XMLscene.prototype.updateGame = function(currTime) {
             this.onCameraChange(true);
         }
         this.setPlayer(this.turn);
-        this.game.play();
+        if (!this.cameraMoving)
+            this.game.play();
     }
 };
 
@@ -246,6 +247,7 @@ XMLscene.prototype.updateCamera = function(currTime) {
     if (this.cameraMoving) {
         if (this.camera_animation.ended) {
             this.cameraMoving = false;
+            this.game.play();
         } else {
             let deltaTime = (currTime - this.initial_camera_timestamp) / 1000;
             let camera_animation_matrix = this.camera_animation.getMatrix(deltaTime);
@@ -258,7 +260,8 @@ XMLscene.prototype.updateCamera = function(currTime) {
 XMLscene.prototype.setPlayer = function(player) {
     if (!this.game.game_over) {
         this.initial_camera_timestamp = performance.now();
-        if (this.game.playerOneType == 'bot' || this.game.playerTwoType == 'bot') {
+        this.cameraMoving = false;
+        if (this.game.playerOneType != 'bot' || this.game.playerTwoType != 'bot') {
             if (player === 1 && this.interface.rotateCamera) {
                 this.cameraMoving = true;
                 this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 180);
