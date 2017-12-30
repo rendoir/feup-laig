@@ -232,6 +232,7 @@ XMLscene.prototype.updateGame = function(currTime) {
         }
     }
     this.ui.update();
+    this.ui.updatePlayer();
     if (this.turn !== this.game.turn && !this.graph.piece_moving && !this.cameraMoving && !this.game.game_over) {
         this.turn = this.game.turn;
         if (!this.interface.disableCamera && this.interface.rotateCamera) {
