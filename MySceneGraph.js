@@ -1966,6 +1966,11 @@ MySceneGraph.prototype.onGameOver = function(event) {
         value.isPickable = false;
     };
     this.mapPickId_to_Piece.forEach(disablePick.bind(this));
+    if (this.scene.game.winner === 1)
+        this.white_score++;
+    else if (this.scene.game.winner === 2)
+        this.black_score++;
+    this.scene.game.winner = null;
 }
 
 MySceneGraph.prototype.receivedMove = function(event) {
