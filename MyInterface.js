@@ -52,31 +52,44 @@ MyInterface.prototype.addCameraMoving = function(scene) {
 };
 
 MyInterface.prototype.addPlayers = function(scene) {
+    this.scene = scene;
     let players = this.gui.addFolder("Players Type");
-    let playerOne = players.add(scene.game, 'playerOneType', ["player", "bot"]).listen();
-    let playerTwo = players.add(scene.game, 'playerTwoType', ["player", "bot"]).listen();
-    playerOne.onChange(function(value) {
-        if (value == 'bot')
-            scene.game.play();
-        else if (scene.turn === 1) {
-            scene.game.type = "player";
-            scene.ui.updatePlayer();
-            scene.updatePick(scene.turn, false);
-        }
-    });
-    playerTwo.onChange(function(value) {
-        if (value == 'bot')
-            scene.game.play();
-        else if (scene.turn === 2) {
-            scene.game.type = "player";
-            scene.ui.updatePlayer();
-            scene.updatePick(scene.turn, false);
-        }
-    });
+    players.add(this, 'player_Vs_player').name('Player Vs Player');
+    players.add(this, 'player_Vs_bot').name('Player Vs Bot');
+    players.add(this, 'bot_Vs_bot').name('Bot Vs Bot');
     let botsStops = players.add(scene.game, 'stopBots').listen();
     botsStops.onChange(function(value) {
         if (!value)
             scene.game.play();
     });
     players.open();
+};
+
+MyInterface.prototype.player_Vs_player = function() {
+    this.scene.game.type = "player";
+    this.scene.game.playerOneType = "player";
+    this.scene.game.playerTwoType = "player";
+    this.scene.updatePick(this.scene.turn, false);
+    this.scene.ui.updatePlayer();
+};
+
+MyInterface.prototype.player_Vs_bot = function() {
+    this.scene.game.playerOneType = "player";
+    this.scene.game.playerTwoType = "bot";
+    if (this.scene.game.turn == 1) {
+        this.scene.game.type = "player";
+        this.scene.updatePick(this.scene.turn, false);
+    } else {
+        this.scene.game.type = "bot";
+        this.scene.game.play();
+    }
+    this.scene.ui.updatePlayer();
+};
+
+MyInterface.prototype.bot_Vs_bot = function() {
+    this.scene.game.type = "bot";
+    this.scene.game.playerOneType = "bot";
+    this.scene.game.playerTwoType = "bot";
+    this.scene.ui.updatePlayer();
+    this.scene.game.play();
 };

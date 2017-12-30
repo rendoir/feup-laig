@@ -26,7 +26,6 @@ class LatrunculiXXI {
      */
     resetGame() {
         this.game_over = false;
-        this.board_stack = [];
         this.move_stack = [];
         this.captured_pieces_stack = [];
         this.turn = 1; //1 or 2
@@ -34,7 +33,6 @@ class LatrunculiXXI {
         this.playerTwoType = "player";
         this.type = this.playerOneType; //"player" or "bot"
         this.botLevel = this.botLevelOne;
-        this.number_plays = 0;
         this.captured_pieces = [];
         this.stopBots = false;
         this.initBoard();
@@ -134,6 +132,8 @@ class LatrunculiXXI {
          * @event gameLoaded
          */
         let reply = function(data) {
+            this.board_stack = [];
+            this.number_plays = 0;
             this.board_stack[this.number_plays] = data.board;
             this.getAllMoves();
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data.board }));

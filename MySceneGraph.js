@@ -84,6 +84,9 @@ MySceneGraph.prototype.initializeBoard = function(event) {
     this.mapCoords_to_Quad = new Map();
     this.allPiecesNode.children = [];
     this.selectableNodes = [];
+    this.captured_pieces = [];
+    this.black_pieces_captured = 0;
+    this.white_pieces_captured = 0;
     for (let line = 0; line < 8; line++) {
         for (let col = 0; col < 8; col++) {
 
@@ -1883,6 +1886,10 @@ MySceneGraph.prototype.initPieceAnimation = function() {
 
 MySceneGraph.prototype.initBotMoveAnimation = function(move) {
     this.last_selected_piece = this.mapCoords_to_Piece.get(move[0]).get(move[1]);
+    if (!this.last_selected_piece) {
+        if (this.mapCoords_to_Piece.get(move[2]).get(move[3]))
+            return;
+    }
     if (this.last_selected_piece.animation) {
         let endTimeOfAnimation = this.last_selected_piece.initialTimestamp + this.last_selected_piece.animation.duration * 2000;
         this.last_selected_piece.update(endTimeOfAnimation);
@@ -1974,6 +1981,7 @@ MySceneGraph.prototype.onGameOver = function(event) {
 }
 
 MySceneGraph.prototype.receivedMove = function(event) {
+    event.stopPropagation();
     this.initBotMoveAnimation(event.detail);
     this.updateMap(event.detail);
 }
