@@ -51,10 +51,10 @@ class UserInterface {
         this.ui_elements["player2"] = player2;
 
         let undo = new UIElement(this.scene, [
-              0.7, 0.5,
-              0.95, 0.5,
-              0.7, 0.25,
-              0.95, 0.25
+              0.7, 0.15,
+              0.95, 0.15,
+              0.7, -0.1,
+              0.95, -0.1
             ],
             text_coords,
             indices,
@@ -63,16 +63,25 @@ class UserInterface {
         this.ui_elements.push(undo);
 
         let reset = new UIElement(this.scene, [
-              0.7, 0.2,
-              0.95, 0.2,
-              0.7, -0.05,
-              0.95, -0.05
+              0.7, -0.15,
+              0.95, -0.15,
+              0.7, -0.4,
+              0.95, -0.4
         ],
             text_coords,
             indices,
             "images/ui/reset.png",
             this.game.resetGame.bind(this.game));
         this.ui_elements.push(reset);
+
+        let movie_position = [
+            0.7, -0.45,
+            0.95, -0.45,
+            0.7, -0.7,
+            0.95, -0.7
+        ];
+        let movie = new UIElement(this.scene, movie_position, text_coords, indices, "images/ui/movie.png", this.game.playMovie.bind(this.game));
+        this.ui_elements.push(movie);
 
         let game_over_position = [
             -0.5, 0.95,
