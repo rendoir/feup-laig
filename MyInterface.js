@@ -30,7 +30,7 @@ MyInterface.prototype.init = function(application) {
 
 MyInterface.prototype.addAvailableScenes = function(myScene) {
     let scene = this.gui.addFolder("Scene Options");
-    let controller = scene.add(this.scene, 'currentScene', myScene.availableScenes);
+    let controller = scene.add(this.scene, 'currentScene', myScene.availableScenes).name('Current Scene');
     controller.onChange(myScene.onSceneChange.bind(myScene));
 };
 
@@ -38,10 +38,11 @@ MyInterface.prototype.addCameraMoving = function(scene) {
     this.rotateCamera = true;
     let camera = this.gui.addFolder("Camera Options");
     let camera_checkbox = camera.add(this, 'disableCamera').listen();
+    camera_checkbox.name('Disable Camera Movement');
     camera_checkbox.onChange(function(value) {
         scene.onCameraChange(value);
     });
-    let rotate = camera.add(this, 'rotateCamera');
+    let rotate = camera.add(this, 'rotateCamera').name('Rotate Camera');
     let onChangeRotate = function(value) {
         if (value) {
             this.disableCamera = true;
@@ -57,7 +58,10 @@ MyInterface.prototype.addPlayers = function(scene) {
     players.add(this, 'player_Vs_player').name('Player Vs Player');
     players.add(this, 'player_Vs_bot').name('Player Vs Bot');
     players.add(this, 'bot_Vs_bot').name('Bot Vs Bot');
+    players.add(this.scene.game, 'botLevelOne', 1, 2).step(1).listen();
+    players.add(this.scene.game, 'botLevelTwo', 1, 2).step(1).listen();
     let botsStops = players.add(scene.game, 'stopBots').listen();
+    botsStops.name('Stop Bots');
     botsStops.onChange(function(value) {
         if (!value)
             scene.game.play();
