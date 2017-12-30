@@ -303,7 +303,14 @@ class LatrunculiXXI {
 
 
     playMovie() {
-        console.log("PLAYING MOVIE");
+        if (!this.game_over) {
+            console.log("Game not over");
+            return;
+        }
+        console.log("Playing movie");
+        while (true) {
+            console.log("move");
+        }
     }
 
 }

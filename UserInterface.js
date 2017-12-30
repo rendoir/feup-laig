@@ -81,7 +81,7 @@ class UserInterface {
             0.95, -0.7
         ];
         let movie = new UIElement(this.scene, movie_position, text_coords, indices, "images/ui/movie.png", this.game.playMovie.bind(this.game));
-        this.ui_elements.push(movie);
+        this.ui_elements["movie"] = movie;
 
         let game_over_position = [
             -0.5, 0.95,
@@ -137,6 +137,7 @@ class UserInterface {
             this.ui_elements[this.current_type].render();
             this.ui_elements[this.current_turn].render();
         } else {
+            this.ui_elements["movie"].render();
             this.ui_elements["game_over"].render();
         }
 
