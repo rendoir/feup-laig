@@ -19,6 +19,7 @@ class LatrunculiXXI {
         this.captured_pieces = [];
         this.stopBots = false;
         this.playingMovie = false;
+        this.number_play_of_game_over = 0;
     }
 
     /**
@@ -37,6 +38,7 @@ class LatrunculiXXI {
         this.captured_pieces = [];
         this.stopBots = false;
         this.playingMovie = false;
+        this.number_play_of_game_over = 0;
         this.initBoard();
     }
 
@@ -77,6 +79,7 @@ class LatrunculiXXI {
             this.game_over = isGameOver;
             this.playingMovie = false;
             this.winner = winner;
+            this.number_play_of_game_over = this.number_plays;
             dispatchEvent(new Event('gameOver', {}));
         } else if (!this.playingMovie) {
             this.getAllMoves();
@@ -232,7 +235,9 @@ class LatrunculiXXI {
             this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
             this.botLevel = (this.turn === 1) ? this.botLevelTwo : this.botLevelOne;
             this.turn = (this.turn === 1) ? 2 : 1;
-            this.checkGameOver();
+            if (this.number_play_of_game_over === this.number_plays) {
+                this.setGameOver(true, this.winner);
+            }
             this.captured_pieces = this.captured_pieces_stack[this.number_plays];
             if (this.captured_pieces.length > 0) {
                 dispatchEvent(new Event('pieceCapture', {}));
