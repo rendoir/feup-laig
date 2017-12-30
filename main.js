@@ -61,15 +61,9 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
 
 
 
-        let controller = myInterface.addAvailableScenes(myScene.availableScenes);
-        controller.onChange(myScene.onSceneChange.bind(myScene));
-
+        myInterface.addAvailableScenes(myScene);
         myInterface.setActiveCamera(myScene.camera);
-        let camera_checkbox = myInterface.addCameraMoving();
-        camera_checkbox.onChange(function(value) {
-            myScene.onCameraChange(value);
-        });
-
+        myInterface.addCameraMoving(myScene);
         myInterface.addPlayers(myScene);
 
 

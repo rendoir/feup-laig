@@ -207,7 +207,7 @@ XMLscene.prototype.update = function(currTime) {
 };
 
 XMLscene.prototype.updateGame = function(currTime) {
-    if (this.graph.last_selected_piece !== null && this.graph.last_selected_quad !== null) {
+    if (this.graph.last_selected_piece != null && this.graph.last_selected_quad != null) {
         if (this.graph.piece_moving) {
             if (this.graph.last_selected_piece.animation.ended) {
                 this.graph.last_selected_piece = null;

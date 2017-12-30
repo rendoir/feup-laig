@@ -17,6 +17,7 @@ class LatrunculiXXI {
         this.type = this.playerOneType; //"player" or "bot"
         this.number_plays = 0;
         this.captured_pieces = [];
+        this.stopBots = false;
     }
 
     /**
@@ -29,10 +30,13 @@ class LatrunculiXXI {
         this.move_stack = [];
         this.captured_pieces_stack = [];
         this.turn = 1; //1 or 2
+        this.playerOneType = "player"; //"player" or "bot"
+        this.playerTwoType = "player";
         this.type = this.playerOneType; //"player" or "bot"
         this.botLevel = this.botLevelOne;
         this.number_plays = 0;
         this.captured_pieces = [];
+        this.stopBots = false;
         this.initBoard();
     }
 
@@ -146,6 +150,7 @@ class LatrunculiXXI {
     undo() {
         console.log("Undo");
         if (this.number_plays > 0) {
+            this.stopBots = true;
             let lastMove = this.move_stack[this.number_plays - 1];
             let capture = this.captured_pieces_stack[this.number_plays - 1];
             this.board_stack.pop();
@@ -213,10 +218,12 @@ class LatrunculiXXI {
     }
 
     play() {
-        if (this.playerOneType == "bot" && this.turn == 1) { //"player" or "bot"
-            this.makeMove();
-        } else if (this.playerTwoType == "bot" && this.turn == 2) { //"player" or "bot")
-            this.makeMove();
+        if (!this.game_over && !this.stopBots) {
+            if (this.playerOneType == "bot" && this.turn == 1) { //"player" or "bot"
+                this.makeMove();
+            } else if (this.playerTwoType == "bot" && this.turn == 2) { //"player" or "bot")
+                this.makeMove();
+            }
         }
     }
 
