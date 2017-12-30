@@ -30,7 +30,7 @@ function MySceneGraph(filename, scene, id) {
     this.quad_model, this.soldier_model, this.dux_model;
 
     this.last_selected_quad = null;
-    this.last_selected_piece = null;
+    this.last_selected_null;
     this.piece_moving = false;
     this.captured_pieces = [];
     this.white_pieces_captured = 0;
@@ -1947,7 +1947,6 @@ MySceneGraph.prototype.initReverseCaptureAnimation = function() {
 
 MySceneGraph.prototype.pieceCaptureHandler = function(event) {
     this.scene.game.captured_pieces.forEach(Elem => {
-        console.log("Piece Capture: ", Elem);
         this.initCaptureAnimation(Elem);
     });
     this.scene.game.captured_pieces = [];
