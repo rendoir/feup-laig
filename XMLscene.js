@@ -99,8 +99,6 @@ XMLscene.prototype.initCameras = function() {
  */
 XMLscene.prototype.onGraphLoaded = function() {
     if (this.isFirstScene) {
-        let controller = this.interface.addAvailableScenes(this.availableScenes);
-        controller.onChange(this.onSceneChange.bind(this));
         this.game.initBoard();
     } else {
         let current_board = this.game.getCurrentBoard();
@@ -177,9 +175,6 @@ XMLscene.prototype.display = function() {
         // Applies initial transformations.
         this.multMatrix(this.graph.initialTransforms);
 
-        // Draw axis
-        this.axis.display();
-
         var i = 0;
         for (var key in this.lightValues) {
             if (this.lightValues.hasOwnProperty(key)) {
@@ -196,9 +191,6 @@ XMLscene.prototype.display = function() {
         }
         // Displays the scene.
         this.graph.displayScene();
-    } else {
-        // Draw axis
-        this.axis.display();
     }
 
     this.popMatrix();
@@ -239,8 +231,14 @@ XMLscene.prototype.updateGame = function(currTime) {
             }
         }
     }
+    if (!this.game.game_over) {
+        this.ui.update();
+    }
     if (this.turn !== this.game.turn && !this.graph.piece_moving && !this.cameraMoving && !this.game.game_over) {
         this.turn = this.game.turn;
+        if (!this.interface.disableCamera && this.interface.rotateCamera) {
+            this.onCameraChange(true);
+        }
         this.setPlayer(this.turn);
     }
 };
@@ -249,6 +247,7 @@ XMLscene.prototype.updateCamera = function(currTime) {
     if (this.cameraMoving) {
         if (this.camera_animation.ended) {
             this.cameraMoving = false;
+            this.game.play();
         } else {
             let deltaTime = (currTime - this.initial_camera_timestamp) / 1000;
             let camera_animation_matrix = this.camera_animation.getMatrix(deltaTime);
@@ -260,13 +259,16 @@ XMLscene.prototype.updateCamera = function(currTime) {
 
 XMLscene.prototype.setPlayer = function(player) {
     if (!this.game.game_over) {
-        this.cameraMoving = true;
+        this.cameraMoving = true && this.interface.rotateCamera;
         this.initial_camera_timestamp = performance.now();
-        if (player === 1)
+        if (player === 1 && this.interface.rotateCamera)
             this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, 90, 180);
-        else this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
+        else if (this.interface.rotateCamera)
+            this.camera_animation = new CircularAnimation(this.camera_radius, this.camera_speed, this.camera_center, -90, 180);
+        else
+            this.game.play();
         this.updatePick(this.turn, false);
-        this.ui.update();
+        this.ui.updatePlayer();
     }
 };
 
@@ -291,7 +293,7 @@ XMLscene.prototype.updatePick = function(player, withBoardPieces) {
     this.graph.mapPickId_to_Piece.forEach(changePick.bind(this));
 };
 
-XMLscene.prototype.onCameraChange = function (value) {
+XMLscene.prototype.onCameraChange = function(value) {
     if (value) {
         this.camera.setTarget(vec3.fromValues(4, 0, 4));
         this.camera.setPosition(this.player_camera[this.turn]);

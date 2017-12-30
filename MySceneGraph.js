@@ -36,6 +36,9 @@ function MySceneGraph(filename, scene, id) {
     this.white_pieces_captured = 0;
     this.black_pieces_captured = 0;
 
+    this.black_score = 0;
+    this.white_score = 0;
+
     // File reading
     this.loadNewScene(filename);
 
@@ -76,6 +79,8 @@ MySceneGraph.prototype.initializeBoard = function(event) {
     this.mapPickId_to_Piece = new Map();
     this.mapCoords_to_Piece = new Map();
     this.mapCoords_to_Quad = new Map();
+    this.allPiecesNode.children = [];
+    this.selectableNodes = [];
     for (let line = 0; line < 8; line++) {
         for (let col = 0; col < 8; col++) {
 
@@ -130,7 +135,6 @@ MySceneGraph.prototype.initializeBoard = function(event) {
             this.mapPickId_to_Piece.set(pos_id, new_board_position);
         }
     }
-    this.rootGraphNode.addChild(this.allPiecesNode);
     this.scene.updatePick(this.scene.turn, false);
 };
 
@@ -151,10 +155,11 @@ MySceneGraph.prototype.onXMLReady = function() {
     }
 
     this.loadedOk = true;
+    this.rootGraphNode.addChild(this.allPiecesNode);
 
     // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
     this.scene.onGraphLoaded();
-}
+};
 
 /**
  * Parses the LSX file, processing each block.
@@ -1626,9 +1631,6 @@ MySceneGraph.prototype.parseNodesXMLTag = function(nodesNode) {
         return "Invalid Root ID";
     }
     this.rootGraphNode = this.parseNode(this.xmlNodes[this.nodeIDToIndex[this.idRoot]]);
-    if (this.allPiecesNode.children.length > 0) {
-        this.rootGraphNode.addChild(this.allPiecesNode);
-    }
 
     console.log("Parsed nodes");
     return null;
@@ -1913,6 +1915,8 @@ MySceneGraph.prototype.initReverseCaptureAnimation = function() {
         return;
     }
     let piece = this.captured_pieces[this.captured_pieces.length - 1];
+    this.captured_pieces.pop();
+    this.mapCoords_to_Piece.get(piece.position.x).set(piece.position.y, piece);
     let side_board_position;
 
     if (piece.nodeID.indexOf("white") != -1) {
@@ -1931,9 +1935,6 @@ MySceneGraph.prototype.initReverseCaptureAnimation = function() {
     ];
     piece.initialTimestamp = -1;
     piece.animation = new BezierAnimation(20, control_points);
-
-    this.captured_pieces.pop();
-    this.mapCoords_to_Piece.get(piece.position.x).set(piece.position.y, piece);
 }
 
 MySceneGraph.prototype.pieceCaptureHandler = function(event) {

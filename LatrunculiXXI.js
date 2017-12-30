@@ -11,9 +11,29 @@ class LatrunculiXXI {
         this.turn = 1; //1 or 2
         this.playerOneType = "player"; //"player" or "bot"
         this.playerTwoType = "player"; //"player" or "bot"
+        this.botLevel = 2;
+        this.botLevelOne = 2;
+        this.botLevelTwo = 2;
         this.type = this.playerOneType; //"player" or "bot"
         this.number_plays = 0;
         this.captured_pieces = [];
+    }
+
+    /**
+     * (description)
+     * @memberof LatrunculiXXI
+     */
+    resetGame() {
+        this.game_over = false;
+        this.board_stack = [];
+        this.move_stack = [];
+        this.captured_pieces_stack = [];
+        this.turn = 1; //1 or 2
+        this.type = this.playerOneType; //"player" or "bot"
+        this.botLevel = this.botLevelOne;
+        this.number_plays = 0;
+        this.captured_pieces = [];
+        this.initBoard();
     }
 
     /**
@@ -34,6 +54,7 @@ class LatrunculiXXI {
         this.number_plays++;
         this.board_stack[this.number_plays] = board;
         this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
+        this.botLevel = (this.turn === 1) ? this.botLevelOne : this.botLevelTwo;
         this.turn = (this.turn === 1) ? 2 : 1;
         this.checkGameOver();
         this.calculateCapturedPieces();
@@ -133,6 +154,10 @@ class LatrunculiXXI {
             this.number_plays--;
             this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
             this.turn = (this.turn === 1) ? 2 : 1;
+            if (this.game_over) {
+                this.game_over = false;
+                this.winner = null;
+            }
             this.getAllMoves();
             dispatchEvent(new Event('undoCapture', {}));
             dispatchEvent(new CustomEvent('receivedMove', {
@@ -183,8 +208,16 @@ class LatrunculiXXI {
             this.addBoard(data.board);
             dispatchEvent(new CustomEvent('receivedMove', { detail: data.move }));
         };
-        let request = createRequest('makeMove', [this.turn, this.getCurrentBoardString(), 2], reply.bind(this));
+        let request = createRequest('makeMove', [this.turn, this.getCurrentBoardString(), this.botLevel], reply.bind(this));
         prologRequest(request);
+    }
+
+    play() {
+        if (this.playerOneType == "bot" && this.turn == 1) { //"player" or "bot"
+            this.makeMove();
+        } else if (this.playerTwoType == "bot" && this.turn == 2) { //"player" or "bot")
+            this.makeMove();
+        }
     }
 
     /**

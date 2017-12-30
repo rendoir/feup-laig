@@ -61,11 +61,17 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
 
 
 
+        let controller = myInterface.addAvailableScenes(myScene.availableScenes);
+        controller.onChange(myScene.onSceneChange.bind(myScene));
+
         myInterface.setActiveCamera(myScene.camera);
         let camera_checkbox = myInterface.addCameraMoving();
-        camera_checkbox.onChange(function (value) {
+        camera_checkbox.onChange(function(value) {
             myScene.onCameraChange(value);
         });
+
+        myInterface.addPlayers(myScene);
+
 
         // get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
         // or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor)
