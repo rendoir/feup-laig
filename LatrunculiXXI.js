@@ -18,6 +18,7 @@ class LatrunculiXXI {
         this.number_plays = 0;
         this.captured_pieces = [];
         this.stopBots = false;
+        this.playingMovie = false;
     }
 
     /**
@@ -35,6 +36,7 @@ class LatrunculiXXI {
         this.botLevel = this.botLevelOne;
         this.captured_pieces = [];
         this.stopBots = false;
+        this.playingMovie = false;
         this.initBoard();
     }
 
@@ -73,9 +75,10 @@ class LatrunculiXXI {
         if (isGameOver) {
             console.log('Game Is Over');
             this.game_over = isGameOver;
+            this.playingMovie = false;
             this.winner = winner;
             dispatchEvent(new Event('gameOver', {}));
-        } else {
+        } else if (!this.playingMovie) {
             this.getAllMoves();
         }
     }
@@ -95,7 +98,7 @@ class LatrunculiXXI {
      * @memberof LatrunculiXXI
      */
     getCurrentBoardString() {
-        return JSON.stringify(this.board_stack[this.number_plays]);
+        return JSON.stringify(this.getCurrentBoard());
     }
 
     /**
@@ -149,7 +152,7 @@ class LatrunculiXXI {
      */
     undo() {
         console.log("Undo");
-        if (this.number_plays > 0) {
+        if (this.number_plays > 0 && !this.playingMovie) {
             this.stopBots = true;
             let lastMove = this.move_stack[this.number_plays - 1];
             let capture = this.captured_pieces_stack[this.number_plays - 1];
@@ -218,12 +221,23 @@ class LatrunculiXXI {
     }
 
     play() {
-        if (!this.game_over && !this.stopBots) {
+        if (!this.game_over && !this.stopBots && !this.playingMovie) {
             if (this.playerOneType == "bot" && this.turn == 1) { //"player" or "bot"
                 this.makeMove();
             } else if (this.playerTwoType == "bot" && this.turn == 2) { //"player" or "bot")
                 this.makeMove();
             }
+        } else if (!this.game_over && !this.stopBots && this.playingMovie) {
+            this.number_plays++;
+            this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
+            this.botLevel = (this.turn === 1) ? this.botLevelTwo : this.botLevelOne;
+            this.turn = (this.turn === 1) ? 2 : 1;
+            this.checkGameOver();
+            this.captured_pieces = this.captured_pieces_stack[this.number_plays];
+            if (this.captured_pieces.length > 0) {
+                dispatchEvent(new Event('pieceCapture', {}));
+            }
+            dispatchEvent(new CustomEvent('receivedMove', { detail: this.move_stack[this.number_plays - 1][1] }));
         }
     }
 
@@ -308,9 +322,11 @@ class LatrunculiXXI {
             return;
         }
         console.log("Playing movie");
-        while (true) {
-            console.log("move");
-        }
+        this.number_plays = 0;
+        this.game_over = false;
+        this.playingMovie = true;
+        dispatchEvent(new CustomEvent('gameLoaded', { detail: this.board_stack[this.number_plays] }));
+        dispatchEvent(new CustomEvent('receivedMove', { detail: this.move_stack[this.number_plays][1] }));
     }
 
 }

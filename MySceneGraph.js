@@ -1899,6 +1899,11 @@ MySceneGraph.prototype.initBotMoveAnimation = function(move) {
 
 MySceneGraph.prototype.initCaptureAnimation = function(piece_position) {
     let piece = this.mapCoords_to_Piece.get(piece_position[0]).get(piece_position[1]);
+    if (piece.animation) {
+        let endTimeOfAnimation = piece.initialTimestamp + piece.animation.duration * 2000;
+        piece.update(endTimeOfAnimation);
+        piece.update(0);
+    }
 
     let side_board_position;
 
