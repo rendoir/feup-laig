@@ -294,6 +294,11 @@ class LatrunculiXXI {
         }
     }
 
+
+    playMovie() {
+        console.log("PLAYING MOVIE");
+    }
+
 }
 
 /**
