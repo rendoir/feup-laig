@@ -58,10 +58,10 @@ MyInterface.prototype.addPlayers = function(scene) {
     players.add(this, 'player_Vs_player').name('Player Vs Player');
     players.add(this, 'player_Vs_bot').name('Player Vs Bot');
     players.add(this, 'bot_Vs_bot').name('Bot Vs Bot');
-    players.add(this.scene.game, 'botLevelOne', 1, 2).step(1).listen();
-    players.add(this.scene.game, 'botLevelTwo', 1, 2).step(1).listen();
+    players.add(this.scene.game, 'botLevelOne', 1, 2).step(1).listen().name('Bot 1 Level');
+    players.add(this.scene.game, 'botLevelTwo', 1, 2).step(1).listen().name('Bot 2 Level');
     let botsStops = players.add(scene.game, 'stopBots').listen();
-    botsStops.name('Stop Bots');
+    botsStops.name('Stop!');
     botsStops.onChange(function(value) {
         if (!value)
             scene.game.play();
