@@ -56,7 +56,7 @@ class LatrunculiXXI {
         this.number_plays++;
         this.board_stack[this.number_plays] = board;
         this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
-        this.botLevel = (this.turn === 1) ? this.botLevelOne : this.botLevelTwo;
+        this.botLevel = (this.turn === 1) ? this.botLevelTwo : this.botLevelOne;
         this.turn = (this.turn === 1) ? 2 : 1;
         this.checkGameOver();
         this.calculateCapturedPieces();
