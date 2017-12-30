@@ -114,6 +114,10 @@ class UserInterface {
                     element.onClick();
                 }
             });
+
+            if (ui_scene.ui_elements["movie"].isInside(x, y, canvas.width, canvas.height)) {
+                ui_scene.ui_elements["movie"].onClick();
+            }
         });
     };
 
