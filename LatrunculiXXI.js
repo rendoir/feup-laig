@@ -207,6 +207,14 @@ class LatrunculiXXI {
         prologRequest(request);
     }
 
+    play() {
+        if (this.playerOneType == "bot" && this.turn == 1) { //"player" or "bot"
+            this.makeMove();
+        } else if (this.playerTwoType == "bot" && this.turn == 2) { //"player" or "bot")
+            this.makeMove();
+        }
+    }
+
     /**
      * Inputs a move to prolog to get the NewBoard and check if is a valid move;
      * @param {number[]} move array of positions --> [Xi, Yi, Xf, Yf];
