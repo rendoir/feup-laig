@@ -28,33 +28,55 @@ MyInterface.prototype.init = function(application) {
     return true;
 };
 
-MyInterface.prototype.addAvailableScenes = function(availableScenes) {
+MyInterface.prototype.addAvailableScenes = function(myScene) {
     let scene = this.gui.addFolder("Scene Options");
-    return scene.add(this.scene, 'currentScene', availableScenes);
+    let controller = scene.add(this.scene, 'currentScene', myScene.availableScenes);
+    controller.onChange(myScene.onSceneChange.bind(myScene));
 };
 
-MyInterface.prototype.addCameraMoving = function() {
+MyInterface.prototype.addCameraMoving = function(scene) {
     this.rotateCamera = true;
     let camera = this.gui.addFolder("Camera Options");
-    camera.add(this, 'rotateCamera');
-    return camera.add(this, 'disableCamera');
+    let camera_checkbox = camera.add(this, 'disableCamera').listen();
+    camera_checkbox.onChange(function(value) {
+        scene.onCameraChange(value);
+    });
+    let rotate = camera.add(this, 'rotateCamera');
+    let onChangeRotate = function(value) {
+        if (value) {
+            this.disableCamera = true;
+            scene.onCameraChange(this.disableCamera);
+        }
+    };
+    rotate.onChange(onChangeRotate.bind(this));
 };
 
 MyInterface.prototype.addPlayers = function(scene) {
     let players = this.gui.addFolder("Players Type");
-    let playerOne = players.add(scene.game, 'playerOneType', ["player", "bot"]);
-    let playerTwo = players.add(scene.game, 'playerTwoType', ["player", "bot"]);
+    let playerOne = players.add(scene.game, 'playerOneType', ["player", "bot"]).listen();
+    let playerTwo = players.add(scene.game, 'playerTwoType', ["player", "bot"]).listen();
     playerOne.onChange(function(value) {
         if (value == 'bot')
             scene.game.play();
-        else if (scene.turn === 1)
+        else if (scene.turn === 1) {
+            scene.game.type = "player";
+            scene.ui.updatePlayer();
             scene.updatePick(scene.turn, false);
+        }
     });
     playerTwo.onChange(function(value) {
         if (value == 'bot')
             scene.game.play();
-        else if (scene.turn === 2)
+        else if (scene.turn === 2) {
+            scene.game.type = "player";
+            scene.ui.updatePlayer();
             scene.updatePick(scene.turn, false);
+        }
+    });
+    let botsStops = players.add(scene.game, 'stopBots').listen();
+    botsStops.onChange(function(value) {
+        if (!value)
+            scene.game.play();
     });
     players.open();
 };

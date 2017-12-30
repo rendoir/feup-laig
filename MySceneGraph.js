@@ -72,7 +72,7 @@ MySceneGraph.prototype.addEventListeners = function() {
  * @param {event} event 
  * @listens gameLoaded
  */
-MySceneGraph.prototype.initializeBoard = function (event) {
+MySceneGraph.prototype.initializeBoard = function(event) {
     this.black_score = 0;
     this.white_score = 0;
     this.scene.ui.resetTimer();
@@ -1883,6 +1883,11 @@ MySceneGraph.prototype.initPieceAnimation = function() {
 
 MySceneGraph.prototype.initBotMoveAnimation = function(move) {
     this.last_selected_piece = this.mapCoords_to_Piece.get(move[0]).get(move[1]);
+    if (this.last_selected_piece.animation) {
+        let endTimeOfAnimation = this.last_selected_piece.initialTimestamp + this.last_selected_piece.animation.duration * 2000;
+        this.last_selected_piece.update(endTimeOfAnimation);
+        this.last_selected_piece.update(0);
+    }
     this.last_selected_quad = this.mapCoords_to_Quad.get(move[2]).get(move[3]);
     this.initPieceAnimation();
 }
