@@ -62,6 +62,18 @@ class UserInterface {
             this.game.undo.bind(this.game));
         this.ui_elements.push(undo);
 
+        let reset = new UIElement(this.scene, [
+              0.7, 0.2,
+              0.95, 0.2,
+              0.7, -0.05,
+              0.95, -0.05
+        ],
+            text_coords,
+            indices,
+            "images/ui/reset.png",
+            this.game.resetGame.bind(this.game));
+        this.ui_elements.push(reset);
+
         let game_over_position = [
             -0.5, 0.95,
             0.5, 0.95, -0.5, 0.75,

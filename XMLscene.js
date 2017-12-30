@@ -177,9 +177,6 @@ XMLscene.prototype.display = function() {
         // Applies initial transformations.
         this.multMatrix(this.graph.initialTransforms);
 
-        // Draw axis
-        this.axis.display();
-
         var i = 0;
         for (var key in this.lightValues) {
             if (this.lightValues.hasOwnProperty(key)) {
@@ -196,9 +193,6 @@ XMLscene.prototype.display = function() {
         }
         // Displays the scene.
         this.graph.displayScene();
-    } else {
-        // Draw axis
-        this.axis.display();
     }
 
     this.popMatrix();
