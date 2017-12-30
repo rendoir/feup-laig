@@ -201,4 +201,8 @@ class UserInterface {
         this.timer_textures[11] = new CGFtexture(this.scene, "./scenes/" + "images/numbers/minus.png");
         this.ui_elements["minus"].texture = this.timer_textures[11];
     }
+
+    resetTimer() {
+        this.initTime = performance.now();
+    }
 };

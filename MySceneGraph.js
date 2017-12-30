@@ -72,7 +72,10 @@ MySceneGraph.prototype.addEventListeners = function() {
  * @param {event} event 
  * @listens gameLoaded
  */
-MySceneGraph.prototype.initializeBoard = function(event) {
+MySceneGraph.prototype.initializeBoard = function (event) {
+    this.black_score = 0;
+    this.white_score = 0;
+    this.scene.ui.resetTimer();
     let data = event.detail;
     let new_piece = null;
     //Maps
