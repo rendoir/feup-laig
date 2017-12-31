@@ -24,6 +24,13 @@
       <diffuse r="1" g="1" b="1" a="1.0" />
       <specular r="1" g="1" b="1" a="1.0" />
     </LIGHT>
+    <LIGHT id="l_sun">
+      <enable value ="1" />
+      <position  x="200" y="0" z="0" w="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+      <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+      <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
   </LIGHTS>
 
 
@@ -32,22 +39,90 @@
       <file path="images/board/board.png" />
       <amplif_factor s="8" t="8" />
     </TEXTURE>
+
     <TEXTURE id="t_board_side">
       <file path="images/board/board_side.png" />
       <amplif_factor s="8" t="1" />
     </TEXTURE>
+
     <TEXTURE id="t_abajur">
       <file path="images/abajur.png" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
+
     <TEXTURE id="t_futuristic">
       <file path="images/table/futuristic.png" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
+
+    <TEXTURE id="t_sun">
+      <file path="images/space/sun.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_back">
+      <file path="images/space/skybox_back.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_down">
+      <file path="images/space/skybox_down.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_front">
+      <file path="images/space/skybox_front.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_left">
+      <file path="images/space/skybox_left.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_right">
+      <file path="images/space/skybox_right.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="t_skybox_up">
+      <file path="images/space/skybox_up.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+    <TEXTURE id="t_spaceship_floor">
+      <file path="images/spaceship/floor.jpg" />
+      <amplif_factor s="49.0" t="49.0" />
+    </TEXTURE>
+    <TEXTURE id="t_spaceship_wall">
+      <file path="images/spaceship/wall.jpg" />
+      <amplif_factor s="1.0" t="1.0" />
+    </TEXTURE>
+
+    <TEXTURE id="t_spaceship_wall_amp">
+      <file path="images/spaceship/wall.jpg" />
+      <amplif_factor s="49.0" t="49.0" />
+    </TEXTURE>
+    <TEXTURE id="t_spaceship_booster">
+      <file path="images/spaceship/booster.jpg" />
+      <amplif_factor s="49.0" t="49.0" />
+    </TEXTURE>
+    <TEXTURE id="t_turbine_blade">
+      <file path="images/spaceship/turbine_blade.jpg" />
+      <amplif_factor s="0.5" t="4.0" />
+    </TEXTURE>
+    
   </TEXTURES>
 
 
   <MATERIALS>
+
+    <MATERIAL id="m_sun">
+      <shininess value="1" />
+      <specular r="0.0" g="0.0" b="0.0" a="1" />
+      <diffuse r="0.0" g="0.0" b="0.0" a="1" />
+      <ambient r="0.0" g="0.0" b="0.0" a="1" />
+      <emission r="1.0" g="0.65" b="0.0" a="1" />
+    </MATERIAL>
     <MATERIAL id="m_board">
       <shininess value="8" />
       <specular r="1.0" g="1.0" b="1.0" a="1" />
@@ -83,10 +158,41 @@
       <ambient r="1.0" g="1.0" b="1.0" a="1" />
       <emission r="1.0" g="1.0" b="1.0" a="1" />
     </MATERIAL>
+    <MATERIAL id="m_skybox">
+      <shininess value="1" />
+      <specular r="0.0" g="0.0" b="0.0" a="1" />
+      <diffuse r="1.0" g="1.0" b="1.0" a="1" />
+      <ambient r="1.0" g="1.0" b="1.0" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+    <MATERIAL id="m_turbine_blade">
+      <shininess value="32" />
+      <specular r="0.2" g="0.8" b="0.8" a="1" />
+      <diffuse r="0.1" g="0.8" b="0.8" a="1" />
+      <ambient r="0.1" g="0.5" b="0.5" a="1" />
+      <emission r="0.0" g="0.2" b="0.2" a="1" />
+    </MATERIAL>
+    <MATERIAL id="m_dark_metal">
+      <shininess value="32" />
+      <specular r="0.8" g="0.8" b="0.8" a="1" />
+      <diffuse r="0.3" g="0.3" b="0.3" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0" b="0" a="1" />
+    </MATERIAL>
+    <MATERIAL id="m_spaceship_floor">
+      <shininess value="32" />
+      <specular r="0" g="0.8" b="0.8" a="1" />
+      <diffuse r="0" g="0.4" b="0.4" a="1" />
+      <ambient r="0" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0" b="0" a="1" />
+    </MATERIAL>
   </MATERIALS>
 
 
   <ANIMATIONS>
+    <ANIMATION id="an_rotate_him_self" speed="1" type="circular"
+                centerx="0" centery="0" centerz="0"
+                radius="0" startang="0" rotang="360000000"/>
   </ANIMATIONS>
 
 
@@ -102,6 +208,8 @@
         <NODEREF id="lamp" />
         <NODEREF id="table" />
         <NODEREF id="spaceship" />
+        <NODEREF id="skybox" />
+        <NODEREF id="sun" />
       </DESCENDANTS>
     </NODE>
     
@@ -222,7 +330,7 @@
 
     <NODE id="box_front">
       <MATERIAL id="null" />
-      <TEXTURE id="t_board_side" />
+      <TEXTURE id="null" />
       <TRANSLATION x="0" y="-1" z="1" />
       <DESCENDANTS>
         <LEAF type="rectangle" args="0 1 1 0" />
@@ -231,7 +339,7 @@
 
     <NODE id="box_left">
       <MATERIAL id="null" />
-      <TEXTURE id="t_board_side" />
+      <TEXTURE id="null" />
       <TRANSLATION x="0" y="0" z="1" />
       <ROTATION axis="y" angle="-90" />
       <ROTATION axis="z" angle="180" />
@@ -242,7 +350,7 @@
 
     <NODE id="box_right">
       <MATERIAL id="null" />
-      <TEXTURE id="t_board_side" />
+      <TEXTURE id="null" />
       <TRANSLATION x="1" y="0" z="0" />
       <ROTATION axis="z" angle="180" />
       <ROTATION axis="y" angle="-90" />
@@ -253,7 +361,7 @@
 
     <NODE id="box_back">
       <MATERIAL id="null" />
-      <TEXTURE id="t_board_side" />
+      <TEXTURE id="null" />
       <TRANSLATION x="1" y="-1" z="0" />
       <ROTATION axis="x" angle="180" />
       <ROTATION axis="z" angle="180" />
@@ -299,6 +407,18 @@
       </DESCENDANTS>
     </NODE>
 
+    <NODE id="sun">
+      <MATERIAL id="m_sun" />
+      <TEXTURE id="t_sun" />
+      <TRANSLATION x="200" y="0" z="0" />
+      <ANIMATIONREFS>
+        <ANIMATIONREF id="an_rotate_him_self" />
+      </ANIMATIONREFS>
+      <DESCENDANTS>
+        <LEAF type="sphere" args="15 40 40" />
+      </DESCENDANTS>
+    </NODE>
+
     <NODE id="table">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -318,8 +438,8 @@
     </NODE>
 
     <NODE id="spaceship">
-      <MATERIAL id="m_white_piece" />
-      <TEXTURE id="null" />
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="t_spaceship_wall" />
       <TRANSLATION x="-3" y="0" z="0" />
       <DESCENDANTS>
         <NODEREF id="spaceship_top" />
@@ -328,6 +448,253 @@
         <NODEREF id="spaceship_right" />
         <NODEREF id="spaceship_back" />
         <NODEREF id="spaceship_front" />
+        <NODEREF id="spaceship_floor" />
+        <NODEREF id="booster_top_left" />
+        <NODEREF id="booster_bottom_left" />
+        <NODEREF id="booster_top_right" />
+        <NODEREF id="booster_bottom_right" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="booster_top_left">
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="clear" />
+      <TRANSLATION x="-33" y="25" z="0" />
+      <DESCENDANTS>
+        <NODEREF id="booster_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="booster_bottom_left">
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="clear" />
+      <TRANSLATION x="-33" y="-10" z="-5" />
+      <DESCENDANTS>
+        <NODEREF id="booster_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="booster_top_right">
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="clear" />
+      <TRANSLATION x="46" y="25" z="0" />
+      <ROTATION axis="z" angle="180"/>
+      <DESCENDANTS>
+        <NODEREF id="booster_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="booster_bottom_right">
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="clear" />
+      <TRANSLATION x="46" y="-10" z="-5" />
+      <ROTATION axis="z" angle="180"/>
+      <DESCENDANTS>
+        <NODEREF id="booster_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="booster_model">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="0" />
+      <DESCENDANTS>
+        <NODEREF id="booster_cylinder" />
+        <NODEREF id="booster_difuser_top" />
+        <NODEREF id="booster_difuser_bottom" />
+        <NODEREF id="booster_difuser_cylinder" />
+        <NODEREF id="booster_turbine" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="booster_cylinder">
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="t_spaceship_booster" />
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="35 4 5 4 12 0 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="booster_difuser_cylinder">
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="clear" />
+      <TRANSLATION x="0" y="0" z="35" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="4.7 0.2 0.2 2 12 1 1" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="booster_difuser_top">
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="clear" />
+      <TRANSLATION x="-5" y="0" z="36" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 3 10 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="booster_difuser_bottom">
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="clear" />
+      <TRANSLATION x="-5" y="0" z="33" />
+      <ROTATION axis="x" angle="90" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 3 10 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="booster_turbine">
+      <MATERIAL id="null" />
+      <TEXTURE id="clear" />
+      <TRANSLATION x="0" y="0" z="31" />
+      <DESCENDANTS>
+        <NODEREF id="turbine_blade_1" />
+        <NODEREF id="turbine_blade_2" />
+        <NODEREF id="turbine_blade_3" />
+        <NODEREF id="turbine_blade_4" />
+        <NODEREF id="turbine_blade_5" />
+        <NODEREF id="turbine_blade_6" />
+        <NODEREF id="turbine_blade_7" />
+        <NODEREF id="turbine_blade_8" />
+        <NODEREF id="turbine_blade_9" />
+        <NODEREF id="turbine_blade_10" />
+        <NODEREF id="turbine_center_rod" />
+        <NODEREF id="turbine_support" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="turbine_support" >
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="turbine_support_1" />
+        <NODEREF id="turbine_support_2" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="turbine_support_1" >
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="15" y="0" z="-20" />
+      <ROTATION axis="y" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="11 0.5 0.5 1 4 0 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="turbine_support_2" >
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="15" y="0" z="0" />
+      <ROTATION axis="y" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="10 0.5 0.5 1 4 0 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="turbine_center_rod" >
+      <MATERIAL id="m_dark_metal" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0" z="-2" />
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="5 1 1 1 12 1 1" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="turbine_blade_1" >
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ROTATION axis="z" angle="0" />
+      <DESCENDANTS>
+        <NODEREF id="turbine_blade_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="turbine_blade_2" >
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ROTATION axis="z" angle="36" />
+      <DESCENDANTS>
+        <NODEREF id="turbine_blade_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="turbine_blade_3" >
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ROTATION axis="z" angle="72" />
+      <DESCENDANTS>
+        <NODEREF id="turbine_blade_model" />
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="turbine_blade_4" >
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ROTATION axis="z" angle="108" />
+      <DESCENDANTS>
+        <NODEREF id="turbine_blade_model" />
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="turbine_blade_5" >
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ROTATION axis="z" angle="144" />
+      <DESCENDANTS>
+        <NODEREF id="turbine_blade_model" />
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="turbine_blade_6" >
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ROTATION axis="z" angle="180" />
+      <DESCENDANTS>
+        <NODEREF id="turbine_blade_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="turbine_blade_7" >
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ROTATION axis="z" angle="216" />
+      <DESCENDANTS>
+        <NODEREF id="turbine_blade_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="turbine_blade_8" >
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ROTATION axis="z" angle="252" />
+      <DESCENDANTS>
+        <NODEREF id="turbine_blade_model" />
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="turbine_blade_9" >
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ROTATION axis="z" angle="288" />
+      <DESCENDANTS>
+        <NODEREF id="turbine_blade_model" />
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="turbine_blade_10" >
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ROTATION axis="z" angle="324" />
+      <DESCENDANTS>
+        <NODEREF id="turbine_blade_model" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="turbine_blade_model" >
+      <MATERIAL id="m_turbine_blade" />
+      <TEXTURE id="t_turbine_blade" />
+      <ROTATION axis="y" angle="30" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="-0.25 4 0.25 0"/>
+        <LEAF type="rectangle" args="0.25 4 -0.25 0" />
       </DESCENDANTS>
     </NODE>
 
@@ -354,7 +721,7 @@
     <NODE id="spaceship_back">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
-      <TRANSLATION x="-19" y="0" z="-19" />
+      <TRANSLATION x="-18" y="0" z="-19" />
       <DESCENDANTS>
         <NODEREF id="spaceship_small_side" />
       </DESCENDANTS>
@@ -363,7 +730,7 @@
     <NODE id="spaceship_front">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
-      <TRANSLATION x="-19" y="0" z="31" />
+      <TRANSLATION x="-18" y="0" z="31" />
       <DESCENDANTS>
         <NODEREF id="spaceship_small_side" />
       </DESCENDANTS>
@@ -385,6 +752,36 @@
       <DESCENDANTS>
         <NODEREF id="small_side_top" />
         <NODEREF id="small_side_bottom" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="spaceship_top">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="-19" y="30" z="-19" />
+      <SCALE sx="50" sy="1" sz="50" />
+      <DESCENDANTS>
+        <NODEREF id="box" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="spaceship_floor">
+      <MATERIAL id="m_spaceship_floor" />
+      <TEXTURE id="t_spaceship_floor" />
+      <TRANSLATION x="-19" y="-10" z="31" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 49 49 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="spaceship_bottom">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_spaceship_wall_amp" />
+      <TRANSLATION x="-18" y="-10" z="-18" />
+      <ROTATION axis="x" angle="90" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 49 49 0" />
       </DESCENDANTS>
     </NODE>
 
@@ -412,7 +809,7 @@
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <TRANSLATION x="0" y="30" z="0"/>
-      <SCALE sx="50" sy="10" sz="1" />
+      <SCALE sx="49" sy="10" sz="1" />
       <DESCENDANTS>
         <NODEREF id="box" />
       </DESCENDANTS>
@@ -422,32 +819,88 @@
       <MATERIAL id="null" />
       <TEXTURE id="null" />
       <TRANSLATION x="0" y="0" z="0"/>
-      <SCALE sx="50" sy="10" sz="1" />
+      <SCALE sx="49" sy="11" sz="1" />
       <DESCENDANTS>
         <NODEREF id="box" />
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="spaceship_top">
+    <NODE id="skybox">
+      <MATERIAL id="m_skybox" />
+      <TEXTURE id="clear" />
+      <SCALE sx="500" sy="500" sz="500"/>
+      <DESCENDANTS>
+        <NODEREF id="skybox_back" />
+        <NODEREF id="skybox_down" />
+        <NODEREF id="skybox_front" />
+        <NODEREF id="skybox_left" />
+        <NODEREF id="skybox_right" />
+        <NODEREF id="skybox_up" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="skybox_back">
       <MATERIAL id="null" />
-      <TEXTURE id="null" />
-      <TRANSLATION x="-19" y="30" z="-19" />
-      <SCALE sx="50" sy="1" sz="50" />
+      <TEXTURE id="t_skybox_back" />
+      <TRANSLATION x="0" y="0" z="0.5" />
+      <ROTATION axis="y" angle="180"/>
       <DESCENDANTS>
-        <NODEREF id="box" />
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
       </DESCENDANTS>
     </NODE>
 
-    <NODE id="spaceship_bottom">
+    <NODE id="skybox_down">
       <MATERIAL id="null" />
-      <TEXTURE id="null" />
-      <TRANSLATION x="-19" y="-10" z="-19" />
-      <SCALE sx="50" sy="1" sz="50" />
+      <TEXTURE id="t_skybox_down" />
+      <TRANSLATION x="0" y="-0.5" z="0" />
+      <ROTATION axis="x" angle="90"/>
+      <ROTATION axis="y" angle="180"/>
+      <ROTATION axis="z" angle="180"/>
       <DESCENDANTS>
-        <NODEREF id="box" />
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
       </DESCENDANTS>
     </NODE>
 
+    <NODE id="skybox_front">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_skybox_front" />
+      <TRANSLATION x="0" y="0" z="-0.5" />
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="skybox_left">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_skybox_left" />
+      <TRANSLATION x="-0.5" y="0" z="0" />
+      <ROTATION axis="y" angle="90"/>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="skybox_right">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_skybox_right" />
+      <TRANSLATION x="0.5" y="0" z="0" />
+      <ROTATION axis="y" angle="270"/>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="skybox_up">
+      <MATERIAL id="null" />
+      <TEXTURE id="t_skybox_up" />
+      <TRANSLATION x="0" y="0.5" z="0" />
+      <ROTATION axis="x" angle="-90"/>
+      <ROTATION axis="y" angle="180"/>
+      <ROTATION axis="z" angle="180"/>
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+      </DESCENDANTS>
+    </NODE>
 
 
   </NODES>
