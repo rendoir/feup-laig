@@ -282,13 +282,13 @@ XMLscene.prototype.updatePick = function(player, withBoardPieces) {
             value.isPickable = true;
         } else if (this.graph.captured_pieces.includes(value)) {
             value.isPickable = false;
-        } else if (value.nodeID.indexOf("white") != -1 && player == 1) {
+        } else if (value.nodeID.indexOf("white") != -1 && player == 1 && this.game.type == 'player') {
             value.isPickable = true;
         } else if (value.nodeID.indexOf("black") != -1 && player == 1) {
             value.isPickable = false;
         } else if (value.nodeID.indexOf("white") != -1 && player == 2) {
             value.isPickable = false;
-        } else if (value.nodeID.indexOf("black") != -1 && player == 2) {
+        } else if (value.nodeID.indexOf("black") != -1 && player == 2 && this.game.type == 'player') {
             value.isPickable = true;
         } else {
             value.isPickable = false;
