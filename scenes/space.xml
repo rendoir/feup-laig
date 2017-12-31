@@ -1,6 +1,6 @@
 <SCENE>
   <INITIALS>
-    <frustum near="0.1" far="100"/>
+    <frustum near="0.1" far="2000"/>
     <translation x="0" y="0" z="0" />
     <rotation axis="x" angle="0" />
     <rotation axis="y" angle="0" />
@@ -131,32 +131,32 @@
     </TEXTURE>
 
     <TEXTURE id="t_skybox_back">
-      <file path="images/solar_system/skybox_back.png" />
+      <file path="images/space/skybox_back.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_skybox_down">
-      <file path="images/solar_system/skybox_down.png" />
+      <file path="images/space/skybox_down.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_skybox_front">
-      <file path="images/solar_system/skybox_front.png" />
+      <file path="images/space/skybox_front.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_skybox_left">
-      <file path="images/solar_system/skybox_left.png" />
+      <file path="images/space/skybox_left.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_skybox_right">
-      <file path="images/solar_system/skybox_right.png" />
+      <file path="images/space/skybox_right.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
     <TEXTURE id="t_skybox_up">
-      <file path="images/solar_system/skybox_up.png" />
+      <file path="images/space/skybox_up.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
@@ -494,7 +494,7 @@
         <TEXTURE id="clear" />
         <ROTATION axis="x" angle="-90" />
         <SCALE sx="20" sy="20" sz="20"/>
-        <TRANSLATION x="0.125" y="-3" z="-0.5" />
+        <TRANSLATION x="0.2" y="-3" z="-0.5" />
         <DESCENDANTS>
           <NODEREF id="spaceship_wings"/>
           <!-- <NODEREF id="spaceship_fin"/> -->
