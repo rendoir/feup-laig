@@ -273,6 +273,7 @@ XMLscene.prototype.setPlayer = function(player) {
         }
         this.updatePick(this.turn, false);
         this.ui.updatePlayer();
+        this.ui.resetTimer();
     }
 };
 

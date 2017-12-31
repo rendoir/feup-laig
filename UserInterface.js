@@ -156,16 +156,22 @@ class UserInterface {
     };
 
     update() {
-        if (!this.game.game_over) {
+        if (!this.game.game_over && !this.game.loading) {
             let now = performance.now();
-            let diff = now - this.initTime;
-            let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            let diff = this.initTime - now;
+            if(diff > 0) {
+              let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+              let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-            this.ui_elements["minutes0"].texture = this.timer_textures[Math.floor(minutes / 10)];
-            this.ui_elements["minutes1"].texture = this.timer_textures[minutes % 10];
-            this.ui_elements["seconds0"].texture = this.timer_textures[Math.floor(seconds / 10)];
-            this.ui_elements["seconds1"].texture = this.timer_textures[seconds % 10];
+              this.ui_elements["minutes0"].texture = this.timer_textures[Math.floor(minutes / 10)];
+              this.ui_elements["minutes1"].texture = this.timer_textures[minutes % 10];
+              this.ui_elements["seconds0"].texture = this.timer_textures[Math.floor(seconds / 10)];
+              this.ui_elements["seconds1"].texture = this.timer_textures[seconds % 10];
+            } else {
+              this.game.game_over = true;
+              this.game.winner = this.game.turn === 1 ? 2 : 1;
+              this.scene.graph.onGameOver();
+            }
         }
 
         if (this.scene.graph) {
@@ -197,7 +203,7 @@ class UserInterface {
 
         this.ui_elements["separator"].texture = this.timer_textures[10];
 
-        this.initTime = performance.now();
+        this.resetTimer();
     }
 
     initCounter(text_coords, indices) {
@@ -219,6 +225,6 @@ class UserInterface {
     }
 
     resetTimer() {
-        this.initTime = performance.now();
+        this.initTime = performance.now() + 20000;
     }
 };
