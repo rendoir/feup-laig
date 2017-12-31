@@ -98,6 +98,8 @@ XMLscene.prototype.initCameras = function() {
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
 XMLscene.prototype.onGraphLoaded = function() {
+    this.camera.near = this.graph.near;
+    this.camera.far = this.graph.far;
     if (this.isFirstScene) {
         this.game.initBoard();
     } else {
