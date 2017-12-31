@@ -160,7 +160,7 @@ getPieceMoveList(Board, Player, Row, Column, PieceMoves) :-
   append(PieceMovesTmp2, PieceMoves4, PieceMoves).
 
 getPieceMoveList(Board, Player, Y, X, Step, Direction, PieceMoves) :-
-   getPieceMoveList(Board, Player, Y, X, _, _, Step, Direction, _, PieceMoves, 1, -1).
+   getPieceMoveList(Board, Player, Y, X, _, _, Step, Direction, _, PieceMoves, 0, -1).
 
 getPieceMoveList(_, _, _, _, _, _, _, _, TmpMoves, FinalMoves, NumberSteps, _) :- NumberSteps >= 8, FinalMoves = TmpMoves.
 getPieceMoveList(Board, Player, Y, X, StepX, StepY, Step, Direction, PieceMoves, FinalMoves, NumberSteps, 0) :-

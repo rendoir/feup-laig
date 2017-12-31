@@ -30,7 +30,7 @@ function MySceneGraph(filename, scene, id) {
     this.quad_model, this.soldier_model, this.dux_model;
 
     this.last_selected_quad = null;
-    this.last_selected_piece = null;
+    this.last_selected_null;
     this.piece_moving = false;
     this.captured_pieces = [];
     this.white_pieces_captured = 0;
@@ -73,6 +73,7 @@ MySceneGraph.prototype.addEventListeners = function() {
  * @listens gameLoaded
  */
 MySceneGraph.prototype.initializeBoard = function(event) {
+    this.scene.ui.resetTimer();
     let data = event.detail;
     let new_piece = null;
     //Maps
@@ -81,6 +82,9 @@ MySceneGraph.prototype.initializeBoard = function(event) {
     this.mapCoords_to_Quad = new Map();
     this.allPiecesNode.children = [];
     this.selectableNodes = [];
+    this.captured_pieces = [];
+    this.black_pieces_captured = 0;
+    this.white_pieces_captured = 0;
     for (let line = 0; line < 8; line++) {
         for (let col = 0; col < 8; col++) {
 
@@ -1707,6 +1711,7 @@ MySceneGraph.prototype.displayScene = function() {
     if (this.rootGraphNode.transformMatrix != null) {
         this.scene.multMatrix(this.rootGraphNode.transformMatrix);
     }
+    this.scene.clearPickRegistration();
     this.displayNode(this.rootGraphNode, material_stack, texture_stack);
 
     if (this.selectedNode != -1) {
@@ -1718,15 +1723,38 @@ MySceneGraph.prototype.displayScene = function() {
             this.scene.updateProjectionMatrix();
             this.scene.gl.cullFace(this.scene.gl.FRONT);
 
+            this.scene.pushMatrix();
+
             this.scene.multMatrix(this.selectedNodeRef.animationMatrix);
             this.scene.multMatrix(this.selectedNodeRef.transformMatrix);
 
             this.displayOutline(this.selectedNodeRef);
 
             this.scene.gl.cullFace(this.scene.gl.BACK);
+            this.last_selected_piece = this.selectedNodeRef;
+
+            //show possible moves
+            this.scene.popMatrix();
+            this.scene.setActiveShader(this.scene.highlight_shader);
+            this.scene.gl.uniform1f(this.scene.activeShader.uniforms.alpha, Math.sin(performance.now() * 0.005));
+
+            this.scene.game.allMoves.forEach(elem => {
+                if (elem[0] == this.last_selected_piece.position.x && elem[1] == this.last_selected_piece.position.y) {
+                    this.scene.pushMatrix();
+                    let quad = this.mapCoords_to_Quad.get(elem[2]).get(elem[3]);
+                    this.scene.multMatrix(quad.animationMatrix);
+                    this.scene.multMatrix(quad.transformMatrix);
+                    this.isToPick = quad.nodeID;
+                    this.displayMark(quad);
+                    this.isToPick = null;
+                    this.scene.popMatrix();
+                }
+            })
+
             this.scene.setActiveShader(previous_shader);
 
-            this.last_selected_piece = this.selectedNodeRef;
+
+
         } else if (this.selectedNodeRef.class === "board_position") {
             let previous_shader = this.scene.activeShader;
             this.scene.setActiveShader(this.scene.highlight_shader);
@@ -1831,6 +1859,23 @@ MySceneGraph.prototype.displayNode = function(node_to_display, material_stack, t
     }
 }
 
+
+MySceneGraph.prototype.displayMark = function(node_to_display) {
+    for (let i = 0; i < node_to_display.leaves.length; i++) {
+        this.scene.registerForPick(this.selectableNodes[this.isToPick], node_to_display.leaves[i]);
+        node_to_display.leaves[i].display();
+    }
+
+    for (let i = 0; i < node_to_display.children.length; i++) {
+        const node = node_to_display.children[i];
+        this.scene.pushMatrix();
+        this.scene.multMatrix(node.transformMatrix);
+        this.scene.multMatrix(node.animationMatrix);
+        this.displayMark(node);
+        this.scene.popMatrix();
+    }
+}
+
 MySceneGraph.prototype.displayOutline = function(node_to_display) {
     for (let i = 0; i < node_to_display.leaves.length; i++) {
         node_to_display.leaves[i].displayOutline();
@@ -1880,12 +1925,26 @@ MySceneGraph.prototype.initPieceAnimation = function() {
 
 MySceneGraph.prototype.initBotMoveAnimation = function(move) {
     this.last_selected_piece = this.mapCoords_to_Piece.get(move[0]).get(move[1]);
+    if (!this.last_selected_piece) {
+        if (this.mapCoords_to_Piece.get(move[2]).get(move[3]))
+            return;
+    }
+    if (this.last_selected_piece.animation) {
+        let endTimeOfAnimation = this.last_selected_piece.initialTimestamp + this.last_selected_piece.animation.duration * 2000;
+        this.last_selected_piece.update(endTimeOfAnimation);
+        this.last_selected_piece.update(0);
+    }
     this.last_selected_quad = this.mapCoords_to_Quad.get(move[2]).get(move[3]);
     this.initPieceAnimation();
 }
 
 MySceneGraph.prototype.initCaptureAnimation = function(piece_position) {
     let piece = this.mapCoords_to_Piece.get(piece_position[0]).get(piece_position[1]);
+    if (piece.animation) {
+        let endTimeOfAnimation = piece.initialTimestamp + piece.animation.duration * 2000;
+        piece.update(endTimeOfAnimation);
+        piece.update(0);
+    }
 
     let side_board_position;
 
@@ -1939,7 +1998,6 @@ MySceneGraph.prototype.initReverseCaptureAnimation = function() {
 
 MySceneGraph.prototype.pieceCaptureHandler = function(event) {
     this.scene.game.captured_pieces.forEach(Elem => {
-        console.log("Piece Capture: ", Elem);
         this.initCaptureAnimation(Elem);
     });
     this.scene.game.captured_pieces = [];
@@ -1959,9 +2017,15 @@ MySceneGraph.prototype.onGameOver = function(event) {
         value.isPickable = false;
     };
     this.mapPickId_to_Piece.forEach(disablePick.bind(this));
+    if (this.scene.game.winner === 1)
+        this.white_score++;
+    else if (this.scene.game.winner === 2)
+        this.black_score++;
+    this.scene.game.winner = null;
 }
 
 MySceneGraph.prototype.receivedMove = function(event) {
+    event.stopPropagation();
     this.initBotMoveAnimation(event.detail);
     this.updateMap(event.detail);
 }

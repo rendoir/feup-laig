@@ -36,10 +36,6 @@
       <file path="images/board/board_side.png" />
       <amplif_factor s="8" t="1" />
     </TEXTURE>
-    <TEXTURE id="t_abajur">
-      <file path="images/abajur-piece.png" />
-      <amplif_factor s="10" t="6" />
-    </TEXTURE>
     <TEXTURE id="t_wood">
       <file path="images/table/wood.jpg" />
       <amplif_factor s="1" t="1" />
@@ -79,6 +75,22 @@
     <TEXTURE id="t_door">
       <file path="images/door.png" />
       <amplif_factor s="12.5" t="20" />
+    </TEXTURE>
+    <TEXTURE id="t_pillar">
+      <file path="images/pillar.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+    <TEXTURE id="t_marble">
+      <file path="images/brown_marble.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+    <TEXTURE id="t_wall_hanger">
+      <file path="images/wall_hanger.png" />
+      <amplif_factor s="10" t="10" />
+    </TEXTURE>
+    <TEXTURE id="t_caesar_painting">
+      <file path="images/caesar_painting.jpg" />
+      <amplif_factor s="7.5" t="10" />
     </TEXTURE>
   </TEXTURES>
 
@@ -126,6 +138,27 @@
       <ambient r="0.1" g="0.1" b="0.1" a="1" />
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
+    <MATERIAL id="m_pillar">
+      <shininess value="8" />
+      <specular r="1.0" g="1.0" b="1.0" a="1" />
+      <diffuse r="1.0" g="1.0" b="1.0" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+    <MATERIAL id="m_marble">
+      <shininess value="8" />
+      <specular r="1.0" g="1.0" b="1.0" a="1" />
+      <diffuse r="1.0" g="0.975" b="0.95" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+    <MATERIAL id="m_wall_hanger">
+      <shininess value="20" />
+      <specular r="1.0" g="1.0" b="1.0" a="1" />
+      <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+      <ambient r="0.1" g="0.1" b="0.1" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
   </MATERIALS>
 
 
@@ -149,7 +182,9 @@
         <NODEREF id="center_floor" />
         <NODEREF id="floor" />
         <NODEREF id="walls" />
-        <NODEREF id="lamp" />
+        <NODEREF id="pillars" />
+        <NODEREF id="wall_hanger" />
+        <NODEREF id="caesar_painting" />
       </DESCENDANTS>
     </NODE>
 
@@ -760,27 +795,27 @@
         <LEAF type="rectangle" args="0 20 12.5 0" />
       </DESCENDANTS>
     </NODE>
+
+    <NODE id="wall_hanger">
+      <MATERIAL id="m_wall_hanger" />
+      <TEXTURE id="t_wall_hanger" />
+      <TRANSLATION x="22" y="6" z="23.9" />
+      <ROTATION axis="y" angle="180" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 10 10 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="caesar_painting">
+      <MATERIAL id="m_house" />
+      <TEXTURE id="t_caesar_painting" />
+      <TRANSLATION x="-5.5" y="4.75" z="23.9" />
+      <ROTATION axis="y" angle="180" />
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 10 7.5 0" />
+      </DESCENDANTS>
+    </NODE>
    
-    
-    <!-- Lamp -->
-    <NODE id="lamp">
-      <MATERIAL id="null" />
-      <TEXTURE id="null" />
-      <TRANSLATION x="4" y="8" z="4" />
-      <ROTATION axis="x" angle="-90" />
-      <DESCENDANTS>
-        <NODEREF id="lightbulb" />
-      </DESCENDANTS>
-    </NODE>
-
-    <NODE id="lightbulb">
-      <MATERIAL id="m_lightbulb" />
-      <TEXTURE id="clear" />
-      <DESCENDANTS>
-        <LEAF type="sphere" args="0.5 32 32" />
-      </DESCENDANTS>
-    </NODE>
-
     <NODE id="table">
       <MATERIAL id="m_wood" />
       <TEXTURE id="null" />
@@ -856,8 +891,96 @@
         <NODEREF id="box" />
       </DESCENDANTS>
     </NODE>
-  </NODES>
 
-  
+    
+    <!-- Pillars -->
+    <NODE id="pillars">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <NODEREF id="pillar" />
+        <NODEREF id="pillar2" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="pillar">
+      <MATERIAL id="m_pillar" />
+      <TEXTURE id="t_pillar" />
+      <TRANSLATION x="-13.5" y="-6" z="-13.5" />
+      <DESCENDANTS>
+        <NODEREF id="pillar_base" />
+        <NODEREF id="pillar_body" />
+        <NODEREF id="pillar_top" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="pillar2">
+      <MATERIAL id="m_house" />
+      <TEXTURE id="t_pillar" />
+      <TRANSLATION x="35" y="0" z="0" />
+      <DESCENDANTS>
+        <NODEREF id="pillar" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="pillar_body">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="15 1.5 1.5 32 32 0 0" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="pillar_base">
+      <MATERIAL id="m_marble" />
+      <TEXTURE id="t_marble" />
+      <DESCENDANTS>
+        <NODEREF id="pillar_base_cylinder" />
+        <NODEREF id="pillar_base_link" />
+        <NODEREF id="pillar_base_ellipsoid" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="pillar_top">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="15" z="0" />
+      <ROTATION axis="x" angle="180" />
+      <DESCENDANTS>
+        <NODEREF id="pillar_base" />
+      </DESCENDANTS>
+    </NODE>
+    
+    <NODE id="pillar_base_cylinder">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <ROTATION axis="x" angle="-90" />
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="0.4 2.5 2.5 32 32 1 1" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="pillar_base_link">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="1.25" z="0" />
+      <SCALE sx="1" sy="0.3" sz="1" />
+      <DESCENDANTS>
+        <LEAF type="sphere" args="1.75 32 32" />
+      </DESCENDANTS>
+    </NODE>
+
+    <NODE id="pillar_base_ellipsoid">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="0" y="0.7" z="0" />
+      <SCALE sx="1" sy="0.3" sz="1" />
+      <DESCENDANTS>
+        <LEAF type="sphere" args="2.25 32 32" />
+      </DESCENDANTS>
+    </NODE>
+    
+  </NODES>
 
 </SCENE>
