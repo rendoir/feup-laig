@@ -335,6 +335,12 @@ class LatrunculiXXI {
         dispatchEvent(new CustomEvent('receivedMove', { detail: this.move_stack[this.number_plays][1] }));
     }
 
+    skipTurn() {
+        this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
+        this.botLevel = (this.turn === 1) ? this.botLevelTwo : this.botLevelOne;
+        this.turn = (this.turn === 1) ? 2 : 1;
+    }
+
 }
 
 /**

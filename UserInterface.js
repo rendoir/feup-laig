@@ -22,16 +22,12 @@ class UserInterface {
             0, 3, 1
         ];
 
-        let player_position = [
-            -0.3, 0.95,
-            0.1, 0.95,
-            -0.3, 0.75,
+        let player_position = [-0.3, 0.95,
+            0.1, 0.95, -0.3, 0.75,
             0.1, 0.75
         ];
-        let bot_position = [
-            -0.2, 0.95,
-            0.0, 0.95,
-            -0.2, 0.75,
+        let bot_position = [-0.2, 0.95,
+            0.0, 0.95, -0.2, 0.75,
             0.0, 0.75
         ];
         let player = new UIElement(this.scene, player_position, text_coords, indices, "images/ui/player.png");
@@ -51,10 +47,10 @@ class UserInterface {
         this.ui_elements["player2"] = player2;
 
         let undo = new UIElement(this.scene, [
-              0.7, 0.15,
-              0.95, 0.15,
-              0.7, -0.1,
-              0.95, -0.1
+                0.7, 0.15,
+                0.95, 0.15,
+                0.7, -0.1,
+                0.95, -0.1
             ],
             text_coords,
             indices,
@@ -63,11 +59,11 @@ class UserInterface {
         this.ui_elements.push(undo);
 
         let reset = new UIElement(this.scene, [
-              0.7, -0.15,
-              0.95, -0.15,
-              0.7, -0.4,
-              0.95, -0.4
-        ],
+                0.7, -0.15,
+                0.95, -0.15,
+                0.7, -0.4,
+                0.95, -0.4
+            ],
             text_coords,
             indices,
             "images/ui/reset.png",
@@ -83,8 +79,7 @@ class UserInterface {
         let movie = new UIElement(this.scene, movie_position, text_coords, indices, "images/ui/movie.png", this.game.playMovie.bind(this.game));
         this.ui_elements["movie"] = movie;
 
-        let game_over_position = [
-            -0.5, 0.95,
+        let game_over_position = [-0.5, 0.95,
             0.5, 0.95, -0.5, 0.75,
             0.5, 0.75
         ];
@@ -159,18 +154,18 @@ class UserInterface {
         if (!this.game.game_over && !this.game.loading) {
             let now = performance.now();
             let diff = this.initTime - now;
-            if(diff > 0) {
-              let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-              let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            if (diff > 0) {
+                let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-              this.ui_elements["minutes0"].texture = this.timer_textures[Math.floor(minutes / 10)];
-              this.ui_elements["minutes1"].texture = this.timer_textures[minutes % 10];
-              this.ui_elements["seconds0"].texture = this.timer_textures[Math.floor(seconds / 10)];
-              this.ui_elements["seconds1"].texture = this.timer_textures[seconds % 10];
+                this.ui_elements["minutes0"].texture = this.timer_textures[Math.floor(minutes / 10)];
+                this.ui_elements["minutes1"].texture = this.timer_textures[minutes % 10];
+                this.ui_elements["seconds0"].texture = this.timer_textures[Math.floor(seconds / 10)];
+                this.ui_elements["seconds1"].texture = this.timer_textures[seconds % 10];
             } else {
-              this.game.game_over = true;
-              this.game.winner = this.game.turn === 1 ? 2 : 1;
-              this.scene.graph.onGameOver();
+                this.game.skipTurn();
+                this.scene.ui.updatePlayer();
+                this.scene.ui.resetTimer();
             }
         }
 
@@ -193,10 +188,10 @@ class UserInterface {
         let initial_x = -0.95 - space_between;
         for (let i = 0; i < ids.length; i++) {
             let vertices = [
-                i * width + (i+1) * space_between + initial_x, 0.95,
-                (i+1) * width + (i+1) * space_between + initial_x, 0.95,
-                i * width + (i+1) * space_between + initial_x, 0.9,
-                (i+1) * width + (i+1) * space_between + initial_x, 0.9
+                i * width + (i + 1) * space_between + initial_x, 0.95,
+                (i + 1) * width + (i + 1) * space_between + initial_x, 0.95,
+                i * width + (i + 1) * space_between + initial_x, 0.9,
+                (i + 1) * width + (i + 1) * space_between + initial_x, 0.9
             ];
             this.ui_elements[ids[i]] = new UIElement(this.scene, vertices, text_coords, indices);
         }
