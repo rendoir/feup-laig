@@ -44,12 +44,16 @@ function prologRequest(request) {
  * @param {Function} onError 
  * @param {number} port 
  */
-function getPrologRequest(requestString, onSuccess, onError, port) {
+function getPrologRequest(requestString, onSuccess, onError, port, tries) {
     var requestPort = port || 8081
     var request = new XMLHttpRequest();
+    if (!tries) {
+        tries = 0;
+    }
     request.open('GET', 'http://localhost:' + requestPort + '/' + requestString, true);
 
     request.onload = function(data) {
+        tries = 0;
         let reply;
         try {
             reply = JSON.parse(data.target.response);
@@ -63,18 +67,30 @@ function getPrologRequest(requestString, onSuccess, onError, port) {
     };
     request.onerror = onError || function() {
         console.log("Error waiting for response");
+        if (tries < 2) {
+            tries++;
+            getPrologRequest(requestString, onSuccess, onError, port, tries);
+        }
     };
 
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     request.send();
+    last_request = request;
 }
 
+/**
+ * Send command to close server
+ */
 function closeServer() {
     getPrologRequest('quit');
 }
 
+/**
+ * Send command to test connection to the server
+ */
 function testConnection() {
     getPrologRequest('testConnection');
 }
+
 
 testConnection();
