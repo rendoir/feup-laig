@@ -129,6 +129,7 @@ class LatrunculiXXI {
 
     /**
      * Request of the initial board representation;
+     * @event gameLoaded
      * @memberof LatrunculiXXI
      */
     initBoard() {
@@ -150,7 +151,9 @@ class LatrunculiXXI {
     }
 
     /**
-     * (description)
+     * Undo the last play
+     * @event undoCapture
+     * @event receivedMove two init animation in backwards
      * @returns {boolean} if can do undo or not
      * @memberof LatrunculiXXI
      */
@@ -204,7 +207,7 @@ class LatrunculiXXI {
 
     /**
      * Requests a valid bot move to prolog and returns it and the board after the move;
-     * @todo change hardcoded difficulty when called makeMove
+     * @event receivedMove
      * @memberof LatrunculiXXI
      */
     makeMove() {
@@ -267,7 +270,6 @@ class LatrunculiXXI {
         if (!this.allMoves.some(element => {
                 return equals(element, move);
             })) {
-            /** @todo Send a message to the User saying is not a valid move; */
             return false;
         }
         this.addMove(move);
@@ -286,7 +288,7 @@ class LatrunculiXXI {
          * @param {ReplyIsOver} data Object with the reply from server;
          */
         let reply = function(data) {
-            this.setGameOver(data.return, data.winner); /** @todo check winner received from server */
+            this.setGameOver(data.return, data.winner);
         };
         let request = createRequest('gameIsOver', [this.getCurrentBoardString()], reply.bind(this));
         prologRequest(request);
@@ -321,7 +323,13 @@ class LatrunculiXXI {
         }
     }
 
-
+    /**
+     * When called start the replay of the all game
+     * @event gameLoaded
+     * @event receivedMove
+     * @returns {null}
+     * @memberof LatrunculiXXI
+     */
     playMovie() {
         if (!this.game_over) {
             console.log("Game not over");
@@ -333,6 +341,17 @@ class LatrunculiXXI {
         this.playingMovie = true;
         dispatchEvent(new CustomEvent('gameLoaded', { detail: this.board_stack[this.number_plays] }));
         dispatchEvent(new CustomEvent('receivedMove', { detail: this.move_stack[this.number_plays][1] }));
+    }
+
+
+    /**
+     * Function to skip the current turn to next one.
+     * @memberof LatrunculiXXI
+     */
+    skipTurn() {
+        this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
+        this.botLevel = (this.turn === 1) ? this.botLevelTwo : this.botLevelOne;
+        this.turn = (this.turn === 1) ? 2 : 1;
     }
 
 }
