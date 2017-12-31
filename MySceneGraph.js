@@ -159,7 +159,7 @@ MySceneGraph.prototype.onXMLReady = function() {
     }
 
     this.loadedOk = true;
-    this.rootGraphNode.addChild(this.allPiecesNode);
+    this.rootGraphNode.children.unshift(this.allPiecesNode);
 
     // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
     this.scene.onGraphLoaded();

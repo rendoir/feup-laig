@@ -10,7 +10,7 @@ function XMLscene(interface) {
 
     this.interface = interface;
     this.lightValues = {};
-    this.availableScenes = ["classic", "futuristic"];
+    this.availableScenes = ["classic", "futuristic", "futuristic2"];
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
