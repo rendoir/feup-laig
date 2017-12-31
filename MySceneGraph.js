@@ -68,8 +68,8 @@ MySceneGraph.prototype.addEventListeners = function() {
 };
 
 /**
- * Function to initialize the board scene 
- * @param {event} event 
+ * Function to initialize the board scene
+ * @param {event} event
  * @listens gameLoaded
  */
 MySceneGraph.prototype.initializeBoard = function(event) {
@@ -140,6 +140,7 @@ MySceneGraph.prototype.initializeBoard = function(event) {
         }
     }
     this.scene.updatePick(this.scene.turn, false);
+    this.scene.game.loading = false;
 };
 
 
@@ -1551,7 +1552,7 @@ MySceneGraph.prototype.parseNode = function(nodeToParse, textureStack) {
 
 /**
  * Reads the optional range attribute of a node. Range defines how much scalling the object gets when pulsing.
- * @param {*} xmlNode 
+ * @param {*} xmlNode
  */
 MySceneGraph.prototype.parseRangeXml = function(xmlNode) {
     const default_range = 0.005;
@@ -1564,7 +1565,7 @@ MySceneGraph.prototype.parseRangeXml = function(xmlNode) {
 
 /**
  * Reads the rgba of a node. This rgba is used for pulsing effect.
- * @param {*} xmlNode 
+ * @param {*} xmlNode
  */
 MySceneGraph.prototype.parseColorXml = function(xmlNode) {
     const defaultColor = 1;
@@ -2017,10 +2018,12 @@ MySceneGraph.prototype.onGameOver = function(event) {
         value.isPickable = false;
     };
     this.mapPickId_to_Piece.forEach(disablePick.bind(this));
-    if (this.scene.game.winner === 1)
-        this.white_score++;
-    else if (this.scene.game.winner === 2)
-        this.black_score++;
+    if(!this.scene.game.playingMovie) {
+      if (this.scene.game.winner === 1)
+          this.white_score++;
+      else if (this.scene.game.winner === 2)
+          this.black_score++;
+    }
     this.scene.game.winner = null;
 }
 

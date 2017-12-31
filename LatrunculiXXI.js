@@ -44,7 +44,7 @@ class LatrunculiXXI {
 
     /**
      * (description)
-     * @param {number[]} move 
+     * @param {number[]} move
      * @memberof LatrunculiXXI
      */
     addMove(move) {
@@ -53,7 +53,7 @@ class LatrunculiXXI {
 
     /**
      * (description)
-     * @param {number[][]} board 
+     * @param {number[][]} board
      * @memberof LatrunculiXXI
      */
     addBoard(board) {
@@ -68,8 +68,8 @@ class LatrunculiXXI {
 
     /**
      * (description)
-     * @param {boolean} isGameOver 
-     * @param {number} winner 
+     * @param {boolean} isGameOver
+     * @param {number} winner
      * @event gameOver fires the event when game is over
      * @memberof LatrunculiXXI
      */
@@ -109,12 +109,12 @@ class LatrunculiXXI {
      * @property {string} msg
      * @property {boolean} return               - value of function called in prolog
      * @property {number[][]} board             - Matrix with the board representation
-     * 
+     *
      * @typedef {object} ReplyMoves
      * @property {string} msg
      * @property {boolean} return               - value of function called in prolog
      * @property {number[][]} moves             - Matrix with all possible moves
-     * 
+     *
      * @typedef {object} ReplyMakeMove
      * @property {string} msg
      * @property {boolean} return               - value of function called in prolog
@@ -134,7 +134,7 @@ class LatrunculiXXI {
     initBoard() {
         /**
          * Receive the reply from server, when requested 'initialBoard';
-         * @param {ReplyBoard} data 
+         * @param {ReplyBoard} data
          * @event gameLoaded
          */
         let reply = function(data) {
@@ -144,6 +144,7 @@ class LatrunculiXXI {
             this.getAllMoves();
             dispatchEvent(new CustomEvent('gameLoaded', { detail: data.board }));
         };
+        this.loading = true;
         let request = createRequest('initialBoard', null, reply.bind(this));
         return prologRequest(request);
     }
@@ -282,7 +283,7 @@ class LatrunculiXXI {
     checkGameOver() {
         /**
          * Receive the reply from server when sent a request of 'gameIsOver';
-         * @param {ReplyIsOver} data Object with the reply from server; 
+         * @param {ReplyIsOver} data Object with the reply from server;
          */
         let reply = function(data) {
             this.setGameOver(data.return, data.winner); /** @todo check winner received from server */
@@ -338,8 +339,8 @@ class LatrunculiXXI {
 
 /**
  * Compare two Arrays
- * @param {Array} param1 
- * @param {Array} param2 
+ * @param {Array} param1
+ * @param {Array} param2
  */
 function equals(param1, param2) {
     if (!Array.isArray)
