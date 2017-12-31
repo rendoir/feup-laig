@@ -220,6 +220,6 @@ class UserInterface {
     }
 
     resetTimer() {
-        this.initTime = performance.now() + 20000;
+        this.initTime = performance.now() + 60000;
     }
 };
