@@ -33,7 +33,7 @@ XMLscene.prototype.init = function(application) {
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(1000 / UPDATES_PER_SECONDS);
     this.setPickEnabled(true);
-    this.game = Game;
+    this.game = new LatrunculiXXI();
     this.turn = this.game.turn;
     this.ui = new UserInterface(this, this.game);
     this.currentScene = this.availableScenes[0];
