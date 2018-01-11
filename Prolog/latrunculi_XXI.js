@@ -378,3 +378,5 @@ function equals(param1, param2) {
     }
     return true;
 }
+
+var Game = new LatrunculiXXI();
