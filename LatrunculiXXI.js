@@ -352,6 +352,7 @@ class LatrunculiXXI {
         this.type = (this.turn === 1) ? this.playerTwoType : this.playerOneType;
         this.botLevel = (this.turn === 1) ? this.botLevelTwo : this.botLevelOne;
         this.turn = (this.turn === 1) ? 2 : 1;
+        this.getAllMoves();
     }
 
 }
