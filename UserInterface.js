@@ -90,7 +90,8 @@ class UserInterface {
         this.initCounter(text_coords, indices);
 
         //Init shader
-        this.ui_shader = new CGFshader(this.gl, '../lib/CGF/shaders/UI/ui_vertex.glsl', '../lib/CGF/shaders/UI/ui_frag.glsl');
+        let currentPath = document.location.pathname;
+        this.ui_shader = new CGFshader(this.gl, currentPath + 'lib/CGF/shaders/UI/ui_vertex.glsl', currentPath+'lib/CGF/shaders/UI/ui_frag.glsl');
         let previous_shader = this.scene.activeShader;
         this.scene.setActiveShader(this.ui_shader);
         this.gl.activeTexture(this.gl.TEXTURE0);

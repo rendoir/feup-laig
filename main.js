@@ -40,13 +40,14 @@ function getUrlVars() {
     return vars;
 }
 
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
+let currentPath = document.location.pathname;
+serialInclude([currentPath+'lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
     'MyGraphNode.js', 'MyGraphLeaf.js', 'MyInterface.js',
     'primitives/cylinder.js', 'primitives/rectangle.js', 'primitives/sphere.js',
     'primitives/triangle.js', 'primitives/circle.js', 'primitives/nurbs.js',
     'animations/animation.js', 'animations/circularAnimation.js', 'animations/linearAnimation.js',
     'animations/bezierAnimation.js', 'animations/comboAnimation.js',
-    'Prolog/server_connection.js', 'LatrunculiXXi.js', 'UIElement.js', 'MyPieceNode.js',
+    'Prolog/server_connection.js', 'Prolog/LatrunculiXXi.js', 'UIElement.js', 'MyPieceNode.js',
     'UserInterface.js',
 
     main = function() {
