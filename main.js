@@ -40,7 +40,8 @@ function getUrlVars() {
     return vars;
 }
 
-serialInclude(['./lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
+let currentPath = document.location.pathname;
+serialInclude([currentPath+'lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
     'MyGraphNode.js', 'MyGraphLeaf.js', 'MyInterface.js',
     'primitives/cylinder.js', 'primitives/rectangle.js', 'primitives/sphere.js',
     'primitives/triangle.js', 'primitives/circle.js', 'primitives/nurbs.js',
