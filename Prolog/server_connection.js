@@ -50,7 +50,7 @@ function getPrologRequest(requestString, onSuccess, onError, port, tries) {
     if (!tries) {
         tries = 0;
     }
-    request.open('GET', 'http://localhost:' + requestPort + '/' + requestString, true);
+    request.open('GET', 'https://localhost:' + requestPort + '/' + requestString, true);
 
     request.onload = function(data) {
         tries = 0;

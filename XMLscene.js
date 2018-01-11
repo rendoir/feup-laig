@@ -37,8 +37,9 @@ XMLscene.prototype.init = function(application) {
     this.turn = this.game.turn;
     this.ui = new UserInterface(this, this.game);
     this.currentScene = this.availableScenes[0];
-    this.outline_shader = new CGFshader(this.gl, '../lib/CGF/shaders/Outline/outline_vertex.glsl', '../lib/CGF/shaders/Outline/outline_frag.glsl');
-    this.highlight_shader = new CGFshader(this.gl, '../lib/CGF/shaders/Outline/highlight_vertex.glsl', '../lib/CGF/shaders/Outline/highlight_frag.glsl');
+    let currentPath = document.location.pathname;
+    this.outline_shader = new CGFshader(this.gl, currentPath + 'lib/CGF/shaders/Outline/outline_vertex.glsl', currentPath + 'lib/CGF/shaders/Outline/outline_frag.glsl');
+    this.highlight_shader = new CGFshader(this.gl, currentPath + 'lib/CGF/shaders/Outline/highlight_vertex.glsl', currentPath + 'lib/CGF/shaders/Outline/highlight_frag.glsl');
 };
 
 /**
