@@ -6,16 +6,23 @@ João Carvalho - 201504875
 Renato Campos - 201504942  
 
 
+
 ## Instructions
-#### Prolog server
+#### Build
 ```sh
-swipl -s Prolog/server.pl -g "server."
+docker-compose build
 ```
 
-#### Web app
+#### Run
 ```sh
-python3 -m http.server 8080
+docker-compose up
 ```
+
+#### Stop
+```sh
+docker-compose down
+```
+
 
 ## Screenshots
 

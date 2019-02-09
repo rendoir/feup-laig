@@ -1,0 +1,4 @@
+FROM swipl:latest
+COPY . /
+EXPOSE 8081
+CMD swipl -s Prolog/server.pl -g "server."

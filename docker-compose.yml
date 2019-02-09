@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  python:
+    build:
+      context: ./
+      dockerfile: build/dockerfile-python
+    command: python3 -m http.server 8080
+    ports:
+      - "8080:8080"
+    expose:
+      - '8080'
+    
+  swipl:
+    build:
+      context: ./
+      dockerfile: build/dockerfile-swipl
+    command: swipl -s Prolog/server.pl -g "server."
+    ports:
+      - "8081:8081"
+    expose:
+      - '8081'
