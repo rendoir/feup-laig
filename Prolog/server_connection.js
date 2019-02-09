@@ -56,9 +56,10 @@ function getPrologRequest(requestString, onSuccess, onError, port, tries) {
         tries = 0;
         let reply;
         try {
-            reply = JSON.parse(data.target.response);
+            let res = data.target.response.substring(1, data.target.response.length - 1);
+            reply = JSON.parse(res);
         } catch (e) {
-            return console.log("JSON Parse ERROR");
+            return console.log("Error: Json parse: " + data.target.response);
         }
         if (onSuccess && data.target.status == 200)
             onSuccess(reply);

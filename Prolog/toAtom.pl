@@ -1,12 +1,12 @@
 toAtom(Element, AtomElement) :-
-    open('/latronculli_cache', write, StreamWrite),
+    open('./latrunculi_cache', write, StreamWrite),
     write(StreamWrite, '\''),
     checkElement(Element, ElementToWrite),
     write(StreamWrite, ElementToWrite),
     write(StreamWrite, '\''),
     write(StreamWrite, '.'),
     close(StreamWrite),
-    open('/latronculli_cache', read, StreamRead),
+    open('./latrunculi_cache', read, StreamRead),
     read(StreamRead, AtomElement),
     close(StreamRead),
     atom(AtomElement).

@@ -1,4 +1,4 @@
-:-use_module(library(sockets)).
+:-use_module(library(socket)).
 :-use_module(library(lists)).
 :-use_module(library(codesio)).
 
@@ -10,32 +10,36 @@
 % You can test requests to this server by going to http://localhost:8081/<request>.
 % Go to http://localhost:8081/quit to close server.
 
-% Made by Luis Reis (ei12085@fe.up.pt) for LAIG course at FEUP.
-
 port(8081).
 
 % Server Entry Point
 server :-
 	port(Port),
+	tcp_socket(Socket),
+    tcp_bind(Socket, Port),
+    tcp_listen(Socket, 5),
+    tcp_open_socket(Socket, _, _),
 	write('Opened Server'),nl,nl,
-	socket_server_open(Port, Socket),
 	server_loop(Socket),
-	socket_server_close(Socket),
+	tcp_close_socket(Socket),
 	write('Closed Server'),nl.
 
 % Server Loop 
 % Uncomment writes for more information on incomming connections
 server_loop(Socket) :-
 	repeat,
-	socket_server_accept(Socket, _Client, Stream, [type(text)]),
-		% write('Accepted connection'), nl,
+	tcp_accept(Socket, Slave, _Client),
+	tcp_open_socket(Slave, StreamPair),
+	stream_pair(StreamPair, Read, Write),
+	% socket_server_accept(Socket, _Client, Stream, [type(text)]),
+		write('Accepted connection'), nl,
 	    % Parse Request
 		catch((
-			read_request(Stream, Request),
-			read_header(Stream)
+			read_request(Read, Request),
+			read_header(Read)
 		),_Exception,(
-			% write('Error parsing request.'),nl,
-			close_stream(Stream),
+			write('Error parsing request.'),nl,
+			close_stream(StreamPair),
 			fail
 		)),
 		
@@ -45,13 +49,13 @@ server_loop(Socket) :-
 		format('Reply: ~q~n', [MyReply]),
 		
 		% Output Response
-		format(Stream, 'HTTP/1.0 ~p~n', [Status]),
-		format(Stream, 'Access-Control-Allow-Origin: *~n', []),
-		format(Stream, 'Content-Type: text/plain~n~n', []),
-		format(Stream, '~p', [MyReply]),
+		format(Write, 'HTTP/1.0 ~p~n', [Status]),
+		format(Write, 'Access-Control-Allow-Origin: *~n', []),
+		format(Write, 'Content-Type: text/plain~n~n', []),
+		format(Write, '~p', [MyReply]),
 	
-		% write('Finnished Connection'),nl,nl,
-		close_stream(Stream),
+		write('Finnished Connection'),nl,nl,
+		close_stream(StreamPair),
 	(Request = quit), !.
 	
 close_stream(Stream) :- flush_output(Stream), close(Stream).
@@ -59,7 +63,7 @@ close_stream(Stream) :- flush_output(Stream), close(Stream).
 % Handles parsed HTTP requests
 % Returns 200 OK on successful aplication of parse_input on request
 % Returns 400 Bad Request on syntax error (received from parser) or on failure of parse_input
-handle_request(Request, MyReply, '200 OK') :- catch(parse_input(Request, MyReply),error(_,_),fail), !.
+handle_request(Request, MyReply, '200 OK') :- parse_input(Request, MyReply), !.
 handle_request(syntax_error, '{"msg": "Syntax Error"}', '400 Bad Request') :- !.
 handle_request(_, '{"msg": "Bad Request"}', '400 Bad Request').
 
@@ -67,7 +71,7 @@ handle_request(_, '{"msg": "Bad Request"}', '400 Bad Request').
 % Returns term parsed from Request-URI
 % Returns syntax_error in case of failure in parsing
 read_request(Stream, Request) :-
-	read_line(Stream, LineCodes),
+	read_line_to_codes(Stream, LineCodes),
 	print_header_line(LineCodes),
 	
 	% Parse Request
@@ -85,7 +89,7 @@ read_request_aux([C|Cs],[C|RCs]) :- read_request_aux(Cs, RCs).
 % Reads and Ignores the rest of the lines of the HTTP Header
 read_header(Stream) :-
 	repeat,
-	read_line(Stream, Line),
+	read_line_to_codes(Stream, Line),
 	print_header_line(Line),
 	(Line = []; Line = end_of_file),!.
 
